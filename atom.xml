@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-03T15:35:13-07:00</updated>
+ <updated>2012-08-03T16:17:40-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -279,7 +279,7 @@
    <id>http://johnbender.github.com/2012/03/22/a-natural-transformation-in-javascript</id>
    <content type="html">Natural transformations are a foundational construct in category theory, so it seems fitting to follow up my &lt;a href=&quot;/2012/02/29/faster-javascript-through-category-theory/&quot;&gt;last post&lt;/a&gt; by describing one using the categories &lt;strong&gt;Html&lt;/strong&gt; and &lt;strong&gt;Jqry&lt;/strong&gt;. As a result this post assumes the reader has covered the material from the last post. Also, as much as I wish that I could claim a similarly exciting result this will remain mostly an exercise in clarifying what natural transformations are and how they behave. If it's any consolation I've borrowed some very attractive TeX diagrams from Wikipedia to help illustrate.
 
-&lt;h1&gt;Natural Transformations&lt;/h1&gt;
+&lt;h2&gt;Natural Transformations&lt;/h2&gt;
 
 Natural transformations are actually fairly simple once you have an example you can comprehend. One way to describe them is - a set of morphisms&lt;sup&gt;1&lt;/sup&gt; that reconcile the way two functors from the same source to the same target categories alter morphisms of the source category&lt;sup&gt;2&lt;/sup&gt;. Unfortunately the written descriptions seems to fall short in aiding comprehension, but as promised there are pretty pictures:
 

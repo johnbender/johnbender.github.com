@@ -1,10 +1,21 @@
 /* Override some defaults */
 html, body {
   background-color: #eee;
+  font-size: 14px;
+  line-height: 1.4em;
 }
 .navbar {
   margin-bottom: 0;
 }
+
+h2, h3 {
+  margin: 0.5em 0 0.2em 0;
+}
+
+img {
+  margin: 1em;
+}
+
 .container > footer {
   margin-top: 20px;
 }
@@ -35,7 +46,6 @@ html, body {
 .topbar .btn {
   border: 0;
 }
-
 
 /* tag_box ======================================================== */
 
@@ -68,4 +78,75 @@ html, body {
 	border:1px solid #4C964D;
 	color:#FFF;
 }
-	
+
+pre {
+  /* border:1px solid #f5f5f5; */
+  background-color: #222;
+  padding: 2.5%;
+  overflow-y: hidden;
+  color: #d3d3d3;
+  -webkit-border-radius: 3px;
+  -mox-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 13px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+pre.comment  {
+  /* font-lock-comment-face */
+  color: #777;
+}
+.comment-delimiter {
+  /* font-lock-comment-delimiter-face */
+  color: #777;
+}
+.constant {
+  /* font-lock-constant-face */
+  color: #52c62b;
+  font-weight: bold;
+}
+.function-name {
+  /* font-lock-function-name-face */
+  color: #ffffbb;
+  font-weight: bold;
+}
+.keyword {
+  /* font-lock-keyword-face */
+  color: #888;
+}
+.string {
+  /* font-lock-string-face */
+  color: #ffffcc;
+}
+.type {
+  /* font-lock-type-face */
+  color: #c2cff1;
+  font-weight: bold;
+}
+
+pre .variable-name {
+  /* font-lock-variable-name-face */
+  color: #f3f3f3 !important;
+}
+
+pre .doc {
+	color: #c2cff1;
+}
+
+.entry-content p .variable-name, code {
+  /* font-lock-variable-name-face */
+  color: #646EF1;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+code {
+  padding: 0.15em 0.4em;
+}
+
+.builtin {
+  /* font-lock-builtin-face */
+  color: #c2cff1;
+  font-weight: bold;
+}

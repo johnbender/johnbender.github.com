@@ -91,15 +91,14 @@
     </div>
 
     <div class="container">
-
       <div class="content">
         
 <div class="page-header">
-  <h1>You got your type class in my jQuery: Applicative Functors <small>Supporting tagline</small></h1>
+  <h1>You got your type class in my jQuery: Applicative Functors</h1>
 </div>
 
-<div class="row">
-  <div class="span8">
+<div class="row-fluid">
+  <div class="span9">
     <p>Previously we saw how jQuery's <code>$()</code> can behave like Haskell's Functor typeclass, when it wraps raw DOM objects and how provides its own version of <code>fmap</code> (<code>$.map</code>) for lifting functions into that wrapper to work with those DOM objects. In this post I'll explain Haskell's Applicative typeclass, how it's slightly different from the Functor, and demonstrate how defining functions on <code>$.fn</code> behaves in a similar fashion to the Applicative function <code>pure</code>.</p>
 
 <p>The article assumes you've read the previous post and that you have some basic understanding of what it means to define a function on jQuery's <code>$.fn</code> object (<a href="http://docs.jquery.com/Plugins/Authoring" title="jQuery Plugin Authoring">docs</a> for reference).</p>
@@ -307,8 +306,8 @@ $( <span class="string">"div"</span> ).clearIds();</pre>
     <hr>
     
   </div>
-  
-  <div class="span4">
+
+  <div class="span3">
     <h4>Published</h4>
     <div class="date"><span>20 July 2011</span></div>
 
@@ -338,7 +337,7 @@ $( <span class="string">"div"</span> ).clearIds();</pre>
 
 
     </ul>
-    
+  
   </div>
 </div>
 
@@ -346,7 +345,7 @@ $( <span class="string">"div"</span> ).clearIds();</pre>
       </div>
 
       <footer>
-        <p>&copy; John Bender 2012 
+        <p>&copy; John Bender 2012
           with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
           and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
         </p>
