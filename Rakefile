@@ -44,7 +44,7 @@ desc "Compile the site and commit to the gh-pages branch"
 task :'gh-pages' do
   exec(<<-CMD)
     set -e
-    jekyll --no-auto;
+    jekyll --no-auto --pygments;
     git checkout gh-pages;
     cp -r _site/* .;
     git add .;
@@ -52,6 +52,11 @@ task :'gh-pages' do
     git push origin gh-pages;
     git checkout master;
   CMD
+end
+
+desc "use the right cmd to prevent asset mis linking"
+task :serve do
+  `jekyll --serve --pygments --url localhost`
 end
 
 # Usage: rake post title="A Title" [date="2012-02-09"]
