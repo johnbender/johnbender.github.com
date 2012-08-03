@@ -49,7 +49,7 @@ task :'gh-pages' do
     cp -r _site/* .;
     git add .;
     git commit -m "updating gh-pages";
-    git push origin gh-pages;
+    git push origin +gh-pages;
     git checkout master;
   CMD
 end
