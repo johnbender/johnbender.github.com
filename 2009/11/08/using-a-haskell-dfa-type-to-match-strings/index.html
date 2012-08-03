@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Using a haskell dfa type to match strings</title>
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com/writing">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/pages.html">Pages</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Using a haskell dfa type to match strings <small>Supporting tagline</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    A <a href="http://mitchellhashimoto.com/">friend of mine </a>recently covered deterministic and non-deterministic finite state machines (automata for the cool kids) in one of his classes and passed along a sample problem for me to figure out. Informally, build a dfa that will match a given string against another string in the provided alphabet. An example of this class of problem would be to build one that matches 'aab' in any string for the alphabet [ab] ('aaba' would match, 'aba' would not).
+
+To help with visualizing the answer for this example I've built a graph of the states and edges that make up our dfa (yay graphviz):
+<img src="http://nickelcode.com/wp-content/uploads/2009/11/graph1.jpg" alt="graph" title="graph" width="158" height="635" class="aligncenter size-full" style="border: 0px; display: block; margin-right: auto; margin-left:auto;"/>
+
+
+At each state the machine follows the edge that matches the next input from a given string. If it ever hits the fourth state, it's found a match. Checking the string "baab" for  "aab" (for which our machine is built), starting at state one it would take the path 1 -b-> 1 -a-> 2 -a-> 3 -b-> 4, and conclude that "aab" was in fact contained within "baab".
+
+After doing this on paper I thought it might be fun to use haskell and put together a function that took a dfa, a string to match, and produced a boolean result. The first step I took was to define a data type that represented the dfa.
+
+   <pre>
+<span class="keyword">type</span> <span class="type">Dfa</span> <span class="variable-name">=</span> [<span class="type">State</span>]
+<span class="keyword">data</span> <span class="type">State</span> <span class="variable-name">=</span>  <span class="type">State</span> { identifier <span class="variable-name">::</span> <span class="type">Int</span> , edges <span class="variable-name">::</span> [<span class="type">Edge</span>] }
+           <span class="variable-name">|</span> <span class="type">FinalState</span> { identifier <span class="variable-name">::</span> <span class="type">Int</span>, edges <span class="variable-name">::</span> [<span class="type">Edge</span>] }
+<span class="keyword">data</span> <span class="type">Edge</span> <span class="variable-name">=</span> <span class="type">Edge</span> { action <span class="variable-name">::</span> (<span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">Bool</span>), edge_identifier <span class="variable-name">::</span> <span class="type">Int</span> }</pre> 
+
+
+This is an informal representation (you can find the formal one <a href="http://en.wikipedia.org/wiki/Deterministic_finite-state_machine#Formal_definition">here</a>) but here, a dfa is a set of States, a State is an identifier and a set of Edges, and an Edge is a function to determine if it is the edge to follow for a given input and its target state. If this looks a bit clunky at first a cleaned up version is further down.
+
+With my types in place I went ahead with building the functions to traverse a DFA for a given input:
+
+<pre>
+
+<span class="function-name">match</span> <span class="variable-name">::</span> <span class="type">State</span> <span class="variable-name">-&gt;</span> <span class="type">Dfa</span> <span class="variable-name">-&gt;</span> <span class="type">String</span> <span class="variable-name">-&gt;</span> <span class="type">Bool</span>
+<span class="function-name">match</span> current_state <span class="keyword">_</span> <span class="type">[]</span> <span class="variable-name">=</span> is_final current_state
+<span class="function-name">match</span> current_state dfa (x<span class="type">:</span>xs) <span class="variable-name">=</span> match next_state dfa xs
+                           <span class="keyword">where</span> next_state <span class="variable-name">=</span> traverse dfa current_state x
+                                
+
+<span class="function-name">traverse</span> <span class="variable-name">::</span> <span class="type">Dfa</span> <span class="variable-name">-&gt;</span> <span class="type">State</span> <span class="variable-name">-&gt;</span> <span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">State</span> 
+<span class="function-name">traverse</span> dfa state <span class="variable-name">=</span> (find_state dfa) <span class="variable-name">.</span> (next_id <span class="variable-name">$</span> edges state)
+                                   
+<span class="function-name">is_final</span> (<span class="type">FinalState</span> x y) <span class="variable-name">=</span> <span class="type">True</span>
+<span class="function-name">is_final</span> (<span class="type">State</span> x y) <span class="variable-name">=</span> <span class="type">False</span>
+
+<span class="function-name">find_state</span> <span class="variable-name">::</span> <span class="type">Dfa</span> <span class="variable-name">-&gt;</span> <span class="type">Int</span> <span class="variable-name">-&gt;</span> <span class="type">State</span>
+<span class="function-name">find_state</span> (st<span class="type">:</span>sts) state_id  <span class="variable-name">|</span> identifier st <span class="variable-name">==</span> state_id <span class="variable-name">=</span> st
+                              <span class="variable-name">|</span> otherwise <span class="variable-name">=</span> find_state sts state_id
+
+<span class="function-name">next_id</span> <span class="variable-name">::</span> [<span class="type">Edge</span>] <span class="variable-name">-&gt;</span> <span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">Int</span>
+<span class="function-name">next_id</span> (e<span class="type">:</span>es) input <span class="variable-name">|</span> (action e) input <span class="variable-name">=</span> edge_identifier e
+                     <span class="variable-name">|</span> otherwise <span class="variable-name">=</span> next_id es input
+</pre>
+
+The short explanation is that for each input it checks the current state for where it should go next, having determined the destination state's id it finds that state in the dfa and then proceeds with the rest of the input.
+
+Now, to test a sample graph:
+
+  <pre>
+<span class="function-name">state1</span> <span class="variable-name">=</span> <span class="type">State</span> 1 [ <span class="type">Edge</span> is_a 2, <span class="type">Edge</span> is_b 1] 
+<span class="function-name">state2</span> <span class="variable-name">=</span> <span class="type">State</span> 2 [ <span class="type">Edge</span> is_a 3, <span class="type">Edge</span> is_b 1]
+<span class="function-name">state3</span> <span class="variable-name">=</span> <span class="type">State</span> 3 [ <span class="type">Edge</span> is_a 3, <span class="type">Edge</span> is_b 4]
+<span class="function-name">state4</span> <span class="variable-name">=</span> <span class="type">FinalState</span> 4 [ <span class="type">Edge</span> is_a 4, <span class="type">Edge</span> is_b 4]
+
+<span class="function-name">graph</span> <span class="variable-name">=</span> [state1, state2, state3, state4]
+
+<span class="function-name">is_a</span> <span class="variable-name">=</span> (<span class="variable-name">==</span> <span class="string">'a'</span>) 
+
+<span class="function-name">is_b</span> <span class="variable-name">=</span> (<span class="variable-name">==</span> <span class="string">'b'</span>) </pre>
+ 
+You'll note that state4 refers to itself no matter the input so that the match function can operate exhaustively on the input string.
+
+And it works! But the best part of this whole exercise (for me at least) was yet to be realized because this whole first definition has been done in a very inelegant manner by failing to make use of haskell's lazy nature and recursive data types. 
+
+<h2>Improved</h2>
+
+The first, and easiest, thing to improve is how the Edges reference their destination states. Before, an integer was defined corresponding the identifier of the target state, but in haskell types can be defined recursively:
+
+ <pre>
+<span class="keyword">type</span> <span class="type">Dfa</span> <span class="variable-name">=</span> [<span class="type">State</span>]
+<span class="keyword">data</span> <span class="type">State</span> <span class="variable-name">=</span>  <span class="type">State</span> { edges <span class="variable-name">::</span> [<span class="type">Edge</span>] }
+           <span class="variable-name">|</span> <span class="type">FinalState</span> 
+<span class="keyword">data</span> <span class="type">Edge</span> <span class="variable-name">=</span> <span class="type">Edge</span> { condition <span class="variable-name">::</span> (<span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">Bool</span>), destination <span class="variable-name">::</span> <span class="type">State</span> }
+
+</pre>
+
+For reference:
+
+   <pre>
+<span class="keyword">type</span> <span class="type">Dfa</span> <span class="variable-name">=</span> [<span class="type">State</span>]
+<span class="keyword">data</span> <span class="type">State</span> <span class="variable-name">=</span>  <span class="type">State</span> { identifier <span class="variable-name">::</span> <span class="type">Int</span> , edges <span class="variable-name">::</span> [<span class="type">Edge</span>] }
+           <span class="variable-name">|</span> <span class="type">FinalState</span> { identifier <span class="variable-name">::</span> <span class="type">Int</span>, edges <span class="variable-name">::</span> [<span class="type">Edge</span>] }
+<span class="keyword">data</span> <span class="type">Edge</span> <span class="variable-name">=</span> <span class="type">Edge</span> { action <span class="variable-name">::</span> (<span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">Bool</span>), edge_identifier <span class="variable-name">::</span> <span class="type">Int</span> }</pre> 
+
+
+Not only is the new definition much cleaner, but its also more intuitive. An edge simply hands off the _actual_ state its pointing at. No need to go find it. As a result the code necessary to operate the state machine is also significantly simplified:
+
+ <pre>
+
+<span class="function-name">match</span> <span class="variable-name">::</span> <span class="type">State</span> <span class="variable-name">-&gt;</span> <span class="type">String</span> <span class="variable-name">-&gt;</span> <span class="type">Bool</span>
+<span class="function-name">match</span> <span class="type">FinalState</span> <span class="keyword">_</span> <span class="variable-name">=</span> <span class="type">True</span>
+<span class="function-name">match</span> (<span class="type">State</span> <span class="keyword">_</span>) <span class="type">[]</span> <span class="variable-name">=</span> <span class="type">False</span> 
+<span class="function-name">match</span> current_state (x<span class="type">:</span>xs) <span class="variable-name">=</span> match next_state xs
+    <span class="keyword">where</span> next_state <span class="variable-name">=</span> traverse (edges current_state) x
+
+<span class="function-name">traverse</span> <span class="variable-name">::</span> [<span class="type">Edge</span>] <span class="variable-name">-&gt;</span> <span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">State</span> 
+<span class="function-name">traverse</span> (e<span class="type">:</span>es) input <span class="variable-name">|</span> (condition e) input <span class="variable-name">=</span> destination e 
+                      <span class="variable-name">|</span> otherwise <span class="variable-name">=</span> traverse es input
+</pre>
+
+Notice the type signature of traverse is very intuitive:
+
+ <pre>
+<span class="function-name">traverse</span> <span class="variable-name">::</span> [<span class="type">Edge</span>] <span class="variable-name">-&gt;</span> <span class="type">Char</span> <span class="variable-name">-&gt;</span> <span class="type">State</span> </pre>
+
+Given a list of edges and an input it will give you the resulting state. Not the id, which would then be used to search for its corresponding state. Finally, the actual graph:
+
+  <pre>
+<span class="function-name">state1</span> <span class="variable-name">=</span> <span class="type">State</span> [ <span class="type">Edge</span> is_a state2, <span class="type">Edge</span> is_b state1] 
+<span class="function-name">state2</span> <span class="variable-name">=</span> <span class="type">State</span> [ <span class="type">Edge</span> is_a state3, <span class="type">Edge</span> is_b state1]
+<span class="function-name">state3</span> <span class="variable-name">=</span> <span class="type">State</span> [ <span class="type">Edge</span> is_a state3, <span class="type">Edge</span> is_b state4]
+<span class="function-name">state4</span> <span class="variable-name">=</span> <span class="type">FinalState</span> 
+
+<span class="function-name">is_a</span> <span class="variable-name">=</span> (<span class="variable-name">==</span> <span class="string">'a'</span>) 
+
+<span class="function-name">is_b</span> <span class="variable-name">=</span> (<span class="variable-name">==</span> <span class="string">'b'</span>)</pre>
+
+<h2>Simplified</h2>
+
+By leveraging the recursive reference to another state in the destination field of the Edge type the code shrinks by 3 functions and an enormous amount of complexity. In addition the ability to exhaust the input string or return early on a match with the FinalState constructor allows for a much more readable definition of the match function and the graph itself (no more self referencing weirdness). 
+
+I had a lot of fun thinking this through and I would be excited to see some further refinements in the comments from those who know haskell!
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/writing/2009/10/28/ruby-cons" title="Ruby Cons">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/writing/2010/01/10/bebop-resource-routing-for-sinatramonk" title="bebop: resource routing for Sinatra/Monk">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>08 November 2009</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; John Bender 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+  </body>
+</html>
+

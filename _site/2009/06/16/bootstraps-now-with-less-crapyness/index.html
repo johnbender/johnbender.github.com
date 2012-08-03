@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BootStraps: now with less crapyness</title>
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com/writing">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/pages.html">Pages</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>BootStraps: now with less crapyness <small>Supporting tagline</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    I've been getting rid of my TODO's in my mini bootstrapping library whilst focusing on my Sinatra app and the config file looks a lot less crappy now. It even looks a tiny bit awesome. Its doesn't do everything (still need to put my app/* directories in here) but it serves my purposes and remains flexible:
+
+    <pre>
+<span class="type">BootStraps</span>::<span class="type">Initializer</span>.configure <span class="keyword">do</span> |config|
+
+  <span class="comment-delimiter">#</span><span class="comment">Use the vendor directory
+</span>  config.vendored = <span class="variable-name">true</span>
+  config.default_env = <span class="string">'production'</span>
+
+  <span class="comment-delimiter">#</span><span class="comment">require each gem
+</span>  config.gem <span class="string">'activerecord'</span>
+  config.gem <span class="string">'sinatra'</span>
+  config.gem <span class="string">'json'</span>
+  config.gem <span class="string">'haml'</span>
+  config.gem <span class="string">'twitter'</span>
+  config.gem <span class="string">'nakajima-rack-flash'</span>
+
+  <span class="comment-delimiter">#</span><span class="comment">action taken when config.db.connect is called
+</span>  config.db.connect_action <span class="keyword">do</span>
+    <span class="type">ActiveRecord</span>::<span class="type">Base</span>.establish_connection( 
+        <span class="constant">:adapter</span> =&gt; <span class="string">'sqlite3'</span>,
+        <span class="constant">:dbfile</span> =&gt;  <span class="type">File</span>.join(config.root, <span class="string">'db'</span>, <span class="string">"</span><span class="variable-name">#{config.env}</span><span class="string">.sqlite3"</span> ))
+
+  <span class="keyword">end</span>
+
+  <span class="comment-delimiter">#</span><span class="comment">Sinatra settings
+</span>  config.framework.set <span class="constant">:environment</span>, config.env
+  config.framework.set <span class="constant">:views</span>, <span class="type">File</span>.join(<span class="string">'app'</span>,<span class="string">'views'</span>)
+  config.framework.set <span class="constant">:server</span>, <span class="string">'mongrel'</span>
+  config.framework.use <span class="type">Rack</span>::<span class="type">Session</span>::<span class="type">Cookie</span>, <span class="constant">:domain</span> =&gt; <span class="string">'localhost'</span>
+  config.framework.use <span class="type">Rack</span>::<span class="type">Flash</span>, <span class="constant">:sweep</span> =&gt; <span class="variable-name">true</span>
+<span class="keyword">end</span>
+</pre>
+
+<br />
+
+No more string literal library names (holy cow that was bad), a nice flexible block for defining the db connection code, and little method missing spice to run whatever methods on whatever framework I'm using.
+
+Using the config has been simplified as well:
+
+  <pre>
+require <span class="string">'config/bootstraps'</span>
+
+<span class="keyword">module</span> <span class="type">MyMod</span>
+  <span class="keyword">class</span> <span class="type">MyApp</span> &lt; <span class="type">Sinatra</span>::<span class="type">Base</span>
+
+    configure <span class="keyword">do</span>
+      <span class="type">Straps</span>.db.connect
+      <span class="type">Straps</span>.framework.apply_settings!(<span class="variable-name">self</span>)
+    <span class="keyword">end</span>
+
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+
+<br />
+
+Thinking about rolling it into a gem just to save myself time down the road. 
+
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/writing/2009/06/09/bootstrapping-a-sinatra-app" title="BootStrapping a Sinatra app">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/writing/2009/06/29/where-to-from-here" title="Where to from here...">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>16 June 2009</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; John Bender 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+  </body>
+</html>
+

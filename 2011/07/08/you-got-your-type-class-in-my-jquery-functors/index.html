@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>You got your type class in my jQuery: Functors</title>
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com/writing">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/pages.html">Pages</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>You got your type class in my jQuery: Functors <small>Supporting tagline</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    I have previously described practical applications of common functional programming concepts in earlier posts: <a href="http://johnbender.us/2010/07/22/middleware-composition-and-monads/" title="Middleware, Composition, and Monads">Rack's Middleware</a> and <a href=" http://johnbender.us/2010/10/18/haskell-and-vagrants-middleware/" title="Haskell and Vagrant's Middleware">Vagrant's Middleware</a>. Next in this series I'll cover how jQuery's design leverages abstractions similar to Haskell's better-known type classes: Functor, Applicative, and Monad. It draws heavily from Brent Yorgey's Typeclassopedia from [<a href="http://www.haskell.org/wikiupload/8/85/TMR-Issue13.pdf" title="The Monad Reader 13">PDF</a>] The Monad Reader 13 (which was essential for my own understanding), and supplements it with examples from Javascript and jQuery.
+
+The only pre-requisite is a functioning knowledge of Javascript, <a href="http://api.jquery.com/jQuery.map/" title="jQuery.map()">jQuery.map</a> and in later posts <a href="http://docs.jquery.com/Plugins/Authoring" title="jQuery.fn">jQuery.fn</a>.
+
+To start: Functors.
+
+<h2>Functors</h2>
+
+Haskell's Functor typeclass can be thought of as a way to define context. More specifically, it defines a type to behave as a context or wrapper for data into which operations can be "lifted" to work with the unwrapped/uncontextualized data.
+
+Lets take a close look at the definition, and don't worry, the salient parts will be explained:
+
+    <pre>
+<span class="keyword">class</span> <span class="type">Functor</span> f <span class="keyword">where</span>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (a <span class="variable-name">-&gt;</span> b) <span class="variable-name">-&gt;</span> f a <span class="variable-name">-&gt;</span> f b
+</pre>
+
+We can safely ignore the first line for the purposes of our discussion.
+
+    <pre>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (a <span class="variable-name">-&gt;</span> b) <span class="variable-name">-&gt;</span> f a <span class="variable-name">-&gt;</span> f b
+</pre>
+
+<span class="variable-name">fmap</span> is a function, but this is not the implementation, only a blueprint for what it should do. This code tells the developer that any actual implementation of <span class="variable-name">fmap</span> requires two arguments and must return a single value.
+
+The first argument <span class="variable-name">(a -> b)</span> is a function that accepts an <span class="variable-name">a</span> (something of type <span class="variable-name">a</span>), and returns a <span class="variable-name">b</span> (something of type <span class="variable-name">b</span>). <span class="variable-name">a</span> and <span class="variable-name">b</span> could be any types at all (Int, String, Boolean, etc). The fact that each is represented by a different letter means that they could be the same type or a different type.
+
+The second argument, <span class="variable-name">f</span> <span class="variable-name">a</span>, is special and forms the basis for our discussion about Functors in jQuery. Remember that <span class="variable-name">a</span> could be any type that we want. That's simple enough, but what is the <span class="variable-name">f</span> that precedes the <span class="variable-name">a</span> in this case? The fact that it's written as <span class="variable-name">f</span> can at first be a little confusing, because it looks like it might be a function. It's not. Lets change it for clarity.
+
+    <pre>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (a <span class="variable-name">-&gt;</span> b) <span class="variable-name">-&gt;</span> functor a <span class="variable-name">-&gt;</span> functor b
+</pre>
+
+That at least makes it clear that the <span class="variable-name">f</span> is meant to describe some relationship between <span class="variable-name">a</span> and a <span class="variable-name">functor</span>. Lets take it a bit further:
+
+    <pre>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (a <span class="variable-name">-&gt;</span> b) <span class="variable-name">-&gt;</span> functor(a) <span class="variable-name">-&gt;</span> functor(b)
+</pre>
+
+This seems to get at the central purpose of the <span class="variable-name">functor</span>: to wrap other data. 
+
+Finally, the <span class="variable-name">functor(b)</span> on the far right is the return value of <span class="variable-name">fmap</span>, which is also data of type <span class="variable-name">b</span> wrapped up in a functor.
+
+Taken all together you can see that the first argument, a function that takes one argument of type <span class="variable-name">a</span> and returns something of type <span class="variable-name">b</span>, will most likely be operating on the <span class="variable-name">a</span> that's inside the second argument <span class="variable-name">functor(a)</span>. Getting that <span class="variable-name">a</span> out of the <span class="variable-name">functor(a)</span> and handing it off to the function <span class="variable-name">(a -> b)</span> is what <span class="variable-name">fmap</span> does.
+
+Here's what the equivalent might look like if we built our own <span class="variable-name">Functor</span>, a function to interact with the values inside it, and invoked <span class="variable-name">fmap</span> with both.
+
+    <pre>
+<span class="comment">// a function that works with a and returns b
+</span><span class="keyword">var</span> <span class="function-name">fromAtoB</span> = <span class="keyword">function</span>(<span class="js2-function-param">a</span>){
+  <span class="keyword">var</span> <span class="variable-name">b</span> = a.alter();
+  <span class="keyword">return</span> b;
+};
+
+<span class="comment">// fmap uses fromAtoB to alter the value of a in the functor instance
+</span><span class="keyword">var</span> <span class="variable-name">functorWrappingB</span> = fmap(fromAtoB, <span class="keyword">new</span> Functor(a));
+
+<span class="comment">// we can see that functorWrappingB is a Functor
+</span>console.log(functorWrappingB <span class="keyword">instanceof</span> Functor); <span class="comment">//true</span></pre>
+
+The sample <span class="variable-name">fromAtoB</span> function takes an <span class="variable-name">a</span>, performs some operation on it, and returns the resulting <span class="variable-name">b</span>, which again could be the same type or different. Again, this is only an example, <span class="variable-name">fromAtoB</span> and consequently any function we use in it's place could do whatever it wants with the <span class="variable-name">a</span> it receives so long as it returns the altered value. With <span class="variable-name">fmap</span>'s first argument, the function <span class="variable-name">fromAtoB</span>, in place all that's left is to provide a <span class="variable-name">Functor</span> object from which the <span class="variable-name">a</span> will be extracted and handed off to <span class="variable-name">fromAtoB</span>. Inside <span class="variable-name">fmap</span>, the return value of <span class="variable-name">fromAtoB</span> will be put back inside a new <span class="variable-name">Functor</span> object and returned.
+
+Finally, lets looks at what an <span class="variable-name">fmap</span> definition might look like in Javascript so that the way it operates on the <span class="variable-name">Functor</span> will be entirely clear.
+
+    <pre>
+<span class="keyword">var</span> <span class="function-name">fmap</span> = <span class="keyword">function</span>(<span class="js2-function-param">fromAToB</span>, <span class="js2-function-param">functorWithA</span>){
+  <span class="keyword">var</span> <span class="variable-name">a</span>, <span class="variable-name">b</span>;
+
+  <span class="comment">// get the value inside the functor object
+</span>  a = functorWithA.getInternalValue();
+
+  <span class="comment">// send that value into our function
+</span>  b = fromAToB(a);
+
+  <span class="comment">// put the value back into a functor object and return
+</span>  <span class="keyword">return</span> <span class="keyword">new</span> Functor(b);
+};</pre>
+
+As we've explained, it pulls the <span class="variable-name">a</span> out of the <span class="variable-name">functorWithA</span>, gives that to <span class="variable-name">fromAtoB</span> and then puts the result <span class="variable-name">b</span> back into a new <span class="variable-name">Functor</span>. The shape or context is always going to be a <span class="variable-name">Functor</span> regardless of whats inside.
+
+<h2>jQuery</h2>
+
+Interestingly, one of the jQuery's most important functions , <span class="variable-name">jQuery</span> / <span class="variable-name">$</span> itself, is based on a pattern similar to a Functor. Remember that instead of altering native HTMLElement objects to add methods and helpers (like Prototype does), jQuery wraps them and provides access to those objects in a safe, browser agnostic fashion.
+
+    <pre>
+$( <span class="string">"div"</span> )</pre>
+
+That's just a bunch of HTMLDivElements wrapped up in the jQuery object. So what if you want to work with the underlying HTMLDivElements? As a developer familiar with jQuery you might do something like:
+
+    <pre>
+$( <span class="string">"div"</span> ).map( <span class="keyword">function</span>( <span class="js2-function-param">i</span>, <span class="js2-function-param">elem</span> ){
+  <span class="comment">// do something with the HTMLElement
+</span>  <span class="keyword">return</span> elem;
+});</pre>
+
+In short we've taken a function and "lifted" it into the jQuery object context to get at the underlying HTMLDivElements. After performing the alteration we can return the element back to <span class="variable-name">map</span> and it will handle putting the element into its jQuery object wrapper, just like <span class="variable-name">fmap</span>. 
+
+If thats not quite clear enough, you can achieve the same result with the following:
+
+    <pre>
+$.map($(<span class="string">"div"</span>), <span class="keyword">function</span>( <span class="js2-function-param">elem</span> ) {
+  <span class="comment">// do something with the element
+</span>  <span class="keyword">return</span> elem;
+});</pre>
+
+Really the only difference between <span class="variable-name">$.map</span> and <span class="variable-name">fmap</span> is that jQuery "Functor" is the first argument to <span class="variable-name">$.map</span> and the function that will operate on the values inside it is the second argument. The argument order is just swapped.
+
+<h2>Sample Usage</h2>
+
+One of the primary uses for a Functor context/wrapper is control. While jQuery provides direct access to the underlying data (array index notation) in addition to the <span class="variable-name">$.fn.map</span> function, this pattern is easy to leverage when you want to control or manipulate access to data.
+
+For example, if you wanted to prevent manipulation of an element while visible, e.g. a modal dialog, you might define a <span class="variable-name">HiddenFunctor</span>. <span class="variable-name">fmap</span> in this case would only execute the function on the dialog element when <span class="variable-name">a.is(":visible")</span> is false. 
+
+    <pre>
+<span class="keyword">var</span> <span class="function-name">HiddenFunctor</span> = <span class="keyword">function</span>(<span class="js2-function-param">a</span>){
+  <span class="keyword">var</span> <span class="variable-name"><span class="js2-warning">a</span></span> = a, <span class="variable-name">self</span> = <span class="builtin">this</span>;
+
+  self.<span class="function-name">fmap</span> = <span class="keyword">function</span>(<span class="js2-function-param">fromAtoB</span>){
+    <span class="keyword">var</span> <span class="variable-name">b</span>;
+
+    <span class="comment">// if a is visible skip the action
+</span>    b = a.is(<span class="string">":visible"</span>) ? a : fromAtoB(a);
+
+    <span class="comment">// re-wrap
+</span>    <span class="keyword">return</span> <span class="keyword">new</span> self.constructor(b);
+  };
+
+  self.<span class="function-name">hide</span> = <span class="keyword">function</span>(){
+    a.hide();
+    <span class="keyword">return</span> self;
+  };
+};
+</pre>
+
+
+The constructor prevents access to the wrapped element <span class="variable-name">a</span> outside the instance of the <span class="variable-name">HiddenFunctor</span> by using a constructor local variable and <span class="variable-name">fmap</span> as a closure. When <span class="variable-name">fmap</span> is invoked it checks if the element is visible and if it is, it <i>does not</i> invoke the passed/lifted function. You'll also see that <span class="variable-name">hide</span> has been included because a function mapped into the functor to hide the element would not execute in the case where it had already been shown.
+
+    <pre>
+<span class="keyword">var</span> <span class="variable-name">functor</span> = <span class="keyword">new</span> HiddenFunctor( $(<span class="string">"#dialog"</span>) ),
+
+    <span class="function-name">show</span> = <span class="keyword">function</span>( <span class="js2-function-param">$dialog</span> ){
+      <span class="keyword">return</span> $dialog.show();
+    }, 
+
+    <span class="function-name">destroy</span> = <span class="keyword">function</span>( <span class="js2-function-param">$dialog</span> ){
+      <span class="keyword">return</span> $dialog.remove();
+    };
+
+<span class="comment">// visible dialog cannot be destroyed
+</span>functor
+  .fmap(show)
+  .fmap(destroy)
+  .hide()
+  .fmap(destroy);
+</pre>
+
+Here a new <span class="variable-name">HiddenFunctor</span> object is created with a reference to the <span class="variable-name">#dialog</span>. The first <span class="variable-name">fmap</span> with <span class="variable-name">destroy</span> doesn't alter the dialog because it's in the visible state, but after hiding it the second <span class="variable-name">destroy</span> removes the element from the page.
+
+By using the Functor pattern to control alteration of the wrapped data based on visibility, we've abstracted away from the actions taking place on the underlying object and what the object might actually be while focusing on the task of making sure the user isn't presented with broken content.
+
+<h2>Haskell</h2>
+
+With any luck the concept of getting your functions into the jQuery object or <span class="variable-name">HiddenFunctor</span> contexts, should look strikingly similar to the more general <span class="variable-name">Functor</span> from Haskell. In jQuery's case, the jQuery object is our context, our <span class="variable-name">Functor</span> like object, and the <span class="variable-name">map</span> function is the <span class="variable-name">fmap</span> we use to get into that context to alter the values inside ( <span class="variable-name">HTMLElement</span>s). 
+
+We can now go back and substitute some fictional types in the <span class="variable-name">fmap</span> type signature to show what fmap would look like if we were building jQuery in Haskell. Assuming the substitution of <span class="variable-name">$</span> for <span class="variable-name">jQuery</span> we can even plug this back into our <span class="variable-name">fmap</span> type signature:
+
+    <pre>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (<span class="type">HTMLElement</span> <span class="variable-name">-&gt;</span> <span class="type">HTMLElement</span>) <span class="variable-name">-&gt;</span> <span class="variable-name">$</span>(<span class="type">HTMLElement</span>) <span class="variable-name">-&gt;</span> <span class="variable-name">$</span>(<span class="type">HTMLElement</span>)</pre>
+
+Again, that's not a valid type signature, but the important part is that you see, <span class="variable-name">jQuery</span> or <span class="variable-name">$</span> is wrapping something, in this case an HTMLElement, and <span class="variable-name">fmap</span> lets you operate on the thing being wrapped in an <i>identical</i> fashion to <span class="variable-name">$.map</span>.
+
+And the valid version: 
+
+    <pre>
+<span class="keyword">class</span> <span class="type">JQFunctor</span> <span class="type">JQuery</span> <span class="keyword">where</span>
+<span class="function-name">fmap</span> <span class="variable-name">::</span> (<span class="type">HTMLElement</span> <span class="variable-name">-&gt;</span> <span class="type">HTMLElement</span>) <span class="variable-name">-&gt;</span> <span class="type">JQuery</span> <span class="type">HTMLElement</span> <span class="variable-name">-&gt;</span> <span class="type">JQuery</span> <span class="type">HTMLElement</span></pre>
+
+<h2>Further Reading</h2>
+
+[update] Its important to note, as some folks have already, that the Functor laws form an important part of their structure preserving properties. For a bit more information on them and why they're important you can view the Learn You a Haskell section on the topic, or for more detail you can check out the <a href="http://en.wikibooks.org/wiki/Haskell/Category_theory#Functors_on_Hask" title="Functors on Hask">wikibook entry</a> on Functors and Hask objects. 
+
+In the next post I'll show how extending jQuery's <span class="variable-name">$.fn</span> object results in a behavior similar to the <span class="variable-name">pure</span> function described in McBride and Paterson's Applicative Programming with Effects. From that we'll derive a simple abstraction to make creating chainable jQuery plugins faster and easier to reason about. 
+
+If this post has piqued your interest in Haskell, or you want to learn about how lists in Haskell behave like Functors (interesting given that the result of <span class="variable-name">$()</span> behaves like a list as well) please take the time to look through some of these links.
+
+<ol>
+  <li><a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses#the-functor-typeclass" title="Learn You a Haskell: Functors">Learn You a Haskell: Functors</a></li>
+  <li>[<a href="www.haskell.org/wikiupload/8/85/TMR-Issue13.pdf" title="Typeclassopedia">PDF</a>] Monad Reader 13: Typeclassopedia</li>
+  <li><a href="http://en.wikibooks.org/wiki/Haskell/Applicative_Functors" title="Haskell Wiki: Applicative Functors">Haskell Wiki: Applicative Functors</a></li>
+</ol>
+
+Special thanks to both Tim Goh (<a href="http://twitter.com/#!/keyist" title="Twitter: keyist">@keyist</a>) and Mitchell Hashimoto (<a href="http://twitter.com/#!/mitchellh" title="Twitter: mitchellh">@mitchellh</a>) for their feedback on the article.
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/writing/2011/03/05/snap-setup-from-scratch-the-vagrant-way" title="Snap setup from scratch the Vagrant way">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/writing/2011/07/20/you-got-your-type-class-in-my-jquery-applicative-functors" title="You got your type class in my jQuery: Applicative Functors">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>08 July 2011</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#jquery-ref">jquery <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#javascript-ref">javascript <span>8</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#learning-ref">learning <span>1</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#javascript-ref">javascript <span>8</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#jquery-ref">jquery <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#pattern-ref">pattern <span>5</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; John Bender 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+  </body>
+</html>
+

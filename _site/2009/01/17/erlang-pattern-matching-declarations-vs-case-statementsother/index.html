@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Erlang: Pattern Matching Declarations vs Case Statements/Other</title>
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com/writing">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/pages.html">Pages</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Erlang: Pattern Matching Declarations vs Case Statements/Other <small>Supporting tagline</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    [Update] I did some refactoring that I've been meaning to do thanks to ayrnieu in #erlang.
+
+So as I'm hacking my first Erlang project I've come across a few places where I was unsure what would generally be a more readable/understandable/robust solution to a given problem. The one I'm thinking about right now is using pattern matching in my function definitions or, alternatively, case statements. I'm hoping someone from the community might be able to shed some light.
+
+Part of the project I'm working on turns a tuple like:
+
+<script src="http://gist.github.com/48407.js"></script>
+
+into a set comprehension like:
+
+<script src="http://gist.github.com/48409.js"></script>
+
+As you can see my goal is to be able to query Mnesia, or rather to produce a standard way to query any data store. The following function definition and support functions do the work:
+
+<script src="http://gist.github.com/48410.js"></script>
+
+The tuple is "filtered" down the function definitions, and when each tuple (columns, operations, etc) is handled it is translated into a string and thus not matched again until ultimately the final definition concatenates all the pieces together to build/return our query. I REALLY like the way this works in that its short and simple. Also the tuples could in theory be replaced by an appropriate string built outside the function and it would still work, which makes it more flexible. 
+
+It has other issues, such as its fragile ordering requirement. If its not ordered properly it may break, or worse just not form the comprehension properly. Which leads me to wonder if there's a better way to implement this, even if its not _quite_ as concise. 
+
+The following is a quick hack and not tested but another way to handle it might look like:
+
+<script src="http://gist.github.com/48416.js"></script>
+
+Honestly, I can't say which would be better as I haven't tried replacing the version I'm using with a case statement. Is there even a third and better way to handle this situation? Or is this just a case of agonizing over the fork or spoon for eating your pie: doesn't really matter both will work equally well.
+
+Also, I am proposing a new term for pattern matching in function declarations:
+
+<strong>patmatchlarations!</strong>
+
+
+
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev disabled"><a>&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/writing/2009/01/31/unit-testing-finds-mochijson2-funnyness" title="testing = mochijson2 funnyness feature">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>17 January 2009</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#erlang-ref">erlang <span>7</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#pattern-ref">pattern <span>5</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; John Bender 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+  </body>
+</html>
+

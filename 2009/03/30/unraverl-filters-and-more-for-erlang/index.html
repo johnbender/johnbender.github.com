@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Unraverl: filters and more for erlang</title>
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/writing/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com/writing">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/writing/pages.html">Pages</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Unraverl: filters and more for erlang <small>Supporting tagline</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    After checking out a really neat project (still in beta but I think its one of the coolest new webapps out there) that leverages Erlang, I got inspired to get back to my functional education. 
+
+<h2>Code as Data</h2>
+
+One thing that I really love about Ruby is how flexible it is, and in almost all other languages I end up wishing I had this/that facility. So as I was trying to come up with ideas for Erlang projects I thought I would try and hack together some new language features for Erlang in the form of a parse_transform.
+
+I only recently happened upon the awesomeness that is the Erlang parse_transform and what it means for programming in Erlang. It basically allows you to manipulate the parsed, or abstract form, of your code before it heads to the compiler. Lispers know what this looks like: code as data... awesome. 
+
+As an example: 
+
+<script src="http://gist.github.com/88022.js"></script>
+
+Tough to look at and evaluate for functionality, but surprisingly it didn't hinder my efforts to hack together filter functionality in the form of a new attribute -before_exec.
+
+<h2>Unraverl</h2>
+
+In the following module code there are two functions, append and prepend that do exactly that. They are using the list operator ++ so it would be nice to make sure that anything that gets in there is in fact a list. One way to do it would be to call the all_lists function on both arguments before operating on those arguments like so: 
+
+<script src="http://gist.github.com/88031.js"></script>
+
+all_lists converts any object into a list using the to_list function and then puts them together. It works, and in this simple example its really not much of a hassle if we decide to change the name of all_lists to make_lists or some such. If instead we had 50 functions we were exposing as list operation api, and, to make them user friendly we wanted to convert everything to a list (for better or worse), it might then be something of a hassle.
+
+<h2>Filter to the Rescue</h2>
+
+So with a little parse transform magic, we can do the following: 
+
+<script src="http://gist.github.com/88032.js"></script>
+
+Three things to look at. The first is the -compile directive to call the parse_transform function that I hacked together in unraverl.erl. The second is the attribute -before_exec that basically says, before [prepend, append] execute all_lists. Last, prepend and append are much simplified! 
+
+At this point you'll notice that all_lists only takes one argument and both of the filtered functions have 2 arguments. My bit of code stipulates that you're filtering function must have an identical arity to the filtered function, or a single argument treated as a list. Additionally it must return a list of a values who's number is equal to the arity of the filtered function. Though it sounds like a lot its really quite simple, the filtering function must deal with the right number of arguments and get them back in a way that the original function can then proceed! You can even use multiple filters on the same function. 
+
+<h2>Down Side</h2>
+
+The downsides to this are obvious. The biggest problem I see is that when you're looking at the function code itself, it is in no way apparent why sending two atoms to append and prepend will work just fine and send you back a string. Although if you think of it as a language construct you just have to keep it in the back of your mind to look at the top of the source file for the given attribute. 
+
+Also, when filters are used elsewhere (such as in Rails) they generally have an effect on some global state which makes them less useful in a pure functional language. In my experience there are times though when multiple functions all execute the same code/function call upon entering, which can then, with a filter be extracted out to a single place. This might happen when you don't have the option of using some parent function, like when you want to expose many different functions in a module as an api, but some of the code is the same. Without the filter, the farthest you can get it down is to a single function call encapsulating all the duplicate code. Later if you decide to change the name of that internal function it can be a pain. In addition, Erlang does have the ability to affect global state, with things like logging, debugging/stdio, the global registry, and Mnesia. 
+
+<h2>Good Times</h2>
+
+It was quite fun to put together and play around with the parsed form of my own code. I definitely plan to add some more fun bits to this, like after_exec/around_exec though I've questioned the usefulness of those. 
+
+It really amazed me at how little time it took despite the almost unreadable nature of the abstract form. Erlang is continuing to show itself to have some strange innate ability to produce error free code quickly and I look forward to finding new ways to break my code at compile time :P
+
+<h2>Fork Away</h2>
+
+You can fork it <a href="https://github.com/johnbender/unraverl/tree/master">here</a>, but be warned its super aplha (no tests, etc).
+
+I'll leave you with the resulting abstract form of this test module that I've used as an example. See if you can figure out how the filtering is implemented in unraverl (hint: its a lot like the rails which has its downsides):
+
+<script src="http://gist.github.com/88034.js"></script>
+
+
+
+
+ 
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/writing/2009/03/21/rquery-for-rails-is-ready" title="rquery for Rails is ready">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/writing/2009/04/12/haskell-learnings" title="Haskell learnings">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>30 March 2009</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#erlang-ref">erlang <span>7</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#filter-ref">filter <span>1</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#unraverl-ref">unraverl <span>2</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#pattern-ref">pattern <span>5</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; John Bender 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+  </body>
+</html>
+
