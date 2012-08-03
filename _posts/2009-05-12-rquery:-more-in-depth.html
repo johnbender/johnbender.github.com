@@ -1,0 +1,46 @@
+--- 
+layout: post
+title: "RQuery: more in depth"
+tags: 
+- rquery metaprogramming
+- ruby
+- rubyonrails
+status: draft
+type: post
+published: false
+meta: 
+  _edit_last: "1"
+---
+RQuery uses some hackery behind the scenes to get a relatively clean look and feel. In the interest of getting feedback I figured it might be a good idea to go through said trickery and give an idea of where I would like to clean things up.
+
+<h2>Class Variables</h2>
+
+Originally the only way to define an operation was by using methods in the Declarations module that were included in the Symbol class. Each of those methods, when called by a Symbol instance alters the Serializers::Operations class variables by adding operations and values that can later be placed in an array and passed as the :conditions value to ActiveRecord::Base.find. 
+
+..example of symbol code
+where
+:age.is == 2
+..
+
+In this case the following execution occurs:
+
+<ol>
+             <li>:age.is appends the string value of the attribute :age (self.to_s in the case of Symbols) to the @@ops array in the Serializers::Operations class</li>
+	<li>:age.is returns the Serializers::IsOperation object (the from, between, in, contains do the same, is_not returns an IsNotOperation)</li>
+	<li>== is called on the IsOperations class which in turn calls == on the adapter to get the translated operation ("= ?") and then appends that to the last element (the latest attribute added "age") of the @@ops array to get the final operation string ("age = ?")</li>
+</ol>
+
+As you can see from this explanation the adapter setup will only work for sql right now as all the operators will need to be infix operators. In future itterations it would better to require the adapter to handle the arrangement of the attribute and value placeholders into a string (or other construct!). 
+
+Also, its a stack based design that relies on the order in which Ruby executes the statements (even worse for grouping operations as we'll see). If the Symbol syntax is removed instance variables of the serializer classes can be used instead of this global stack of operations and values that need to be handled so carefully. Bottom line: if you've looked at the code you know that its less than perfect in terms of how much of a hack this implementation is.
+
+..
+where |user|
+user.age.is == 2
+..
+
+In a better world where I remove the Symbol syntax instance variables can be used for each operation and can stay focused on the single operation they represent. To my mind this design is easier to reason about since each operation is self contain, there wouldn't be global state, and the class/method that pulls the disparate operations instances together can, again, be a entity of focused purpose ( as opposed to this state-container / adapter-broker frankenstien )
+
+<h2>Or'n'And</h2>
+
+Adding the ability to use the | and & operators on a single line to group operations into more complex logic made this a usable tool in many rails apps. The only addition was that each operation returns the Serializers::Operations class which defines both of those methods and calls the group(:type) to handle the rest. 

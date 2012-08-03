@@ -1,0 +1,44 @@
+--- 
+layout: post
+title: "Erlang: Pattern Matching Declarations vs Case Statements/Other"
+tags: 
+- erlang
+- pattern
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+[Update] I did some refactoring that I've been meaning to do thanks to ayrnieu in #erlang.
+
+So as I'm hacking my first Erlang project I've come across a few places where I was unsure what would generally be a more readable/understandable/robust solution to a given problem. The one I'm thinking about right now is using pattern matching in my function definitions or, alternatively, case statements. I'm hoping someone from the community might be able to shed some light.
+
+Part of the project I'm working on turns a tuple like:
+
+<script src="http://gist.github.com/48407.js"></script>
+
+into a set comprehension like:
+
+<script src="http://gist.github.com/48409.js"></script>
+
+As you can see my goal is to be able to query Mnesia, or rather to produce a standard way to query any data store. The following function definition and support functions do the work:
+
+<script src="http://gist.github.com/48410.js"></script>
+
+The tuple is "filtered" down the function definitions, and when each tuple (columns, operations, etc) is handled it is translated into a string and thus not matched again until ultimately the final definition concatenates all the pieces together to build/return our query. I REALLY like the way this works in that its short and simple. Also the tuples could in theory be replaced by an appropriate string built outside the function and it would still work, which makes it more flexible. 
+
+It has other issues, such as its fragile ordering requirement. If its not ordered properly it may break, or worse just not form the comprehension properly. Which leads me to wonder if there's a better way to implement this, even if its not _quite_ as concise. 
+
+The following is a quick hack and not tested but another way to handle it might look like:
+
+<script src="http://gist.github.com/48416.js"></script>
+
+Honestly, I can't say which would be better as I haven't tried replacing the version I'm using with a case statement. Is there even a third and better way to handle this situation? Or is this just a case of agonizing over the fork or spoon for eating your pie: doesn't really matter both will work equally well.
+
+Also, I am proposing a new term for pattern matching in function declarations:
+
+<strong>patmatchlarations!</strong>
+
+
+

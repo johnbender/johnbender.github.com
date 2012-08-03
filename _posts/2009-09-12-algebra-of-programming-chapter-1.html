@@ -1,0 +1,88 @@
+--- 
+layout: post
+title: "Algebra of Programming: Chapter 1 Section 2"
+tags: 
+- algebra of programming
+- functional
+- functional programming
+- haskell
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+[update] you'll notice I corrected the title to represent the section I went through. Not clear how I got the idea this was the whole first chapter.
+
+My wife, bless her heart, heard me talking about Algebra of Programming after it was recommended to my by the fine people in #haskell and she went out and ordered a print on demand copy. You can do the same for yourself <a href="http://www.amazon.ca/Algebra-Programming-Richard-Bird/dp/013507245X/ref=sr_1_1?ie=UTF8&s=books&qid=1252798706&sr=8-1">here</a> (Note: the price at amazon.ca is much better than amazon.com).
+
+Since my new job is working with Ruby, my free time can be devoted to other languages/projects and I've fallen under the spell of Haskell. As an example, <a href="http://github.com/johnbender/unraverl/tree/master">Unraverl</a>'s partial application parse transform for Erlang grew out of my time spent learning about Haskell, and how useful partial application can be. And as a natural sort of progression I've gotten interested in how mathematics can play a larger roll in my programming.
+
+<h2>Starting Out</h2>
+
+I was initially a bit worried that I would be out of my depth with this book but I was also determined to do whatever was necessary to fill in the gaps of understanding. Luckily the first bit hasn't been too difficult, as most of my questions have been around terminology which were quickly answered thanks, once again, to #haskell. As an aside, if you're on the fence about which functional language to learn spend a couple minutes in haskell's irc channel. Huge thanks to heatsink, c_wraith, and others.
+
+<h2>Recursive Data Types </h2>
+
+The second section of the first chapter is where things started to get exciting and dense. The first example of recursive data types they provide, that make the basis for the rest of the chapter, is natural numbers (all integers >= 0). In haskell it would look something like 
+
+<pre>
+<span class="keyword">data</span> <span class="type">Nat</span> <span class="variable-name">=</span> <span class="type">Zero</span> <span class="variable-name">|</span> <span class="type">Successor</span> <span class="type">Nat</span></pre>
+<br />
+
+To further explain how this can represent any natural number consider the following possible definitions of a function that represents the value 3 
+
+     <pre>
+<span class="comment-delimiter">-- </span><span class="comment">What we would normally do
+</span><span class="function-name">three</span> <span class="variable-name">=</span> 3
+
+<span class="comment-delimiter">-- </span><span class="comment">Another "unrolled" recursive definition using the + function
+</span><span class="function-name">three</span> <span class="variable-name">=</span> (1 <span class="variable-name">+</span> (1 <span class="variable-name">+</span> (1 <span class="variable-name">+</span> 0)))
+
+<span class="comment-delimiter">-- </span><span class="comment">Using our data type
+</span><span class="function-name">three</span> <span class="variable-name">=</span> (<span class="type">Successor</span> (<span class="type">Successor</span> (<span class="type">Successor</span> <span class="type">Zero</span>)))
+
+</pre>
+<br />
+
+When I attempted an explanation of this to my wife her question was a frustrating "Why?". Of course, "because its cool" didn't persuade her. First, it's a definition for a set of numbers which involves no actual numbers, only the structure of our new data type. We've <em>structurally</em> defined natural numbers. Second, because we have a recursive representation we can define recursive functions for this data type, and more generic functions for other types that are similarly recursive.
+
+The rest of the chapter is devoted to presenting the foldn function that provides a very generic way to perform operations over recursive data types like Nat.
+
+    <pre>
+<span class="comment-delimiter">-- </span><span class="comment">In terms of numbers as you would use them normally
+</span><span class="function-name">foldn</span> c h 0 <span class="variable-name">=</span> c
+<span class="function-name">foldn</span> c h (n <span class="variable-name">+</span> 1) <span class="variable-name">=</span> h (foldn c h n)
+
+<span class="comment-delimiter">-- </span><span class="comment">In terms of our Nat data type
+</span><span class="function-name">foldn</span> c h <span class="type">Zero</span> <span class="variable-name">=</span> c
+<span class="function-name">foldn</span> c h ( <span class="type">Successor</span> n ) <span class="variable-name">=</span>  h (foldn c h n)</pre>
+<br />
+
+It should be noted here, as it confused me initially, that by providing (n + 1) or (Successor n) in the head of the function, n represents a value of one less than that which is passed in. So in the case that foldn was called with some c, some h and 6, n has the value 5 (since (5 + 1) is 6).
+
+The fun part about this is that is provides a method by which you can define functions for addition, subtraction and exponentiation (and others) in terms of foldn. From the book: 
+
+<pre>
+<span class="comment-delimiter">-- </span><span class="comment">Addition
+</span><span class="function-name">plus</span> m n <span class="variable-name">=</span> foldn m <span class="type">Successor</span> n
+
+<span class="comment-delimiter">-- </span><span class="comment">Subtraction
+</span><span class="function-name">mult</span> m n <span class="variable-name">=</span> foldn 0 (plus m) n
+
+<span class="comment-delimiter">-- </span><span class="comment">Exponentiation
+</span><span class="function-name">expn</span> m n <span class="variable-name">=</span> foldn 1 (mult m) n
+
+<span class="comment-delimiter">-- </span><span class="comment">The more point free ("point-less"?) version, would be without the n's. </span>
+</pre>
+<br />
+
+If you're a ruby developer you'll recall the Comparable mixin. Each of the methods in Comparable is defined in terms of the method <span class="function-name">< =></span>, and once you've done that you get skads of additional functionality for free. Similarly here we've defined one function, significantly more generic than <span class="function-name">< =></span>, that can be used as the basis for many other functions.
+
+<h2>Exercises</h2>
+
+I've actually completed all the exercises save for the 1.4 and 1.6. For the first, I simply couldn't provide h which requires knowing how to add n times in such a way that it results in the square of a number. As for the second, I haven't taken the time. You can actually download the answers <a href="http://web2.comlab.ox.ac.uk/oucl/publications/books/algebra/">here</a>, which has been wonderful for checking my answers and allowing me to enjoy the satisfaction of my failures and triumphs.
+
+<h2>Elementary</h2>
+
+Obviously this is only the first chapter and relatively simple (though not for me), but being able to go through it and grasp the concepts explained was extremely gratifying. Even more, seeing how those concepts apply to every day development gave me confidence that I can really get something out of this to apply to my personal projects. I hope to post here on each of the chapters so that I'm forced to verify my understanding of the material. Any corrections are greatly welcomed in the comments!

@@ -1,0 +1,188 @@
+--- 
+layout: post
+title: A Natural Transformation in JavaScript
+tags: 
+- functional programming
+- javascript
+- jquery
+- maths
+- programming
+- uncategorized
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+Natural transformations are a foundational construct in category theory, so it seems fitting to follow up my <a href="/2012/02/29/faster-javascript-through-category-theory/">last post</a> by describing one using the categories <strong>Html</strong> and <strong>Jqry</strong>. As a result this post assumes the reader has covered the material from the last post. Also, as much as I wish that I could claim a similarly exciting result this will remain mostly an exercise in clarifying what natural transformations are and how they behave. If it's any consolation I've borrowed some very attractive TeX diagrams from Wikipedia to help illustrate.
+
+<h1>Natural Transformations</h1>
+
+Natural transformations are actually fairly simple once you have an example you can comprehend. One way to describe them is - a set of morphisms<sup>1</sup> that reconcile the way two functors from the same source to the same target categories alter morphisms of the source category<sup>2</sup>. Unfortunately the written descriptions seems to fall short in aiding comprehension, but as promised there are pretty pictures:
+
+<div style="text-align: center;">
+<img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+</div>
+
+This equation is simple and captures the expected behavior of the natural transformation <code>N</code> (used in place of <code>η</code> hereafter). Namely, it must "prepare" input objects for a morphism transformed with <code>G</code>, ie <code>G(f)</code>, such that the result will be identical to that of "repairing" the output objects from a morphism transformed with <code>F</code>, ie <code>F(f)</code>. Again, this assumes that both <code>F</code> and <code>G</code> share that same source and target categories. Also it helps to remember that the input and output objects of <code>F(f)</code> and <code>G(f)</code> are in the target category, so if <code>F</code> and <code>G</code> are both from categories <strong>Html</strong> to <strong>jQuery</strong> we're just dealing with objects in <strong>Jqry</strong>. If the notation is confusing recall that <code>○</code> is the operator form of <code>$.compose</code> and that <code>F(f)</code> is that same as <code>$.Functor(f)</code> from the previous post, both of which result in JavaScript functions/morphisms. While this equation gives us an understanding of how the transformation should function, it doesn't help with comprehending the transformations directionality and purpose.
+
+<div style="text-align: center">
+<img src="http://johnbender.us/wp-content/uploads/2012/03/diagram.png" alt="diagram of composition"/>
+</div>
+
+Diagrams are used to clarify composition of morphisms, a (the?) key operation in category theory. This diagram represents the same concept as the equation but it makes the goal more obvious: from <code>F(X)</code> whether you take the road to the east - <code>Ny ○ F(f)</code> or the road to the south - <code>G(f) ○ Nx</code> - the result has to be the same. Again, the purpose of the natural tranformation is get the results to look like <code>G(f)</code> results whether the operation started with <code>F(f)</code> or ended with <code>G(f)</code>.
+
+If, at this point, it's still unclear don't worry the JavaScript examples should help.
+
+<h2>Two Functors</h2>
+
+Since natural transformations are defined for two functors we'll borrow the <code>$.Functor</code> from the last post and then try to find another. As a quick refresher the <code>$.Functor</code> functor maps from <strong>Html</strong> to <strong>Jqry</strong> using the <code>$.fn.map</code> method. We'll rename it <code>F</code> so that it's easier to reconcile with the diagram/equation.
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">F</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="builtin">this</span>.map( a );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+The new functor obviously has to be different, so let's tweek the way that it operates on the functions from <strong>Html</strong>. In this case the function it returns only applys the <code>html.morphism</code> to the first member of the jQuery object's set. Note that it retains the same operation on objects in <strong>Html</strong>, the application of <code>$()</code>.
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">G</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      a( <span class="builtin">this</span>[0] );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+An alternate implementation that forwards the arguments down to the <code>html.morphism</code> is a bit more complex but much more useful<sup>3</sup>:
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">G</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="keyword">var</span> <span class="variable-name">args</span> = [].slice.call(arguments);
+
+      args.unshift( <span class="builtin">this</span>[0] );
+      a.apply( <span class="builtin">this</span>, args );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+At first this may seem like defining an alternate functor for the sake of it, but there are already methods in jQuery Core that behave in this fashion. For example a naive implementation of the <code>$.fn.css</code> method using the argument-forwarding form of our new functor<sup>4</sup>:
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.newCss = G(<span class="keyword">function</span>( <span class="js2-function-param">elem</span>, <span class="js2-function-param">key</span>, <span class="js2-function-param">value</span> ){
+  elem.setAttribute( <span class="string">"style"</span>,  key + <span class="string">": "</span> + value );
+  <span class="keyword">return</span> elem;
+});
+
+<span class="keyword">var</span> <span class="variable-name">$foo</span> = $( <span class="string">".foo"</span> );           <span class="comment">// [&lt;div class="foo"&gt;&lt;/div&gt;, &lt;span class="foo"&gt;&lt;/span&gt;]
+</span>$foo.newCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo"&gt;&lt;/span&gt;]
+</span></pre>
+
+Now we've got two functors that satisfy the basics needed to define a natural transformation. They both have the same source and target categories, <strong>Html</strong> and <strong>Jqry</strong> respectively, but they are distinct in the way that they achieve the goal of translating the functions/morphisms from <strong>Html</strong> into functions/morphisms in <strong>Jqry</strong>. Now we just need to find a way to make results from <code>F</code> look like results from <code>G</code>.
+
+<h2>Finding the Transformation</h2>
+
+Recall from the diagram that the natural transformation must produce the same result whether it's composed "in front of" a <code>$.fn</code> method defined with <code>G</code> or after a <code>$.fn</code> method defined with <code>F</code>. Lets look at an example of two methods built with <code>F</code> and <code>G</code> using the css function in the previous example to see if that points us in the right direction. For completeness' sake we need to modify <code>F</code> so that the function it returns accepts arguments:
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">F</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="keyword">var</span> <span class="variable-name">$this</span> = <span class="builtin">this</span>,
+          <span class="variable-name">args</span> = [].slice.call(arguments);
+
+      <span class="builtin">this</span>.map(<span class="keyword">function</span>( <span class="js2-function-param">elem</span> ) {
+        args.unshift( elem );
+        <span class="keyword">return</span> a.apply( $this, args );
+      });
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+Having squared that let's look at an example definition of two <code>$.fn</code> methods using the Functors.
+
+<pre>
+<span class="keyword">var</span> <span class="function-name">alterCss</span> = <span class="keyword">function</span>( <span class="js2-function-param">elem</span>, <span class="js2-function-param">key</span>, <span class="js2-function-param">value</span> ){
+  elem.setAttribute( <span class="string">"style"</span>,  key + <span class="string">": "</span> + value );
+  <span class="keyword">return</span> elem;
+};
+
+<span class="js2-external-variable">$</span>.fn.mapCss = F(alterCss);
+<span class="js2-external-variable">$</span>.fn.oneCss = G(alterCss);
+
+<span class="keyword">var</span> <span class="variable-name"><span class="js2-warning">$foo</span></span> = $( <span class="string">".foo"</span> );           <span class="comment">// [&lt;div class="foo"&gt;&lt;/div&gt;, &lt;span class="foo"&gt;&lt;/span&gt;]
+</span>$foo.mapCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo" style="display: none"&gt;&lt;/span&gt;]
+</span>
+<span class="keyword">var</span> <span class="variable-name">$bar</span> = $( <span class="string">".bar"</span> );           <span class="comment">// [&lt;div class="bar"&gt;&lt;/div&gt;, &lt;span class="bar"&gt;&lt;/span&gt;]
+</span>$bar.oneCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo"&gt;&lt;/span&gt;]
+</span></pre>
+
+Here <code>$.fn.mapCss</code> is equivelant to <code>F(f)</code> and <code>$.fn.oneCss</code> is equivelant to <code>G(f)</code> in the equation and diagram. As you would expect the method created using <code>G</code> only alters the first element in the jQuery object set where as the method created with <code>F</code> alters all the elements. So our hypothetical natural transformation could simply reduce the jQuery object set to the first element in which case both results would be the same. The <code>$.fn.first</code> method should serve. Borrowing the <code>$.compose</code> function, again from the previous post, we can verify that it matches the equation.
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.FtoNy = $.compose( $.fn.first, F(alterCss) );
+<span class="js2-external-variable">$</span>.fn.NxToG = $.compose( G(alterCss), $.fn.first );
+
+$( <span class="string">".foo"</span> ).FtoNy( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;]
+</span>$( <span class="string">".bar"</span> ).NxToG( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;]
+</span></pre>
+
+If you replace the application of <code>$.compose</code> with the infix operator <code>○</code> it looks just like the equation:
+
+<div style="text-align: center">
+  <img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+</div>
+
+With the order reversed we can use the more idiomatic fluent invocation:
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.mapCss = F(alterCss);
+<span class="js2-external-variable">$</span>.fn.oneCss = G(alterCss);
+
+$( <span class="string">".foo"</span> ).mapCss( <span class="string">"display"</span>, <span class="string">"none"</span> ).first(); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;]
+</span>$( <span class="string">".bar"</span> ).first().oneCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;]
+</span></pre>
+
+Let's alter the diagram to use the new method names:
+
+<div style="text-align: center">
+  <img src="http://johnbender.us/wp-content/uploads/2012/03/svg-methods.png" alt="altered diagram" title="svg-methods" width="200" height="162" class="aligncenter size-full wp-image-1695" />
+</div>
+
+As you can see the southerly route first limits the jQuery object set and then applys the method that only operates on the first object, whereas the easterly route first applys the method that opperates on all the functions in the jQuery object set and then limits the set to one result. Most of the time you'll want to head South to save yourself some execution time.
+
+<h2>Naturally</h2>
+
+The result of our work is a trivial optimization that most users should be able spot, ie. they might be creating a method chain that invokes <code>$.fn.first</code> too late. In any case, the fact that we can arrive at this conclusion by viewing the JavaScript through the lense of mathematics continues to astound me and it makes me wonder what interesting things I might find by examining Monoids and Cartesion Closed categories.
+
+<ol>
+<li>Thanks to Dan Peebles, otherwise known as <a href="http://twitter.com/copumpkin">copumpkin</a>, for reviewing the introduction to natural transformations and suggesting this addition.</li>
+<li>This is far from rigorous. For a more concrete definition checkout the <a href="http://en.wikipedia.org/wiki/Natural_transformation">wikipedia page</a> and <a href="http://www.haskell.org/haskellwiki/Category_theory/Natural_transformation">haskell wiki page</a> pages. My attempt to rephrase the definition comes from my experiences learning abstract concepts like this where I've often been aided by many different renderings of the same idea.</li>
+<li>It's important to keep in mind that, as a result of forwarding the arguments, we've technically changed the type signature of the <strong>Html</strong> morphism from <code>HTMLElement -&gt; HTMLElement</code> to <code>HTMLElement, String, String -&gt; HTMLElement</code>. For the purposes of our discussion I thought it was usefull to pull an existing example from jQuery to illustrate how the second functor works. Also if the jQuery object is empty this will `unshift` undefined as the first argument. Again, clarity proved to be more important.</li>
+<li>This implementation omits even simple style persistence for the sake of focusing the reader on the subject matter.</li>
+</ol>

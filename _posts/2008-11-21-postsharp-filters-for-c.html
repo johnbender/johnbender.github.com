@@ -1,0 +1,31 @@
+--- 
+layout: post
+title: "PostSharp: filters for C#"
+tags: 
+- .Net AspectOriented
+- pattern
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+Aspect oriented programming is a relatively new paradigm but it's existence in the the .NET world was <strong>brand new</strong> to me when one of my clients/bosses <a href="http://kniaz.net/">Kris Kniaz</a> stopped by my desk and told me about it. He pointed me at their <a href="http://www.postsharp.org/">site</a> and at first it was a little vague what the software was trying to accomplish but about 2 minutes into reading it over I realized I was looking at C# filtering!
+
+So what do I mean by c# filtering? In Rails, when you want to run a specific method before, after, around another method you use a <a href="http://api.rubyonrails.org/classes/ActionController/Filters/ClassMethods.html">filter</a>. This makes for some very <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> code when you throw in the ability to white list and black list methods from the filters. 
+
+The obvious and oft-cited example in Rails is authentication:
+
+<script src="http://gist.github.com/27655.js"></script>
+
+For the destroy method in SomeController, before its executed,  authenticate will run, which might makes sense! Note that the :only option can be replaced with :except option to black list or it can be left off all together.
+
+So in the case of PostSharp you would end up with something like this:
+
+<script src="http://gist.github.com/27658.js"></script>
+
+Its not quite as <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> as The Rails Way, but its a pretty awesome tool to have in your kit!
+
+Obviously this has some draw backs, in the same way it does with Rails. If your programmers aren't smart they are going to overlooking a lot of possible code executing when they see those attributes. In general it can just lead to a lot of unintended branch logic, but good documentation/communication among your team, and using this powerful tool in the right scenario could result in some really clean solutions.
+
+I encourage you to take a look at the PostSharp <a href="http://www.postsharp.org/about/video/">demo video</a>, and comment if you've used it before!

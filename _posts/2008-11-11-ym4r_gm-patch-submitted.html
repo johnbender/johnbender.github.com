@@ -1,0 +1,25 @@
+--- 
+layout: post
+title: ym4r_gm patch submitted!
+tags: 
+- rubyonrails
+- ym4r rails google maps
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+As promised I submitted my ym4r google maps rails plugin <a href="http://rubyforge.org/tracker/index.php?func=detail&aid=22766&group_id=1716&atid=6686">patch</a>. That's pretty much the first patch I've ever submitted for anything, so here's hoping they don't come back and lambast me for my ridiculously stupid idea. 
+
+If you look at the diff its around 5 lines but I thought it was a pretty nice little extra. I just added a :function option that lets you specify a function that you can call in javascript client side to actually render the map instead of the the default window.onload or automatic. Here's what using the option looks like 
+
+<script src="http://gist.github.com/24087.js"></script>
+
+and this renders as the following in the page
+
+<script src="http://gist.github.com/24086.js"></script>
+
+Meaning you can just call it whenever you would like. 
+
+I added this in because I was loading 5 - 10 map divs per page and they were display=none, so it didn't make sense to send the call to Google for the map unless the user wanted to view the hidden map. Here's hoping they except the patch!

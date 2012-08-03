@@ -1,0 +1,44 @@
+--- 
+layout: post
+title: "Happenings: RESTful event tracking"
+tags: 
+- jquery
+- rails happenings events jquery google maps
+- rubyonrails
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+So I finally got myself into a project I couldn't get out of and I hacked together an event tracking system I dubbed, happenings. 
+
+As it stands now its a rails project by itself, but I would like to create a gem or plugin so that the models can easily be used by others. Some of the highlights are:
+
+<ul>
+	<li>Google maps (ym4r)</li>
+
+	<li>Google geocode</li>
+	<li>
+Desktop calendar client events (.vcs)</li>
+	<li>
+Events, Addresses, Users, and Roles as seperate Models</li>
+</ul>
+
+That will all stay there if I ever get around to making a gem out of it but for the completed project, I also worked with:
+
+<ul>
+	<li>jQuery (effects)</li>
+
+	<li>Prototype (calendar select)</li>
+
+	<li>restful_authentication</li>
+</ul>
+
+It has some nice animations and I'm probably going to submit a patch to ym4r to add the :function option to the map.to_html method. Basically it let me assign a function call to the map service call so I could call it only when it was unhidden by some jquery niceness:
+
+<script src="http://gist.github.com/24089.js"></script>
+
+All and all very fun things. Next step since no one ever reads this blog is to unleash my master plan of an Mnesia webservice backend and datamapper adapter. MWAAHAHA!
+
+I'll post the code for happenings soon. 

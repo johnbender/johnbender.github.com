@@ -1,0 +1,40 @@
+--- 
+layout: post
+title: ASP.NET on Rails
+tags: 
+- microsoft
+- MVC Rails .NET
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+A friend at work alerted me to the new MVC framework that's in beta for .NET and I was really excited to see what they had come up with. He showed me some code samples and I immediately recognized some very Rails-ish stuff in there. So lets take a look and see what they have going on because so far its looking pretty awesome.
+
+Disclaimer: Obviously Rails isn't the worlds first MVC implementation, its just a really nice one and I think MS has definitely taken a few cues here.
+
+<strong>Directory Structure (courtesy of Scott Guthrie's <a href="http://weblogs.asp.net/scottgu/archive/2007/10/14/asp-net-mvc-framework.aspx">blog</a>):</strong>
+
+<div style="text-align: center;">
+<a href='http://nickelcode.com/wp-content/uploads/2008/11/folder-structure.jpg'><img src="http://nickelcode.com/wp-content/uploads/2008/11/folder-structure1.jpg" alt="" title="folder-structure" width="261" height="571"  style="padding: 0px;"/></a>
+</div>
+
+A logical directory structure for an MVC app to be sure. I would kill to have this on some of my current projects where locating things you are looking for is a nightmare. It may not be Rails's "Convention Over Configuration" but its a nice step in the right direction from my perspective. 
+
+<strong>Routing:</strong>
+
+Routes! Routes! I loves me some Routes! Making your web apps RESTful has many advantages (see <a href="http://cafe.elharo.com/web/refactoring-html/why-rest/">here</a>, and <a href="http://www.manageability.org/blog/stuff/rest-explained-in-code">here </a>for some examples) and in any case the flexibility that custom routes provides is enormous. Think of how much nicer SharePoint url's could be :), and, as ScottGu mentions, it helps in optimizing SEO.
+
+<strong>Backward Compatibility:
+</strong>
+If you were a good little software architect/engineer and built decoupled user controls and master pages there's no reason why you can't re-use that code again on your new shiny MVC pages!
+
+<strong>Plug and Play:</strong>
+
+Again from Scott's blog, "... it's highly extensible and pluggable...", which is music to my ears. One of the great things about Rails, and one of the reasons I really believe in it as a long term technology is that while it is opinionated software, you can swap out its main pieces like ActiveRecord < => <a href="http://datamapper.org/doku.php">Datamapper </a>. This means that if you think Datamapper will serve your project better then you're free to use it, and anyone with a better idea for an ORM can jump right in and write one. If ASP.NET MVC can live up to this not only will it be a better framework for it, but I wouldn't be surprised to see a bunch of custom pieces from hackers who want something better or just different. 
+
+<strong>Looking forward:</strong>
+
+If you are a web developer and you're main expertise is with .NET then  this is something to be very excited about. Not just as a tool for building websites but also because MS can recognize a better way to get things done for developer's and they are willing to throw money at making our lives easier. Good stuff all around!
+

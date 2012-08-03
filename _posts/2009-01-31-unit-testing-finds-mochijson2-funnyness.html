@@ -1,0 +1,40 @@
+--- 
+layout: post
+title: testing = mochijson2 funnyness feature
+tags: 
+- erlang
+- programming
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+[Update] I filed a ticket on the mochiweb google code site, and they pointed out that this <strong>IS</strong> expected behaviour. Mochijson2 expects binary strings, which makes good sense since when you decode with mochijson2, strings are converted to just that! Also, string operations in Erlang are faster on binary strings (or so I've been told). See the gist for an example.
+
+So I'm working on my test coverage for grove, which has been otherwise abysmal and late to the game. The bright side is that I caught some funnyness with my testing that I was not dealing with before, and I thought I would share my good fortune with everyone.
+
+Notice I said <strong>funnyness</strong> and not wrongness, this may be the intended behavior but I was not expecting it.
+
+<script src="http://gist.github.com/55800.js"></script>
+
+I realized this once I started building my unit tests because I'd been dealing with atoms and numbers ONLY for the value position of those key/value tuples. Obviously I thought it a bit odd when the string result I got included and array of integers where I expected to see a string.
+
+Solution: use mochijson. Not sure why I was using 2 in the first place.
+
+Blah, blah worthless post, _but_ I am constantly reminded why testing makes the world a better place. To take it a bit farther I'm going to borrow a story my high school econ teacher, Mr. Werbylo, told me to explain why we shouldn't sit on the desks in class:
+
+<blockquote>
+
+Look, [ these desks are old < => programming is hard ].
+
+If you [ fall of the desk  < => don't build unit tests ] you're going to be hurt and everyone is going to laugh at you for your clumsiness. Most people think the story ends there, but it doesn't. When you get home, you'll still be angry and you might kick your dog. Your dog, being angry and sad from the physical pain you've caused him will bite the mailman. And finally, ultimately,  the mailman will go to work the next day with an Uzi and kill everyone. 
+
+That, is how [ falling of a desk < => failing to get test coverage ] causes loss of life.
+
+</blockquote>
+
+One of my favorite teachers.
+
+
+

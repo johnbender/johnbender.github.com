@@ -1,0 +1,43 @@
+--- 
+layout: post
+title: Ruby Cons
+tags: 
+- ruby
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+I think technically this counts as an application of my readings from Algebra of Programming. Satisfied.
+
+<pre>
+<span class="keyword">class</span> <span class="type">Cons</span>
+  include <span class="type">Enumerable</span>
+  attr_accessor <span class="constant">:child</span>, <span class="constant">:value</span>
+
+  <span class="keyword">def</span> <span class="function-name">self.[]</span>(value, child=<span class="constant">:empty</span>)
+    new(value, child)
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">initialize</span>(value, child)
+    <span class="variable-name">@value</span>, <span class="variable-name">@child</span> = value, child
+  <span class="keyword">end</span>
+
+  <span class="keyword">def</span> <span class="function-name">each</span>
+    x = <span class="variable-name">self</span>
+    <span class="keyword">while</span>( x != <span class="constant">:empty</span>)
+      <span class="keyword">yield</span> x
+      x = x.child
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+x = <span class="type">Cons</span>[<span class="string">'MWA'</span>, <span class="type">Cons</span>[<span class="string">'HAHA'</span>, <span class="type">Cons</span>[<span class="string">'HAHA'</span>]]]
+puts x.inject(<span class="string">''</span>){ |acc, x| acc+=x.value  }
+</pre>
+
+<br />
+
+
+As a side note, I hope that someone finds this page looking for a list of negative things about ruby. Maybe if you run the code you'll find something >:]  

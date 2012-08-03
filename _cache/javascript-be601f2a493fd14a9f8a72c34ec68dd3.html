@@ -1,0 +1,11 @@
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;.foo&quot;</span> <span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Current popular idiom</span>
+    <span class="nx">$</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+
+    <span class="c1">// - In favor of -&gt;</span>
+
+    <span class="c1">// Using the underlying morphism</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>

@@ -1,0 +1,26 @@
+--- 
+layout: post
+title: SharePoint Site permissions STSADM extension
+tags: 
+- microsoft
+- sharepoint
+- sharepoint stsadm extension
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+For the SharePoint developer's group I run in NYC I created a quick STSADM extension that outputs all of site, subsite, list, and list item permissions for a given SharePoint site. 
+
+By piping this output into a file you can create a baseline to compare to at a later date with something like <a href="http://www.winmerge.org/">winmerge</a>. Thus you have a simply way to verify your site permissions should you need to. The idea was to illustrate how easy it is to create extension for STSADM, but I ended up with a useful utility in the process.
+
+Code <a href="https://www.hensongroup.com/usersgroups/sharepointdevelopers/Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2fusersgroups%2fsharepointdevelopers%2fShared%20Documents%2fJuly%2029th%202008&FolderCTID=&View={7E84DB17-7B83-4137-8EEC-10BEE788F0AB}">here</a>.
+
+Also, if you look at the code you'll see that there is in fact an interface that all of the "Permissionable" objects implement (ISecurableObject) and as a result the methods for retrieving their Roles and Rights can be generic. Contrary to my earlier post <a href="http://nickelcode.com/2008/04/07/sharepoint-objects-inheriting-from-systemobject/">here</a>. 
+
+If you have any questions or are interested in attending the next meeting of the New York SharePoint Developer's Group send me an email at john.bender at hensongroup.com.
+
+Enjoy!
+
+

@@ -1,0 +1,43 @@
+--- 
+layout: post
+title: delicious-user-top javascript
+tags: 
+- delicious user links javascript
+- javascript
+- jquery
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+Github: <a href="http://github.com/johnbender/delicious-user-top/tree/master">delicious-user-top</a>
+
+So if you stopped by last week you saw that I hacked together the github-repos javascript plugin for my new forum, <a href="http://erlanguid.com">erlanguid</a>, to pull a users github repo information and display it in their posts. It was so easy that I got kind of plugin happy and decided to do a few more for my forum. The latest pulls the users top links for a given tag or tags from Delicious.com. Here's how to use it!
+
+If you read the github-repos post this script works in the same way, but since we need more information than just the user name, in this case the tag(s), and because the delicious feed doesn't return the username with its json data like github does, things got more interesting.
+
+The first big change was adding the tag(s) to the id of the div the links would be added to. In the page, the html where the links will be inserted looks like this:
+
+<script src="http://gist.github.com/33031.js"></script>
+
+You'll notice that the id has the users delicious id, and also the tag were looking to search for. In this case we want johndoe's links tagged with erlang. It's important to note that you can add tags with a plus. So if I wanted to find only those links that had been tagged as both erlang and mnesia it would look like this:
+
+<script src="http://gist.github.com/33032.js"></script>
+
+So once thats in the page, and you've included delicious-user-top.js in the head of your page, you'll get the links for the user and tags specified. 
+
+The second big change was forced by delicious only passing an array of links back with no association to the user which we queried for. Understandable, but it made it much more difficult to target the correct divs on the page for a given user and tags.
+
+To maintain the asynchronous nature of the loading and also make sure that the script could add the new links to multiple divs in the page with the same username and tags, I simply added a new method into the DOM that would call the DeliciousTop.DisplayLinks method with the right id and the callback data. After that was defined, I added the script element that made the remote resource call to delicious with the user specific method added before as the callback. When all was said and done, for our example the DOM would have looked something like this:
+
+<script src="http://gist.github.com/33036.js"></script>
+
+The only reason for this is to pass the "johndoe|erlang" string to the function so it can insert the data from the callback into the right divs. It looks like crazyness but is necessary for multiple places on the page.
+
+As a result everything works just fine for multiple divs for the same user. Because the function name doesn't include tags, the same user can't have multiple divs with different tags in the same page. This could be changed by making different functions with each of the tags added to the function name, but its not necessary for my purposes. 
+
+Post in the comments if you have any questions, or send me a message on github. 
+
+UPDATE: requires jQuery 1.2.6
+

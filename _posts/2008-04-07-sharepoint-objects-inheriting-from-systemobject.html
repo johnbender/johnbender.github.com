@@ -1,0 +1,26 @@
+--- 
+layout: post
+title: Sharepoint Objects inheriting from System.Object?
+tags: 
+- microsoft
+- sharepoint
+- sharepoint objects som oop
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+---
+<strong>UPDATE:</strong> All of these objects implement and interface that allows them to be used generically (ISecurableObject). YAY! See <a href="http://nickelcode.com/2008/09/06/sharepoint-site-permissions-stsadm-extension/">here</a> for an example.
+
+In my short time working the the Sharepoint Object Model, I have thoroughly enjoyed the ease with which I am able to access all the bits and pieces that make up Sharepoint. It allows the developer to get creative with what he/she wants to do, and really the only limiting factors are time and money.  The only oddity I have come across thus far is that objects like SPList (document libraries, etc) and SPWeb (sites within a site collection) inherit from the System.Object class.
+
+<a href="http://msdn2.microsoft.com/en-us/library/microsoft.sharepoint.splist.aspx"><img src="http://nickelcode.com/images/splist_inheritance.jpg" width="311" border="1" height="85"/<a/></a><a href="http://msdn2.microsoft.com/en-us/library/microsoft.sharepoint.spweb.aspx"><img src="http://nickelcode.com/images/spweb_inheritance.jpg" width="311" align="top" border="1" height="55" /></a>
+
+From a high level view of the inheritance hierarchy this could be justifiable, but they do have common elements (roles, groups) that would better serve developers, where they incorporated into a singe parent element.  For example, I've written a simple extension to stsadm to recursively grab all groups and roles for all webs, lists and list items within a site collection. Because there is not a common "SPObject" or "SPPermissionedObject" class that SPList, SPWeb, and SPListItem inherit from, and that I can cast those objects to, I am stuck writting three different functions to handle the roles and groups for each type of object.
+
+Example:
+
+<script src="http://gist.github.com/24090.js"></script>
+
+On a small scale this doesn't seem like much of an issue, but with large code bases the result of the current inheritance hierarchy is code that will be much more difficult to maintain. The only reason I can see for Microsoft having proceeded this way is that they want to see how developers are using the software before solidifying their inheritance. Providing my suggested solution and then changing it would break code, where as with the current situation code will work even if they were to implement an SPPermissionedObject.
