@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Hello World!</title>
+    <title></title>
     
     <meta name="author" content="John Bender">
 
@@ -52,10 +52,6 @@
   
     
       
-    
-  
-    
-      
       	
       	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
       	
@@ -82,6 +78,8 @@
       
     
   
+    
+  
 
 
 
@@ -93,128 +91,566 @@
     <div class="container">
       <div class="content">
         
+
 <div class="page-header">
-  <h1>Hello World!</h1>
+  <h1><a href="//johnbender.github.com/writing/2012/07/19/splitting-jquery-in-two-a-proposal">Splitting jQuery in Two, A Proposal</a></h1>
 </div>
 
 <div class="row-fluid">
-  <div class="span12">
-    <p>Read <a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">Jekyll Quick Start</a></p>
+  <div class="span9">
+    <p>Previously I&#39;ve described applications of Category Theory in JavaScript and with jQuery. An earlier post, <a href="http://johnbender.us/2012/02/29/faster-javascript-through-category-theory/">Faster JavaScript with Category Theory</a>, identified a possible performance benefit where composition could be shown to hold for a Functor from <strong>Html</strong> to <strong>Jqry</strong>. This post follows up with a more concrete look at that optimization and suggests an additional, farther reaching, implication for the two categories.</p>
 
-<p>Complete usage and documentation available at: <a href="http://jekyllbootstrap.com">Jekyll Bootstrap</a></p>
+<h2 id="toc_11">Quick Recap</h2>
 
-<h2 id="toc_20">Update Author Attributes</h2>
+<p>Previously we defined the categories <strong>Html</strong> and <strong>Jqry</strong>, providing a concrete mathematical representation of DOM manipulations in raw form and their counterparts used inside the jQuery library.</p>
 
-<p>In <code>_config.yml</code> remember to specify your own data:</p>
-<div class="highlight"><pre><code class="text">title : My Blog =)
-
-author :
-  name : Name Lastname
-  email : blah@email.test
-  github : username
-  twitter : username
+<p><strong>Html</strong> is the category of all DOM elements and JavaScript functions that manipulate them. It represents the basic building blocks of client side web applications that most web developers are familiar with, eg</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">setFoo</span><span class="p">(</span> <span class="nx">elem</span> <span class="p">){</span>
+  <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
+  <span class="k">return</span> <span class="nx">elem</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<p>The theme should reference these variables whenever needed.</p>
+<p>where <code>elem</code> is any object implementing the <code>HTMLElement</code> interface.</p>
 
-<h2 id="toc_21">Sample Posts</h2>
-
-<p>This blog contains sample posts which help stage pages and blog data.
-When you don&#39;t need the samples anymore just delete the <code>_posts/core-samples</code> folder.</p>
-<div class="highlight"><pre><code class="text">$ rm -rf _posts/core-samples
+<p><strong>Jqry</strong> is the category of jQuery objects (sets of DOM elements) and jQuery methods, eg</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">addClass</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
 </code></pre>
 </div>
 
-<p>Here&#39;s a sample &quot;posts list&quot;.</p>
+<p>Where the jQuery &quot;object-set&quot; of divs selected from the DOM is an example object in <strong>Jqry</strong> and <code>addClass</code> is an example morphism.</p>
 
-<ul class="posts">
-  
-    <li><span>19 Jul 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/07/19/splitting-jquery-in-two-a-proposal">Splitting jQuery in Two, A Proposal</a></li>
-  
-    <li><span>15 Jun 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/06/15/presentation-faster-javascript-through-category-theory">Presentation: Faster JavaScript through Category Theory</a></li>
-  
-    <li><span>28 Apr 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction">Presentation: Middleware as a General Purpose Abstraction</a></li>
-  
-    <li><span>22 Mar 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/03/22/a-natural-transformation-in-javascript">A Natural Transformation in JavaScript</a></li>
-  
-    <li><span>29 Feb 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/02/29/faster-javascript-through-category-theory">Faster JavaScript Through Category Theory</a></li>
-  
-    <li><span>22 Feb 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/02/22/leveraging-your-insecurities">Leveraging Your Insecurities</a></li>
-  
-    <li><span>09 Feb 2012</span> &raquo; <a href="//johnbender.github.com/writing/2012/02/09/faster-javascript-through-category-theory">Faster Javascript Through Category Theory</a></li>
-  
-    <li><span>25 Nov 2011</span> &raquo; <a href="//johnbender.github.com/writing/2011/11/25/jquery-is-just-a-browser-api">jQuery is just a browser API</a></li>
-  
-    <li><span>20 Jul 2011</span> &raquo; <a href="//johnbender.github.com/writing/2011/07/20/you-got-your-type-class-in-my-jquery-applicative-functors">You got your type class in my jQuery: Applicative Functors</a></li>
-  
-    <li><span>08 Jul 2011</span> &raquo; <a href="//johnbender.github.com/writing/2011/07/08/you-got-your-type-class-in-my-jquery-functors">You got your type class in my jQuery: Functors</a></li>
-  
-    <li><span>05 Mar 2011</span> &raquo; <a href="//johnbender.github.com/writing/2011/03/05/snap-setup-from-scratch-the-vagrant-way">Snap setup from scratch the Vagrant way</a></li>
-  
-    <li><span>08 Feb 2011</span> &raquo; <a href="//johnbender.github.com/writing/2011/02/08/contributing-to-jquery-mobile">Contributing to jQuery Mobile</a></li>
-  
-    <li><span>18 Oct 2010</span> &raquo; <a href="//johnbender.github.com/writing/2010/10/18/haskell-and-vagrants-middleware">Haskell and Vagrant’s Middleware</a></li>
-  
-    <li><span>22 Jul 2010</span> &raquo; <a href="//johnbender.github.com/writing/2010/07/22/middleware-composition-and-monads">Middleware, Composition, and Monads</a></li>
-  
-    <li><span>10 Jan 2010</span> &raquo; <a href="//johnbender.github.com/writing/2010/01/10/bebop-resource-routing-for-sinatramonk">bebop: resource routing for Sinatra/Monk</a></li>
-  
-    <li><span>08 Nov 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/11/08/using-a-haskell-dfa-type-to-match-strings">Using a haskell dfa type to match strings</a></li>
-  
-    <li><span>28 Oct 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/10/28/ruby-cons">Ruby Cons</a></li>
-  
-    <li><span>26 Oct 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/10/26/stolen-gem-name">Stolen gem name?</a></li>
-  
-    <li><span>26 Sep 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/09/26/algebra-of-programming-chapter-1-sections-5">Algebra of Programming: Chapter 1 section 5</a></li>
-  
-    <li><span>19 Sep 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/09/19/algebra-of-programming-chapter-1-section-3">Algebra of Programming: Chapter 1 Section 3</a></li>
-  
-    <li><span>12 Sep 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/09/12/algebra-of-programming-chapter-1">Algebra of Programming: Chapter 1 Section 2</a></li>
-  
-    <li><span>22 Aug 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/08/22/rquery-refactored-and-simplified">RQuery: refactored and simplified</a></li>
-  
-    <li><span>14 Aug 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/08/14/unraverl-partial-function-application">Unraverl: Partial Function Application</a></li>
-  
-    <li><span>29 Jun 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/06/29/where-to-from-here">Where to from here...</a></li>
-  
-    <li><span>16 Jun 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/06/16/bootstraps-now-with-less-crapyness">BootStraps: now with less crapyness</a></li>
-  
-    <li><span>09 Jun 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/06/09/bootstrapping-a-sinatra-app">BootStrapping a Sinatra app</a></li>
-  
-    <li><span>05 Jun 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/06/05/os-xi">OS XI</a></li>
-  
-    <li><span>26 Apr 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/04/26/rquery-now-with-and-operators">RQuery: now with | and & operators</a></li>
-  
-    <li><span>22 Apr 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/04/22/searching-the-abstract-form-in-erlang">Searching the abstract form in erlang</a></li>
-  
-    <li><span>17 Apr 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/04/17/non-deterministic-description">non-deterministic description</a></li>
-  
-    <li><span>12 Apr 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/04/12/haskell-learnings">Haskell learnings</a></li>
-  
-    <li><span>30 Mar 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/03/30/unraverl-filters-and-more-for-erlang">Unraverl: filters and more for erlang</a></li>
-  
-    <li><span>21 Mar 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/03/21/rquery-for-rails-is-ready">rquery for Rails is ready</a></li>
-  
-    <li><span>12 Mar 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/03/12/query-dsl-in-ruby">Query DSL in Ruby</a></li>
-  
-    <li><span>17 Feb 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/02/17/rails-dev-shortages">Rails Dev Shortages</a></li>
-  
-    <li><span>16 Feb 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/02/16/grove-is-done">grove is out</a></li>
-  
-    <li><span>11 Feb 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/02/11/scale-rails-screencasts">Scale Rails Screencasts</a></li>
-  
-    <li><span>31 Jan 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/01/31/unit-testing-finds-mochijson2-funnyness">testing = mochijson2 funnyness feature</a></li>
-  
-    <li><span>17 Jan 2009</span> &raquo; <a href="//johnbender.github.com/writing/2009/01/17/erlang-pattern-matching-declarations-vs-case-statementsother">Erlang: Pattern Matching Declarations vs Case Statements/Other</a></li>
-  
-</ul>
+<p>We also saw that defining a mapping (Functor) from <strong>Html</strong> to <strong>Jqry</strong> and proving that composition is preserved suggests a possible performance win in the form of loop fusion. The two components of the mapping turned out to be jQuery&#39;s dollar function and <code>$.map</code> for objects and morphisms respectively. The important equivalence, preserving composition:</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">g</span><span class="p">().</span><span class="nx">f</span><span class="p">()</span> <span class="o">===</span> <span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="nx">cmps</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">g</span><span class="p">)</span> <span class="p">)</span>
+</code></pre>
+</div>
 
-<h2 id="toc_22">To-Do</h2>
+<p>which is an equivalence of two approaches (one of which requires one less iteration to accomplish the same task). This, viewed in the light of &quot;interesting results from math&quot;, is relatively exciting but the performance implications warranted some further exploration, which takes us to the meat of this post.</p>
 
-<p>This theme is still unfinished. If you&#39;d like to be added as a contributor, <a href="http://github.com/plusjade/jekyll-bootstrap">please fork</a>!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.</p>
+<h2 id="toc_12">Performance Reality</h2>
 
+<p>The most obvious and the least labor-intensive candidates for profiling loop fusion are jQuery methods that already rely on an <em>abstracted</em> <strong>Html</strong> morphism. They represent a real use case for that separation of functionality within the library.</p>
+
+<p>The one I chose was <code>jQuery.fn.removeAttr</code>. It relies on <code>jQuery.removeAttr</code> (note that this is not defined on the jQuery object prototype <code>jQuery.fn</code>) for its DOM manipulations and uses the <code>jQuery.fn.each</code> method to iterate over the set of elements.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Current jQuery.fn.removeAttr implementation in jQuery Core</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jQuery</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="k">this</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Testing a set of chained calls to <code>jQuery.fn.removeAttr</code> against a single loop with three inlined invocations of <code>jQuery.removeAttr</code> <a href="http://jsperf.com/remove-attr-composed-vs-chained-simple-methods/2">yielded</a> a fairly consistent 5-10 percent performance increase (blue bars). This was an <a href="http://johnbender.github.com/presentation-faster-js/#24">incentive</a> of sorts that I used to keep people from running for the exits during my JQCON talk.</p>
+
+<p><img src="http://i.imgur.com/alVRh.png" alt="incentive"></p>
+
+<p>Unfortunately this doesn&#39;t accurately represent the reality of most jQuery methods. The majority of the performance benefit appears to arise from the reduction in the number of function calls when a single loop with many invocations is used in place of multiple loop callbacks and function invocations. In the majority of jQuery methods the DOM alterations are actually inlined. That is, they don&#39;t live in an abstracted <strong>Html</strong> morphism at all -- the DOM elements are manipulated inside the loop and then returned to the jQuery &quot;object-set&quot;.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// More likely/performant version with inlined dom manipulation</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">value</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">elem</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">){</span>
+        <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">length</span><span class="p">];</span>
+
+        <span class="c1">// ...</span>
+        <span class="c1">// attr removal in jQuery.removeAttr</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Running a similar test but with an inlined implementation of <code>jQuery.fn.removeAttr</code> for the chained version resulted in a <a href="http://jsperf.com/chained-sequence-or-composition-removeattr/2">performance profile</a> mostly indistinguishable from the manually fused alternative (blue and yellow bars in the graph below). While this might require more investigation it was fair to conclude that fusion isn&#39;t compelling enough to warrant further work. Luckily a fruitful conversation with some of the attendees at my talk gave me a few ideas that might ultimately provide more value in terms of library architecture and performance.</p>
+
+<p><img src="http://i.imgur.com/Qtq7Q.png" alt="performance profile"></p>
+
+<h2 id="toc_13">Even My Presentation had Side Effects</h2>
+
+<p>Most of the jQuery Core team was at the breakout session doing dramatic readings of bugs when I gave my presentation<sup>1</sup> but there was a notable attendee in the front row, Yehuda Katz. He asked after my talk if the test methods were implemented using actual composition or simply invoked directly in serial (they were), alluding to the fact that the additional function call added with <code>cmps</code> would negate the reduced loop iteration operations.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">cmps</span><span class="p">(</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// the closure creates an additional function call</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">a</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">f</span><span class="p">(</span><span class="nx">g</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>As we saw earlier, even when DOM manipulation is abstracted into a function and invoked directly it&#39;s likely in the best case to perform at/near parity with a jQuery method built on inlined DOM manipulation code. Consequently, adding the extra function wrapper and call to the execution path with <code>cmps</code> may result in a slowdown (red bars in the previous graph).</p>
+
+<p>Yehuda subsequently also expressed interest in the idea of clearly separating the <strong>Html</strong> morphisms from the <strong>Jqry</strong> morphisms that rely on them. That is, every jQuery method that manipulates the DOM has some form of an <strong>Html</strong> morphism living inside it, be it inlined or abstracted into its own function (like <code>removeAttr</code>). To illustrate we&#39;ll take a naive implementation of <code>jQuery.fn.addClass</code> and separate the DOM manipulation out. First, the current norm as inlined functionality:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// !! Inlined DOM element manipulation</span>
+        <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>And then, abstracted:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// !! Abstracted manipulation. Too expensive?</span>
+        <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// Html morphism</span>
+<span class="kd">function</span> <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
+    <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>He rightly pointed out that from an architectural standpoint, this is a fairly compelling idea, so long as the extra function call doesn&#39;t affect performance too drastically. Taking <code>jQuery.fn.removeAttr</code> as the test subject again, I inlined the contents of <code>jQuery.removeAttr</code> and compared it to the original. For small sets it appears that the extra function call is negligible<sup>2</sup>.</p>
+
+<p><img src="http://i.imgur.com/6XOM0.png" alt="extra function call"></p>
+
+<p>Just to be sure, it&#39;s worth checking against larger jQuery object-sets. For large sets, as with loop fusion, the DOM manipulations outweigh something as fundamental as function invocation.</p>
+
+<p><img src="http://i.imgur.com/cTeMr.png" alt="extra function call larger set"></p>
+
+<p>You can see in both cases that the overhead of abstracting the DOM manipulation into a function is mostly tenable, the notable exception being smaller sets of elements in Opera. If that small additional overhead in the common case is acceptable it exposes some benefits that the library can provide to framework authors and performance-minded developers.</p>
+
+<h2 id="toc_14">Architecture Benefits</h2>
+
+<p>Clearly, there are benefits from a clean separation for both the library itself and for advanced users relying on jQuery&#39;s inbuilt &quot;experience&quot; with browser compatibility. If the two sides are kept separate jQuery Core could provide a build target that only includes the DOM manipulation and reduces the overall size of the gzipped include. Mobile devices have made file size a serious concern (belaboring the obvious) not just because of wire weight but also parsing time, and the reduction of code in this case could be significant.</p>
+
+<p>What&#39;s more, external framework authors and other advanced users would have a more foundational building block to make use of without the commitment to the entire jQuery source. For example users who are happy to rely on <code>querySelectorAll</code> (which enjoys relatively broad support) and who don&#39;t need selectors/effects/etc could simply use the distilled knowledge in this hypothetical DOM manipulation core.</p>
+
+<p>Less interesting for end-users is the benefit to the Core team in terms of separating concerns and testing. For the DOM manipulations this change delineates <code>jQuery.fn</code> methods as a usability layer on top of the underlying <strong>Html</strong> morphism. If you ascribe to the ideas that fall out of the dependency between the two categories then <strong>Jqry</strong> has always had this role. Also, where testing is concerned, the DOM manipulation methods can be tested in isolation from the code that makes jQuery easy to use (with stubbing in the latter case).</p>
+
+<h2 id="toc_15">Performance Benefits</h2>
+
+<p>Assuming a perfect world where every jQuery method involved in DOM element manipulation is built on an <strong>Html</strong> morphism there are a couple of possible performance benefits. First, and least impactful is that it makes rewrapping DOM elements using the <code>$</code>/<code>jQuery</code> function unnecessary in many cases.</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;.foo&quot;</span> <span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Current popular idiom</span>
+    <span class="nx">$</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+
+    <span class="c1">// - In favor of -&gt;</span>
+
+    <span class="c1">// Using the underlying morphism</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Rewrapping DOM objects with a jQuery object in event and loop callbacks to get access to jQuery methods is common practice. If the same functionality on jQuery objects can be used to directly manipulate DOM elements, the rewrapping can be avoided all together. This isn&#39;t likely to be a huge win, but the reduction in setup for iterating over jQuery objects cannot be overlooked.</p>
+
+<p>Much more interesting though is the possibility of stripping down the functionality provided by the DOM element manipulations. That is, removing the user-friendly layer associated with many jQuery methods and only providing the cross platform working core of each manipulation could have a serious performance and size impact. Again, looking at the <code>jQuery.fn.removeAttr</code> implementation, it&#39;s built to accept a whitespace-delimited list for the attribute name value as a concession to terse manipulations.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Friendly</span>
+<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo bar&quot;</span> <span class="p">);</span>
+
+<span class="c1">// Not-friendly?</span>
+<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+</code></pre>
+</div>
+
+<p>The performance benefits of using the manipulations directly without this additional feature are real. Simply stripping the split and loop from <code>jQuery.fn.removeAttr</code> provided nearly a 25% gain<sup>3</sup>.</p>
+
+<p><img src="http://i.imgur.com/wA8wf.png" alt="friendliness"></p>
+
+<p>Again, the jQuery method would retain all its old functionality. The proposed underlying morphism is a new API. It can stick to what it does best: cross-platform manipulation of DOM elements. When a user is concerned about performance they can start looking at the ways their application uses jQuery and leverage a less friendly but still beautiful &quot;low-level&quot; API for DOM manipulations to save execution time.</p>
+
+<h2 id="toc_16">Beautiful API Design</h2>
+
+<p>Given the benefits in library size reduction a separate set of methods can provide, these methods should all be available on some top level namespace. <code>$</code>/<code>jQuery</code> may be the most obvious choice but this requires some consideration due to compatibility concerns with existing methods like <code>jQuery.removeAttr</code> and <code>jQuery.css</code>.</p>
+
+<p>More importantly it might be useful, as suggested in the previous posts, to provide the method as an attribute of its associated jQuery method. That is, <code>jQuery.removeAttr</code> would exist on the <code>jQuery</code> object and also as something like <code>jQuery.fn.removeAttr.domManip</code> or <code>jQuery.fn.removeAttr.alterOne</code><sup>4</sup>.</p>
+
+<p>To illustrate, let&#39;s look at an example with two conversions of a simple method chain assuming the jQuery function as the pure DOM manipulation namespace:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// 1. Unoptimized</span>
+<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">attr</span><span class="p">(</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">).</span><span class="nx">css</span><span class="p">(</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+
+<span class="c1">// 2. Optimized with jQuery.fn.each</span>
+<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// without check for null to remove, and hooks</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
+
+  <span class="c1">// without hook</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// 3. Optimized in a while loop to avoid extra calls</span>
+<span class="kd">var</span> <span class="nx">$divs</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">),</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="nx">elem</span><span class="p">;</span>
+
+<span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="nx">elem</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">[</span><span class="nx">elem</span><span class="p">];</span>
+
+  <span class="c1">// without check for null to remove, and hooks</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
+
+  <span class="c1">// without hook</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="toc_17">What happened to the Math?</h2>
+
+<p>Long story short: I&#39;m looking into it. There is certainly a dependent relationship between the set of <strong>Jqry</strong> morphisms that operate on the contents of <strong>Jqry</strong> objects (remember there are <strong>Jqry</strong> morphisms that don&#39;t, eg. <code>jQuery.fn.first</code> only alters the container) and the underlying <strong>Html</strong> morphisms. That subset of morphisms and all jQuery objects may form a subcategory <strong>Jqry</strong><sub>h</sub>.</p>
+
+<p><img src="http://i.imgur.com/tTwkz.png" alt="jquery sub h equation"></p>
+
+<p>Where <em>F</em> is the functor previously defined (eq 1), the objects of <strong>Jqry</strong><sub>h</sub> are the objects of <strong>Jqry</strong> (eq 3) and the morphisms of <strong>Jqry</strong><sub>h</sub> are <strong>Html</strong> morphisms lifted into <strong>Jqry</strong> with <em>F</em> (eq 3). Do note that morphisms of <strong>Jqry</strong><sub>h</sub> are a proper subset of <strong>Jqry</strong> because of methods like <code>jQuery.fn.first</code> (eq 4).</p>
+
+<p>I&#39;m sure there&#39;s a more elegant way to represent the two sets, objects and morphisms, of this subcategory but this works for me now. Also, it&#39;s not clear that there are useful practical implications for the dependency aside from how it might otherwise affect our perception of jQuery as a library. I intend to look into this a bit more when I have time.</p>
+
+<h2 id="toc_18">Further Investigation Required</h2>
+
+<p>If the goals presented here turn out to be of real value there&#39;s a lot of work left to do. Most importantly the performance overhead of an extra function call in so many jQuery methods needs to be examined thoroughly, not just in jQuery Core but in dependent projects like UI, Mobile, and possibly plugins. Hopefully the initial impression of fast function calls bears out in further testing.</p>
+
+<p>It would also be useful to examine the conversion of some complex applications to the <strong>Html</strong> morphisms to see what kind of cognitive overhead is incurred. If no one wants to use the underlying functions because they are a pain, then the exercise would be futile. This examination should includes aspects like namespacing and how each function is made available to the end user in both the full and &quot;stripped down&quot; builds.</p>
+
+<p>Ultimately the ideas here are a rough sketch.</p>
+
+<h3 id="toc_19">Footnotes</h3>
+
+<ol>
+<li>To be totally clear this isn&#39;t a jab at the core team. I&#39;m under the impression that the readings are really entertaining. Moreover the talks at conferences are rarely really interesting to the presenters in my experience. Most of the time you can find them chatting/hacking in the halls, which might indicate some level of boredom with the material and may even be a leading indicator of when someone is ready to start submitting talk proposals in terms of experience/content knowledge.</li>
+<li><em>Appears</em> is the key word here. More testing in varied situations is really required to make sure this small sample set is consistent with other jQuery methods.</li>
+<li>The benefits here will vary widely depending on the complexity of the &quot;user-friendliness&quot; built into a given jQuery method. Disclaim all the things!</li>
+<li><code>alterOne</code> was, again, suggested by Yehuda during our discussion.</li>
+<li>The reader will have noted the conspicuous absence of IE in my performance test results. For whatever reason there was a consistent exception raised when executing the test code in IE that I haven&#39;t had time to investigate. For serious consideration of the content in this post those numbers need to be included.</li>
+<li>perf links: <a href="http://jsperf.com/chained-sequence-or-composition-removeattr/2">chained, sequence, or composed</a>, <a href="http://jsperf.com/user-friendliness-overhead-for-remove-attr/2">user friendlyness overhead</a>, <a href="http://jsperf.com/additional-function-call-overhead-for-remove-attr">additional function call overhead</a></li>
+<li>Special thanks to <a href="http://twitter.com/keyist">Tim Goh</a> for reviewing this post.</li>
+</ol>
+
+  </div>
+
+  <div id="info" class="span3">
+    <h4>Published</h4>
+    <div class="date">
+      <span>19 July 2012</span>
+    </div>
+
+    
+    <h4>Tags</h4>
+    <ul class="tag_box">
+      
+      
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#jquery-ref">jquery <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#category theory-ref">category theory <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+<div class="page-header">
+  <h1><a href="//johnbender.github.com/writing/2012/06/15/presentation-faster-javascript-through-category-theory">Presentation: Faster JavaScript through Category Theory</a></h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span9">
+    I'd like to give a big "Thanks!" to the folks at <a href="http://js.la">la.js</a> for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the <a href="https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js">code samples</a> and the <a href="http://johnbender.github.com/presentation-faster-js">presentation slides</a> on Github.
+
+<iframe src="http://player.vimeo.com/video/44085271" width="640" height=" 360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+<strong>NOTE</strong>: The larger format presented on <a href="http://vimeo.com/44085271">the Vimeo site itself</a> might be better viewing.
+
+  </div>
+
+  <div id="info" class="span3">
+    <h4>Published</h4>
+    <div class="date">
+      <span>15 June 2012</span>
+    </div>
+
+    
+    <h4>Tags</h4>
+    <ul class="tag_box">
+      
+      
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+<div class="page-header">
+  <h1><a href="//johnbender.github.com/writing/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction">Presentation: Middleware as a General Purpose Abstraction</a></h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span9">
+    It was my pleasure to give this presentation at LARubyConf in February. You can find the <a href="https://github.com/johnbender/presentation-middleware/tree/master/samples">code samples</a> and the <a href="http://johnbender.github.com/presentation-middleware">presentation slides</a> on Github and a big thanks to the fine folks at <a href="http://confreaks.com">Confreaks</a> for posting the video.
+
+<iframe width="640" height="360" src="http://www.youtube.com/embed/fcNaiP5tea0" frameborder="0" allowfullscreen></iframe>
+
+  </div>
+
+  <div id="info" class="span3">
+    <h4>Published</h4>
+    <div class="date">
+      <span>28 April 2012</span>
+    </div>
+
+    
+    <h4>Tags</h4>
+    <ul class="tag_box">
+      
+      
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  </div>
+</div>
+
+<div class="page-header">
+  <h1><a href="//johnbender.github.com/writing/2012/03/22/a-natural-transformation-in-javascript">A Natural Transformation in JavaScript</a></h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span9">
+    Natural transformations are a foundational construct in category theory, so it seems fitting to follow up my <a href="/2012/02/29/faster-javascript-through-category-theory/">last post</a> by describing one using the categories <strong>Html</strong> and <strong>Jqry</strong>. As a result this post assumes the reader has covered the material from the last post. Also, as much as I wish that I could claim a similarly exciting result this will remain mostly an exercise in clarifying what natural transformations are and how they behave. If it's any consolation I've borrowed some very attractive TeX diagrams from Wikipedia to help illustrate.
+
+<h2>Natural Transformations</h2>
+
+Natural transformations are actually fairly simple once you have an example you can comprehend. One way to describe them is - a set of morphisms<sup>1</sup> that reconcile the way two functors from the same source to the same target categories alter morphisms of the source category<sup>2</sup>. Unfortunately the written descriptions seems to fall short in aiding comprehension, but as promised there are pretty pictures:
+
+<div style="text-align: center;">
+<img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+</div>
+
+This equation is simple and captures the expected behavior of the natural transformation <code>N</code> (used in place of <code>η</code> hereafter). Namely, it must "prepare" input objects for a morphism transformed with <code>G</code>, ie <code>G(f)</code>, such that the result will be identical to that of "repairing" the output objects from a morphism transformed with <code>F</code>, ie <code>F(f)</code>. Again, this assumes that both <code>F</code> and <code>G</code> share that same source and target categories. Also it helps to remember that the input and output objects of <code>F(f)</code> and <code>G(f)</code> are in the target category, so if <code>F</code> and <code>G</code> are both from categories <strong>Html</strong> to <strong>jQuery</strong> we're just dealing with objects in <strong>Jqry</strong>. If the notation is confusing recall that <code>○</code> is the operator form of <code>$.compose</code> and that <code>F(f)</code> is that same as <code>$.Functor(f)</code> from the previous post, both of which result in JavaScript functions/morphisms. While this equation gives us an understanding of how the transformation should function, it doesn't help with comprehending the transformations directionality and purpose.
+
+<div style="text-align: center">
+<img src="http://johnbender.us/wp-content/uploads/2012/03/diagram.png" alt="diagram of composition"/>
+</div>
+
+Diagrams are used to clarify composition of morphisms, a (the?) key operation in category theory. This diagram represents the same concept as the equation but it makes the goal more obvious: from <code>F(X)</code> whether you take the road to the east - <code>Ny ○ F(f)</code> or the road to the south - <code>G(f) ○ Nx</code> - the result has to be the same. Again, the purpose of the natural tranformation is get the results to look like <code>G(f)</code> results whether the operation started with <code>F(f)</code> or ended with <code>G(f)</code>.
+
+If, at this point, it's still unclear don't worry the JavaScript examples should help.
+
+<h2>Two Functors</h2>
+
+Since natural transformations are defined for two functors we'll borrow the <code>$.Functor</code> from the last post and then try to find another. As a quick refresher the <code>$.Functor</code> functor maps from <strong>Html</strong> to <strong>Jqry</strong> using the <code>$.fn.map</code> method. We'll rename it <code>F</code> so that it's easier to reconcile with the diagram/equation.
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">F</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="builtin">this</span>.map( a );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+The new functor obviously has to be different, so let's tweek the way that it operates on the functions from <strong>Html</strong>. In this case the function it returns only applys the <code>html.morphism</code> to the first member of the jQuery object's set. Note that it retains the same operation on objects in <strong>Html</strong>, the application of <code>$()</code>.
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">G</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      a( <span class="builtin">this</span>[0] );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+An alternate implementation that forwards the arguments down to the <code>html.morphism</code> is a bit more complex but much more useful<sup>3</sup>:
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">G</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="keyword">var</span> <span class="variable-name">args</span> = [].slice.call(arguments);
+
+      args.unshift( <span class="builtin">this</span>[0] );
+      a.apply( <span class="builtin">this</span>, args );
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+At first this may seem like defining an alternate functor for the sake of it, but there are already methods in jQuery Core that behave in this fashion. For example a naive implementation of the <code>$.fn.css</code> method using the argument-forwarding form of our new functor<sup>4</sup>:
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.newCss = G(<span class="keyword">function</span>( <span class="js2-function-param">elem</span>, <span class="js2-function-param">key</span>, <span class="js2-function-param">value</span> ){
+  elem.setAttribute( <span class="string">"style"</span>,  key + <span class="string">": "</span> + value );
+  <span class="keyword">return</span> elem;
+});
+
+<span class="keyword">var</span> <span class="variable-name">$foo</span> = $( <span class="string">".foo"</span> );           <span class="comment">// [&lt;div class="foo"&gt;&lt;/div&gt;, &lt;span class="foo"&gt;&lt;/span&gt;]
+</span>$foo.newCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo"&gt;&lt;/span&gt;]
+</span></pre>
+
+Now we've got two functors that satisfy the basics needed to define a natural transformation. They both have the same source and target categories, <strong>Html</strong> and <strong>Jqry</strong> respectively, but they are distinct in the way that they achieve the goal of translating the functions/morphisms from <strong>Html</strong> into functions/morphisms in <strong>Jqry</strong>. Now we just need to find a way to make results from <code>F</code> look like results from <code>G</code>.
+
+<h2>Finding the Transformation</h2>
+
+Recall from the diagram that the natural transformation must produce the same result whether it's composed "in front of" a <code>$.fn</code> method defined with <code>G</code> or after a <code>$.fn</code> method defined with <code>F</code>. Lets look at an example of two methods built with <code>F</code> and <code>G</code> using the css function in the previous example to see if that points us in the right direction. For completeness' sake we need to modify <code>F</code> so that the function it returns accepts arguments:
+
+<pre>
+<span class="doc">/** @sig {html.morphism | HTMLElement} -&gt; {jqry.morphism | jQuery} */</span>
+<span class="keyword">function</span> <span class="function-name">F</span>( <span class="js2-function-param">a</span> ) {
+  <span class="keyword">if</span>( <span class="keyword">typeof</span> a === <span class="string">"function"</span> ) {
+    <span class="keyword">return</span> <span class="keyword">function</span>() {
+      <span class="keyword">var</span> <span class="variable-name">$this</span> = <span class="builtin">this</span>,
+          <span class="variable-name">args</span> = [].slice.call(arguments);
+
+      <span class="builtin">this</span>.map(<span class="keyword">function</span>( <span class="js2-function-param">elem</span> ) {
+        args.unshift( elem );
+        <span class="keyword">return</span> a.apply( $this, args );
+      });
+    };
+  }
+
+  <span class="keyword">return</span> $( a );
+}
+</pre>
+
+Having squared that let's look at an example definition of two <code>$.fn</code> methods using the Functors.
+
+<pre>
+<span class="keyword">var</span> <span class="function-name">alterCss</span> = <span class="keyword">function</span>( <span class="js2-function-param">elem</span>, <span class="js2-function-param">key</span>, <span class="js2-function-param">value</span> ){
+  elem.setAttribute( <span class="string">"style"</span>,  key + <span class="string">": "</span> + value );
+  <span class="keyword">return</span> elem;
+};
+
+<span class="js2-external-variable">$</span>.fn.mapCss = F(alterCss);
+<span class="js2-external-variable">$</span>.fn.oneCss = G(alterCss);
+
+<span class="keyword">var</span> <span class="variable-name"><span class="js2-warning">$foo</span></span> = $( <span class="string">".foo"</span> );           <span class="comment">// [&lt;div class="foo"&gt;&lt;/div&gt;, &lt;span class="foo"&gt;&lt;/span&gt;]
+</span>$foo.mapCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo" style="display: none"&gt;&lt;/span&gt;]
+</span>
+<span class="keyword">var</span> <span class="variable-name">$bar</span> = $( <span class="string">".bar"</span> );           <span class="comment">// [&lt;div class="bar"&gt;&lt;/div&gt;, &lt;span class="bar"&gt;&lt;/span&gt;]
+</span>$bar.oneCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;,
+</span>                                  <span class="comment">//  &lt;span class="foo"&gt;&lt;/span&gt;]
+</span></pre>
+
+Here <code>$.fn.mapCss</code> is equivelant to <code>F(f)</code> and <code>$.fn.oneCss</code> is equivelant to <code>G(f)</code> in the equation and diagram. As you would expect the method created using <code>G</code> only alters the first element in the jQuery object set where as the method created with <code>F</code> alters all the elements. So our hypothetical natural transformation could simply reduce the jQuery object set to the first element in which case both results would be the same. The <code>$.fn.first</code> method should serve. Borrowing the <code>$.compose</code> function, again from the previous post, we can verify that it matches the equation.
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.FtoNy = $.compose( $.fn.first, F(alterCss) );
+<span class="js2-external-variable">$</span>.fn.NxToG = $.compose( G(alterCss), $.fn.first );
+
+$( <span class="string">".foo"</span> ).FtoNy( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;]
+</span>$( <span class="string">".bar"</span> ).NxToG( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;]
+</span></pre>
+
+If you replace the application of <code>$.compose</code> with the infix operator <code>○</code> it looks just like the equation:
+
+<div style="text-align: center">
+  <img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+</div>
+
+With the order reversed we can use the more idiomatic fluent invocation:
+
+<pre>
+<span class="js2-external-variable">$</span>.fn.mapCss = F(alterCss);
+<span class="js2-external-variable">$</span>.fn.oneCss = G(alterCss);
+
+$( <span class="string">".foo"</span> ).mapCss( <span class="string">"display"</span>, <span class="string">"none"</span> ).first(); <span class="comment">// [&lt;div class="foo" style="display: none"&gt;&lt;/div&gt;]
+</span>$( <span class="string">".bar"</span> ).first().oneCss( <span class="string">"display"</span>, <span class="string">"none"</span> ); <span class="comment">// [&lt;div class="bar" style="display: none"&gt;&lt;/div&gt;]
+</span></pre>
+
+Let's alter the diagram to use the new method names:
+
+<div style="text-align: center">
+  <img src="http://johnbender.us/wp-content/uploads/2012/03/svg-methods.png" alt="altered diagram" title="svg-methods" width="200" height="162" class="aligncenter size-full wp-image-1695" />
+</div>
+
+As you can see the southerly route first limits the jQuery object set and then applys the method that only operates on the first object, whereas the easterly route first applys the method that opperates on all the functions in the jQuery object set and then limits the set to one result. Most of the time you'll want to head South to save yourself some execution time.
+
+<h2>Naturally</h2>
+
+The result of our work is a trivial optimization that most users should be able spot, ie. they might be creating a method chain that invokes <code>$.fn.first</code> too late. In any case, the fact that we can arrive at this conclusion by viewing the JavaScript through the lense of mathematics continues to astound me and it makes me wonder what interesting things I might find by examining Monoids and Cartesion Closed categories.
+
+<ol>
+<li>Thanks to Dan Peebles, otherwise known as <a href="http://twitter.com/copumpkin">copumpkin</a>, for reviewing the introduction to natural transformations and suggesting this addition.</li>
+<li>This is far from rigorous. For a more concrete definition checkout the <a href="http://en.wikipedia.org/wiki/Natural_transformation">wikipedia page</a> and <a href="http://www.haskell.org/haskellwiki/Category_theory/Natural_transformation">haskell wiki page</a> pages. My attempt to rephrase the definition comes from my experiences learning abstract concepts like this where I've often been aided by many different renderings of the same idea.</li>
+<li>It's important to keep in mind that, as a result of forwarding the arguments, we've technically changed the type signature of the <strong>Html</strong> morphism from <code>HTMLElement -&gt; HTMLElement</code> to <code>HTMLElement, String, String -&gt; HTMLElement</code>. For the purposes of our discussion I thought it was usefull to pull an existing example from jQuery to illustrate how the second functor works. Also if the jQuery object is empty this will `unshift` undefined as the first argument. Again, clarity proved to be more important.</li>
+<li>This implementation omits even simple style persistence for the sake of focusing the reader on the subject matter.</li>
+</ol>
+
+  </div>
+
+  <div id="info" class="span3">
+    <h4>Published</h4>
+    <div class="date">
+      <span>22 March 2012</span>
+    </div>
+
+    
+    <h4>Tags</h4>
+    <ul class="tag_box">
+      
+      
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#javascript-ref">javascript <span>8</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#jquery-ref">jquery <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#maths-ref">maths <span>3</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/writing/tags.html#uncategorized-ref">uncategorized <span>5</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
   </div>
 </div>
 

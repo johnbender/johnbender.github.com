@@ -57,7 +57,19 @@ html, body, .page-header {
 /* The white background content wrapper */
 .content {
   background-color: #fff;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
+}
+
+.content .row-fluid {
+  margin-bottom: 2em;
+}
+
+h1 > a {
+  color: black;
+}
+
+h1 > a:hover {
+  text-decoration: none;
 }
 
 .navbar-inner {
@@ -100,12 +112,16 @@ html, body, .page-header {
 /* Page header tweaks */
 .page-header {
   padding: 20px 20px;
-  margin: -20px -20px 20px;
+  margin: 0px -20px 20px;
 }
 
 hr, .page-header, .content {
   border-bottom: 1px solid #DDD;
   border-top: 0;
+}
+
+.page-header {
+  border-top: 1px solid #DDD;
 }
 
 .topbar .btn {
