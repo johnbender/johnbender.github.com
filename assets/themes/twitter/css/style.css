@@ -64,10 +64,37 @@ html, body, .page-header {
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
           border-radius: 0;
+          background-image: -moz-linear-gradient(top, #f7f7f7, #F0F0F0);
+          background-image: -ms-linear-gradient(top, #f7f7f7, #F0F0F0);
+          background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f7f7f7), to(#F0F0F0));
+          background-image: -webkit-linear-gradient(top, #F7F7F7, #F0F0F0);
+          background-image: -o-linear-gradient(top, #f7f7f7, #F0F0F0);
+          background-image: linear-gradient(top, #f7f7f7, #F0F0F0);
+          background-repeat: repeat-x;
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#F0F0F0', GradientType=0);
+}
+
+.navbar .brand {
+  color: black;
+}
+
+.navbar .nav > li > a {
+  color: #333;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav > li > a:hover {
+  color: #999;
+}
+
+.navbar .nav .active > a, .navbar .nav .active > a:hover {
+  color: #333;
+  text-decoration: none;
+  background-color: #e6e6e6;
 }
 
 .nav > li {
-  margin-bottom: 0;
+  margin-bottom: 1px;
 }
 
 /* Page header tweaks */
@@ -121,9 +148,8 @@ hr, .page-header, .content {
 
 code {
   /* font-lock-variable-name-face */
-  font-weight: bold;
   color: #08C;
-  padding: 0.10em 0.2em;
+  padding: 0.16em 0.4em;
 }
 
 pre, code {
@@ -154,20 +180,78 @@ pre code {
   -mozilla-box-shadow: none;
 }
 
+.builtin {
+  /* font-lock-builtin-face */
+  color: #62124b;
+}
+
+.comment, .doc, .cm {
+  /* font-lock-comment-face */
+  color: #aea79f;
+}
+
+.comment-delimiter {
+  /* font-lock-comment-delimiter-face */
+  color: #aea79f;
+  font-style: italic;
+}
+
+.function-name {
+  /* font-lock-function-name-face */
+  /* color: #860e73; */
+  /* font-weight: bold; */
+}
+
+.keyword, .k, .kc, .kd, .kn, .kp, .kr, .kt {
+  /* font-lock-keyword-face */
+  color: #f47321;
+  font-weight: bold;
+}
+
+.string, pre.sh_sourceCode .sh_string, .s1, .s2 {
+  /* font-lock-string-face */
+  color: #dd1144;
+}
+
+pre.sh_sourceCode > code > span {
+  color: #333;
+}
+
+b .variable-name {
+  color: white;
+}
+
+.css-property {
+  /* css-property */
+  color: #8b005a;
+}
+.css-selector {
+  /* css-selector */
+  color: #860e73;
+  font-weight: bold;
+}
+
+.type {
+  /* font-lock-type-face */
+  color: #83a525;
+}
+.constant {
+  /* font-lock-constant-face */
+  color: #f68d47;
+}
+
 .hll { background-color: #ffffcc }
 .c { color: #8f5902;} /* Comment */
 .err { color: #a40000; border: 1px solid #ef2929 } /* Error */
 .g { color: #000000 } /* Generic */
-.k { color: #204a87; font-weight: bold } /* Keyword */
+.k, .keyword, .builtin { color: #204a87; font-weight: bold } /* Keyword */
 .l { color: #000000 } /* Literal */
 .n { color: #000000 } /* Name */
-.o { color: #ce5c00; font-weight: bold } /* Operator */
+/* .o { color: #ce5c00; font-weight: bold } /* Operator */
 .x { color: #000000 } /* Other */
-.p { color: #000000; font-weight: bold } /* Punctuation */
-.cm { color: #8f5902;} /* Comment.Multiline */
+.p { color: #000000; font-weight: normal } /* Punctuation */
 .cp { color: #8f5902;} /* Comment.Preproc */
-.c1 { color: #8f5902;} /* Comment.Single */
-.cs { color: #8f5902;} /* Comment.Special */
+.c1, .cm, .doc, .cs { color: #9b9b9b;} /* Comment.Single */
 .gd { color: #a40000 } /* Generic.Deleted */
 .ge { color: #000000;} /* Generic.Emph */
 .gr { color: #ef2929 } /* Generic.Error */
@@ -186,7 +270,7 @@ pre code {
 .kt { color: #204a87; font-weight: bold } /* Keyword.Type */
 .ld { color: #000000 } /* Literal.Date */
 .m { color: #0000cf; font-weight: bold } /* Literal.Number */
-.s { color: #4e9a06 } /* Literal.String */
+.s, .string { color: #4e9a06 } /* Literal.String */
 .na { color: #c4a000 } /* Name.Attribute */
 .nb { color: #204a87 } /* Name.Builtin */
 .nc { color: #000000 } /* Name.Class */
@@ -223,67 +307,5 @@ pre code {
 .vg { color: #000000 } /* Name.Variable.Global */
 .vi { color: #000000 } /* Name.Variable.Instance */
 .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
-
-
-.builtin {
-  /* font-lock-builtin-face */
-  color: #62124b;
-}
-.comment {
-  /* font-lock-comment-face */
-  color: #aea79f;
-}
-
-.comment-delimiter {
-  /* font-lock-comment-delimiter-face */
-  color: #aea79f;
-  font-style: italic;
-}
-
-.function-name {
-  /* font-lock-function-name-face */
-  color: #860e73;
-  font-weight: bold;
-}
-.keyword {
-  /* font-lock-keyword-face */
-  color: #f47321;
-  font-weight: bold;
-}
-.string, pre.sh_sourceCode .sh_string {
-  /* font-lock-string-face */
-  color: #dd1144;
-}
-
-pre.sh_sourceCode > code > span {
-  color: #333;
-}
-
-.variable-name {
-  /* font-lock-variable-name-face */
-  color: #8b005a;
-}
-
-b .variable-name {
-  color: white;
-}
-
-.css-property {
-  /* css-property */
-  color: #8b005a;
-}
-.css-selector {
-  /* css-selector */
-  color: #860e73;
-  font-weight: bold;
-}
-
-.type {
-  /* font-lock-type-face */
-  color: #83a525;
-}
-.constant {
-  /* font-lock-constant-face */
-  color: #f68d47;
-}
-
+.o { color: #ce5c00; font-weight: bold } /* Operator */
+.p { color: #000000; } /* Punctuation */
