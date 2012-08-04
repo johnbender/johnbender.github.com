@@ -33,7 +33,7 @@ li {
 }
 
 html, body, .page-header {
-  background-color: #white;
+  background-color: white;
 }
 
 #info > div, #info > ul {
@@ -76,7 +76,7 @@ html, body, .page-header {
   margin: -20px -20px 20px;
 }
 
-hr, .page-header {
+hr, .page-header, .content {
   border-bottom: 1px solid #DDD;
   border-top: 0;
 }
@@ -123,7 +123,7 @@ code {
   /* font-lock-variable-name-face */
   font-weight: bold;
   color: #08C;
-  padding: 0.18em 0.2em;
+  padding: 0.10em 0.2em;
 }
 
 pre, code {
@@ -138,6 +138,10 @@ pre {
 
 pre code {
   font-weight: normal;
+}
+
+.pagination {
+  margin: 0.5em;
 }
 
 .pagination a {
