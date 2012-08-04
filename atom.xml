@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-03T16:17:40-07:00</updated>
+ <updated>2012-08-03T21:43:58-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>Splitting Jquery In Two A Proposal</title>
+   <title>Splitting jQuery in Two, A Proposal</title>
    <link href="http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal"/>
    <updated>2012-07-19T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal</id>
@@ -255,7 +255,7 @@
    <id>http://johnbender.github.com/2012/06/15/presentation-faster-javascript-through-category-theory</id>
    <content type="html">I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.
 
-&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;680&quot; height=&quot; 382&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;640&quot; height=&quot; 360&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
 
 &lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.
 </content>
@@ -263,12 +263,12 @@
  
  <entry>
    <title>Presentation: Middleware as a General Purpose Abstraction</title>
-   <link href="http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction"/>
+   <link href="http://johnbender.github.com/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction"/>
    <updated>2012-04-28T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction</id>
+   <id>http://johnbender.github.com/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction</id>
    <content type="html">It was my pleasure to give this presentation at LARubyConf in February. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-middleware/tree/master/samples&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-middleware&quot;&gt;presentation slides&lt;/a&gt; on Github and a big thanks to the fine folks at &lt;a href=&quot;http://confreaks.com&quot;&gt;Confreaks&lt;/a&gt; for posting the video.
 
-&lt;iframe width=&quot;680&quot; height=&quot;420&quot; src=&quot;http://www.youtube.com/embed/fcNaiP5tea0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/fcNaiP5tea0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 </content>
  </entry>
  
