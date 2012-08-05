@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -114,7 +106,7 @@ Function composition and the method call chain created when defining a middlewar
 <span class="keyword">end</span>
 </pre>
 
-Which, once its made its way down the call "request" chain, takes the psuedo-code-form: 
+Which, once its made its way down the call "request" chain, takes the psuedo-code-form:
 
 <pre>
 <span class="type">Rack</span>::<span class="type">Reverse</span>#call <- <span class="type">Rack</span>::<span class="type">Upcase</span>#call <- <span class="type">Proc</span>#call
@@ -132,11 +124,11 @@ It boils down to function chaining with a common argument, namely <span class="v
 reverse <span class="variable-name">&lt;=&lt;</span> upcase <span class="variable-name">&lt;=&lt;</span> head <span class="variable-name">&lt;=&lt;</span> <span class="variable-name">\</span>env <span class="variable-name">-&gt;</span> <span class="type">Right</span> (200, [(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>)], <span class="string">""</span>)
 </pre>
 
-By lifting the functions into the Either monad and using the monadic composition operator <span class="variable-name">&lt;=&lt;</span>, error condition handling is abstracted outside of the functions operating on the <span class="variable-name">env</span>. The Warden class inside Vagrant was implemented to provide similar functionality by inserting itself into the Vagrant middleware call stack. 
+By lifting the functions into the Either monad and using the monadic composition operator <span class="variable-name">&lt;=&lt;</span>, error condition handling is abstracted outside of the functions operating on the <span class="variable-name">env</span>. The Warden class inside Vagrant was implemented to provide similar functionality by inserting itself into the Vagrant middleware call stack.
 
 <h2>Warden</h2>
 
-Vagrant, being a command line application unlike Rack, requires different things of its middleware. Particularly when it comes to error handling. For example, when running `vagrant up` it duplicates a base virtual machine. If for some reason there's an issue during this process its best not to leave 500mb+ virtual disk files lying around. 
+Vagrant, being a command line application unlike Rack, requires different things of its middleware. Particularly when it comes to error handling. For example, when running `vagrant up` it duplicates a base virtual machine. If for some reason there's an issue during this process its best not to leave 500mb+ virtual disk files lying around.
 
 Prior to the introduction of the middleware Warden, each middleware would call its own cleanup method and either return back up the call chain when a problem was encountered or mark the <span class="variable-name">env</span> with an error. This meant that each middleware had to contain its own logic for error checking the environment and for dealing with those errors appropriately.
 
@@ -191,7 +183,7 @@ Which becomes:
 <span class="type">Warden</span>#call <- <span class="type">Rack</span>::<span class="type">Reverse</span>#call <- <span class="type">Warden</span>#call <- <span class="type">Rack</span>::<span class="type">Upcase</span>#call <- <span class="type">Warden</span>#call <- <span class="type">Proc</span>#call
 </pre>
 
-Swapping the monadic composition operator <span class="variable-name">(&lt;=&lt;)</span> into the pseudo-code call chain for the Warden instance makes the inspiration a bit clearer. 
+Swapping the monadic composition operator <span class="variable-name">(&lt;=&lt;)</span> into the pseudo-code call chain for the Warden instance makes the inspiration a bit clearer.
 
 <pre>
 <span class="variable-name">&lt;=&lt;</span> <span class="type">Rack</span>::<span class="type">Reverse</span>#call <span class="variable-name">&lt;=&lt;</span> <span class="type">Rack</span>::<span class="type">Upcase</span>#call <span class="variable-name">&lt;=&lt;</span> <span class="type">Proc</span>#call
@@ -229,7 +221,7 @@ Next the Builder class calls the Warden instance just as it would normally call 
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
 
-Lets break this down a little so its clear how this method does the middleware management in the midst of the interupt handling code. 
+Lets break this down a little so its clear how this method does the middleware management in the midst of the interupt handling code.
 
 <pre>
   <span class="variable-name">@stack</span>.unshift(<span class="variable-name">@actions</span>.shift).first.call(env)
@@ -258,7 +250,7 @@ The implementation of the Warden class is distinctly imperative. Still, the basi
 
 <h2>Learning from Haskell</h2>
 
-Anyone who follows Haskell can see that its fortunes are rising in "the real world". Still, you might be forgiven for thinking its goals too lofty and learning curve too steep for taking the time to learn it. For my part the Warden implementation in Vagrant has been a clear example of what can be gained from spending time learning Haskell. The analogs between function composition and middleware were evident when talking with Mitchell about his middleware implementation in Vagrant. Viewed from that perspective it was natural to look for other techniques and abstractions guided by function composition and combinators that might provide interesting benefits where middleware "composition" was concerned. 
+Anyone who follows Haskell can see that its fortunes are rising in "the real world". Still, you might be forgiven for thinking its goals too lofty and learning curve too steep for taking the time to learn it. For my part the Warden implementation in Vagrant has been a clear example of what can be gained from spending time learning Haskell. The analogs between function composition and middleware were evident when talking with Mitchell about his middleware implementation in Vagrant. Viewed from that perspective it was natural to look for other techniques and abstractions guided by function composition and combinators that might provide interesting benefits where middleware "composition" was concerned.
 
 My goal for the next article will be to build a middleware implementation in Haskell that reflects the same rescue-able behavior. Then I hope to compare its implementation to existing Rack-like software such as Hack and Wai.
 
@@ -281,17 +273,9 @@ My goal for the next article will be to build a middleware implementation in Has
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>12</span></a></li>
     
   
 

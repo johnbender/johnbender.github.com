@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-04T13:33:11-07:00</updated>
+ <updated>2012-08-04T17:43:24-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -775,9 +775,9 @@ And there you have it. After defining a mathematical framework in which to view 
    <id>http://johnbender.github.com/2012/02/22/leveraging-your-insecurities</id>
    <content type="html">&lt;strong&gt;update&lt;/strong&gt;: This article has been &lt;a href=&quot;http://news.ycombinator.com/item?id=3621425&quot; title=&quot;Hacker News Discussion&quot;&gt;posted to Hacker News&lt;/a&gt;. If you enjoy it and are a member there please upvote/comment.
 
-I believe mine is a fairly common condition as a software developer. I know, or at least believe, that I'm smart enough to be paid well for the work that I do, but the state of my intelligence relative to the &quot;great minds&quot; in the communities of which I'm a part (JavaScript and Ruby) is an unknown. My tendency is to assume, as a baseline, that nearly any developer I don't know is smarter and more capable than I am. 
+I believe mine is a fairly common condition as a software developer. I know, or at least believe, that I'm smart enough to be paid well for the work that I do, but the state of my intelligence relative to the &quot;great minds&quot; in the communities of which I'm a part (JavaScript and Ruby) is an unknown. My tendency is to assume, as a baseline, that nearly any developer I don't know is smarter and more capable than I am.
 
-This manifests as a whole host of negative behaviors, everything from grasping wildly at straws on subjects in which I have little or no background, to simply feeling left out of conversations that I would kill to participate in. As bad as the action might be, the self loathing that comes later is far worse and can haunt me long after. Oddly, even after viewing the same situations from the other side, that of the knowledgeable participant, the most endearing quality in those less knowledgeable is honesty and enthusiasm! 
+This manifests as a whole host of negative behaviors, everything from grasping wildly at straws on subjects in which I have little or no background, to simply feeling left out of conversations that I would kill to participate in. As bad as the action might be, the self loathing that comes later is far worse and can haunt me long after. Oddly, even after viewing the same situations from the other side, that of the knowledgeable participant, the most endearing quality in those less knowledgeable is honesty and enthusiasm!
 
 &lt;h2&gt;How then?&lt;/h2&gt;
 
@@ -785,17 +785,17 @@ So, aside from attempting to correct these behaviors, what am I to make of all t
 
 First, it forces me, as the presenter, to fully realize and enumerate an idea from start to finish. This includes branching out into little corners and dark areas of the topic from which a question might be raised. The fear of being caught out without a response to an obvious question drives me, as much as possible, to gather a comprehensive knowledge of what I'm presenting on. This may not be the case for all presenters but I feel compelled to become something of a topic expert before even submitting the proposal.
 
-Second, it requires that I accept not everyone will care about the material or agree with the premise. Even in a room of 30 people, the best technical presentation, no matter how funny, relevant, and inspiring is likely to lose someone. They didn't have enough coffee, their lunch gave them gas, they're already a topic expert, or their pager simply went off and they have to struggle to diagnose a production issue over the spotty conference Wi-Fi. Learning to accept the imperfect nature of your presentation is a good start to accepting that the things you say will not always be ground breaking/thoughtful/witty. 
+Second, it requires that I accept not everyone will care about the material or agree with the premise. Even in a room of 30 people, the best technical presentation, no matter how funny, relevant, and inspiring is likely to lose someone. They didn't have enough coffee, their lunch gave them gas, they're already a topic expert, or their pager simply went off and they have to struggle to diagnose a production issue over the spotty conference Wi-Fi. Learning to accept the imperfect nature of your presentation is a good start to accepting that the things you say will not always be ground breaking/thoughtful/witty.
 
 Last, public speaking requires that you ... speak in public. The confidence that repeated speaking engagements builds in the presenter is not to be underestimated and it translates directly into other social interactions. Meetings, performance reviews, and virtually any expository conversation will benefit directly from the ease with words that one develops.
 
 &lt;h2&gt;(Bumb|Stumb|Fumb)ling Into The Endzone&lt;/h2&gt;
 
-Another particularly interesting behavior that appears to be closely correlated with my involvement in the jQuery Mobile project is a desire to be extremely(+/-) thorough in responses to my teammates and external developers on technical issues. 
+Another particularly interesting behavior that appears to be closely correlated with my involvement in the jQuery Mobile project is a desire to be extremely(+/-) thorough in responses to my teammates and external developers on technical issues.
 
-I should mention that, for internal team issues, this is not always the case. The sad truth is that the people I work with day to day already have a sense, positive or negative, for my capabilities as a developer and expending large amounts of effort to sway their opinion would be a waste. This seems to suggest that the reason for the enormous effort I put in where external developers interact with the project is, in many cases, the conversation on github over an issue or a pull request will be the only interaction that these people ever have with me. As a result I do my best to be careful about presenting intelligent and thoughtful answers to their questions/requests in the hopes of cultivating a positive perception of me in the broader developer community. 
+I should mention that, for internal team issues, this is not always the case. The sad truth is that the people I work with day to day already have a sense, positive or negative, for my capabilities as a developer and expending large amounts of effort to sway their opinion would be a waste. This seems to suggest that the reason for the enormous effort I put in where external developers interact with the project is, in many cases, the conversation on github over an issue or a pull request will be the only interaction that these people ever have with me. As a result I do my best to be careful about presenting intelligent and thoughtful answers to their questions/requests in the hopes of cultivating a positive perception of me in the broader developer community.
 
-For instance last year, before jQuery Mobile went 1.0, one of our users (&lt;a href=&quot;https://github.com/jammus&quot; title=&quot;Jammus on Github&quot;&gt;jammus&lt;/a&gt;) logged an &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579&quot; title=&quot;jQuery Mobile Issue 1579&quot; target=&quot;_blank&quot;&gt;issue&lt;/a&gt; he was experiencing while using the appcache on iOS. After some discussion and proposed workarounds Todd Parker (our team lead) asked me to take a look. A short time later, once I felt understood the issues at hand, I &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374186&quot; title=&quot;jQuery Mobile Issue 1579 Comment&quot; target=&quot;_blank&quot;&gt;voiced my concerns&lt;/a&gt; about the solutions that other user's were offering in the thread. If you scroll down you can almost watch me sweat as I reread my response and correct with additional comments. There's a &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374321&quot; title=&quot;jQuery Mobile Issue 1579 Comment 2&quot;&gt;follow up&lt;/a&gt; noting that CORS requests won't work, which I later correct after realizing that appcache requests can't be cross domain according &lt;a href=&quot;http://dev.w3.org/html5/spec/offline.html#appcache&quot; title=&quot;Appcache w3 Spec&quot;&gt;the spec&lt;/a&gt;. My comment just below that is &lt;em&gt;edited out&lt;/em&gt;, and while it's not totally obvious what I was thinking I do remember being at least mildly embarrassed. 
+For instance last year, before jQuery Mobile went 1.0, one of our users (&lt;a href=&quot;https://github.com/jammus&quot; title=&quot;Jammus on Github&quot;&gt;jammus&lt;/a&gt;) logged an &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579&quot; title=&quot;jQuery Mobile Issue 1579&quot; target=&quot;_blank&quot;&gt;issue&lt;/a&gt; he was experiencing while using the appcache on iOS. After some discussion and proposed workarounds Todd Parker (our team lead) asked me to take a look. A short time later, once I felt understood the issues at hand, I &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374186&quot; title=&quot;jQuery Mobile Issue 1579 Comment&quot; target=&quot;_blank&quot;&gt;voiced my concerns&lt;/a&gt; about the solutions that other user's were offering in the thread. If you scroll down you can almost watch me sweat as I reread my response and correct with additional comments. There's a &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374321&quot; title=&quot;jQuery Mobile Issue 1579 Comment 2&quot;&gt;follow up&lt;/a&gt; noting that CORS requests won't work, which I later correct after realizing that appcache requests can't be cross domain according &lt;a href=&quot;http://dev.w3.org/html5/spec/offline.html#appcache&quot; title=&quot;Appcache w3 Spec&quot;&gt;the spec&lt;/a&gt;. My comment just below that is &lt;em&gt;edited out&lt;/em&gt;, and while it's not totally obvious what I was thinking I do remember being at least mildly embarrassed.
 
 The ultimate result of that interaction was positive: we decided that the hacks suggested would suffice for now and that the issue should be left open for developers experiencing the same problem. I like to believe that is at least in part due to how much effort I expended not just in attempting to help but also in making sure I didn't look silly.
 
@@ -1148,7 +1148,7 @@ Developers have traditionally used JavaScript for relatively simple DOM manipula
 
 &lt;h2&gt;Nested Closures&lt;/h2&gt;
 
-Relegating code to event bindings breaks down in even very simple situations for a few important reasons. First the state that's closed over is often hard to track and bindings can easily be shadowed. 
+Relegating code to event bindings breaks down in even very simple situations for a few important reasons. First the state that's closed over is often hard to track and bindings can easily be shadowed.
 
     &lt;pre&gt;
 (&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$&lt;/span&gt; ) {
@@ -1163,18 +1163,18 @@ Relegating code to event bindings breaks down in even very simple situations for
 &lt;/span&gt;
   $(&lt;span class=&quot;string&quot;&gt;&quot;.bar&quot;&lt;/span&gt;).click(&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
     &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;header&lt;/span&gt; = $( &lt;span class=&quot;string&quot;&gt;&quot;header&quot;&lt;/span&gt; );
-    
+
     &lt;span class=&quot;comment&quot;&gt;// ...
 &lt;/span&gt;  });
 })( jQuery );&lt;/pre&gt;
 
-Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.  
+Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.
 
 &lt;h2&gt;Objects Not Functions&lt;/h2&gt;
 
 As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It's also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.
 
-With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it's &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder. 
+With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it's &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.
 
 Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like &lt;a href=&quot;http://documentcloud.github.com/backbone/#Model&quot; title=&quot;Backbone Model&quot;&gt;Backbone&lt;/a&gt; and &lt;a href=&quot;http://docs.sproutcore.com/#doc=SC.Object&amp;src=false&quot; title=&quot;Sproutcore Object&quot;&gt;Sproutcore&lt;/a&gt; provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his &lt;a href=&quot;http://vimeo.com/22687694&quot; title=&quot;Getting Truth from the DOM&quot;&gt;presentation&lt;/a&gt; &quot;Getting Truth Out of the DOM&quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.
 
@@ -1190,7 +1190,7 @@ Operating under the assumption that jQuery will remain the primary means of inte
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;AlertArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$domElement&lt;/span&gt; ){
   &lt;span class=&quot;comment&quot;&gt;// bind to the instances onCloseClick
 &lt;/span&gt;  $domElement.find( &lt;span class=&quot;string&quot;&gt;&quot;div.close&quot;&lt;/span&gt; ).click(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.onCloseClick);
-  
+
   &lt;span class=&quot;comment&quot;&gt;// if the alert area has text on creation show it
 &lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( $domElement.text() ) {
     $domElement.show();
@@ -1219,7 +1219,7 @@ This function takes as arguments a context (&lt;code&gt;newThis&lt;/code&gt;) an
     &lt;pre&gt;
 Function.prototype.&lt;span class=&quot;function-name&quot;&gt;bind&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;) {
   &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;self&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;
-  
+
   &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
     self.apply(newThis, arguments);
   };
@@ -1251,28 +1251,28 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;textarea&quot;&lt;/span&gt; ).each
       $textArea.height(scrollHeight + 20);
     }
   }
-    
+
   &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;limitWarn&lt;/span&gt;() {
     &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( $textArea.val().length &amp;gt; 10 ) {
       $textArea.css( &lt;span class=&quot;string&quot;&gt;'background-color'&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;'red'&lt;/span&gt; );
     }
   }
-  
+
   $textArea.keyup(grow).keyup(limitWarn);
   $(window).load(grow).load(limitWarn);
 });
 &lt;/pre&gt;
 
-For all textarea elements in the DOM the &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; functions are bound to &lt;code&gt;keyup&lt;/code&gt; for user input and &lt;code&gt;$(window).load&lt;/code&gt; for text included in the markup. &lt;code&gt;grow&lt;/code&gt; does a simple calculation to determine if the text exceeds the textarea's rendered height and then increases it where necessary. &lt;code&gt;limitWarn&lt;/code&gt; changes the background color of the textarea when the content length exceeds a given threshold. Already there are three references bleeding into &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; (ie, &lt;code&gt;i&lt;/code&gt;, &lt;code&gt;elem&lt;/code&gt;, and &lt;code&gt;limitWarn&lt;/code&gt;/&lt;code&gt;grow&lt;/code&gt;). Now, the equivalent using the prototype system. 
+For all textarea elements in the DOM the &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; functions are bound to &lt;code&gt;keyup&lt;/code&gt; for user input and &lt;code&gt;$(window).load&lt;/code&gt; for text included in the markup. &lt;code&gt;grow&lt;/code&gt; does a simple calculation to determine if the text exceeds the textarea's rendered height and then increases it where necessary. &lt;code&gt;limitWarn&lt;/code&gt; changes the background color of the textarea when the content length exceeds a given threshold. Already there are three references bleeding into &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; (ie, &lt;code&gt;i&lt;/code&gt;, &lt;code&gt;elem&lt;/code&gt;, and &lt;code&gt;limitWarn&lt;/code&gt;/&lt;code&gt;grow&lt;/code&gt;). Now, the equivalent using the prototype system.
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;TextArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$textArea&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;limit&lt;/span&gt; ){
   &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;grow&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.grow.bind(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;),
       &lt;span class=&quot;variable-name&quot;&gt;limitWarn&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.limitWarn.bind(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;);
-  
+
   $textArea.keyup(grow).keyup(limitWarn);
   $(window).load(grow).load(limitWarn);
-    
+
   &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$textArea = $textArea;
   &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.limit = limit;
 }
@@ -1297,7 +1297,7 @@ $(&lt;span class=&quot;string&quot;&gt;&quot;textarea&quot;&lt;/span&gt;).each(&
 });
 &lt;/pre&gt;
 
-The only additional overhead is the function context bindings&lt;sup&gt;2&lt;/sup&gt;, typing &lt;code&gt;TextArea&lt;/code&gt; and &lt;code&gt;prototype&lt;/code&gt;, and the instantiation. The upshot is a purpose built constructor where the &lt;code&gt;each&lt;/code&gt; closure served before and a very specific portal through which state contained in the object is accessed (&lt;code&gt;this&lt;/code&gt;). 
+The only additional overhead is the function context bindings&lt;sup&gt;2&lt;/sup&gt;, typing &lt;code&gt;TextArea&lt;/code&gt; and &lt;code&gt;prototype&lt;/code&gt;, and the instantiation. The upshot is a purpose built constructor where the &lt;code&gt;each&lt;/code&gt; closure served before and a very specific portal through which state contained in the object is accessed (&lt;code&gt;this&lt;/code&gt;).
 
 Now consider another developer working on the same project needs to manage textareas in a different context with a minor alteration. The closure based solution requires something of an overhaul, but the &lt;code&gt;TextArea&lt;/code&gt; prototype can remain nearly untouched while it's repurposed elsewhere.
 
@@ -1382,10 +1382,10 @@ My fear, and the motivation for this post, is that developers are not turning qu
 &lt;ol&gt;
 	&lt;li&gt;One of the best examples I've found is Google's closure library. Whatever you may think of the library itself, the &lt;a href=&quot;http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/demos/samplecomponent.js&quot; title=&quot;Sample&quot;&gt;code&lt;/a&gt; is really nice to look through.
 	&lt;li&gt;Underscore.js provides a nice facility for binding all methods on an object to that object context (&lt;code&gt;_.bindAll&lt;/code&gt;), though it requires explicit inclusion of methods defined on the prototype&lt;/li&gt;
-	&lt;li&gt;You can learn more about prototypal inheritance from &lt;a href=&quot;http://javascript.crockford.com/prototypal.html&quot; title=&quot;prototypal inheritance&quot;&gt;Douglas Crockford&lt;/a&gt; and &lt;a href=&quot;http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/&quot; title=&quot;Yehuda Katz - Prototypes&quot;&gt;Yehuda Katz&lt;/a&gt;&lt;/li&gt;  
+	&lt;li&gt;You can learn more about prototypal inheritance from &lt;a href=&quot;http://javascript.crockford.com/prototypal.html&quot; title=&quot;prototypal inheritance&quot;&gt;Douglas Crockford&lt;/a&gt; and &lt;a href=&quot;http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/&quot; title=&quot;Yehuda Katz - Prototypes&quot;&gt;Yehuda Katz&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
- 
+
 </content>
  </entry>
  
@@ -1482,7 +1482,7 @@ foo.apply(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;js2-error&qu
     e.id = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;;
     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; e;
   });
-  
+
   &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;
 };
 
@@ -1535,7 +1535,7 @@ or in terms of the Applicative
     &lt;pre&gt;
 &lt;span class=&quot;variable-name&quot;&gt;$.&lt;/span&gt;fn&lt;span class=&quot;variable-name&quot;&gt;.&lt;/span&gt;ap &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (f a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; f b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; f a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; f b&lt;/pre&gt;
 
-which is is pretty close to what we're looking for 
+which is is pretty close to what we're looking for
 
 &lt;pre&gt;
 (&lt;span class=&quot;function-name&quot;&gt;&amp;lt;*&amp;gt;&lt;/span&gt;) &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; f (a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; f a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; f b
@@ -1632,7 +1632,7 @@ That at least makes it clear that the &lt;span class=&quot;variable-name&quot;&g
 &lt;span class=&quot;function-name&quot;&gt;fmap&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; functor(a) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; functor(b)
 &lt;/pre&gt;
 
-This seems to get at the central purpose of the &lt;span class=&quot;variable-name&quot;&gt;functor&lt;/span&gt;: to wrap other data. 
+This seems to get at the central purpose of the &lt;span class=&quot;variable-name&quot;&gt;functor&lt;/span&gt;: to wrap other data.
 
 Finally, the &lt;span class=&quot;variable-name&quot;&gt;functor(b)&lt;/span&gt; on the far right is the return value of &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt;, which is also data of type &lt;span class=&quot;variable-name&quot;&gt;b&lt;/span&gt; wrapped up in a functor.
 
@@ -1688,7 +1688,7 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;div&quot;&lt;/span&gt; ).map( &lt;
 &lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; elem;
 });&lt;/pre&gt;
 
-In short we've taken a function and &quot;lifted&quot; it into the jQuery object context to get at the underlying HTMLDivElements. After performing the alteration we can return the element back to &lt;span class=&quot;variable-name&quot;&gt;map&lt;/span&gt; and it will handle putting the element into its jQuery object wrapper, just like &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt;. 
+In short we've taken a function and &quot;lifted&quot; it into the jQuery object context to get at the underlying HTMLDivElements. After performing the alteration we can return the element back to &lt;span class=&quot;variable-name&quot;&gt;map&lt;/span&gt; and it will handle putting the element into its jQuery object wrapper, just like &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt;.
 
 If thats not quite clear enough, you can achieve the same result with the following:
 
@@ -1704,7 +1704,7 @@ Really the only difference between &lt;span class=&quot;variable-name&quot;&gt;$
 
 One of the primary uses for a Functor context/wrapper is control. While jQuery provides direct access to the underlying data (array index notation) in addition to the &lt;span class=&quot;variable-name&quot;&gt;$.fn.map&lt;/span&gt; function, this pattern is easy to leverage when you want to control or manipulate access to data.
 
-For example, if you wanted to prevent manipulation of an element while visible, e.g. a modal dialog, you might define a &lt;span class=&quot;variable-name&quot;&gt;HiddenFunctor&lt;/span&gt;. &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; in this case would only execute the function on the dialog element when &lt;span class=&quot;variable-name&quot;&gt;a.is(&quot;:visible&quot;)&lt;/span&gt; is false. 
+For example, if you wanted to prevent manipulation of an element while visible, e.g. a modal dialog, you might define a &lt;span class=&quot;variable-name&quot;&gt;HiddenFunctor&lt;/span&gt;. &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; in this case would only execute the function on the dialog element when &lt;span class=&quot;variable-name&quot;&gt;a.is(&quot;:visible&quot;)&lt;/span&gt; is false.
 
     &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;HiddenFunctor&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;a&lt;/span&gt;){
@@ -1735,7 +1735,7 @@ The constructor prevents access to the wrapped element &lt;span class=&quot;vari
 
     &lt;span class=&quot;function-name&quot;&gt;show&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$dialog&lt;/span&gt; ){
       &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; $dialog.show();
-    }, 
+    },
 
     &lt;span class=&quot;function-name&quot;&gt;destroy&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$dialog&lt;/span&gt; ){
       &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; $dialog.remove();
@@ -1755,7 +1755,7 @@ By using the Functor pattern to control alteration of the wrapped data based on 
 
 &lt;h2&gt;Haskell&lt;/h2&gt;
 
-With any luck the concept of getting your functions into the jQuery object or &lt;span class=&quot;variable-name&quot;&gt;HiddenFunctor&lt;/span&gt; contexts, should look strikingly similar to the more general &lt;span class=&quot;variable-name&quot;&gt;Functor&lt;/span&gt; from Haskell. In jQuery's case, the jQuery object is our context, our &lt;span class=&quot;variable-name&quot;&gt;Functor&lt;/span&gt; like object, and the &lt;span class=&quot;variable-name&quot;&gt;map&lt;/span&gt; function is the &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; we use to get into that context to alter the values inside ( &lt;span class=&quot;variable-name&quot;&gt;HTMLElement&lt;/span&gt;s). 
+With any luck the concept of getting your functions into the jQuery object or &lt;span class=&quot;variable-name&quot;&gt;HiddenFunctor&lt;/span&gt; contexts, should look strikingly similar to the more general &lt;span class=&quot;variable-name&quot;&gt;Functor&lt;/span&gt; from Haskell. In jQuery's case, the jQuery object is our context, our &lt;span class=&quot;variable-name&quot;&gt;Functor&lt;/span&gt; like object, and the &lt;span class=&quot;variable-name&quot;&gt;map&lt;/span&gt; function is the &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; we use to get into that context to alter the values inside ( &lt;span class=&quot;variable-name&quot;&gt;HTMLElement&lt;/span&gt;s).
 
 We can now go back and substitute some fictional types in the &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; type signature to show what fmap would look like if we were building jQuery in Haskell. Assuming the substitution of &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; for &lt;span class=&quot;variable-name&quot;&gt;jQuery&lt;/span&gt; we can even plug this back into our &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; type signature:
 
@@ -1764,7 +1764,7 @@ We can now go back and substitute some fictional types in the &lt;span class=&qu
 
 Again, that's not a valid type signature, but the important part is that you see, &lt;span class=&quot;variable-name&quot;&gt;jQuery&lt;/span&gt; or &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; is wrapping something, in this case an HTMLElement, and &lt;span class=&quot;variable-name&quot;&gt;fmap&lt;/span&gt; lets you operate on the thing being wrapped in an &lt;i&gt;identical&lt;/i&gt; fashion to &lt;span class=&quot;variable-name&quot;&gt;$.map&lt;/span&gt;.
 
-And the valid version: 
+And the valid version:
 
     &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;JQFunctor&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;JQuery&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;
@@ -1772,9 +1772,9 @@ And the valid version:
 
 &lt;h2&gt;Further Reading&lt;/h2&gt;
 
-[update] Its important to note, as some folks have already, that the Functor laws form an important part of their structure preserving properties. For a bit more information on them and why they're important you can view the Learn You a Haskell section on the topic, or for more detail you can check out the &lt;a href=&quot;http://en.wikibooks.org/wiki/Haskell/Category_theory#Functors_on_Hask&quot; title=&quot;Functors on Hask&quot;&gt;wikibook entry&lt;/a&gt; on Functors and Hask objects. 
+[update] Its important to note, as some folks have already, that the Functor laws form an important part of their structure preserving properties. For a bit more information on them and why they're important you can view the Learn You a Haskell section on the topic, or for more detail you can check out the &lt;a href=&quot;http://en.wikibooks.org/wiki/Haskell/Category_theory#Functors_on_Hask&quot; title=&quot;Functors on Hask&quot;&gt;wikibook entry&lt;/a&gt; on Functors and Hask objects.
 
-In the next post I'll show how extending jQuery's &lt;span class=&quot;variable-name&quot;&gt;$.fn&lt;/span&gt; object results in a behavior similar to the &lt;span class=&quot;variable-name&quot;&gt;pure&lt;/span&gt; function described in McBride and Paterson's Applicative Programming with Effects. From that we'll derive a simple abstraction to make creating chainable jQuery plugins faster and easier to reason about. 
+In the next post I'll show how extending jQuery's &lt;span class=&quot;variable-name&quot;&gt;$.fn&lt;/span&gt; object results in a behavior similar to the &lt;span class=&quot;variable-name&quot;&gt;pure&lt;/span&gt; function described in McBride and Paterson's Applicative Programming with Effects. From that we'll derive a simple abstraction to make creating chainable jQuery plugins faster and easier to reason about.
 
 If this post has piqued your interest in Haskell, or you want to learn about how lists in Haskell behave like Functors (interesting given that the result of &lt;span class=&quot;variable-name&quot;&gt;$()&lt;/span&gt; behaves like a list as well) please take the time to look through some of these links.
 
@@ -1826,7 +1826,7 @@ $ wget &lt;a href=&quot;http://github.com/johnbender/snap-skeleton/tarball/maste
 After cloning/untaring you can rename the project directory, in which case you'll need to replace snap-skeleton in the following commands with whatever you choose.
 
 &lt;pre&gt;
-$ cd snap-skeleton 
+$ cd snap-skeleton
 $ vagrant up
 &lt;/pre&gt;
 
@@ -1847,7 +1847,7 @@ You'll also notice that application built from the initial snap source is named 
 
 &lt;h2&gt;Vagrant workflow&lt;/h2&gt;
 
-Now that you've got a nice new virtual machine and everything necessary to dive into a new Snap application you'll need to know a few simple vagrant commands to save you some time. First and foremost all Vagrant commands must be run from within the project directory where the Vagrantfile resides. With that in mind, you've already seen the `up` command but if you want to get rid of your vm, a quick 
+Now that you've got a nice new virtual machine and everything necessary to dive into a new Snap application you'll need to know a few simple vagrant commands to save you some time. First and foremost all Vagrant commands must be run from within the project directory where the Vagrantfile resides. With that in mind, you've already seen the `up` command but if you want to get rid of your vm, a quick
 
 &lt;pre&gt;
 $ vagrant destroy
@@ -1905,7 +1905,7 @@ vagrant@vagrantup:~$ exit
 $ vagrant suspend
 &lt;/pre&gt;
 
-The next time you want to start hacking just get to the snap-skeleton directory and fire up the vm with a `resume`. 
+The next time you want to start hacking just get to the snap-skeleton directory and fire up the vm with a `resume`.
 
 &lt;h2&gt;Altering Your VM&lt;/h2&gt;
 
@@ -1946,7 +1946,7 @@ config.vm.customize &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |vm|
 &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
 
-The last and most important configuration is for the provisioning tool, Chef. 
+The last and most important configuration is for the provisioning tool, Chef.
 
 &lt;pre&gt;
 config.vm.provision &lt;span class=&quot;constant&quot;&gt;:chef_solo&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |chef|
@@ -2153,7 +2153,7 @@ Function composition and the method call chain created when defining a middlewar
 &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
 
-Which, once its made its way down the call &quot;request&quot; chain, takes the psuedo-code-form: 
+Which, once its made its way down the call &quot;request&quot; chain, takes the psuedo-code-form:
 
 &lt;pre&gt;
 &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Reverse&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Upcase&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Proc&lt;/span&gt;#call
@@ -2171,11 +2171,11 @@ It boils down to function chaining with a common argument, namely &lt;span class
 reverse &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; upcase &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; head &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;\&lt;/span&gt;env &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Right&lt;/span&gt; (200, [(&lt;span class=&quot;string&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;text/html&quot;&lt;/span&gt;)], &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;)
 &lt;/pre&gt;
 
-By lifting the functions into the Either monad and using the monadic composition operator &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;, error condition handling is abstracted outside of the functions operating on the &lt;span class=&quot;variable-name&quot;&gt;env&lt;/span&gt;. The Warden class inside Vagrant was implemented to provide similar functionality by inserting itself into the Vagrant middleware call stack. 
+By lifting the functions into the Either monad and using the monadic composition operator &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;, error condition handling is abstracted outside of the functions operating on the &lt;span class=&quot;variable-name&quot;&gt;env&lt;/span&gt;. The Warden class inside Vagrant was implemented to provide similar functionality by inserting itself into the Vagrant middleware call stack.
 
 &lt;h2&gt;Warden&lt;/h2&gt;
 
-Vagrant, being a command line application unlike Rack, requires different things of its middleware. Particularly when it comes to error handling. For example, when running `vagrant up` it duplicates a base virtual machine. If for some reason there's an issue during this process its best not to leave 500mb+ virtual disk files lying around. 
+Vagrant, being a command line application unlike Rack, requires different things of its middleware. Particularly when it comes to error handling. For example, when running `vagrant up` it duplicates a base virtual machine. If for some reason there's an issue during this process its best not to leave 500mb+ virtual disk files lying around.
 
 Prior to the introduction of the middleware Warden, each middleware would call its own cleanup method and either return back up the call chain when a problem was encountered or mark the &lt;span class=&quot;variable-name&quot;&gt;env&lt;/span&gt; with an error. This meant that each middleware had to contain its own logic for error checking the environment and for dealing with those errors appropriately.
 
@@ -2230,7 +2230,7 @@ Which becomes:
 &lt;span class=&quot;type&quot;&gt;Warden&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Reverse&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Warden&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Upcase&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Warden&lt;/span&gt;#call &lt;- &lt;span class=&quot;type&quot;&gt;Proc&lt;/span&gt;#call
 &lt;/pre&gt;
 
-Swapping the monadic composition operator &lt;span class=&quot;variable-name&quot;&gt;(&amp;lt;=&amp;lt;)&lt;/span&gt; into the pseudo-code call chain for the Warden instance makes the inspiration a bit clearer. 
+Swapping the monadic composition operator &lt;span class=&quot;variable-name&quot;&gt;(&amp;lt;=&amp;lt;)&lt;/span&gt; into the pseudo-code call chain for the Warden instance makes the inspiration a bit clearer.
 
 &lt;pre&gt;
 &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Reverse&lt;/span&gt;#call &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Rack&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Upcase&lt;/span&gt;#call &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Proc&lt;/span&gt;#call
@@ -2268,7 +2268,7 @@ Next the Builder class calls the Warden instance just as it would normally call 
   &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;
 
-Lets break this down a little so its clear how this method does the middleware management in the midst of the interupt handling code. 
+Lets break this down a little so its clear how this method does the middleware management in the midst of the interupt handling code.
 
 &lt;pre&gt;
   &lt;span class=&quot;variable-name&quot;&gt;@stack&lt;/span&gt;.unshift(&lt;span class=&quot;variable-name&quot;&gt;@actions&lt;/span&gt;.shift).first.call(env)
@@ -2297,7 +2297,7 @@ The implementation of the Warden class is distinctly imperative. Still, the basi
 
 &lt;h2&gt;Learning from Haskell&lt;/h2&gt;
 
-Anyone who follows Haskell can see that its fortunes are rising in &quot;the real world&quot;. Still, you might be forgiven for thinking its goals too lofty and learning curve too steep for taking the time to learn it. For my part the Warden implementation in Vagrant has been a clear example of what can be gained from spending time learning Haskell. The analogs between function composition and middleware were evident when talking with Mitchell about his middleware implementation in Vagrant. Viewed from that perspective it was natural to look for other techniques and abstractions guided by function composition and combinators that might provide interesting benefits where middleware &quot;composition&quot; was concerned. 
+Anyone who follows Haskell can see that its fortunes are rising in &quot;the real world&quot;. Still, you might be forgiven for thinking its goals too lofty and learning curve too steep for taking the time to learn it. For my part the Warden implementation in Vagrant has been a clear example of what can be gained from spending time learning Haskell. The analogs between function composition and middleware were evident when talking with Mitchell about his middleware implementation in Vagrant. Viewed from that perspective it was natural to look for other techniques and abstractions guided by function composition and combinators that might provide interesting benefits where middleware &quot;composition&quot; was concerned.
 
 My goal for the next article will be to build a middleware implementation in Haskell that reflects the same rescue-able behavior. Then I hope to compare its implementation to existing Rack-like software such as Hack and Wai.
 
@@ -2429,7 +2429,7 @@ While Rack, in its current form, doesn't have any alternatives to offer when it 
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt; &lt;/span&gt;&lt;/pre&gt;
 
 
-There are 3 changes to the original. First, an import of Control.Monad makes the Maybe Monad instance available. Second, the dot composition operator has been replaced with the monad composition operator (&lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;). Third, the type of (&lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;) is  
+There are 3 changes to the original. First, an import of Control.Monad makes the Maybe Monad instance available. Second, the dot composition operator has been replaced with the monad composition operator (&lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;). Third, the type of (&lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;) is
 &lt;pre&gt;
 (&lt;span class=&quot;function-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt;) &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Monad&lt;/span&gt; m) &lt;span class=&quot;variable-name&quot;&gt;=&amp;gt;&lt;/span&gt; (b &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; m c) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; (a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; m b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; m c&lt;/pre&gt;
 
@@ -2454,7 +2454,7 @@ The key is that when Nothing is passed as the first argument to (&lt;span class=
 
 &lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt; run ()
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Nothing
-&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt; 
+&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt;
 &lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;run2&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; reverse &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; upcase &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; head &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;\&lt;/span&gt;env &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; (200, [(&lt;span class=&quot;string&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;text/html&quot;&lt;/span&gt;)], &lt;span class=&quot;string&quot;&gt;&quot;Hello World!&quot;&lt;/span&gt;)
 
@@ -2463,7 +2463,7 @@ The key is that when Nothing is passed as the first argument to (&lt;span class=
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt;
 &lt;/span&gt;&lt;/pre&gt;
 
-Great! We've established a way to prevent the other middleware from futzing with the error, but lets make one small change so that our pipeline can report something more useful than Nothing while continuing to short circuit. 
+Great! We've established a way to prevent the other middleware from futzing with the error, but lets make one small change so that our pipeline can report something more useful than Nothing while continuing to short circuit.
 
  &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Control.Monad.Error&lt;/span&gt;
@@ -2482,7 +2482,7 @@ Great! We've established a way to prevent the other middleware from futzing with
 
 &lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt; run ()
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Left &quot;Head cannot operate on an empty string&quot;
-&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt; 
+&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;*Main&amp;gt;
 &lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;run2&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; reverse &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; upcase &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; head &lt;span class=&quot;variable-name&quot;&gt;&amp;lt;=&amp;lt;&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;\&lt;/span&gt;env &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Right&lt;/span&gt; (200, [(&lt;span class=&quot;string&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;text/html&quot;&lt;/span&gt;)], &lt;span class=&quot;string&quot;&gt;&quot;Hello World!&quot;&lt;/span&gt;)
 
@@ -2500,7 +2500,7 @@ Next time I'd like to take the concepts we've applied here to our Haskell &quot;
 
 1. Functions composed in the Maybe monad, as in the example, don't actually short circuit. They have to run through each composition but as you can see from the Maybe Monad instance they don't execute the function itself.
 
-2. Replacing our Response whole sale with a Left String is really only useful for illustration in this case. It would be better to at least use Either Response Response, and provide an errorResponse function that takes a string and sets the status and headers properly. 
+2. Replacing our Response whole sale with a Left String is really only useful for illustration in this case. It would be better to at least use Either Response Response, and provide an errorResponse function that takes a string and sets the status and headers properly.
 </content>
  </entry>
  
@@ -2511,11 +2511,11 @@ Next time I'd like to take the concepts we've applied here to our Haskell &quot;
    <id>http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk</id>
    <content type="html">&lt;h2&gt;Motivation&lt;/h2&gt;
 
-I've been using &lt;a href=&quot;http://monkrb.com&quot;&gt;Monk&lt;/a&gt; with the &lt;a href=&quot;http://github.com/tizoc/armonk-skeleton&quot;&gt;armonk&lt;/a&gt; skeleton for the last couple of weeks to build a little app that monitors Craig's List searches. Bebop aside, I've found it to be a really refreshing experience, but I knew when I started building the app that the vanilla routing DSL wasn't going to meet my needs (it wasn't built too!). I also knew I would end up missing the path helpers, targeted filters, resource nesting, and printable routing information from Rails. So! after mocking up a simple DSL and consulting some friends I built and tested this little Sinatra routing extension and dubbed it Bebop in honor of Thelonius Monk.  
+I've been using &lt;a href=&quot;http://monkrb.com&quot;&gt;Monk&lt;/a&gt; with the &lt;a href=&quot;http://github.com/tizoc/armonk-skeleton&quot;&gt;armonk&lt;/a&gt; skeleton for the last couple of weeks to build a little app that monitors Craig's List searches. Bebop aside, I've found it to be a really refreshing experience, but I knew when I started building the app that the vanilla routing DSL wasn't going to meet my needs (it wasn't built too!). I also knew I would end up missing the path helpers, targeted filters, resource nesting, and printable routing information from Rails. So! after mocking up a simple DSL and consulting some friends I built and tested this little Sinatra routing extension and dubbed it Bebop in honor of Thelonius Monk.
 
 &lt;h2&gt;Examples&lt;/h2&gt;
 
-Once registered Bebop provides the &lt;code&gt;resource&lt;/code&gt; class method on &lt;code&gt;Sinatra::Base&lt;/code&gt; as the starting point for building your routes. 
+Once registered Bebop provides the &lt;code&gt;resource&lt;/code&gt; class method on &lt;code&gt;Sinatra::Base&lt;/code&gt; as the starting point for building your routes.
 
     &lt;pre&gt;
 require &lt;span class=&quot;string&quot;&gt;'sinatra'&lt;/span&gt;
@@ -2525,7 +2525,7 @@ require &lt;span class=&quot;string&quot;&gt;'bebop'&lt;/span&gt;
   register &lt;span class=&quot;type&quot;&gt;Bebop&lt;/span&gt;
 
   resource &lt;span class=&quot;constant&quot;&gt;:foos&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |foos|
-    
+
     &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;GET /foos/hello
 &lt;/span&gt;    foos.get &lt;span class=&quot;string&quot;&gt;'/hello'&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
       &lt;span class=&quot;string&quot;&gt;'hello world'&lt;/span&gt;
@@ -2562,7 +2562,7 @@ As illustrated, Bebop can be used for nothing more than prefixing the routes gen
 
     &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;PUT /foos/:foo_id
 &lt;/span&gt;    foos.update {}
-    
+
     &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;GET /foos/:foo_id/edit
 &lt;/span&gt;    foos.edit {}
 
@@ -2580,10 +2580,10 @@ And if you want to nest your resources bebop handles prepending the routes corre
   resource &lt;span class=&quot;constant&quot;&gt;:foos&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |foos|
 
     foos.resource &lt;span class=&quot;constant&quot;&gt;:bars&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |bars|
-      
+
       &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Get /foos/:foos_id/bars
 &lt;/span&gt;      foos.index {}
-      
+
       &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;GET /foos/:foo_id/bars/:bar_id
 &lt;/span&gt;      foos.show {}
     &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
@@ -2600,12 +2600,12 @@ Bebop also extends some of the basic Sinatra functionality like before and after
 
   resource &lt;span class=&quot;constant&quot;&gt;:foos&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |foos|
 
-    &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;To run a filter before all routes 
+    &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;To run a filter before all routes
 &lt;/span&gt;    &lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;
 &lt;/span&gt;    foos.before &lt;span class=&quot;constant&quot;&gt;:all&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
       &lt;span class=&quot;variable-name&quot;&gt;@all&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;'all'&lt;/span&gt;
     &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
-    
+
     &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;To have your filter run before a specific route, the route must be one of the seven helper
 &lt;/span&gt;    &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;routes (see example/routes.rb) or specify the :identifier parameter
 &lt;/span&gt;    &lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;
@@ -2616,7 +2616,7 @@ Bebop also extends some of the basic Sinatra functionality like before and after
     foos.new &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
       &lt;span class=&quot;string&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;variable-name&quot;&gt;#{@all}&lt;/span&gt;&lt;span class=&quot;string&quot;&gt; &lt;/span&gt;&lt;span class=&quot;variable-name&quot;&gt;#{@new}&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;=&amp;gt; 'all new'
 &lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
-   
+
     &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;You can target the vanila methods by providing the :identifier hash option
 &lt;/span&gt;    &lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;
 &lt;/span&gt;    &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;GET /foos/baz
@@ -2629,7 +2629,7 @@ Bebop also extends some of the basic Sinatra functionality like before and after
 &lt;/span&gt;    foos.before &lt;span class=&quot;constant&quot;&gt;:bars&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
       &lt;span class=&quot;variable-name&quot;&gt;@bars&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;'some bars'&lt;/span&gt;
     &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
-    
+
     foos.resource &lt;span class=&quot;constant&quot;&gt;:bars&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |bars|
       bars.get &lt;span class=&quot;string&quot;&gt;'/some_bars'&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
         &lt;span class=&quot;variable-name&quot;&gt;@bars&lt;/span&gt; &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;=&amp;gt; 'some bars'
@@ -2647,12 +2647,12 @@ Bebop also extends some of the basic Sinatra functionality like before and after
     &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 
     foos.get(&lt;span class=&quot;string&quot;&gt;'/something'&lt;/span&gt;, &lt;span class=&quot;constant&quot;&gt;:identifier&lt;/span&gt; =&amp;gt; &lt;span class=&quot;constant&quot;&gt;:bak&lt;/span&gt;) { &lt;span class=&quot;variable-name&quot;&gt;@bak_baz&lt;/span&gt; }
-    foos.get(&lt;span class=&quot;string&quot;&gt;'/anything'&lt;/span&gt;, &lt;span class=&quot;constant&quot;&gt;:identifier&lt;/span&gt; =&amp;gt; &lt;span class=&quot;constant&quot;&gt;:baz&lt;/span&gt;) { &lt;span class=&quot;variable-name&quot;&gt;@bak_baz&lt;/span&gt; }    
+    foos.get(&lt;span class=&quot;string&quot;&gt;'/anything'&lt;/span&gt;, &lt;span class=&quot;constant&quot;&gt;:identifier&lt;/span&gt; =&amp;gt; &lt;span class=&quot;constant&quot;&gt;:baz&lt;/span&gt;) { &lt;span class=&quot;variable-name&quot;&gt;@bak_baz&lt;/span&gt; }
   &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
 &lt;/pre&gt;
 
-Path helpers follow a simple naming convention that starts with the original parent resource, all the child resources ordered by nesting, and finishing with the action identifier. 
+Path helpers follow a simple naming convention that starts with the original parent resource, all the child resources ordered by nesting, and finishing with the action identifier.
 
   &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;MyApp&lt;/span&gt; &amp;lt; &lt;span class=&quot;type&quot;&gt;Sinatra&lt;/span&gt;::&lt;span class=&quot;type&quot;&gt;Base&lt;/span&gt;
@@ -2661,14 +2661,14 @@ Path helpers follow a simple naming convention that starts with the original par
   resource &lt;span class=&quot;constant&quot;&gt;:foos&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |foos|
 
     foos.resource &lt;span class=&quot;constant&quot;&gt;:bars&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |bars|
-      
+
       &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;GET /foos/:foo_id/bars/:bar_id/edit
 &lt;/span&gt;      bars.edit &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
         &lt;span class=&quot;string&quot;&gt;&quot;foo: &lt;/span&gt;&lt;span class=&quot;variable-name&quot;&gt;#{params[:foo_id]}&lt;/span&gt;&lt;span class=&quot;string&quot;&gt; bar: &lt;/span&gt;&lt;span class=&quot;variable-name&quot;&gt;#{params[:bar_id]}&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&quot;&lt;/span&gt;
-      &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt; 
-      
+      &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+
       bars.get &lt;span class=&quot;string&quot;&gt;'/redirect'&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
-     
+
         &lt;span class=&quot;comment-delimiter&quot;&gt;# &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Redirects to /foos/1/bars/2/edit
 &lt;/span&gt;        redirect foos_bars_edit_path(1, 2)
       &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
@@ -2679,7 +2679,7 @@ Path helpers follow a simple naming convention that starts with the original par
 
 &lt;h2&gt;Code&lt;/h2&gt;
 
-Most of the above examples are borrowed from the examples directory in the gem if you are interested. The repo can be found at &lt;a href=&quot;http://github.com/johnbender/bebop&quot;&gt;github&lt;/a&gt;, and you can install the gem right now as long as gemcutter.org is one of your sources. As suggested by Damian Janowski I'll be adding some template helpers and some other goodies soon. 
+Most of the above examples are borrowed from the examples directory in the gem if you are interested. The repo can be found at &lt;a href=&quot;http://github.com/johnbender/bebop&quot;&gt;github&lt;/a&gt;, and you can install the gem right now as long as gemcutter.org is one of your sources. As suggested by Damian Janowski I'll be adding some template helpers and some other goodies soon.
 
 As always feedback and suggestions are welcome!
 </content>
@@ -2704,7 +2704,7 @@ After doing this on paper I thought it might be fun to use haskell and put toget
 &lt;span class=&quot;keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Dfa&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt;]
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; { identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; , edges &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] }
            &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; { identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt;, edges &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] }
-&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; { action &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;), edge_identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; }&lt;/pre&gt; 
+&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; { action &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;), edge_identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; }&lt;/pre&gt;
 
 
 This is an informal representation (you can find the formal one &lt;a href=&quot;http://en.wikipedia.org/wiki/Deterministic_finite-state_machine#Formal_definition&quot;&gt;here&lt;/a&gt;) but here, a dfa is a set of States, a State is an identifier and a set of Edges, and an Edge is a function to determine if it is the edge to follow for a given input and its target state. If this looks a bit clunky at first a cleaned up version is further down.
@@ -2717,11 +2717,11 @@ With my types in place I went ahead with building the functions to traverse a DF
 &lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; current_state &lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; is_final current_state
 &lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; current_state dfa (x&lt;span class=&quot;type&quot;&gt;:&lt;/span&gt;xs) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; match next_state dfa xs
                            &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt; next_state &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; traverse dfa current_state x
-                                
 
-&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Dfa&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 
+
+&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Dfa&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; dfa state &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (find_state dfa) &lt;span class=&quot;variable-name&quot;&gt;.&lt;/span&gt; (next_id &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; edges state)
-                                   
+
 &lt;span class=&quot;function-name&quot;&gt;is_final&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; x y) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;True&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;is_final&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; x y) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;False&lt;/span&gt;
 
@@ -2739,20 +2739,20 @@ The short explanation is that for each input it checks the current state for whe
 Now, to test a sample graph:
 
   &lt;pre&gt;
-&lt;span class=&quot;function-name&quot;&gt;state1&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 1 [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a 2, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b 1] 
+&lt;span class=&quot;function-name&quot;&gt;state1&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 1 [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a 2, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b 1]
 &lt;span class=&quot;function-name&quot;&gt;state2&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 2 [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a 3, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b 1]
 &lt;span class=&quot;function-name&quot;&gt;state3&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 3 [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a 3, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b 4]
 &lt;span class=&quot;function-name&quot;&gt;state4&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; 4 [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a 4, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b 4]
 
 &lt;span class=&quot;function-name&quot;&gt;graph&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; [state1, state2, state3, state4]
 
-&lt;span class=&quot;function-name&quot;&gt;is_a&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'a'&lt;/span&gt;) 
+&lt;span class=&quot;function-name&quot;&gt;is_a&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'a'&lt;/span&gt;)
 
 &lt;span class=&quot;function-name&quot;&gt;is_b&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'b'&lt;/span&gt;) &lt;/pre&gt;
- 
+
 You'll note that state4 refers to itself no matter the input so that the match function can operate exhaustively on the input string.
 
-And it works! But the best part of this whole exercise (for me at least) was yet to be realized because this whole first definition has been done in a very inelegant manner by failing to make use of haskell's lazy nature and recursive data types. 
+And it works! But the best part of this whole exercise (for me at least) was yet to be realized because this whole first definition has been done in a very inelegant manner by failing to make use of haskell's lazy nature and recursive data types.
 
 &lt;h2&gt;Improved&lt;/h2&gt;
 
@@ -2761,7 +2761,7 @@ The first, and easiest, thing to improve is how the Edges reference their destin
  &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Dfa&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt;]
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; { edges &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] }
-           &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; 
+           &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt;
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; { condition &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;), destination &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; }
 
 &lt;/pre&gt;
@@ -2772,7 +2772,7 @@ For reference:
 &lt;span class=&quot;keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Dfa&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt;]
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; { identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; , edges &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] }
            &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; { identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt;, edges &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] }
-&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; { action &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;), edge_identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; }&lt;/pre&gt; 
+&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; { action &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;), edge_identifier &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Int&lt;/span&gt; }&lt;/pre&gt;
 
 
 Not only is the new definition much cleaner, but its also more intuitive. An edge simply hands off the _actual_ state its pointing at. No need to go find it. As a result the code necessary to operate the state machine is also significantly simplified:
@@ -2781,12 +2781,12 @@ Not only is the new definition much cleaner, but its also more intuitive. An edg
 
 &lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Bool&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;True&lt;/span&gt;
-&lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt;) &lt;span class=&quot;type&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;False&lt;/span&gt; 
+&lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt;) &lt;span class=&quot;type&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;False&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;match&lt;/span&gt; current_state (x&lt;span class=&quot;type&quot;&gt;:&lt;/span&gt;xs) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; match next_state xs
     &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt; next_state &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; traverse (edges current_state) x
 
-&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; 
-&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; (e&lt;span class=&quot;type&quot;&gt;:&lt;/span&gt;es) input &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; (condition e) input &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; destination e 
+&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; [&lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt;] &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Char&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt;
+&lt;span class=&quot;function-name&quot;&gt;traverse&lt;/span&gt; (e&lt;span class=&quot;type&quot;&gt;:&lt;/span&gt;es) input &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; (condition e) input &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; destination e
                       &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; otherwise &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; traverse es input
 &lt;/pre&gt;
 
@@ -2798,18 +2798,18 @@ Notice the type signature of traverse is very intuitive:
 Given a list of edges and an input it will give you the resulting state. Not the id, which would then be used to search for its corresponding state. Finally, the actual graph:
 
   &lt;pre&gt;
-&lt;span class=&quot;function-name&quot;&gt;state1&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a state2, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b state1] 
+&lt;span class=&quot;function-name&quot;&gt;state1&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a state2, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b state1]
 &lt;span class=&quot;function-name&quot;&gt;state2&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a state3, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b state1]
 &lt;span class=&quot;function-name&quot;&gt;state3&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;State&lt;/span&gt; [ &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_a state3, &lt;span class=&quot;type&quot;&gt;Edge&lt;/span&gt; is_b state4]
-&lt;span class=&quot;function-name&quot;&gt;state4&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt; 
+&lt;span class=&quot;function-name&quot;&gt;state4&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;FinalState&lt;/span&gt;
 
-&lt;span class=&quot;function-name&quot;&gt;is_a&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'a'&lt;/span&gt;) 
+&lt;span class=&quot;function-name&quot;&gt;is_a&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'a'&lt;/span&gt;)
 
 &lt;span class=&quot;function-name&quot;&gt;is_b&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;variable-name&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;'b'&lt;/span&gt;)&lt;/pre&gt;
 
 &lt;h2&gt;Simplified&lt;/h2&gt;
 
-By leveraging the recursive reference to another state in the destination field of the Edge type the code shrinks by 3 functions and an enormous amount of complexity. In addition the ability to exhaust the input string or return early on a match with the FinalState constructor allows for a much more readable definition of the match function and the graph itself (no more self referencing weirdness). 
+By leveraging the recursive reference to another state in the destination field of the Edge type the code shrinks by 3 functions and an enormous amount of complexity. In addition the ability to exhaust the input string or return early on a match with the FinalState constructor allows for a much more readable definition of the match function and the graph itself (no more self referencing weirdness).
 
 I had a lot of fun thinking this through and I would be excited to see some further refinements in the comments from those who know haskell!
 </content>
@@ -2856,31 +2856,6 @@ As a side note, I hope that someone finds this page looking for a list of negati
  </entry>
  
  <entry>
-   <title>Stolen gem name?</title>
-   <link href="http://johnbender.github.com/2009/10/26/stolen-gem-name"/>
-   <updated>2009-10-26T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2009/10/26/stolen-gem-name</id>
-   <content type="html">[Update: Nick Quaranto was kind enough to respond to my twitter message, and the issue has been resolved. Many thanks Nick!]
-
-So I went to publish RQuery to gem cutter but I got this lovely tidbit:
-
-&lt;pre&gt;
-Pushing gem to Gemcutter...
-You do not have permission to push to this gem.
-&lt;/pre&gt;
-&lt;br /&gt;
-
-I figured someone had clearly come up with a similar name and applied it to their gem so I went and searched and found:
-
-&lt;a href=&quot;http://gemcutter.org/gems/rquery&quot;&gt;http://gemcutter.org/gems/rquery&lt;/a&gt;
-
-Needless to say I was a little bit bummed, but I thought it odd that its was just a dot one version higher than my last release, and then I noticed that the homepage link points back to none other than my page about the darn gem! 
-
-What that hell man, gimme my gem name back!
-</content>
- </entry>
- 
- <entry>
    <title>Algebra of Programming: Chapter 1 section 5</title>
    <link href="http://johnbender.github.com/2009/09/26/algebra-of-programming-chapter-1-sections-5"/>
    <updated>2009-09-26T00:00:00-07:00</updated>
@@ -2894,34 +2869,34 @@ zip &lt;span class=&quot;function-name&quot;&gt;.&lt;/span&gt; unzip &lt;span cl
 &lt;/pre&gt;
 &lt;br /&gt;
 
-A couple of notes here. Previously everything has been defined in terms of Haskell, but this is simply an equation. Also, if you're coming from a non-functional background, id is a function that gives you back the same thing you pass to it. No matter what. 
+A couple of notes here. Previously everything has been defined in terms of Haskell, but this is simply an equation. Also, if you're coming from a non-functional background, id is a function that gives you back the same thing you pass to it. No matter what.
 
-In this case the equation is meant to point out that, if you give unzip a list of pairs (two element tuples) and give that result, a tuple of two lists, to zip, in the end you'll get back the original list of pairs. So zip compose unzip is equivalent to the id function. You get back just what you gave it. 
+In this case the equation is meant to point out that, if you give unzip a list of pairs (two element tuples) and give that result, a tuple of two lists, to zip, in the end you'll get back the original list of pairs. So zip compose unzip is equivalent to the id function. You get back just what you gave it.
 
     &lt;pre&gt;
 zip &lt;span class=&quot;function-name&quot;&gt;$&lt;/span&gt; unzip [(1,2), (3,4)] &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; [(1,2), (3,4)]
 &lt;/pre&gt;
 &lt;br /&gt;
 
-Before we get into why this is immediately useful lets define the two functions as the book does, but with Haskell. 
+Before we get into why this is immediately useful lets define the two functions as the book does, but with Haskell.
 
  &lt;pre&gt;
-&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt; 
+&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt;
 
 &lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; c
-&lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; h a &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; foldr' c h x 
+&lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; h a &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; foldr' c h x
 &lt;/pre&gt;
 &lt;br /&gt;
 
 Our old friends the Cons list and foldr here. If you're new to these you can check out more information on them &lt;a href=&quot;http://nickelcode.com/2009/09/19/algebra-of-programming-chapter-1-section-3/&quot;&gt;here&lt;/a&gt;.
 
 &lt;pre&gt;
-&lt;span class=&quot;function-name&quot;&gt;unzip'&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; (a, b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; b) 
+&lt;span class=&quot;function-name&quot;&gt;unzip'&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; (a, b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; b)
 &lt;span class=&quot;function-name&quot;&gt;unzip'&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; foldr' emptys conss
         &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt; emptys &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;, &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;)
               conss (a, b) (x, y) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x) , &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (b, y))
 
-&lt;span class=&quot;function-name&quot;&gt;unzip_'&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; (a, b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; b) 
+&lt;span class=&quot;function-name&quot;&gt;unzip_'&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; (a, b) &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; b)
 &lt;span class=&quot;function-name&quot;&gt;unzip_'&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;, &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;)
 &lt;span class=&quot;function-name&quot;&gt;unzip_'&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; ((a,b), x)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, left &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; unzip_' x), &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (b, right &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; unzip_' x))
                            &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt; left (x, y) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; x
@@ -2937,7 +2912,7 @@ unzip' and unzip_' represent two possible ways of unzipping a list of pairs. Of 
 &lt;span class=&quot;function-name&quot;&gt;zip'&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt;) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;zip'&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;_&lt;/span&gt;, &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt;
 &lt;span class=&quot;function-name&quot;&gt;zip'&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x), &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (b, y)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; ( (a, b) , zip' (x, y) )
-               
+
 &lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;&amp;gt; let x = zip' . unzip'
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;&amp;gt; x  $ Cons ((1, 'a'), Cons ((2, 'b'), Empty))
 &lt;/span&gt;
@@ -2950,7 +2925,7 @@ unzip' and unzip_' represent two possible ways of unzipping a list of pairs. Of 
 &lt;/span&gt;
 &lt;/pre&gt;&lt;br /&gt;
 
-Finally we have an exhaustive (can handle lists of different lengths) definition of zip' and the results of composing zip' with unzip' and unzip_' using ghci. 
+Finally we have an exhaustive (can handle lists of different lengths) definition of zip' and the results of composing zip' with unzip' and unzip_' using ghci.
 
 &lt;h2&gt;Testing with maths&lt;/h2&gt;
 
@@ -2971,17 +2946,17 @@ And that's really the sweet spot here. While its not a formal proof of the funct
    <updated>2009-09-19T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/09/19/algebra-of-programming-chapter-1-section-3</id>
    <content type="html">&lt;h2&gt;Lists&lt;/h2&gt;
-The third section of chapter one covered some basic functional programming concepts. Namely Cons lists, their mirror Snoc lists, and the functions built to operate on them. Particularly the adaptations of the foldn function from the previous section which operated over Nat. 
+The third section of chapter one covered some basic functional programming concepts. Namely Cons lists, their mirror Snoc lists, and the functions built to operate on them. Particularly the adaptations of the foldn function from the previous section which operated over Nat.
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Nil&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a, a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt;
-&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt; 
+&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt;
 
 &lt;span class=&quot;function-name&quot;&gt;foldl'&lt;/span&gt; c h &lt;span class=&quot;type&quot;&gt;Nil&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; c
 &lt;span class=&quot;function-name&quot;&gt;foldl'&lt;/span&gt; c h (&lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt; (x, a)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; h (foldl' c h x) a
 
 &lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; c
-&lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; h a &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; foldr' c h x                   
+&lt;span class=&quot;function-name&quot;&gt;foldr'&lt;/span&gt; c h (&lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt; (a, x)) &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; h a &lt;span class=&quot;variable-name&quot;&gt;$&lt;/span&gt; foldr' c h x
 &lt;/pre&gt;
 &lt;br /&gt;
 
@@ -2991,7 +2966,7 @@ As you can see in the definition of both Cons and Snoc they are identical to the
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Nil&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt; (&lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a, a) &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt;
 
 (&lt;span class=&quot;function-name&quot;&gt;:&lt;/span&gt;) &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a
-x &lt;span class=&quot;function-name&quot;&gt;:&lt;/span&gt; y &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt; (y, x) 
+x &lt;span class=&quot;function-name&quot;&gt;:&lt;/span&gt; y &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt; (y, x)
 
 &lt;span class=&quot;function-name&quot;&gt;example&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; 1 &lt;span class=&quot;type&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt;(&lt;span class=&quot;type&quot;&gt;Snoc&lt;/span&gt;(&lt;span class=&quot;type&quot;&gt;Nil&lt;/span&gt;, 3), 2)
           &lt;span class=&quot;comment-delimiter&quot;&gt;--  &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Cons(2, Cons(1, Nil)) would be the norm
@@ -3004,7 +2979,7 @@ Also of interest in this chapter is the myriad of operations that can be defined
     &lt;pre&gt;
 &lt;span class=&quot;comment-delimiter&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Excercise 1.7
 &lt;/span&gt;&lt;span class=&quot;function-name&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listl&lt;/span&gt; a &lt;span class=&quot;variable-name&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Listr&lt;/span&gt; a
-&lt;span class=&quot;function-name&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; foldl' &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; h 
+&lt;span class=&quot;function-name&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; foldl' &lt;span class=&quot;type&quot;&gt;Empty&lt;/span&gt; h
     &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt; h x y &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Cons&lt;/span&gt;(y, x)
 
 &lt;span class=&quot;comment-delimiter&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Excercise 1.8
@@ -3027,11 +3002,11 @@ Or a quick implementation of map' for Cons lists built atop our &lt;em&gt;extrem
 
 &lt;h2&gt;Further Work&lt;/h2&gt;
 
-I'm getting a lot of joy from rehashing these basic data structures and the implications of understanding them at a relatively low level are obvious. Lists make up such a huge portion of the programming that we do and understanding the types of lists that make the most sense for use within code for both comprehension and performance can provide real value. Also, in fooling around with some little coding challenges on the side (examples to be posted soon I hope) in haskell I've noticed my ease with maps and folds becoming greater. 
+I'm getting a lot of joy from rehashing these basic data structures and the implications of understanding them at a relatively low level are obvious. Lists make up such a huge portion of the programming that we do and understanding the types of lists that make the most sense for use within code for both comprehension and performance can provide real value. Also, in fooling around with some little coding challenges on the side (examples to be posted soon I hope) in haskell I've noticed my ease with maps and folds becoming greater.
 
-One bit that I have to revisit is the proof from the middle of the section that the ++ operation is associative and that nil is the left and right unit. I was never very good with proofs, I've long since lost the terminology, and I would like to complete the exercise that requires that knowledge. 
+One bit that I have to revisit is the proof from the middle of the section that the ++ operation is associative and that nil is the left and right unit. I was never very good with proofs, I've long since lost the terminology, and I would like to complete the exercise that requires that knowledge.
 
- 
+
 </content>
  </entry>
  
@@ -3052,13 +3027,13 @@ I was initially a bit worried that I would be out of my depth with this book but
 
 &lt;h2&gt;Recursive Data Types &lt;/h2&gt;
 
-The second section of the first chapter is where things started to get exciting and dense. The first example of recursive data types they provide, that make the basis for the rest of the chapter, is natural numbers (all integers &gt;= 0). In haskell it would look something like 
+The second section of the first chapter is where things started to get exciting and dense. The first example of recursive data types they provide, that make the basis for the rest of the chapter, is natural numbers (all integers &gt;= 0). In haskell it would look something like
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Nat&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Zero&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Successor&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Nat&lt;/span&gt;&lt;/pre&gt;
 &lt;br /&gt;
 
-To further explain how this can represent any natural number consider the following possible definitions of a function that represents the value 3 
+To further explain how this can represent any natural number consider the following possible definitions of a function that represents the value 3
 
      &lt;pre&gt;
 &lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;What we would normally do
@@ -3089,7 +3064,7 @@ The rest of the chapter is devoted to presenting the foldn function that provide
 
 It should be noted here, as it confused me initially, that by providing (n + 1) or (Successor n) in the head of the function, n represents a value of one less than that which is passed in. So in the case that foldn was called with some c, some h and 6, n has the value 5 (since (5 + 1) is 6).
 
-The fun part about this is that is provides a method by which you can define functions for addition, subtraction and exponentiation (and others) in terms of foldn. From the book: 
+The fun part about this is that is provides a method by which you can define functions for addition, subtraction and exponentiation (and others) in terms of foldn. From the book:
 
 &lt;pre&gt;
 &lt;span class=&quot;comment-delimiter&quot;&gt;-- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;Addition
@@ -3210,39 +3185,6 @@ To make use of this feature in your own applications simply add the compiler dir
 and make sure the &lt;a href=&quot;http://github.com/johnbender/unraverl/tree/master&quot;&gt;library&lt;/a&gt; is in the code path.
 
 As yet, it doesn't have a makefile or unit tests so use at your own peril.
-
-
-</content>
- </entry>
- 
- <entry>
-   <title>Where to from here...</title>
-   <link href="http://johnbender.github.com/2009/06/29/where-to-from-here"/>
-   <updated>2009-06-29T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2009/06/29/where-to-from-here</id>
-   <content type="html">Been mulling over my next project after I finish a small Rails app for my friend. I'm not sure I'll have the time in the near future but here are the ideas that are competing in my head for... well literally... mind share.
-
-Both use Erlang. &lt;a href=&quot;http://github.com/johnbender/unraverl/tree/master&quot;&gt;Unraverl &lt;/a&gt;is the beginnings of a meta programming/parse transform library for Erlang. At this point it only implements before/after filters with method chains. &lt;a href=&quot;http://github.com/johnbender/grove/tree/master&quot;&gt;Grove&lt;/a&gt; is a JSON Query to set comprehension library for use with Mnesia. 
-
-&lt;ul&gt;
-	&lt;li&gt;&lt;a href=&quot;http://github.com/johnbender/unraverl/tree/master&quot;&gt;Unraverl&lt;/a&gt;&lt;ol&gt;
-	&lt;li&gt;add partial application&lt;/li&gt;
-	&lt;li&gt;runtime function definition from funs&lt;/li&gt;
-        &lt;li&gt;add pure/impure designation attribute/checking&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;a href=&quot;http://github.com/johnbender/grove/tree/master&quot;&gt;Grove&lt;/a&gt;&lt;ol&gt;
-	&lt;li&gt;Make use of MochiWeb&lt;/li&gt;
-	&lt;li&gt;Rework the JSON query structure&lt;/li&gt;
-        &lt;li&gt;Move JSON Query to Set Comprehension logic out into separate module/project&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-Clearly Unraverl is the most flashy, and likely the most interesting bit of hacking, but whether it becomes useful later or not remains to be seen. I still think that Being able to use Mnesia from Rails or from rich clients would be really very awesome. 
-
-On top of those things I need to take the time to learn org-mode, and build at least one gen_server or gen_fsm based app.
-
-Either way code will result!
 
 
 </content>
@@ -3385,29 +3327,11 @@ It's quirky in some places (you have to specify something for a gem version even
  </entry>
  
  <entry>
-   <title>OS XI</title>
-   <link href="http://johnbender.github.com/2009/06/05/os-xi"/>
-   <updated>2009-06-05T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2009/06/05/os-xi</id>
-   <content type="html">Things I'd like to see in OS 11:
-
-&lt;ul&gt;
-	&lt;li&gt;True micro-kernel architecture&lt;/li&gt;
-	&lt;li&gt;64 bit all the way down&lt;/li&gt;
-	&lt;li&gt;MacRuby support for desktop apps (Apple should adopt this project immediately)&lt;/li&gt;
-	&lt;li&gt;Automatic window arrangement like XMonad/Ion&lt;/li&gt;
-&lt;/ul&gt;
-
-That is all.
-</content>
- </entry>
- 
- <entry>
    <title>RQuery: now with | and & operators</title>
    <link href="http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators"/>
    <updated>2009-04-26T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators</id>
-   <content type="html">This weekend I wanted to tackle some of rquery's shortcomings so I added the ability to |/&amp; your operations and also the ability to use an object in the block instead of the symbol class for the column names. I agree with the assertion that it's bad to pollute other classes, but I still think the symbol.declaration syntax is pretty clean and there's isn't much likely hood of those methods ever being implemented elsewhere ( says the guy who decided to implement them :P ) 
+   <content type="html">This weekend I wanted to tackle some of rquery's shortcomings so I added the ability to |/&amp; your operations and also the ability to use an object in the block instead of the symbol class for the column names. I agree with the assertion that it's bad to pollute other classes, but I still think the symbol.declaration syntax is pretty clean and there's isn't much likely hood of those methods ever being implemented elsewhere ( says the guy who decided to implement them :P )
 
 &lt;h2&gt;Examples&lt;/h2&gt;
 
@@ -3425,8 +3349,8 @@ The key bit is the ability to add multiple operations to the same line connected
 The above example should be easy to follow but there is one important gotcha with including &amp;'s and |'s on the same line. Because the &amp; operator has precedence in a string of operations if you want both | and &amp; on the same line you need to force precedence for the | where it needs to be evaluated before the &amp; in the resulting query.
 
 &lt;pre&gt;
-&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;the &amp;amp; takes precedence here and will be grouped with the contains &quot;Alice&quot; which will be 
-&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;or'd with the contains &quot;George&quot; 
+&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;the &amp;amp; takes precedence here and will be grouped with the contains &quot;Alice&quot; which will be
+&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;or'd with the contains &quot;George&quot;
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;=&amp;gt; name contains &quot;George&quot; or (name contains &quot;Alice and age from 20 to 30)
 &lt;/span&gt;&lt;span class=&quot;type&quot;&gt;User&lt;/span&gt;.where &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |user|
   (user.name.contains &lt;span class=&quot;string&quot;&gt;&quot;George&quot;&lt;/span&gt;) | (user.name.contains &lt;span class=&quot;string&quot;&gt;&quot;Alice&quot;&lt;/span&gt;) &amp;amp; (user.age.from 20..30)
@@ -3438,7 +3362,7 @@ In this case the query writer wanted to get the users who's names contained eith
 
 &lt;pre&gt;
 &lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;to correct the above to the more intuitive version add parens to force precedence of the
-&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;contains operations 
+&lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;contains operations
 &lt;/span&gt;&lt;span class=&quot;comment-delimiter&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;=&amp;gt; (name contains &quot;George&quot; or name contains &quot;Alice) and age from 20 to 30
 &lt;/span&gt;&lt;span class=&quot;type&quot;&gt;User&lt;/span&gt;.where &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |user|
  ((user.name.contains &lt;span class=&quot;string&quot;&gt;&quot;George&quot;&lt;/span&gt;) | (user.name.contains &lt;span class=&quot;string&quot;&gt;&quot;Alice&quot;&lt;/span&gt;)) &amp;amp; (user.age.from 20..30)
@@ -3608,13 +3532,13 @@ Name fills its roll in the macro and the fun is used to check all the elements i
    <id>http://johnbender.github.com/2009/04/17/non-deterministic-description</id>
    <content type="html">File this under that &quot;meta-tao of hacking&quot; or WARNING: thar be rosy language and fluff hereabouts.
 
-Walking my dog down the street at dusk today the air had a nice warmth to it and I enjoyed the pink and gold hues of the sunset (please stick with this post it does go somewhere). It's warming up here, and instead of racing home with my head down I was free to enjoy the smell of the air and the sites around me. So, I was letting this scene (dusk, pink, leaves, trees) roll around in my head trying to think how I would describe it accurately to my wife so she could somehow feel and see the light as it passed through the new leaves and buds of flowers, the warmth hitting my face, etc, etc. 
+Walking my dog down the street at dusk today the air had a nice warmth to it and I enjoyed the pink and gold hues of the sunset (please stick with this post it does go somewhere). It's warming up here, and instead of racing home with my head down I was free to enjoy the smell of the air and the sites around me. So, I was letting this scene (dusk, pink, leaves, trees) roll around in my head trying to think how I would describe it accurately to my wife so she could somehow feel and see the light as it passed through the new leaves and buds of flowers, the warmth hitting my face, etc, etc.
 
 &lt;h2&gt;Mooshy&lt;/h2&gt;
 
-Its very hard, if not impossible to achieve that type of expressiveness. Thats what makes great writers. Transferring the totally ephemeral/sensory/emotional/mooshy stuff to these semi-deterministic buckets of words and phrases that comprise our language is a real and difficult challenge that people seek to tackle every day. Even as I'm writing this I'm struggling to lay my ideas out in a way that can be understood by someone else reading them. Without even considering the gulf of perception and personal experience that separates any two people this task is almost insurmountable. 
+Its very hard, if not impossible to achieve that type of expressiveness. Thats what makes great writers. Transferring the totally ephemeral/sensory/emotional/mooshy stuff to these semi-deterministic buckets of words and phrases that comprise our language is a real and difficult challenge that people seek to tackle every day. Even as I'm writing this I'm struggling to lay my ideas out in a way that can be understood by someone else reading them. Without even considering the gulf of perception and personal experience that separates any two people this task is almost insurmountable.
 
-In a lot of ways language designers are trying to do the same thing in reverse. They're trying to give us the tools to describe a very deterministic world using words and phrases with more meaning than their underlying implementation. We've continually abstracted farther and farther away from the on die voltage so that a more detailed and expressive version of computational reality can be recorded. 
+In a lot of ways language designers are trying to do the same thing in reverse. They're trying to give us the tools to describe a very deterministic world using words and phrases with more meaning than their underlying implementation. We've continually abstracted farther and farther away from the on die voltage so that a more detailed and expressive version of computational reality can be recorded.
 
 As a result we get a meeting somewhere in the middle:
 
@@ -3636,7 +3560,7 @@ As time marches on it seems like we've worked our way towards that reality of us
 
 &lt;h2&gt;merge! valid? Damn you GHCI compile my code!&lt;/h2&gt;
 
-I personally really like the Ruby way of using the language equivalent of tone to convey meaning in code. When you ask a question of an object and expect a boolean you can use a question mark (how novel!) and when I use the bang operator it reminds me of getting frustrated with clamshell packaging and just smashing my way into it with a screwdriver which is most definitely a destructive update. 
+I personally really like the Ruby way of using the language equivalent of tone to convey meaning in code. When you ask a question of an object and expect a boolean you can use a question mark (how novel!) and when I use the bang operator it reminds me of getting frustrated with clamshell packaging and just smashing my way into it with a screwdriver which is most definitely a destructive update.
 
 Even better is Haskell's type inference. Admittedly my knowledge of Haskell is limited to a small set of hacks that I've been toying with, and in almost every case I define a type signature for my functions, but inference is something we do every time we speak or write. My use of &quot;their&quot; or &quot;there&quot; in spoken form is immediately apparent because of the context its been wrapped in. Haskell's compiler(s) is(are) smart enough to force a type based a what can be gathered about the operations over that type within a function. Thats pretty awesome.
 
@@ -3654,7 +3578,7 @@ There are other places that inference could be used. Namespaces/modules for inst
    <link href="http://johnbender.github.com/2009/04/12/haskell-learnings"/>
    <updated>2009-04-12T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/04/12/haskell-learnings</id>
-   <content type="html">This week I caved and decided to learn haskell. I'm about 5 chapters into RWH and its great except for a few topics they gloss over early on (Type classes, $). Luckily my attention was directed &lt;a href=&quot;http://learnyouahaskell.com/&quot;&gt;here&lt;/a&gt;, and I was quickly able to fill in some gaps. Big thanks to &lt;a href=&quot;http://www.reddit.com/user/f4hy/&quot;&gt;f4hy&lt;/a&gt; from proggit for the link. 
+   <content type="html">This week I caved and decided to learn haskell. I'm about 5 chapters into RWH and its great except for a few topics they gloss over early on (Type classes, $). Luckily my attention was directed &lt;a href=&quot;http://learnyouahaskell.com/&quot;&gt;here&lt;/a&gt;, and I was quickly able to fill in some gaps. Big thanks to &lt;a href=&quot;http://www.reddit.com/user/f4hy/&quot;&gt;f4hy&lt;/a&gt; from proggit for the link.
 
 Aside from the link there are a couple things that have gotten me really excited. One of which is partial function application.
 
@@ -3687,7 +3611,7 @@ So to figure out how this works we can start with the trace of how foldr builds 
 foldr step zero (x:xs) = step x (foldr step zero xs)
 foldr _    zero []     = zero
 
---foldr (+) 1 [1,2,3] 
+--foldr (+) 1 [1,2,3]
 --step = (+)
 --zero = 1
 + 1 (+ 2 (+ 3 (1)))
@@ -3701,13 +3625,13 @@ That's simple enough, now lets apply this to the chapter 4 problem and see where
 myFoldl f z xs = foldr step id xs z
     where step x g a = g (f a x)
 
---foldr step id [1,2,3] 
+--foldr step id [1,2,3]
 --step = step
 --zero = id
 step 1 (step 2 (step 3 (id)))
 &lt;/pre&gt;
 
-But how does that damn z fit in here? If evaluating foldr with those three arguments gets me that expression how does that last argument fit in? This is where I got stopped and figured that either this assumption was incorrect or I was missing some fundamental piece of the problem. As it turns out, this is correct but the way in which this statement is evaluated to come up with a result is not obvious, and really amazing. 
+But how does that damn z fit in here? If evaluating foldr with those three arguments gets me that expression how does that last argument fit in? This is where I got stopped and figured that either this assumption was incorrect or I was missing some fundamental piece of the problem. As it turns out, this is correct but the way in which this statement is evaluated to come up with a result is not obvious, and really amazing.
 
 The explanation I got from #haskell (Gracenotes/Eridius) was simple and important for working with haskell in general. All functions with more than a single argument can be decomposed one argument at a time into anonymous functions with the remaining arguments.
 
@@ -3729,13 +3653,13 @@ In the case of our step function and the resulting expression of our foldr, you 
 &lt;pre lang=&quot;haskell&quot;&gt;
 step 1 (step 2 (step 3 (id)))
 
-\a3 -&gt; (\a2 -&gt; (\a -&gt; id (f a 3)) (f a2 2)) (f a3 1) 
+\a3 -&gt; (\a2 -&gt; (\a -&gt; id (f a 3)) (f a2 2)) (f a3 1)
 &lt;/pre&gt;
 
 Confusing? Yes its hard to read so walking though it step by step might be useful.
 
 &lt;pre lang=&quot;haskell&quot;&gt;
---right most fold operation 
+--right most fold operation
 step 3 (id)
 
 --only two arguments to the step function
@@ -3751,34 +3675,34 @@ step 1 (step 2 (\a -&gt; id (f a 3)))
 --having evaluated the 2 rightmost folds
 step 1 (\a2 -&gt; (\a -&gt; id (f a 3)) (f a2 x))
 
---and finally evaluating the last fold we get 
-\a3 -&gt; (\a2 -&gt; (\a -&gt; id (f a 3)) (f a2 2)) (f a3 1) 
+--and finally evaluating the last fold we get
+\a3 -&gt; (\a2 -&gt; (\a -&gt; id (f a 3)) (f a2 2)) (f a3 1)
 &lt;/pre&gt;
 
 At this point we've at least figured out how the function is able to take only two arguments (partial application!) and we can actually plug that back in to our original myFoldl (adding in the example argument values (+), 1, and [1,2,3]) to see what it will look like
 
 &lt;pre lang=&quot;haskell&quot;&gt;
 --for myFoldl (+) 1 [1,2,3]
-myFoldl (+) 1 [1,2,3] = (\a3 -&gt; (\a2 -&gt; (\a -&gt; id (+ a 3)) (+ a2 2)) (+ a3 1))  1  
+myFoldl (+) 1 [1,2,3] = (\a3 -&gt; (\a2 -&gt; (\a -&gt; id (+ a 3)) (+ a2 2)) (+ a3 1))  1
     where step x g a = g (f a x)
 &lt;/pre&gt;
 
 And if you look waaay over there on the right we have our third argument! So you can follow the course of the evaluation down from there replacing a3 with 1 and then evaluating (+ a3 1) then passing the result to a2 and (+ a2 2) to a.
 
-The laziness of the language allows you to deal with completing your function call at a later date through partial application. This also gives some insight into the type signature syntax of functions 
+The laziness of the language allows you to deal with completing your function call at a later date through partial application. This also gives some insight into the type signature syntax of functions
 
 &lt;pre lang=&quot;haskell&quot;&gt;
 myFunc :: Int -&gt; Int -&gt; Bool
 myFunc x y = x == y
 &lt;/pre&gt;
 
-What its really saying is that after evaluation of myFunc with its first argument of type Int another function accepting an argument of type Int will be returned. Should you supply another argument to the resulting function a final result of Bool will be returned. I'm not speaking specifically about the execution of the code but rather the nature of the application of functions to the arguments passed. 
+What its really saying is that after evaluation of myFunc with its first argument of type Int another function accepting an argument of type Int will be returned. Should you supply another argument to the resulting function a final result of Bool will be returned. I'm not speaking specifically about the execution of the code but rather the nature of the application of functions to the arguments passed.
 
 &lt;pre lang=&quot;haskell&quot;&gt;
 --different ways to write myFunc
 \x -&gt; (\y -&gt; x == y)
 \x y -&gt; x == y
-myFunc 1 = \y -&gt; 1 == y 
+myFunc 1 = \y -&gt; 1 == y
 myFunc 1 2 = False
 &lt;/pre&gt;
 
@@ -3799,15 +3723,15 @@ Hopefully I'll be back with more as haskell continues to flip my lid.
    <link href="http://johnbender.github.com/2009/03/30/unraverl-filters-and-more-for-erlang"/>
    <updated>2009-03-30T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/03/30/unraverl-filters-and-more-for-erlang</id>
-   <content type="html">After checking out a really neat project (still in beta but I think its one of the coolest new webapps out there) that leverages Erlang, I got inspired to get back to my functional education. 
+   <content type="html">After checking out a really neat project (still in beta but I think its one of the coolest new webapps out there) that leverages Erlang, I got inspired to get back to my functional education.
 
 &lt;h2&gt;Code as Data&lt;/h2&gt;
 
 One thing that I really love about Ruby is how flexible it is, and in almost all other languages I end up wishing I had this/that facility. So as I was trying to come up with ideas for Erlang projects I thought I would try and hack together some new language features for Erlang in the form of a parse_transform.
 
-I only recently happened upon the awesomeness that is the Erlang parse_transform and what it means for programming in Erlang. It basically allows you to manipulate the parsed, or abstract form, of your code before it heads to the compiler. Lispers know what this looks like: code as data... awesome. 
+I only recently happened upon the awesomeness that is the Erlang parse_transform and what it means for programming in Erlang. It basically allows you to manipulate the parsed, or abstract form, of your code before it heads to the compiler. Lispers know what this looks like: code as data... awesome.
 
-As an example: 
+As an example:
 
 &lt;script src=&quot;http://gist.github.com/88022.js&quot;&gt;&lt;/script&gt;
 
@@ -3815,7 +3739,7 @@ Tough to look at and evaluate for functionality, but surprisingly it didn't hind
 
 &lt;h2&gt;Unraverl&lt;/h2&gt;
 
-In the following module code there are two functions, append and prepend that do exactly that. They are using the list operator ++ so it would be nice to make sure that anything that gets in there is in fact a list. One way to do it would be to call the all_lists function on both arguments before operating on those arguments like so: 
+In the following module code there are two functions, append and prepend that do exactly that. They are using the list operator ++ so it would be nice to make sure that anything that gets in there is in fact a list. One way to do it would be to call the all_lists function on both arguments before operating on those arguments like so:
 
 &lt;script src=&quot;http://gist.github.com/88031.js&quot;&gt;&lt;/script&gt;
 
@@ -3823,23 +3747,23 @@ all_lists converts any object into a list using the to_list function and then pu
 
 &lt;h2&gt;Filter to the Rescue&lt;/h2&gt;
 
-So with a little parse transform magic, we can do the following: 
+So with a little parse transform magic, we can do the following:
 
 &lt;script src=&quot;http://gist.github.com/88032.js&quot;&gt;&lt;/script&gt;
 
-Three things to look at. The first is the -compile directive to call the parse_transform function that I hacked together in unraverl.erl. The second is the attribute -before_exec that basically says, before [prepend, append] execute all_lists. Last, prepend and append are much simplified! 
+Three things to look at. The first is the -compile directive to call the parse_transform function that I hacked together in unraverl.erl. The second is the attribute -before_exec that basically says, before [prepend, append] execute all_lists. Last, prepend and append are much simplified!
 
-At this point you'll notice that all_lists only takes one argument and both of the filtered functions have 2 arguments. My bit of code stipulates that you're filtering function must have an identical arity to the filtered function, or a single argument treated as a list. Additionally it must return a list of a values who's number is equal to the arity of the filtered function. Though it sounds like a lot its really quite simple, the filtering function must deal with the right number of arguments and get them back in a way that the original function can then proceed! You can even use multiple filters on the same function. 
+At this point you'll notice that all_lists only takes one argument and both of the filtered functions have 2 arguments. My bit of code stipulates that you're filtering function must have an identical arity to the filtered function, or a single argument treated as a list. Additionally it must return a list of a values who's number is equal to the arity of the filtered function. Though it sounds like a lot its really quite simple, the filtering function must deal with the right number of arguments and get them back in a way that the original function can then proceed! You can even use multiple filters on the same function.
 
 &lt;h2&gt;Down Side&lt;/h2&gt;
 
-The downsides to this are obvious. The biggest problem I see is that when you're looking at the function code itself, it is in no way apparent why sending two atoms to append and prepend will work just fine and send you back a string. Although if you think of it as a language construct you just have to keep it in the back of your mind to look at the top of the source file for the given attribute. 
+The downsides to this are obvious. The biggest problem I see is that when you're looking at the function code itself, it is in no way apparent why sending two atoms to append and prepend will work just fine and send you back a string. Although if you think of it as a language construct you just have to keep it in the back of your mind to look at the top of the source file for the given attribute.
 
-Also, when filters are used elsewhere (such as in Rails) they generally have an effect on some global state which makes them less useful in a pure functional language. In my experience there are times though when multiple functions all execute the same code/function call upon entering, which can then, with a filter be extracted out to a single place. This might happen when you don't have the option of using some parent function, like when you want to expose many different functions in a module as an api, but some of the code is the same. Without the filter, the farthest you can get it down is to a single function call encapsulating all the duplicate code. Later if you decide to change the name of that internal function it can be a pain. In addition, Erlang does have the ability to affect global state, with things like logging, debugging/stdio, the global registry, and Mnesia. 
+Also, when filters are used elsewhere (such as in Rails) they generally have an effect on some global state which makes them less useful in a pure functional language. In my experience there are times though when multiple functions all execute the same code/function call upon entering, which can then, with a filter be extracted out to a single place. This might happen when you don't have the option of using some parent function, like when you want to expose many different functions in a module as an api, but some of the code is the same. Without the filter, the farthest you can get it down is to a single function call encapsulating all the duplicate code. Later if you decide to change the name of that internal function it can be a pain. In addition, Erlang does have the ability to affect global state, with things like logging, debugging/stdio, the global registry, and Mnesia.
 
 &lt;h2&gt;Good Times&lt;/h2&gt;
 
-It was quite fun to put together and play around with the parsed form of my own code. I definitely plan to add some more fun bits to this, like after_exec/around_exec though I've questioned the usefulness of those. 
+It was quite fun to put together and play around with the parsed form of my own code. I definitely plan to add some more fun bits to this, like after_exec/around_exec though I've questioned the usefulness of those.
 
 It really amazed me at how little time it took despite the almost unreadable nature of the abstract form. Erlang is continuing to show itself to have some strange innate ability to produce error free code quickly and I look forward to finding new ways to break my code at compile time :P
 
@@ -3854,7 +3778,7 @@ I'll leave you with the resulting abstract form of this test module that I've us
 
 
 
- 
+
 </content>
  </entry>
  
@@ -3877,17 +3801,17 @@ I'll leave you with the resulting abstract form of this test module that I've us
 
 Having hacked rails apps is, in my opinion, not sufficient for learning the strengths/weaknesses/ins/outs of ruby, as most of it is obstructed from view. I guess in that sense they shouldn't really be called &quot;helpers&quot; (rimshot?).
 
-In any case, I figured I could build a simple Ruby library for querying Mnesia via my little project Grove. This has given me a chance to use Rspec outside of rails, and get working with some of metaprogramming bits of the language that I haven't touched. In particular its pushed me to consider building a query language using Ruby. 
+In any case, I figured I could build a simple Ruby library for querying Mnesia via my little project Grove. This has given me a chance to use Rspec outside of rails, and get working with some of metaprogramming bits of the language that I haven't touched. In particular its pushed me to consider building a query language using Ruby.
 
 There's one particular structure I'm leaning towards because it maps well to sql queries, and with Grove, Mnesia set comprehension queries. It's sort of Rspecish.
 
 &lt;script src=&quot;http://gist.github.com/78203.js&quot;&gt;&lt;/script&gt;
 
-Ideally, adapters would be built to implement the functions for eq, gt, etc that would allow translation into various forms of sql and other query languages. Writing things in ruby is just more fun, and it gives you more options like: 
+Ideally, adapters would be built to implement the functions for eq, gt, etc that would allow translation into various forms of sql and other query languages. Writing things in ruby is just more fun, and it gives you more options like:
 
 &lt;script src=&quot;http://gist.github.com/78240.js&quot;&gt;&lt;/script&gt;
 
-It looks like my little adventure into letting ruby talk to Mnesia has pushed me in a whole new direction. I still want to add a lot more to Grove (authentication, better error description/handling, CrUD), but this might be more generally useful for other's applications. 
+It looks like my little adventure into letting ruby talk to Mnesia has pushed me in a whole new direction. I still want to add a lot more to Grove (authentication, better error description/handling, CrUD), but this might be more generally useful for other's applications.
 
 [update] even better:
 
@@ -3915,7 +3839,7 @@ It looks like my little adventure into letting ruby talk to Mnesia has pushed me
 
 It's not a problem only for Tom and Engine Yard. At Hashrocket we've been helping organizations transition from legacy technologies to Rails and they all have difficulties finding qualified developers. I know that folks like Courtenay at ENTP are having the same problem. Please don't shoot the messenger. Something has to be done about this, and I think it's more important than Rails 3 or anything else we are currently excited about.&lt;/blockquote&gt;
 
-If this is you, if you're looking for someone who would make a great rails dev, please post in the comments. 
+If this is you, if you're looking for someone who would make a great rails dev, please post in the comments.
 
 [update] I would also love to work with erlang, if anyone is listening.
 
@@ -3943,8 +3867,7 @@ If this is you, if you're looking for someone who would make a great rails dev, 
    <id>http://johnbender.github.com/2009/02/11/scale-rails-screencasts</id>
    <content type="html">&lt;a href=&quot;http://railslab.newrelic.com/scaling-rails&quot;&gt;http://railslab.newrelic.com/scaling-rails&lt;/a&gt;
 
-Been watching these, and they are great from every perspective. Even if you're rails app is small and doesn't really need to scale, the client side optimization tips in the first video are awesome stuff to put into practice. 
-
+Been watching these, and they are great from every perspective. Even if your rails app is small and doesn't really need to scale, the client side optimization tips in the first video are awesome stuff to put into practice.
 </content>
  </entry>
  
@@ -3971,7 +3894,7 @@ Blah, blah worthless post, _but_ I am constantly reminded why testing makes the 
 
 Look, [ these desks are old &lt; =&gt; programming is hard ].
 
-If you [ fall of the desk  &lt; =&gt; don't build unit tests ] you're going to be hurt and everyone is going to laugh at you for your clumsiness. Most people think the story ends there, but it doesn't. When you get home, you'll still be angry and you might kick your dog. Your dog, being angry and sad from the physical pain you've caused him will bite the mailman. And finally, ultimately,  the mailman will go to work the next day with an Uzi and kill everyone. 
+If you [ fall of the desk  &lt; =&gt; don't build unit tests ] you're going to be hurt and everyone is going to laugh at you for your clumsiness. Most people think the story ends there, but it doesn't. When you get home, you'll still be angry and you might kick your dog. Your dog, being angry and sad from the physical pain you've caused him will bite the mailman. And finally, ultimately,  the mailman will go to work the next day with an Uzi and kill everyone.
 
 That, is how [ falling of a desk &lt; =&gt; failing to get test coverage ] causes loss of life.
 
@@ -4005,9 +3928,9 @@ As you can see my goal is to be able to query Mnesia, or rather to produce a sta
 
 &lt;script src=&quot;http://gist.github.com/48410.js&quot;&gt;&lt;/script&gt;
 
-The tuple is &quot;filtered&quot; down the function definitions, and when each tuple (columns, operations, etc) is handled it is translated into a string and thus not matched again until ultimately the final definition concatenates all the pieces together to build/return our query. I REALLY like the way this works in that its short and simple. Also the tuples could in theory be replaced by an appropriate string built outside the function and it would still work, which makes it more flexible. 
+The tuple is &quot;filtered&quot; down the function definitions, and when each tuple (columns, operations, etc) is handled it is translated into a string and thus not matched again until ultimately the final definition concatenates all the pieces together to build/return our query. I REALLY like the way this works in that its short and simple. Also the tuples could in theory be replaced by an appropriate string built outside the function and it would still work, which makes it more flexible.
 
-It has other issues, such as its fragile ordering requirement. If its not ordered properly it may break, or worse just not form the comprehension properly. Which leads me to wonder if there's a better way to implement this, even if its not _quite_ as concise. 
+It has other issues, such as its fragile ordering requirement. If its not ordered properly it may break, or worse just not form the comprehension properly. Which leads me to wonder if there's a better way to implement this, even if its not _quite_ as concise.
 
 The following is a quick hack and not tested but another way to handle it might look like:
 

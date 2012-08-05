@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -130,7 +122,7 @@ $ wget <a href="http://github.com/johnbender/snap-skeleton/tarball/master">http:
 After cloning/untaring you can rename the project directory, in which case you'll need to replace snap-skeleton in the following commands with whatever you choose.
 
 <pre>
-$ cd snap-skeleton 
+$ cd snap-skeleton
 $ vagrant up
 </pre>
 
@@ -151,7 +143,7 @@ You'll also notice that application built from the initial snap source is named 
 
 <h2>Vagrant workflow</h2>
 
-Now that you've got a nice new virtual machine and everything necessary to dive into a new Snap application you'll need to know a few simple vagrant commands to save you some time. First and foremost all Vagrant commands must be run from within the project directory where the Vagrantfile resides. With that in mind, you've already seen the `up` command but if you want to get rid of your vm, a quick 
+Now that you've got a nice new virtual machine and everything necessary to dive into a new Snap application you'll need to know a few simple vagrant commands to save you some time. First and foremost all Vagrant commands must be run from within the project directory where the Vagrantfile resides. With that in mind, you've already seen the `up` command but if you want to get rid of your vm, a quick
 
 <pre>
 $ vagrant destroy
@@ -209,7 +201,7 @@ vagrant@vagrantup:~$ exit
 $ vagrant suspend
 </pre>
 
-The next time you want to start hacking just get to the snap-skeleton directory and fire up the vm with a `resume`. 
+The next time you want to start hacking just get to the snap-skeleton directory and fire up the vm with a `resume`.
 
 <h2>Altering Your VM</h2>
 
@@ -250,7 +242,7 @@ config.vm.customize <span class="keyword">do</span> |vm|
 <span class="keyword">end</span>
 </pre>
 
-The last and most important configuration is for the provisioning tool, Chef. 
+The last and most important configuration is for the provisioning tool, Chef.
 
 <pre>
 config.vm.provision <span class="constant">:chef_solo</span> <span class="keyword">do</span> |chef|
@@ -298,11 +290,7 @@ chef.json.merge!({ <span class="constant">:ghc_version</span> =&gt; <span class=
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
      
     	<li><a href="//johnbender.github.com/writing/tags.html#vagrant-ref">vagrant <span>2</span></a></li>
     

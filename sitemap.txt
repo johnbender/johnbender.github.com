@@ -1,7 +1,6 @@
 
 http://johnbender.github.com/atom.xml
 http://johnbender.github.com/archive.html
-http://johnbender.github.com/categories.html
 http://johnbender.github.com/sitemap.txt
 http://johnbender.github.com/tags.html
 http://johnbender.github.com/pages.html
@@ -24,16 +23,13 @@ http://johnbender.github.com/2010/07/22/middleware-composition-and-monads
 http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk
 http://johnbender.github.com/2009/11/08/using-a-haskell-dfa-type-to-match-strings
 http://johnbender.github.com/2009/10/28/ruby-cons
-http://johnbender.github.com/2009/10/26/stolen-gem-name
 http://johnbender.github.com/2009/09/26/algebra-of-programming-chapter-1-sections-5
 http://johnbender.github.com/2009/09/19/algebra-of-programming-chapter-1-section-3
 http://johnbender.github.com/2009/09/12/algebra-of-programming-chapter-1
 http://johnbender.github.com/2009/08/22/rquery-refactored-and-simplified
 http://johnbender.github.com/2009/08/14/unraverl-partial-function-application
-http://johnbender.github.com/2009/06/29/where-to-from-here
 http://johnbender.github.com/2009/06/16/bootstraps-now-with-less-crapyness
 http://johnbender.github.com/2009/06/09/bootstrapping-a-sinatra-app
-http://johnbender.github.com/2009/06/05/os-xi
 http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators
 http://johnbender.github.com/2009/04/22/searching-the-abstract-form-in-erlang
 http://johnbender.github.com/2009/04/17/non-deterministic-description

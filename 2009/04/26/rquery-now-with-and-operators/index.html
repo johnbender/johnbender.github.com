@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -97,7 +89,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-    This weekend I wanted to tackle some of rquery's shortcomings so I added the ability to |/& your operations and also the ability to use an object in the block instead of the symbol class for the column names. I agree with the assertion that it's bad to pollute other classes, but I still think the symbol.declaration syntax is pretty clean and there's isn't much likely hood of those methods ever being implemented elsewhere ( says the guy who decided to implement them :P ) 
+    This weekend I wanted to tackle some of rquery's shortcomings so I added the ability to |/& your operations and also the ability to use an object in the block instead of the symbol class for the column names. I agree with the assertion that it's bad to pollute other classes, but I still think the symbol.declaration syntax is pretty clean and there's isn't much likely hood of those methods ever being implemented elsewhere ( says the guy who decided to implement them :P )
 
 <h2>Examples</h2>
 
@@ -115,8 +107,8 @@ The key bit is the ability to add multiple operations to the same line connected
 The above example should be easy to follow but there is one important gotcha with including &'s and |'s on the same line. Because the & operator has precedence in a string of operations if you want both | and & on the same line you need to force precedence for the | where it needs to be evaluated before the & in the resulting query.
 
 <pre>
-<span class="comment-delimiter">#</span><span class="comment">the &amp; takes precedence here and will be grouped with the contains "Alice" which will be 
-</span><span class="comment-delimiter">#</span><span class="comment">or'd with the contains "George" 
+<span class="comment-delimiter">#</span><span class="comment">the &amp; takes precedence here and will be grouped with the contains "Alice" which will be
+</span><span class="comment-delimiter">#</span><span class="comment">or'd with the contains "George"
 </span><span class="comment-delimiter">#</span><span class="comment">=&gt; name contains "George" or (name contains "Alice and age from 20 to 30)
 </span><span class="type">User</span>.where <span class="keyword">do</span> |user|
   (user.name.contains <span class="string">"George"</span>) | (user.name.contains <span class="string">"Alice"</span>) &amp; (user.age.from 20..30)
@@ -128,7 +120,7 @@ In this case the query writer wanted to get the users who's names contained eith
 
 <pre>
 <span class="comment-delimiter">#</span><span class="comment">to correct the above to the more intuitive version add parens to force precedence of the
-</span><span class="comment-delimiter">#</span><span class="comment">contains operations 
+</span><span class="comment-delimiter">#</span><span class="comment">contains operations
 </span><span class="comment-delimiter">#</span><span class="comment">=&gt; (name contains "George" or name contains "Alice) and age from 20 to 30
 </span><span class="type">User</span>.where <span class="keyword">do</span> |user|
  ((user.name.contains <span class="string">"George"</span>) | (user.name.contains <span class="string">"Alice"</span>)) &amp; (user.age.from 20..30)
@@ -201,15 +193,9 @@ You can get the gem from github as johnbender-rquery, and I won't be updating th
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#rquery-ref">rquery <span>3</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>12</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#rails-ref">rails <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#rubyonrails-ref">rubyonrails <span>5</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#rails-ref">rails <span>5</span></a></li>
     
   
 
@@ -230,7 +216,7 @@ You can get the gem from github as johnbender-rquery, and I won't be updating th
       
         <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
       
-        <li class="next"><a href="//johnbender.github.com/writing/2009/06/05/os-xi" title="OS XI">Next &rarr;</a></li>
+        <li class="next"><a href="//johnbender.github.com/writing/2009/06/09/bootstrapping-a-sinatra-app" title="BootStrapping a Sinatra app">Next &rarr;</a></li>
       
       </ul>
     </div>

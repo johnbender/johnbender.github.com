@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -215,7 +207,7 @@ While Rack, in its current form, doesn't have any alternatives to offer when it 
 </span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt; </span></pre>
 
 
-There are 3 changes to the original. First, an import of Control.Monad makes the Maybe Monad instance available. Second, the dot composition operator has been replaced with the monad composition operator (<span class="variable-name">&lt;=&lt;</span>). Third, the type of (<span class="variable-name">&lt;=&lt;</span>) is  
+There are 3 changes to the original. First, an import of Control.Monad makes the Maybe Monad instance available. Second, the dot composition operator has been replaced with the monad composition operator (<span class="variable-name">&lt;=&lt;</span>). Third, the type of (<span class="variable-name">&lt;=&lt;</span>) is
 <pre>
 (<span class="function-name">&lt;=&lt;</span>) <span class="variable-name">::</span> (<span class="type">Monad</span> m) <span class="variable-name">=&gt;</span> (b <span class="variable-name">-&gt;</span> m c) <span class="variable-name">-&gt;</span> (a <span class="variable-name">-&gt;</span> m b) <span class="variable-name">-&gt;</span> a <span class="variable-name">-&gt;</span> m c</pre>
 
@@ -240,7 +232,7 @@ The key is that when Nothing is passed as the first argument to (<span class="va
 
 <span class="comment-delimiter">-- </span><span class="comment">*Main&gt; run ()
 </span><span class="comment-delimiter">-- </span><span class="comment">Nothing
-</span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt; 
+</span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt;
 </span>
 <span class="function-name">run2</span> <span class="variable-name">=</span> reverse <span class="variable-name">&lt;=&lt;</span> upcase <span class="variable-name">&lt;=&lt;</span> head <span class="variable-name">&lt;=&lt;</span> <span class="variable-name">\</span>env <span class="variable-name">-&gt;</span> <span class="type">Just</span> (200, [(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>)], <span class="string">"Hello World!"</span>)
 
@@ -249,7 +241,7 @@ The key is that when Nothing is passed as the first argument to (<span class="va
 </span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt;
 </span></pre>
 
-Great! We've established a way to prevent the other middleware from futzing with the error, but lets make one small change so that our pipeline can report something more useful than Nothing while continuing to short circuit. 
+Great! We've established a way to prevent the other middleware from futzing with the error, but lets make one small change so that our pipeline can report something more useful than Nothing while continuing to short circuit.
 
  <pre>
 <span class="keyword">import</span> <span class="type">Control.Monad.Error</span>
@@ -268,7 +260,7 @@ Great! We've established a way to prevent the other middleware from futzing with
 
 <span class="comment-delimiter">-- </span><span class="comment">*Main&gt; run ()
 </span><span class="comment-delimiter">-- </span><span class="comment">Left "Head cannot operate on an empty string"
-</span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt; 
+</span><span class="comment-delimiter">-- </span><span class="comment">*Main&gt;
 </span>
 <span class="function-name">run2</span> <span class="variable-name">=</span> reverse <span class="variable-name">&lt;=&lt;</span> upcase <span class="variable-name">&lt;=&lt;</span> head <span class="variable-name">&lt;=&lt;</span> <span class="variable-name">\</span>env <span class="variable-name">-&gt;</span> <span class="type">Right</span> (200, [(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>)], <span class="string">"Hello World!"</span>)
 
@@ -286,7 +278,7 @@ Next time I'd like to take the concepts we've applied here to our Haskell "middl
 
 1. Functions composed in the Maybe monad, as in the example, don't actually short circuit. They have to run through each composition but as you can see from the Maybe Monad instance they don't execute the function itself.
 
-2. Replacing our Response whole sale with a Left String is really only useful for illustration in this case. It would be better to at least use Either Response Response, and provide an errorResponse function that takes a string and sets the status and headers properly. 
+2. Replacing our Response whole sale with a Left String is really only useful for illustration in this case. It would be better to at least use Either Response Response, and provide an errorResponse function that takes a string and sets the status and headers properly.
 
     
   </div>
@@ -304,23 +296,11 @@ Next time I'd like to take the concepts we've applied here to our Haskell "middl
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>12</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#rack-ref">rack <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#composition-ref">composition <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#monads-ref">monads <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#ruby-ref">ruby <span>13</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#math-ref">math <span>8</span></a></li>
     
   
 

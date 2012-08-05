@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -106,34 +98,34 @@ zip <span class="function-name">.</span> unzip <span class="variable-name">=</sp
 </pre>
 <br />
 
-A couple of notes here. Previously everything has been defined in terms of Haskell, but this is simply an equation. Also, if you're coming from a non-functional background, id is a function that gives you back the same thing you pass to it. No matter what. 
+A couple of notes here. Previously everything has been defined in terms of Haskell, but this is simply an equation. Also, if you're coming from a non-functional background, id is a function that gives you back the same thing you pass to it. No matter what.
 
-In this case the equation is meant to point out that, if you give unzip a list of pairs (two element tuples) and give that result, a tuple of two lists, to zip, in the end you'll get back the original list of pairs. So zip compose unzip is equivalent to the id function. You get back just what you gave it. 
+In this case the equation is meant to point out that, if you give unzip a list of pairs (two element tuples) and give that result, a tuple of two lists, to zip, in the end you'll get back the original list of pairs. So zip compose unzip is equivalent to the id function. You get back just what you gave it.
 
     <pre>
 zip <span class="function-name">$</span> unzip [(1,2), (3,4)] <span class="variable-name">=</span> [(1,2), (3,4)]
 </pre>
 <br />
 
-Before we get into why this is immediately useful lets define the two functions as the book does, but with Haskell. 
+Before we get into why this is immediately useful lets define the two functions as the book does, but with Haskell.
 
  <pre>
-<span class="keyword">data</span> <span class="type">Listr</span> a <span class="variable-name">=</span> <span class="type">Empty</span> <span class="variable-name">|</span> <span class="type">Cons</span> (a, <span class="type">Listr</span> a) <span class="keyword">deriving</span> <span class="type">Show</span> 
+<span class="keyword">data</span> <span class="type">Listr</span> a <span class="variable-name">=</span> <span class="type">Empty</span> <span class="variable-name">|</span> <span class="type">Cons</span> (a, <span class="type">Listr</span> a) <span class="keyword">deriving</span> <span class="type">Show</span>
 
 <span class="function-name">foldr'</span> c h <span class="type">Empty</span> <span class="variable-name">=</span> c
-<span class="function-name">foldr'</span> c h (<span class="type">Cons</span> (a, x)) <span class="variable-name">=</span> h a <span class="variable-name">$</span> foldr' c h x 
+<span class="function-name">foldr'</span> c h (<span class="type">Cons</span> (a, x)) <span class="variable-name">=</span> h a <span class="variable-name">$</span> foldr' c h x
 </pre>
 <br />
 
 Our old friends the Cons list and foldr here. If you're new to these you can check out more information on them <a href="http://nickelcode.com/2009/09/19/algebra-of-programming-chapter-1-section-3/">here</a>.
 
 <pre>
-<span class="function-name">unzip'</span> <span class="variable-name">::</span> <span class="type">Listr</span> (a, b) <span class="variable-name">-&gt;</span> (<span class="type">Listr</span> a, <span class="type">Listr</span> b) 
+<span class="function-name">unzip'</span> <span class="variable-name">::</span> <span class="type">Listr</span> (a, b) <span class="variable-name">-&gt;</span> (<span class="type">Listr</span> a, <span class="type">Listr</span> b)
 <span class="function-name">unzip'</span> <span class="variable-name">=</span> foldr' emptys conss
         <span class="keyword">where</span> emptys <span class="variable-name">=</span> (<span class="type">Empty</span>, <span class="type">Empty</span>)
               conss (a, b) (x, y) <span class="variable-name">=</span> (<span class="type">Cons</span> (a, x) , <span class="type">Cons</span> (b, y))
 
-<span class="function-name">unzip_'</span> <span class="variable-name">::</span> <span class="type">Listr</span> (a, b) <span class="variable-name">-&gt;</span> (<span class="type">Listr</span> a, <span class="type">Listr</span> b) 
+<span class="function-name">unzip_'</span> <span class="variable-name">::</span> <span class="type">Listr</span> (a, b) <span class="variable-name">-&gt;</span> (<span class="type">Listr</span> a, <span class="type">Listr</span> b)
 <span class="function-name">unzip_'</span> <span class="type">Empty</span> <span class="variable-name">=</span> (<span class="type">Empty</span>, <span class="type">Empty</span>)
 <span class="function-name">unzip_'</span> (<span class="type">Cons</span> ((a,b), x)) <span class="variable-name">=</span> (<span class="type">Cons</span> (a, left <span class="variable-name">$</span> unzip_' x), <span class="type">Cons</span> (b, right <span class="variable-name">$</span> unzip_' x))
                            <span class="keyword">where</span> left (x, y) <span class="variable-name">=</span> x
@@ -149,7 +141,7 @@ unzip' and unzip_' represent two possible ways of unzipping a list of pairs. Of 
 <span class="function-name">zip'</span> (<span class="type">Empty</span>, <span class="keyword">_</span>) <span class="variable-name">=</span> <span class="type">Empty</span>
 <span class="function-name">zip'</span> (<span class="keyword">_</span>, <span class="type">Empty</span>) <span class="variable-name">=</span> <span class="type">Empty</span>
 <span class="function-name">zip'</span> (<span class="type">Cons</span> (a, x), <span class="type">Cons</span> (b, y)) <span class="variable-name">=</span> <span class="type">Cons</span> ( (a, b) , zip' (x, y) )
-               
+
 <span class="comment-delimiter">-- </span><span class="comment">&gt; let x = zip' . unzip'
 </span><span class="comment-delimiter">-- </span><span class="comment">&gt; x  $ Cons ((1, 'a'), Cons ((2, 'b'), Empty))
 </span>
@@ -162,7 +154,7 @@ unzip' and unzip_' represent two possible ways of unzipping a list of pairs. Of 
 </span>
 </pre><br />
 
-Finally we have an exhaustive (can handle lists of different lengths) definition of zip' and the results of composing zip' with unzip' and unzip_' using ghci. 
+Finally we have an exhaustive (can handle lists of different lengths) definition of zip' and the results of composing zip' with unzip' and unzip_' using ghci.
 
 <h2>Testing with maths</h2>
 
@@ -191,21 +183,9 @@ And that's really the sweet spot here. While its not a formal proof of the funct
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#algebra-ref">algebra <span>3</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#maths-ref">maths <span>3</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#math-ref">math <span>8</span></a></li>
     
   
 
@@ -226,7 +206,7 @@ And that's really the sweet spot here. While its not a formal proof of the funct
       
         <li><a href="//johnbender.github.com/writing/archive.html">Archive</a></li>
       
-        <li class="next"><a href="//johnbender.github.com/writing/2009/10/26/stolen-gem-name" title="Stolen gem name?">Next &rarr;</a></li>
+        <li class="next"><a href="//johnbender.github.com/writing/2009/10/28/ruby-cons" title="Ruby Cons">Next &rarr;</a></li>
       
       </ul>
     </div>

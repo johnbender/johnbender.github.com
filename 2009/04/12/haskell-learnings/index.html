@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -97,7 +89,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-    This week I caved and decided to learn haskell. I'm about 5 chapters into RWH and its great except for a few topics they gloss over early on (Type classes, $). Luckily my attention was directed <a href="http://learnyouahaskell.com/">here</a>, and I was quickly able to fill in some gaps. Big thanks to <a href="http://www.reddit.com/user/f4hy/">f4hy</a> from proggit for the link. 
+    This week I caved and decided to learn haskell. I'm about 5 chapters into RWH and its great except for a few topics they gloss over early on (Type classes, $). Luckily my attention was directed <a href="http://learnyouahaskell.com/">here</a>, and I was quickly able to fill in some gaps. Big thanks to <a href="http://www.reddit.com/user/f4hy/">f4hy</a> from proggit for the link.
 
 Aside from the link there are a couple things that have gotten me really excited. One of which is partial function application.
 
@@ -130,7 +122,7 @@ So to figure out how this works we can start with the trace of how foldr builds 
 foldr step zero (x:xs) = step x (foldr step zero xs)
 foldr _    zero []     = zero
 
---foldr (+) 1 [1,2,3] 
+--foldr (+) 1 [1,2,3]
 --step = (+)
 --zero = 1
 + 1 (+ 2 (+ 3 (1)))
@@ -144,13 +136,13 @@ That's simple enough, now lets apply this to the chapter 4 problem and see where
 myFoldl f z xs = foldr step id xs z
     where step x g a = g (f a x)
 
---foldr step id [1,2,3] 
+--foldr step id [1,2,3]
 --step = step
 --zero = id
 step 1 (step 2 (step 3 (id)))
 </pre>
 
-But how does that damn z fit in here? If evaluating foldr with those three arguments gets me that expression how does that last argument fit in? This is where I got stopped and figured that either this assumption was incorrect or I was missing some fundamental piece of the problem. As it turns out, this is correct but the way in which this statement is evaluated to come up with a result is not obvious, and really amazing. 
+But how does that damn z fit in here? If evaluating foldr with those three arguments gets me that expression how does that last argument fit in? This is where I got stopped and figured that either this assumption was incorrect or I was missing some fundamental piece of the problem. As it turns out, this is correct but the way in which this statement is evaluated to come up with a result is not obvious, and really amazing.
 
 The explanation I got from #haskell (Gracenotes/Eridius) was simple and important for working with haskell in general. All functions with more than a single argument can be decomposed one argument at a time into anonymous functions with the remaining arguments.
 
@@ -172,13 +164,13 @@ In the case of our step function and the resulting expression of our foldr, you 
 <pre lang="haskell">
 step 1 (step 2 (step 3 (id)))
 
-\a3 -> (\a2 -> (\a -> id (f a 3)) (f a2 2)) (f a3 1) 
+\a3 -> (\a2 -> (\a -> id (f a 3)) (f a2 2)) (f a3 1)
 </pre>
 
 Confusing? Yes its hard to read so walking though it step by step might be useful.
 
 <pre lang="haskell">
---right most fold operation 
+--right most fold operation
 step 3 (id)
 
 --only two arguments to the step function
@@ -194,34 +186,34 @@ step 1 (step 2 (\a -> id (f a 3)))
 --having evaluated the 2 rightmost folds
 step 1 (\a2 -> (\a -> id (f a 3)) (f a2 x))
 
---and finally evaluating the last fold we get 
-\a3 -> (\a2 -> (\a -> id (f a 3)) (f a2 2)) (f a3 1) 
+--and finally evaluating the last fold we get
+\a3 -> (\a2 -> (\a -> id (f a 3)) (f a2 2)) (f a3 1)
 </pre>
 
 At this point we've at least figured out how the function is able to take only two arguments (partial application!) and we can actually plug that back in to our original myFoldl (adding in the example argument values (+), 1, and [1,2,3]) to see what it will look like
 
 <pre lang="haskell">
 --for myFoldl (+) 1 [1,2,3]
-myFoldl (+) 1 [1,2,3] = (\a3 -> (\a2 -> (\a -> id (+ a 3)) (+ a2 2)) (+ a3 1))  1  
+myFoldl (+) 1 [1,2,3] = (\a3 -> (\a2 -> (\a -> id (+ a 3)) (+ a2 2)) (+ a3 1))  1
     where step x g a = g (f a x)
 </pre>
 
 And if you look waaay over there on the right we have our third argument! So you can follow the course of the evaluation down from there replacing a3 with 1 and then evaluating (+ a3 1) then passing the result to a2 and (+ a2 2) to a.
 
-The laziness of the language allows you to deal with completing your function call at a later date through partial application. This also gives some insight into the type signature syntax of functions 
+The laziness of the language allows you to deal with completing your function call at a later date through partial application. This also gives some insight into the type signature syntax of functions
 
 <pre lang="haskell">
 myFunc :: Int -> Int -> Bool
 myFunc x y = x == y
 </pre>
 
-What its really saying is that after evaluation of myFunc with its first argument of type Int another function accepting an argument of type Int will be returned. Should you supply another argument to the resulting function a final result of Bool will be returned. I'm not speaking specifically about the execution of the code but rather the nature of the application of functions to the arguments passed. 
+What its really saying is that after evaluation of myFunc with its first argument of type Int another function accepting an argument of type Int will be returned. Should you supply another argument to the resulting function a final result of Bool will be returned. I'm not speaking specifically about the execution of the code but rather the nature of the application of functions to the arguments passed.
 
 <pre lang="haskell">
 --different ways to write myFunc
 \x -> (\y -> x == y)
 \x y -> x == y
-myFunc 1 = \y -> 1 == y 
+myFunc 1 = \y -> 1 == y
 myFunc 1 2 = False
 </pre>
 
@@ -251,13 +243,7 @@ Hopefully I'll be back with more as haskell continues to flip my lid.
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#function-ref">function <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#application-ref">application <span>1</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
     
   
 

@@ -52,14 +52,6 @@
   
     
       
-      	
-      	<li><a href="//johnbender.github.com/writing/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-      
     
   
     
@@ -109,13 +101,13 @@ I was initially a bit worried that I would be out of my depth with this book but
 
 <h2>Recursive Data Types </h2>
 
-The second section of the first chapter is where things started to get exciting and dense. The first example of recursive data types they provide, that make the basis for the rest of the chapter, is natural numbers (all integers >= 0). In haskell it would look something like 
+The second section of the first chapter is where things started to get exciting and dense. The first example of recursive data types they provide, that make the basis for the rest of the chapter, is natural numbers (all integers >= 0). In haskell it would look something like
 
 <pre>
 <span class="keyword">data</span> <span class="type">Nat</span> <span class="variable-name">=</span> <span class="type">Zero</span> <span class="variable-name">|</span> <span class="type">Successor</span> <span class="type">Nat</span></pre>
 <br />
 
-To further explain how this can represent any natural number consider the following possible definitions of a function that represents the value 3 
+To further explain how this can represent any natural number consider the following possible definitions of a function that represents the value 3
 
      <pre>
 <span class="comment-delimiter">-- </span><span class="comment">What we would normally do
@@ -146,7 +138,7 @@ The rest of the chapter is devoted to presenting the foldn function that provide
 
 It should be noted here, as it confused me initially, that by providing (n + 1) or (Successor n) in the head of the function, n represents a value of one less than that which is passed in. So in the case that foldn was called with some c, some h and 6, n has the value 5 (since (5 + 1) is 6).
 
-The fun part about this is that is provides a method by which you can define functions for addition, subtraction and exponentiation (and others) in terms of foldn. From the book: 
+The fun part about this is that is provides a method by which you can define functions for addition, subtraction and exponentiation (and others) in terms of foldn. From the book:
 
 <pre>
 <span class="comment-delimiter">-- </span><span class="comment">Addition
@@ -188,19 +180,9 @@ Obviously this is only the first chapter and relatively simple (though not for m
 
   
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#algebra-ref">algebra <span>3</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#math-ref">math <span>8</span></a></li>
      
-    	<li><a href="//johnbender.github.com/writing/tags.html#of-ref">of <span>1</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#functional-ref">functional <span>14</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#programming-ref">programming <span>28</span></a></li>
-     
-    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>15</span></a></li>
+    	<li><a href="//johnbender.github.com/writing/tags.html#haskell-ref">haskell <span>10</span></a></li>
     
   
 
