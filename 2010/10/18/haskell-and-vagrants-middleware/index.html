@@ -76,6 +76,18 @@
 
 
           </ul>
+
+          <div class="social-media">
+            <a href="http://twitter.com/johnbender">
+              <img src="//johnbender.github.com/writing/assets/themes/twitter/../../../assets/images/twitter.png">
+            </a>
+            <a href="http://github.com/johnbender">
+              <img src="//johnbender.github.com/writing/assets/themes/twitter/../../../assets/images/github.png">
+            </a>
+            <a href="http://www.linkedin.com/in/johnmbender">
+              <img src="//johnbender.github.com/writing/assets/themes/twitter/../../../assets/images/linkedin.png">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -88,7 +100,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span9">
+  <div class="span10">
     As a follow up to my last post on <a href="http://nickelcode.com/2010/07/22/middleware-composition-and-monads/">middleware and monads</a> I'll be going over how the Warden class, as <a href="http://github.com/mitchellh/vagrant/blob/master/lib/vagrant/action/warden.rb">implemented inside Vagrant</a>, uses concepts derived from some of the basic monad combinators to achieve a rescuable middleware stack. As before, this article assumes you have some knowledge of the Haskell language and middleware as defined in the Rack specification/Pep 333. Also, if you've never heard of Vagrant you can check out the <a href="http://vagrantup.com">documentation</a> and some <a href="http://www.engineyard.com/blog/2010/mitchell-hashimoto-joins-engine-yard-oss-community-grant-program/">press</a>.
 
 <h2>Quick Recap</h2>
@@ -260,7 +272,7 @@ My goal for the next article will be to build a middleware implementation in Has
     
   </div>
 
-  <div id="info" class="span3">
+  <div id="info" class="span2">
     <h4>Published</h4>
     <div class="date"><span>18 October 2010</span></div>
 
