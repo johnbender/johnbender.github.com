@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-05T15:35:32-07:00</updated>
+ <updated>2012-08-06T09:17:50-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -19,7 +19,7 @@
    <id>http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal</id>
    <content type="html">&lt;p&gt;Previously I&amp;#39;ve described applications of Category Theory in JavaScript and with jQuery. An earlier post, &lt;a href=&quot;http://johnbender.us/2012/02/29/faster-javascript-through-category-theory/&quot;&gt;Faster JavaScript with Category Theory&lt;/a&gt;, identified a possible performance benefit where composition could be shown to hold for a Functor from &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;. This post follows up with a more concrete look at that optimization and suggests an additional, farther reaching, implication for the two categories.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_11&quot;&gt;Quick Recap&lt;/h2&gt;
+&lt;h2 id=&quot;toc_10&quot;&gt;Quick Recap&lt;/h2&gt;
 
 &lt;p&gt;Previously we defined the categories &lt;strong&gt;Html&lt;/strong&gt; and &lt;strong&gt;Jqry&lt;/strong&gt;, providing a concrete mathematical representation of DOM manipulations in raw form and their counterparts used inside the jQuery library.&lt;/p&gt;
 
@@ -47,7 +47,7 @@
 
 &lt;p&gt;which is an equivalence of two approaches (one of which requires one less iteration to accomplish the same task). This, viewed in the light of &amp;quot;interesting results from math&amp;quot;, is relatively exciting but the performance implications warranted some further exploration, which takes us to the meat of this post.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_12&quot;&gt;Performance Reality&lt;/h2&gt;
+&lt;h2 id=&quot;toc_11&quot;&gt;Performance Reality&lt;/h2&gt;
 
 &lt;p&gt;The most obvious and the least labor-intensive candidates for profiling loop fusion are jQuery methods that already rely on an &lt;em&gt;abstracted&lt;/em&gt; &lt;strong&gt;Html&lt;/strong&gt; morphism. They represent a real use case for that separation of functionality within the library.&lt;/p&gt;
 
@@ -87,7 +87,7 @@
 
 &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Qtq7Q.png&quot; alt=&quot;performance profile&quot;&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_13&quot;&gt;Even My Presentation had Side Effects&lt;/h2&gt;
+&lt;h2 id=&quot;toc_12&quot;&gt;Even My Presentation had Side Effects&lt;/h2&gt;
 
 &lt;p&gt;Most of the jQuery Core team was at the breakout session doing dramatic readings of bugs when I gave my presentation&lt;sup&gt;1&lt;/sup&gt; but there was a notable attendee in the front row, Yehuda Katz. He asked after my talk if the test methods were implemented using actual composition or simply invoked directly in serial (they were), alluding to the fact that the additional function call added with &lt;code&gt;cmps&lt;/code&gt; would negate the reduced loop iteration operations.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cmps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -140,7 +140,7 @@
 
 &lt;p&gt;You can see in both cases that the overhead of abstracting the DOM manipulation into a function is mostly tenable, the notable exception being smaller sets of elements in Opera. If that small additional overhead in the common case is acceptable it exposes some benefits that the library can provide to framework authors and performance-minded developers.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_14&quot;&gt;Architecture Benefits&lt;/h2&gt;
+&lt;h2 id=&quot;toc_13&quot;&gt;Architecture Benefits&lt;/h2&gt;
 
 &lt;p&gt;Clearly, there are benefits from a clean separation for both the library itself and for advanced users relying on jQuery&amp;#39;s inbuilt &amp;quot;experience&amp;quot; with browser compatibility. If the two sides are kept separate jQuery Core could provide a build target that only includes the DOM manipulation and reduces the overall size of the gzipped include. Mobile devices have made file size a serious concern (belaboring the obvious) not just because of wire weight but also parsing time, and the reduction of code in this case could be significant.&lt;/p&gt;
 
@@ -148,7 +148,7 @@
 
 &lt;p&gt;Less interesting for end-users is the benefit to the Core team in terms of separating concerns and testing. For the DOM manipulations this change delineates &lt;code&gt;jQuery.fn&lt;/code&gt; methods as a usability layer on top of the underlying &lt;strong&gt;Html&lt;/strong&gt; morphism. If you ascribe to the ideas that fall out of the dependency between the two categories then &lt;strong&gt;Jqry&lt;/strong&gt; has always had this role. Also, where testing is concerned, the DOM manipulation methods can be tested in isolation from the code that makes jQuery easy to use (with stubbing in the latter case).&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_15&quot;&gt;Performance Benefits&lt;/h2&gt;
+&lt;h2 id=&quot;toc_14&quot;&gt;Performance Benefits&lt;/h2&gt;
 
 &lt;p&gt;Assuming a perfect world where every jQuery method involved in DOM element manipulation is built on an &lt;strong&gt;Html&lt;/strong&gt; morphism there are a couple of possible performance benefits. First, and least impactful is that it makes rewrapping DOM elements using the &lt;code&gt;$&lt;/code&gt;/&lt;code&gt;jQuery&lt;/code&gt; function unnecessary in many cases.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;.foo&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;click&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -180,7 +180,7 @@
 
 &lt;p&gt;Again, the jQuery method would retain all its old functionality. The proposed underlying morphism is a new API. It can stick to what it does best: cross-platform manipulation of DOM elements. When a user is concerned about performance they can start looking at the ways their application uses jQuery and leverage a less friendly but still beautiful &amp;quot;low-level&amp;quot; API for DOM manipulations to save execution time.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_16&quot;&gt;Beautiful API Design&lt;/h2&gt;
+&lt;h2 id=&quot;toc_15&quot;&gt;Beautiful API Design&lt;/h2&gt;
 
 &lt;p&gt;Given the benefits in library size reduction a separate set of methods can provide, these methods should all be available on some top level namespace. &lt;code&gt;$&lt;/code&gt;/&lt;code&gt;jQuery&lt;/code&gt; may be the most obvious choice but this requires some consideration due to compatibility concerns with existing methods like &lt;code&gt;jQuery.removeAttr&lt;/code&gt; and &lt;code&gt;jQuery.css&lt;/code&gt;.&lt;/p&gt;
 
@@ -216,7 +216,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;toc_17&quot;&gt;What happened to the Math?&lt;/h2&gt;
+&lt;h2 id=&quot;toc_16&quot;&gt;What happened to the Math?&lt;/h2&gt;
 
 &lt;p&gt;Long story short: I&amp;#39;m looking into it. There is certainly a dependent relationship between the set of &lt;strong&gt;Jqry&lt;/strong&gt; morphisms that operate on the contents of &lt;strong&gt;Jqry&lt;/strong&gt; objects (remember there are &lt;strong&gt;Jqry&lt;/strong&gt; morphisms that don&amp;#39;t, eg. &lt;code&gt;jQuery.fn.first&lt;/code&gt; only alters the container) and the underlying &lt;strong&gt;Html&lt;/strong&gt; morphisms. That subset of morphisms and all jQuery objects may form a subcategory &lt;strong&gt;Jqry&lt;/strong&gt;&lt;sub&gt;h&lt;/sub&gt;.&lt;/p&gt;
 
@@ -226,7 +226,7 @@
 
 &lt;p&gt;I&amp;#39;m sure there&amp;#39;s a more elegant way to represent the two sets, objects and morphisms, of this subcategory but this works for me now. Also, it&amp;#39;s not clear that there are useful practical implications for the dependency aside from how it might otherwise affect our perception of jQuery as a library. I intend to look into this a bit more when I have time.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_18&quot;&gt;Further Investigation Required&lt;/h2&gt;
+&lt;h2 id=&quot;toc_17&quot;&gt;Further Investigation Required&lt;/h2&gt;
 
 &lt;p&gt;If the goals presented here turn out to be of real value there&amp;#39;s a lot of work left to do. Most importantly the performance overhead of an extra function call in so many jQuery methods needs to be examined thoroughly, not just in jQuery Core but in dependent projects like UI, Mobile, and possibly plugins. Hopefully the initial impression of fast function calls bears out in further testing.&lt;/p&gt;
 
@@ -234,7 +234,7 @@
 
 &lt;p&gt;Ultimately the ideas here are a rough sketch.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_19&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_18&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;To be totally clear this isn&amp;#39;t a jab at the core team. I&amp;#39;m under the impression that the readings are really entertaining. Moreover the talks at conferences are rarely really interesting to the presenters in my experience. Most of the time you can find them chatting/hacking in the halls, which might indicate some level of boredom with the material and may even be a leading indicator of when someone is ready to start submitting talk proposals in terms of experience/content knowledge.&lt;/li&gt;
@@ -773,49 +773,49 @@ And there you have it. After defining a mathematical framework in which to view 
    <link href="http://johnbender.github.com/2012/02/22/leveraging-your-insecurities"/>
    <updated>2012-02-22T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2012/02/22/leveraging-your-insecurities</id>
-   <content type="html">&lt;strong&gt;update&lt;/strong&gt;: This article has been &lt;a href=&quot;http://news.ycombinator.com/item?id=3621425&quot; title=&quot;Hacker News Discussion&quot;&gt;posted to Hacker News&lt;/a&gt;. If you enjoy it and are a member there please upvote/comment.
+   <content type="html">&lt;p&gt;&lt;strong&gt;update&lt;/strong&gt;: This article has been &lt;a href=&quot;http://news.ycombinator.com/item?id=3621425&quot; title=&quot;Hacker News Discussion&quot;&gt;posted to Hacker News&lt;/a&gt;. If you enjoy it and are a member there please upvote/comment.&lt;/p&gt;
 
-I believe mine is a fairly common condition as a software developer. I know, or at least believe, that I'm smart enough to be paid well for the work that I do, but the state of my intelligence relative to the &quot;great minds&quot; in the communities of which I'm a part (JavaScript and Ruby) is an unknown. My tendency is to assume, as a baseline, that nearly any developer I don't know is smarter and more capable than I am.
+&lt;p&gt;I believe mine is a fairly common condition as a software developer. I know, or at least believe, that I&amp;#39;m smart enough to be paid well for the work that I do, but the state of my intelligence relative to the &amp;quot;great minds&amp;quot; in the communities of which I&amp;#39;m a part (JavaScript and Ruby) is an unknown. My tendency is to assume, as a baseline, that nearly any developer I don&amp;#39;t know is smarter and more capable than I am.&lt;/p&gt;
 
-This manifests as a whole host of negative behaviors, everything from grasping wildly at straws on subjects in which I have little or no background, to simply feeling left out of conversations that I would kill to participate in. As bad as the action might be, the self loathing that comes later is far worse and can haunt me long after. Oddly, even after viewing the same situations from the other side, that of the knowledgeable participant, the most endearing quality in those less knowledgeable is honesty and enthusiasm!
+&lt;p&gt;This manifests as a whole host of negative behaviors, everything from grasping wildly at straws on subjects in which I have little or no background, to simply feeling left out of conversations that I would kill to participate in. As bad as the action might be, the self loathing that comes later is far worse and can haunt me long after. Oddly, even after viewing the same situations from the other side, that of the knowledgeable participant, the most endearing quality in those less knowledgeable is honesty and enthusiasm!&lt;/p&gt;
 
 &lt;h2&gt;How then?&lt;/h2&gt;
 
-So, aside from attempting to correct these behaviors, what am I to make of all the nervous energy generated by the shame of my social and intelectual failings? For one, I've taken up public speaking at conferences and meetups as a means through which to prove to my peers and myself that I am a capable speaker and thoughtful developer. I like to think of it as a sort of act in defiance of my own, well documented, shortcomings. And while this clearly exposes an ugly character flaw in the need to repair my ego, a well thought out and executed presentation has many benefits where confidence, or its absence, is concerned.
+&lt;p&gt;So, aside from attempting to correct these behaviors, what am I to make of all the nervous energy generated by the shame of my social and intelectual failings? For one, I&amp;#39;ve taken up public speaking at conferences and meetups as a means through which to prove to my peers and myself that I am a capable speaker and thoughtful developer. I like to think of it as a sort of act in defiance of my own, well documented, shortcomings. And while this clearly exposes an ugly character flaw in the need to repair my ego, a well thought out and executed presentation has many benefits where confidence, or its absence, is concerned.&lt;/p&gt;
 
-First, it forces me, as the presenter, to fully realize and enumerate an idea from start to finish. This includes branching out into little corners and dark areas of the topic from which a question might be raised. The fear of being caught out without a response to an obvious question drives me, as much as possible, to gather a comprehensive knowledge of what I'm presenting on. This may not be the case for all presenters but I feel compelled to become something of a topic expert before even submitting the proposal.
+&lt;p&gt;First, it forces me, as the presenter, to fully realize and enumerate an idea from start to finish. This includes branching out into little corners and dark areas of the topic from which a question might be raised. The fear of being caught out without a response to an obvious question drives me, as much as possible, to gather a comprehensive knowledge of what I&amp;#39;m presenting on. This may not be the case for all presenters but I feel compelled to become something of a topic expert before even submitting the proposal.&lt;/p&gt;
 
-Second, it requires that I accept not everyone will care about the material or agree with the premise. Even in a room of 30 people, the best technical presentation, no matter how funny, relevant, and inspiring is likely to lose someone. They didn't have enough coffee, their lunch gave them gas, they're already a topic expert, or their pager simply went off and they have to struggle to diagnose a production issue over the spotty conference Wi-Fi. Learning to accept the imperfect nature of your presentation is a good start to accepting that the things you say will not always be ground breaking/thoughtful/witty.
+&lt;p&gt;Second, it requires that I accept not everyone will care about the material or agree with the premise. Even in a room of 30 people, the best technical presentation, no matter how funny, relevant, and inspiring is likely to lose someone. They didn&amp;#39;t have enough coffee, their lunch gave them gas, they&amp;#39;re already a topic expert, or their pager simply went off and they have to struggle to diagnose a production issue over the spotty conference Wi-Fi. Learning to accept the imperfect nature of your presentation is a good start to accepting that the things you say will not always be ground breaking/thoughtful/witty.&lt;/p&gt;
 
-Last, public speaking requires that you ... speak in public. The confidence that repeated speaking engagements builds in the presenter is not to be underestimated and it translates directly into other social interactions. Meetings, performance reviews, and virtually any expository conversation will benefit directly from the ease with words that one develops.
+&lt;p&gt;Last, public speaking requires that you ... speak in public. The confidence that repeated speaking engagements builds in the presenter is not to be underestimated and it translates directly into other social interactions. Meetings, performance reviews, and virtually any expository conversation will benefit directly from the ease with words that one develops.&lt;/p&gt;
 
 &lt;h2&gt;(Bumb|Stumb|Fumb)ling Into The Endzone&lt;/h2&gt;
 
-Another particularly interesting behavior that appears to be closely correlated with my involvement in the jQuery Mobile project is a desire to be extremely(+/-) thorough in responses to my teammates and external developers on technical issues.
+&lt;p&gt;Another particularly interesting behavior that appears to be closely correlated with my involvement in the jQuery Mobile project is a desire to be extremely(+/-) thorough in responses to my teammates and external developers on technical issues.&lt;/p&gt;
 
-I should mention that, for internal team issues, this is not always the case. The sad truth is that the people I work with day to day already have a sense, positive or negative, for my capabilities as a developer and expending large amounts of effort to sway their opinion would be a waste. This seems to suggest that the reason for the enormous effort I put in where external developers interact with the project is, in many cases, the conversation on github over an issue or a pull request will be the only interaction that these people ever have with me. As a result I do my best to be careful about presenting intelligent and thoughtful answers to their questions/requests in the hopes of cultivating a positive perception of me in the broader developer community.
+&lt;p&gt;I should mention that, for internal team issues, this is not always the case. The sad truth is that the people I work with day to day already have a sense, positive or negative, for my capabilities as a developer and expending large amounts of effort to sway their opinion would be a waste. This seems to suggest that the reason for the enormous effort I put in where external developers interact with the project is, in many cases, the conversation on github over an issue or a pull request will be the only interaction that these people ever have with me. As a result I do my best to be careful about presenting intelligent and thoughtful answers to their questions/requests in the hopes of cultivating a positive perception of me in the broader developer community.&lt;/p&gt;
 
-For instance last year, before jQuery Mobile went 1.0, one of our users (&lt;a href=&quot;https://github.com/jammus&quot; title=&quot;Jammus on Github&quot;&gt;jammus&lt;/a&gt;) logged an &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579&quot; title=&quot;jQuery Mobile Issue 1579&quot; target=&quot;_blank&quot;&gt;issue&lt;/a&gt; he was experiencing while using the appcache on iOS. After some discussion and proposed workarounds Todd Parker (our team lead) asked me to take a look. A short time later, once I felt understood the issues at hand, I &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374186&quot; title=&quot;jQuery Mobile Issue 1579 Comment&quot; target=&quot;_blank&quot;&gt;voiced my concerns&lt;/a&gt; about the solutions that other user's were offering in the thread. If you scroll down you can almost watch me sweat as I reread my response and correct with additional comments. There's a &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374321&quot; title=&quot;jQuery Mobile Issue 1579 Comment 2&quot;&gt;follow up&lt;/a&gt; noting that CORS requests won't work, which I later correct after realizing that appcache requests can't be cross domain according &lt;a href=&quot;http://dev.w3.org/html5/spec/offline.html#appcache&quot; title=&quot;Appcache w3 Spec&quot;&gt;the spec&lt;/a&gt;. My comment just below that is &lt;em&gt;edited out&lt;/em&gt;, and while it's not totally obvious what I was thinking I do remember being at least mildly embarrassed.
+&lt;p&gt;For instance last year, before jQuery Mobile went 1.0, one of our users (&lt;a href=&quot;https://github.com/jammus&quot; title=&quot;Jammus on Github&quot;&gt;jammus&lt;/a&gt;) logged an &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579&quot; title=&quot;jQuery Mobile Issue 1579&quot; target=&quot;_blank&quot;&gt;issue&lt;/a&gt; he was experiencing while using the appcache on iOS. After some discussion and proposed workarounds Todd Parker (our team lead) asked me to take a look. A short time later, once I felt understood the issues at hand, I &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374186&quot; title=&quot;jQuery Mobile Issue 1579 Comment&quot; target=&quot;_blank&quot;&gt;voiced my concerns&lt;/a&gt; about the solutions that other user&amp;#39;s were offering in the thread. If you scroll down you can almost watch me sweat as I reread my response and correct with additional comments. There&amp;#39;s a &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues/1579#issuecomment-2374321&quot; title=&quot;jQuery Mobile Issue 1579 Comment 2&quot;&gt;follow up&lt;/a&gt; noting that CORS requests won&amp;#39;t work, which I later correct after realizing that appcache requests can&amp;#39;t be cross domain according &lt;a href=&quot;http://dev.w3.org/html5/spec/offline.html#appcache&quot; title=&quot;Appcache w3 Spec&quot;&gt;the spec&lt;/a&gt;. My comment just below that is &lt;em&gt;edited out&lt;/em&gt;, and while it&amp;#39;s not totally obvious what I was thinking I do remember being at least mildly embarrassed.&lt;/p&gt;
 
-The ultimate result of that interaction was positive: we decided that the hacks suggested would suffice for now and that the issue should be left open for developers experiencing the same problem. I like to believe that is at least in part due to how much effort I expended not just in attempting to help but also in making sure I didn't look silly.
+&lt;p&gt;The ultimate result of that interaction was positive: we decided that the hacks suggested would suffice for now and that the issue should be left open for developers experiencing the same problem. I like to believe that is at least in part due to how much effort I expended not just in attempting to help but also in making sure I didn&amp;#39;t look silly.&lt;/p&gt;
 
 &lt;h2&gt;You Can't Always Be Right&lt;/h2&gt;
 
-Before I close this post I would like to address at least one common symptom of being insecure about your intelligence, that is the need to always be right. Again, I have to believe that this is a common issue among developers, especially because we are consistently debating very technical ideas and because I've seen it so often in myself and others. You can spot it in your own behavior if you, like me, tend to get agitated or excited when someone doesn't agree with you. For my part the fix is so small as to seem insignificant:
+&lt;p&gt;Before I close this post I would like to address at least one common symptom of being insecure about your intelligence, that is the need to always be right. Again, I have to believe that this is a common issue among developers, especially because we are consistently debating very technical ideas and because I&amp;#39;ve seen it so often in myself and others. You can spot it in your own behavior if you, like me, tend to get agitated or excited when someone doesn&amp;#39;t agree with you. For my part the fix is so small as to seem insignificant:&lt;/p&gt;
 
-Speak your ideas in the form of a question.&lt;sup&gt;1&lt;/sup&gt;
+&lt;p&gt;Speak your ideas in the form of a question.&lt;sup&gt;1&lt;/sup&gt;&lt;/p&gt;
 
-What a difference the inflection at the end of a sentence can make in the tone of a discussion! So often when leading with &quot;You should ...&quot; or &quot;We should ...&quot;, especially in a text medium, it presents an unapproachable front and stifles conversation. Instead, leading with &quot;Can we ...&quot; or &quot;Should we ...&quot; leaves the door open for others to freely express concerns or offer totally different approaches. By asking a question you invite discussion and criticism, and position yourself in direct opposition to your insecurity.
+&lt;p&gt;What a difference the inflection at the end of a sentence can make in the tone of a discussion! So often when leading with &amp;quot;You should ...&amp;quot; or &amp;quot;We should ...&amp;quot;, especially in a text medium, it presents an unapproachable front and stifles conversation. Instead, leading with &amp;quot;Can we ...&amp;quot; or &amp;quot;Should we ...&amp;quot; leaves the door open for others to freely express concerns or offer totally different approaches. By asking a question you invite discussion and criticism, and position yourself in direct opposition to your insecurity.&lt;/p&gt;
 
 &lt;h2&gt;Don't Forget To Take Out The Trash&lt;/h2&gt;
 
-Generally, being insecure is not a positive thing. It's at the root of jealousy, resentment, and other Dark Side behavior. Even so, I don't think it's necessary to let your insecurities, or more specifically the motivating force they can provide, go to waste. Just don't forget that while using them to motivate you, addressing the actual problems they represent has to take center stage.
+&lt;p&gt;Generally, being insecure is not a positive thing. It&amp;#39;s at the root of jealousy, resentment, and other Dark Side behavior. Even so, I don&amp;#39;t think it&amp;#39;s necessary to let your insecurities, or more specifically the motivating force they can provide, go to waste. Just don&amp;#39;t forget that while using them to motivate you, addressing the actual problems they represent has to take center stage.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;How do I know this works? I have the distinct pleasure of interacting with &lt;a href=&quot;https://twitter.com/scottjehl&quot; title=&quot;Scott Jehl on Twitter&quot;&gt;Scott Jehl&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/toddmparker&quot; title=&quot;Todd Parker on Twitter&quot;&gt;Todd Parker&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot;Kin Blas on Twitter&quot;&gt;Kin Blas&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/wilto&quot; title=&quot;Mat Marquis on Twitter&quot;&gt;Mat Marquis&lt;/a&gt;, and &lt;a href=&quot;https://twitter.com/gseguin&quot; title=&quot;Ghislain Seguin on Twitter&quot;&gt;Ghislain Seguin&lt;/a&gt; every day while working on the jQuery Mobile project and this approach to collaboration is always the order of the day. Obviously one sample does not a tautology make, but it's one of the very best teams/environments I've ever worked with/in.&lt;/li&gt;
 &lt;/ol&gt;
 
-Special thanks to &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot;Kin Blas on Twitter&quot;&gt;Kin Blas&lt;/a&gt; for his feedback on the article.
+&lt;p&gt;Special thanks to &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot;Kin Blas on Twitter&quot;&gt;Kin Blas&lt;/a&gt; for his feedback on the article.&lt;/p&gt;
 </content>
  </entry>
  
@@ -824,13 +824,11 @@ Special thanks to &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot
    <link href="http://johnbender.github.com/2012/02/09/faster-javascript-through-category-theory"/>
    <updated>2012-02-09T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2012/02/09/faster-javascript-through-category-theory</id>
-   <content type="html">&lt;h1 id=&quot;toc_0&quot;&gt;Faster Javascript Through Category Theory&lt;/h1&gt;
-
-&lt;p&gt;This post started out as a &lt;a href=&quot;https://gist.github.com/7242a7434195565b4a9d&quot;&gt;gist&lt;/a&gt; that I was using to work through what I&amp;#39;ve learned about category theory by applying it to something I already know: JavaScript. The surprising result was a clearly defined set of JavaScript functions and jQuery helpers that could be optimized to reduce execution time.&lt;/p&gt;
+   <content type="html">&lt;p&gt;This post started out as a &lt;a href=&quot;https://gist.github.com/7242a7434195565b4a9d&quot;&gt;gist&lt;/a&gt; that I was using to work through what I&amp;#39;ve learned about category theory by applying it to something I already know: JavaScript. The surprising result was a clearly defined set of JavaScript functions and jQuery helpers that could be optimized to reduce execution time.&lt;/p&gt;
 
 &lt;p&gt;In the course of this post we&amp;#39;ll define two categories: one for HTMLElements and the other for jQuery objects. We&amp;#39;ll then construct a Functor that maps from the category of HTMLElements to the category of jQuery objects. At the end we&amp;#39;ll see how jQuery plugin authors can help user&amp;#39;s speed up their JavaScript.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_1&quot;&gt;Asumptions/Requirements&lt;/h3&gt;
+&lt;h3 id=&quot;toc_0&quot;&gt;Asumptions/Requirements&lt;/h3&gt;
 
 &lt;p&gt;Some things to know before getting started:&lt;/p&gt;
 
@@ -840,7 +838,7 @@ Special thanks to &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot
 &lt;li&gt;My examples do not constitute proofs but I&amp;#39;m fairly confident that both categories and the functor satisfy their respective laws.&lt;sup&gt;1&lt;/sup&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&quot;toc_2&quot;&gt;Categories&lt;/h3&gt;
+&lt;h3 id=&quot;toc_1&quot;&gt;Categories&lt;/h3&gt;
 
 &lt;p&gt;If you&amp;#39;re perfectly happy taking the category definitions at face value, feel free to skip ahead to the next section.&lt;/p&gt;
 
@@ -861,7 +859,7 @@ Special thanks to &lt;a href=&quot;https://twitter.com/kinblas&quot; title=&quot
 
 &lt;p&gt;These laws are important for understanding the conclusions drawn from the rest of the post and we&amp;#39;ll cover how both the &lt;strong&gt;Html&lt;/strong&gt; and &lt;strong&gt;Jqry&lt;/strong&gt; categories satisfies each.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_3&quot;&gt;Html&lt;/h3&gt;
+&lt;h3 id=&quot;toc_2&quot;&gt;Html&lt;/h3&gt;
 
 &lt;p&gt;The Category &lt;strong&gt;Html&lt;/strong&gt; is extremely simple and, if you&amp;#39;re still interested in understanding categories more generally, it will help in building an intuition for them. The objects in &lt;strong&gt;Html&lt;/strong&gt; are the HTMLElements that you&amp;#39;re familiar with from JavaScript (eg, HTMLDivElement, HTMLAnchorElement). The morphisms are JavaScript functions that opperate on those objects, and &lt;em&gt;only&lt;/em&gt; those objects.&lt;/p&gt;
 
@@ -914,7 +912,7 @@ elem.getAttribute( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
 
 &lt;p&gt;The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in &lt;strong&gt;Html&lt;/strong&gt; are closed under composition because of the type guarantees we&amp;#39;ve placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there&amp;#39;s no way to compose two of them that doesn&amp;#39;t also have the same type signature. Having met the three requirements for a category with &lt;strong&gt;Html&lt;/strong&gt; we can move on to the second, and more complex category &lt;strong&gt;Jqry&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_4&quot;&gt;Jqry&lt;/h3&gt;
+&lt;h3 id=&quot;toc_3&quot;&gt;Jqry&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Jqry&lt;/strong&gt; is the category of &lt;code&gt;jQuery&lt;/code&gt; objects and functions from &lt;code&gt;jQuery&lt;/code&gt; objects to &lt;code&gt;jQuery&lt;/code&gt; objects.&lt;sup&gt;3&lt;/sup&gt; It&amp;#39;s only slightly more complex than &lt;strong&gt;Html&lt;/strong&gt; because the reader must accept &lt;code&gt;this&lt;/code&gt; as an implicit parameter to the JavaScript functions that are the category&amp;#39;s morphisms. Also, these morphisms must be defined on the &lt;code&gt;$.fn&lt;/code&gt; object to guarantee the value of &lt;code&gt;this&lt;/code&gt; is a &lt;code&gt;jQuery&lt;/code&gt; object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like &lt;code&gt;$(&amp;quot;div&amp;quot;)&lt;/code&gt;, and the functions are JavaScript functions that retun jQuery objects.&lt;/p&gt;
 
@@ -982,7 +980,7 @@ $elem.aAndB().attr( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/spa
 
 &lt;p&gt;Again, we know that the morphisms of &lt;strong&gt;Jqry&lt;/strong&gt; are closed under composition because each accepts and returns only jQuery objects.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_5&quot;&gt;$() ∉ Functors&lt;/h3&gt;
+&lt;h3 id=&quot;toc_4&quot;&gt;$() ∉ Functors&lt;/h3&gt;
 
 &lt;p&gt;Functors are a &lt;em&gt;single&lt;/em&gt; morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &amp;quot;works&amp;quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating &lt;code&gt;$()&lt;/code&gt; as a functor from &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;, shows that it translates the objects in the category &lt;strong&gt;Html&lt;/strong&gt; (HTMLElements) properly to the objects in &lt;strong&gt;Jqry&lt;/strong&gt; (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So &lt;code&gt;$()&lt;/code&gt; is not, strictly speaking, a category theoretic functor.&lt;/p&gt;
 
@@ -990,7 +988,7 @@ $elem.aAndB().attr( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/spa
 
 &lt;p&gt;For the Haskell fans out there (and ciaranm in ##categorytheory) it&amp;#39;s better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of &lt;code&gt;fmap&lt;/code&gt;, but since this is flexible ol&amp;#39; JavaScript, it&amp;#39;s possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I&amp;#39;ve chosen to deal with both in a single function.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_6&quot;&gt;Functor Html -&amp;gt; Jqry&lt;/h3&gt;
+&lt;h3 id=&quot;toc_5&quot;&gt;Functor Html -&amp;gt; Jqry&lt;/h3&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;doc&quot;&gt;/** @sig {HTMLElement | html.morphism} -&amp;gt; {jQuery | jqry.morphism} */&lt;/span&gt;
@@ -1070,13 +1068,13 @@ $elem.sndAB().attr(&lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
 
 &lt;p&gt;You might recognize the optimization as &lt;a href=&quot;http://en.wikipedia.org/wiki/Loop_fusion&quot;&gt;loop fusion&lt;/a&gt;. By ensuring that the functor satisfies the requsite laws we&amp;#39;ve stumbled upon an interesting relationship. That is, any time we use n &amp;gt; 1 iterative &lt;code&gt;$.fn&lt;/code&gt; methods that exist in &lt;strong&gt;Jqry&lt;/strong&gt; it&amp;#39;s possible to extract the pure HTMLElement-altering functions that &lt;em&gt;might&lt;/em&gt; underly them, compose those functions, and save n-1 full iterations in the process.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_7&quot;&gt;Loop Fusing Hipster&lt;/h3&gt;
+&lt;h3 id=&quot;toc_6&quot;&gt;Loop Fusing Hipster&lt;/h3&gt;
 
 &lt;p&gt;It&amp;#39;s clear that someone using &lt;code&gt;$(&amp;quot;foo&amp;quot;).a().b()&lt;/code&gt; could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; could be unified to speed up execution and subsequently point out they&amp;#39;ve been fusing loops since before it was cool. What&amp;#39;s not clear is how to know in other cases when it&amp;#39;s possible to extract the underlying functions from the &lt;code&gt;$.fn&lt;/code&gt; methods for composition. Because of the Functor laws we&amp;#39;ve unambiguously defined a specific subset of functions -- the set of &lt;strong&gt;Html&lt;/strong&gt; morphisms with &lt;code&gt;$.fn.map&lt;/code&gt; applied -- that we &lt;em&gt;know&lt;/em&gt; can be fused and will produce the same result. Put differently:&lt;/p&gt;
 
 &lt;p&gt;As long as the &lt;em&gt;n&lt;/em&gt; functions being mapped over the jQuery object&amp;#39;s contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set &lt;em&gt;once&lt;/em&gt;, and be asured the resulting jQuery object will be the same.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_8&quot;&gt;Package it up&lt;/h3&gt;
+&lt;h3 id=&quot;toc_7&quot;&gt;Package it up&lt;/h3&gt;
 
 &lt;p&gt;Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the &lt;strong&gt;Jqry&lt;/strong&gt; category to see what this might look like.&lt;/p&gt;
 
@@ -1122,11 +1120,11 @@ $elem.sndAB().attr(&lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
 
 &lt;p&gt;Obviously these two examples are tiny and could easily be consolidated by hand, but two plugins with more complex DOM manipulations would be much harder to classify as &amp;quot;fusable&amp;quot;. By puting the onus on the plugin developer it gives the end user a better guarantee that it&amp;#39;s safe.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_9&quot;&gt;Did you make it?&lt;/h3&gt;
+&lt;h3 id=&quot;toc_8&quot;&gt;Did you make it?&lt;/h3&gt;
 
 &lt;p&gt;And there you have it. After defining a mathematical framework in which to view DOM alterations with jQuery and JavaScript we identified an important set of characteristics to use for speeding up our client side code. Maybe this isn&amp;#39;t enough to get you interested, but for me it&amp;#39;s an afirmation that, even this far from the its ivory towers, math has a role to play.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_10&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_9&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Thanks again to edwardk and xplat from #haskell-blah and ciaranm from ##categorytheory for reviewing my categories and providing feedback. I&amp;#39;d also like to thank &lt;a href=&quot;http://twitter.com/keyist&quot;&gt;Tim Goh&lt;/a&gt; for taking the time to enhance my terrible writting.&lt;/li&gt;
@@ -1142,15 +1140,15 @@ $elem.sndAB().attr(&lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
    <link href="http://johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api"/>
    <updated>2011-11-25T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api</id>
-   <content type="html">[Update] Thanks to Charlie in the comments for pointing me to jQuery's &lt;code&gt;$.fn.proxy&lt;/code&gt; method.
+   <content type="html">&lt;p&gt;[Update] Thanks to Charlie in the comments for pointing me to jQuery&amp;#39;s &lt;code&gt;$.fn.proxy&lt;/code&gt; method.&lt;/p&gt;
 
-Developers have traditionally used JavaScript for relatively simple DOM manipulations and XHR, but as more functionality moves to the client, the techniques used by those developers have been slow to evolve. One consequence of this slow evolution is systems comprised entirely of jQuery and a series of nested event bindings. While jQuery is an extremely effective browser API, hiding the clumsy and often bug ridden out of the box equivelants, developers need effective solutions for organizing and reusing their code.
+&lt;p&gt;Developers have traditionally used JavaScript for relatively simple DOM manipulations and XHR, but as more functionality moves to the client, the techniques used by those developers have been slow to evolve. One consequence of this slow evolution is systems comprised entirely of jQuery and a series of nested event bindings. While jQuery is an extremely effective browser API, hiding the clumsy and often bug ridden out of the box equivelants, developers need effective solutions for organizing and reusing their code.&lt;/p&gt;
 
 &lt;h2&gt;Nested Closures&lt;/h2&gt;
 
-Relegating code to event bindings breaks down in even very simple situations for a few important reasons. First the state that's closed over is often hard to track and bindings can easily be shadowed.
+&lt;p&gt;Relegating code to event bindings breaks down in even very simple situations for a few important reasons. First the state that&amp;#39;s closed over is often hard to track and bindings can easily be shadowed.&lt;/p&gt;
 
-    &lt;pre&gt;
+&lt;pre&gt;
 (&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$&lt;/span&gt; ) {
   &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;other&lt;/span&gt;() {
     &lt;span class=&quot;comment&quot;&gt;// ...
@@ -1168,23 +1166,23 @@ Relegating code to event bindings breaks down in even very simple situations for
 &lt;/span&gt;  });
 })( jQuery );&lt;/pre&gt;
 
-Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.
+&lt;p&gt;Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.&lt;/p&gt;
 
 &lt;h2&gt;Objects Not Functions&lt;/h2&gt;
 
-As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It's also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.
+&lt;p&gt;As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It&amp;#39;s also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.&lt;/p&gt;
 
-With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it's &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.
+&lt;p&gt;With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it&amp;#39;s &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.&lt;/p&gt;
 
-Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like &lt;a href=&quot;http://documentcloud.github.com/backbone/#Model&quot; title=&quot;Backbone Model&quot;&gt;Backbone&lt;/a&gt; and &lt;a href=&quot;http://docs.sproutcore.com/#doc=SC.Object&amp;src=false&quot; title=&quot;Sproutcore Object&quot;&gt;Sproutcore&lt;/a&gt; provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his &lt;a href=&quot;http://vimeo.com/22687694&quot; title=&quot;Getting Truth from the DOM&quot;&gt;presentation&lt;/a&gt; &quot;Getting Truth Out of the DOM&quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.
+&lt;p&gt;Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like &lt;a href=&quot;http://documentcloud.github.com/backbone/#Model&quot; title=&quot;Backbone Model&quot;&gt;Backbone&lt;/a&gt; and &lt;a href=&quot;http://docs.sproutcore.com/#doc=SC.Object&amp;src=false&quot; title=&quot;Sproutcore Object&quot;&gt;Sproutcore&lt;/a&gt; provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his &lt;a href=&quot;http://vimeo.com/22687694&quot; title=&quot;Getting Truth from the DOM&quot;&gt;presentation&lt;/a&gt; &amp;quot;Getting Truth Out of the DOM&amp;quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.&lt;/p&gt;
 
-Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript's object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it's prototype you can group, organize, and reuse common functionality quite easily&lt;sup&gt;1&lt;/sup&gt;. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.
+&lt;p&gt;Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript&amp;#39;s object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it&amp;#39;s prototype you can group, organize, and reuse common functionality quite easily&lt;sup&gt;1&lt;/sup&gt;. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.&lt;/p&gt;
 
-Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it's necessary to address binding context (ie &lt;code&gt;this&lt;/code&gt;) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).
+&lt;p&gt;Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it&amp;#39;s necessary to address binding context (ie &lt;code&gt;this&lt;/code&gt;) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).&lt;/p&gt;
 
 &lt;h2&gt;jQuery and Function.prototype.bind&lt;/h2&gt;
 
-&lt;del&gt;One conspicuous absence from jQuery is a helper for function context binding&lt;/del&gt; jQuery's answer for context binding is the &lt;code&gt;$.proxy&lt;/code&gt; method. That is, it provides a way to guarantee the value of &lt;code&gt;this&lt;/code&gt; during the invocation of a given function. &lt;code&gt;this&lt;/code&gt; becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we'll build a library agnostic version.
+&lt;p&gt;&lt;del&gt;One conspicuous absence from jQuery is a helper for function context binding&lt;/del&gt; jQuery&amp;#39;s answer for context binding is the &lt;code&gt;$.proxy&lt;/code&gt; method. That is, it provides a way to guarantee the value of &lt;code&gt;this&lt;/code&gt; during the invocation of a given function. &lt;code&gt;this&lt;/code&gt; becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we&amp;#39;ll build a library agnostic version.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;AlertArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$domElement&lt;/span&gt; ){
@@ -1205,7 +1203,7 @@ AlertArea.prototype.&lt;span class=&quot;function-name&quot;&gt;onCloseClick&lt;
 &lt;/span&gt;  &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$domElement.hide();
 };&lt;/pre&gt;
 
-In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it's displayed. It also binds the prototype method &lt;code&gt;onCloseClick&lt;/code&gt; to clicks on child elements matching the &lt;code&gt;div.close&lt;/code&gt; selector. The problem here is that &lt;code&gt;this&lt;/code&gt; in &lt;code&gt;onCloseClick&lt;/code&gt; won't be the &lt;code&gt;AlertArea&lt;/code&gt; object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the &lt;code&gt;this&lt;/code&gt; value upon invocation a binding function is required.
+&lt;p&gt;In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it&amp;#39;s displayed. It also binds the prototype method &lt;code&gt;onCloseClick&lt;/code&gt; to clicks on child elements matching the &lt;code&gt;div.close&lt;/code&gt; selector. The problem here is that &lt;code&gt;this&lt;/code&gt; in &lt;code&gt;onCloseClick&lt;/code&gt; won&amp;#39;t be the &lt;code&gt;AlertArea&lt;/code&gt; object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the &lt;code&gt;this&lt;/code&gt; value upon invocation a binding function is required.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;bindContext&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;fn&lt;/span&gt;) {
@@ -1214,18 +1212,20 @@ In this example when the constructor is invoked with some jQuery wrapped DOM obj
   };
 }&lt;/pre&gt;
 
-This function takes as arguments a context (&lt;code&gt;newThis&lt;/code&gt;) and a function (&lt;code&gt;fn&lt;/code&gt;). It then creates a new function that, when invoked, will use the &lt;code&gt;apply&lt;/code&gt; method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.
+&lt;p&gt;This function takes as arguments a context (&lt;code&gt;newThis&lt;/code&gt;) and a function (&lt;code&gt;fn&lt;/code&gt;). It then creates a new function that, when invoked, will use the &lt;code&gt;apply&lt;/code&gt; method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;&amp;lt;pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-    &lt;pre&gt;
-Function.prototype.&lt;span class=&quot;function-name&quot;&gt;bind&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;) {
-  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;self&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;
+&lt;p&gt;Function.prototype.&lt;span class=&quot;function-name&quot;&gt;bind&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;) {
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;self&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;&lt;/p&gt;
 
-  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
+&lt;p&gt;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
     self.apply(newThis, arguments);
   };
-};&lt;/pre&gt;
+};&lt;/pre&gt;&lt;/p&gt;
 
-With that in place the &lt;code&gt;this&lt;/code&gt; value of the &lt;code&gt;onCloseClick&lt;/code&gt; method can be guaranteed by altering the click binding
+&lt;p&gt;With that in place the &lt;code&gt;this&lt;/code&gt; value of the &lt;code&gt;onCloseClick&lt;/code&gt; method can be guaranteed by altering the click binding&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;comment&quot;&gt;// bind to the instances onCloseClick
@@ -1233,11 +1233,11 @@ With that in place the &lt;code&gt;this&lt;/code&gt; value of the &lt;code&gt;on
 $domElement.find( &lt;span class=&quot;string&quot;&gt;&quot;a.close&quot;&lt;/span&gt; ).click(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.onCloseClick.bind(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;));
 &lt;/pre&gt;
 
-&lt;del&gt;The fact that jQuery lacks this core function is telling. It isn't attempting to facilitate your code organization because that's not what it's for. I like to think that at least part of jQuery's success is due to it's focus on a very specific set of problems, but that leaves the developer to choose their preferred method of code organization. Sadly many developers fail to take that step though it can easily be accomplished with JavaScript's prototype system&lt;/del&gt;.
+&lt;p&gt;&lt;del&gt;The fact that jQuery lacks this core function is telling. It isn&amp;#39;t attempting to facilitate your code organization because that&amp;#39;s not what it&amp;#39;s for. I like to think that at least part of jQuery&amp;#39;s success is due to it&amp;#39;s focus on a very specific set of problems, but that leaves the developer to choose their preferred method of code organization. Sadly many developers fail to take that step though it can easily be accomplished with JavaScript&amp;#39;s prototype system&lt;/del&gt;.&lt;/p&gt;
 
 &lt;h2&gt;Getting Comfortable With &lt;code&gt;this&lt;/code&gt;&lt;/h2&gt;
 
-A simple library for managing textareas should serve to illustrate how the prototype system is an easy win over nested closures both early on and as application complexity grows. We'll start with the more common approach:
+&lt;p&gt;A simple library for managing textareas should serve to illustrate how the prototype system is an easy win over nested closures both early on and as application complexity grows. We&amp;#39;ll start with the more common approach:&lt;/p&gt;
 
 &lt;pre&gt;
 $( &lt;span class=&quot;string&quot;&gt;&quot;textarea&quot;&lt;/span&gt; ).each(&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;i&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;elem&lt;/span&gt;) {
@@ -1263,7 +1263,7 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;textarea&quot;&lt;/span&gt; ).each
 });
 &lt;/pre&gt;
 
-For all textarea elements in the DOM the &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; functions are bound to &lt;code&gt;keyup&lt;/code&gt; for user input and &lt;code&gt;$(window).load&lt;/code&gt; for text included in the markup. &lt;code&gt;grow&lt;/code&gt; does a simple calculation to determine if the text exceeds the textarea's rendered height and then increases it where necessary. &lt;code&gt;limitWarn&lt;/code&gt; changes the background color of the textarea when the content length exceeds a given threshold. Already there are three references bleeding into &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; (ie, &lt;code&gt;i&lt;/code&gt;, &lt;code&gt;elem&lt;/code&gt;, and &lt;code&gt;limitWarn&lt;/code&gt;/&lt;code&gt;grow&lt;/code&gt;). Now, the equivalent using the prototype system.
+&lt;p&gt;For all textarea elements in the DOM the &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; functions are bound to &lt;code&gt;keyup&lt;/code&gt; for user input and &lt;code&gt;$(window).load&lt;/code&gt; for text included in the markup. &lt;code&gt;grow&lt;/code&gt; does a simple calculation to determine if the text exceeds the textarea&amp;#39;s rendered height and then increases it where necessary. &lt;code&gt;limitWarn&lt;/code&gt; changes the background color of the textarea when the content length exceeds a given threshold. Already there are three references bleeding into &lt;code&gt;grow&lt;/code&gt; and &lt;code&gt;limitWarn&lt;/code&gt; (ie, &lt;code&gt;i&lt;/code&gt;, &lt;code&gt;elem&lt;/code&gt;, and &lt;code&gt;limitWarn&lt;/code&gt;/&lt;code&gt;grow&lt;/code&gt;). Now, the equivalent using the prototype system.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;TextArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$textArea&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;limit&lt;/span&gt; ){
@@ -1297,48 +1297,52 @@ $(&lt;span class=&quot;string&quot;&gt;&quot;textarea&quot;&lt;/span&gt;).each(&
 });
 &lt;/pre&gt;
 
-The only additional overhead is the function context bindings&lt;sup&gt;2&lt;/sup&gt;, typing &lt;code&gt;TextArea&lt;/code&gt; and &lt;code&gt;prototype&lt;/code&gt;, and the instantiation. The upshot is a purpose built constructor where the &lt;code&gt;each&lt;/code&gt; closure served before and a very specific portal through which state contained in the object is accessed (&lt;code&gt;this&lt;/code&gt;).
+&lt;p&gt;The only additional overhead is the function context bindings&lt;sup&gt;2&lt;/sup&gt;, typing &lt;code&gt;TextArea&lt;/code&gt; and &lt;code&gt;prototype&lt;/code&gt;, and the instantiation. The upshot is a purpose built constructor where the &lt;code&gt;each&lt;/code&gt; closure served before and a very specific portal through which state contained in the object is accessed (&lt;code&gt;this&lt;/code&gt;).&lt;/p&gt;
 
-Now consider another developer working on the same project needs to manage textareas in a different context with a minor alteration. The closure based solution requires something of an overhaul, but the &lt;code&gt;TextArea&lt;/code&gt; prototype can remain nearly untouched while it's repurposed elsewhere.
+&lt;p&gt;Now consider another developer working on the same project needs to manage textareas in a different context with a minor alteration. The closure based solution requires something of an overhaul, but the &lt;code&gt;TextArea&lt;/code&gt; prototype can remain nearly untouched while it&amp;#39;s repurposed elsewhere.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;&amp;lt;pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-    &lt;pre&gt;
-&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;DialogWarnTextArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$textArea&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;limit&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;$dialog&lt;/span&gt; ) {
-  TextArea.apply(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;, arguments);
+&lt;p&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;DialogWarnTextArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$textArea&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;limit&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;$dialog&lt;/span&gt; ) {
+  TextArea.apply(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;, arguments);&lt;/p&gt;
 
-  &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog = $dialog;
-}
+&lt;p&gt;&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog = $dialog;
+}&lt;/p&gt;
 
-&lt;/span&gt;DialogWarnTextArea.prototype = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TextArea();
+&lt;p&gt;&lt;/span&gt;DialogWarnTextArea.prototype = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TextArea();&lt;/p&gt;
 
-&lt;/span&gt;DialogWarnTextArea.prototype.&lt;span class=&quot;function-name&quot;&gt;limitWarn&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
+&lt;p&gt;&lt;/span&gt;DialogWarnTextArea.prototype.&lt;span class=&quot;function-name&quot;&gt;limitWarn&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
   &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$textArea.val().length &amp;gt; &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.limit ) {
-    &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog.text(&lt;span class=&quot;string&quot;&gt;&quot;Too much text!&quot;&lt;/span&gt;).show();
+    &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog.text(&lt;span class=&quot;string&quot;&gt;&amp;quot;Too much text!&amp;quot;&lt;/span&gt;).show();
   }
-};&lt;/pre&gt;
+};&lt;/pre&gt;&lt;/p&gt;
 
-A few things to take note of. First, an application of the original &lt;code&gt;TextArea&lt;/code&gt; constructor to &lt;code&gt;this&lt;/code&gt; in the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; constructor makes sure the original attributes are set up properly (ie &lt;code&gt;limit&lt;/code&gt; and &lt;code&gt;$textArea&lt;/code&gt;). You can think of this as an explicit &lt;code&gt;super&lt;/code&gt;.
+&lt;p&gt;A few things to take note of. First, an application of the original &lt;code&gt;TextArea&lt;/code&gt; constructor to &lt;code&gt;this&lt;/code&gt; in the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; constructor makes sure the original attributes are set up properly (ie &lt;code&gt;limit&lt;/code&gt; and &lt;code&gt;$textArea&lt;/code&gt;). You can think of this as an explicit &lt;code&gt;super&lt;/code&gt;.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;/span&gt;TextArea.apply(&lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;, arguments);
 &lt;/pre&gt;
 
-Second, assigning the prototype to a new instance of &lt;code&gt;TextArea&lt;/code&gt; places the methods and attributes defined on it's prototype in the chain above those defined (later) on the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; prototype. This is referred to by most JavaScript developer's as &quot;prototypal inheritance&quot; for the way it emulates method/attribute lookup in languages with classical inheritance&lt;sup&gt;3&lt;/sup&gt;.
+&lt;p&gt;Second, assigning the prototype to a new instance of &lt;code&gt;TextArea&lt;/code&gt; places the methods and attributes defined on it&amp;#39;s prototype in the chain above those defined (later) on the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; prototype. This is referred to by most JavaScript developer&amp;#39;s as &amp;quot;prototypal inheritance&amp;quot; for the way it emulates method/attribute lookup in languages with classical inheritance&lt;sup&gt;3&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;/span&gt;DialogWarnTextArea.prototype = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TextArea();
 &lt;/pre&gt;
 
-Third, defining a &lt;code&gt;limitWarn&lt;/code&gt; attribute on the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; prototype means that objects created with the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; will use that definition since it appears earlier in the prototype chain.
+&lt;p&gt;Third, defining a &lt;code&gt;limitWarn&lt;/code&gt; attribute on the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; prototype means that objects created with the &lt;code&gt;DialogWarnTextArea&lt;/code&gt; will use that definition since it appears earlier in the prototype chain.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;&amp;lt;pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-    &lt;pre&gt;
-DialogWarnTextArea.prototype.&lt;span class=&quot;function-name&quot;&gt;limitWarn&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
+&lt;p&gt;DialogWarnTextArea.prototype.&lt;span class=&quot;function-name&quot;&gt;limitWarn&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
   &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$textArea.val().length &amp;gt; &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.limit ) {
-    &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog.text(&lt;span class=&quot;string&quot;&gt;&quot;Too much text!&quot;&lt;/span&gt;).show();
+    &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$dialog.text(&lt;span class=&quot;string&quot;&gt;&amp;quot;Too much text!&amp;quot;&lt;/span&gt;).show();
   }
 };
-&lt;/pre&gt;
+&lt;/pre&gt;&lt;/p&gt;
 
-Last, we need to handle the case where the &lt;code&gt;TextArea&lt;/code&gt; constructor is invoked with the new operator to set a prototype (ie, without arguments) which constitutes our only alteration to the &lt;code&gt;TextArea&lt;/code&gt; code.
+&lt;p&gt;Last, we need to handle the case where the &lt;code&gt;TextArea&lt;/code&gt; constructor is invoked with the new operator to set a prototype (ie, without arguments) which constitutes our only alteration to the &lt;code&gt;TextArea&lt;/code&gt; code.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;TextArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$textArea&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;limit&lt;/span&gt; ){
@@ -1347,7 +1351,7 @@ Last, we need to handle the case where the &lt;code&gt;TextArea&lt;/code&gt; con
 &lt;/span&gt;}
 &lt;/pre&gt;
 
-It should also be pointed out that there are a few items worth refactoring (3 arg and the &lt;code&gt;limitWarn&lt;/code&gt; boolean operation) but the changes are at least palatable and mostly non-invasive. In stark contrast, achieving the same functionality without the prototype system requires moving the &lt;code&gt;grow&lt;/code&gt; function into a parent scope, gathering the target from the event object passed to &lt;code&gt;grow&lt;/code&gt; as an event handler, and creating another each loop over the second set of textareas.
+&lt;p&gt;It should also be pointed out that there are a few items worth refactoring (3 arg and the &lt;code&gt;limitWarn&lt;/code&gt; boolean operation) but the changes are at least palatable and mostly non-invasive. In stark contrast, achieving the same functionality without the prototype system requires moving the &lt;code&gt;grow&lt;/code&gt; function into a parent scope, gathering the target from the event object passed to &lt;code&gt;grow&lt;/code&gt; as an event handler, and creating another each loop over the second set of textareas.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;grow&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;event&lt;/span&gt; ){
@@ -1373,19 +1377,17 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;textarea.other&quot;&lt;/span&gt; 
   $(window).load(grow).load(limitWarn);
 });&lt;/pre&gt;
 
-Also unfortunate is that &lt;code&gt;grow&lt;/code&gt; has lost context for the reader, it relies entirely on the fact that the &lt;code&gt;event.target&lt;/code&gt; will behave like a textarea. Ultimately this is really about getting any reusability &lt;strong&gt;at all&lt;/strong&gt; with the added bonuses of sane state access and a limit on the enclosed bindings. Using closures alone to manage scoping concerns simply collapses where reuse is concerned.
+&lt;p&gt;Also unfortunate is that &lt;code&gt;grow&lt;/code&gt; has lost context for the reader, it relies entirely on the fact that the &lt;code&gt;event.target&lt;/code&gt; will behave like a textarea. Ultimately this is really about getting any reusability &lt;strong&gt;at all&lt;/strong&gt; with the added bonuses of sane state access and a limit on the enclosed bindings. Using closures alone to manage scoping concerns simply collapses where reuse is concerned.&lt;/p&gt;
 
 &lt;h2&gt;Slow Progress&lt;/h2&gt;
 
-My fear, and the motivation for this post, is that developers are not turning quickly enough to libraries and language constructs, be they MV* frameworks or plain old prototypes, which are crucial to building more complex client side applications. For nearly any application that must be maintained, even those with a minimum of client side code, developer's should look to move beyond the simple scoping semantics of the jQuery event callback and leverage the code organization and reuse features that JavaScript and its libraries have to offer.
+&lt;p&gt;My fear, and the motivation for this post, is that developers are not turning quickly enough to libraries and language constructs, be they MV* frameworks or plain old prototypes, which are crucial to building more complex client side applications. For nearly any application that must be maintained, even those with a minimum of client side code, developer&amp;#39;s should look to move beyond the simple scoping semantics of the jQuery event callback and leverage the code organization and reuse features that JavaScript and its libraries have to offer.&lt;/p&gt;
 
 &lt;ol&gt;
-	&lt;li&gt;One of the best examples I've found is Google's closure library. Whatever you may think of the library itself, the &lt;a href=&quot;http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/demos/samplecomponent.js&quot; title=&quot;Sample&quot;&gt;code&lt;/a&gt; is really nice to look through.
-	&lt;li&gt;Underscore.js provides a nice facility for binding all methods on an object to that object context (&lt;code&gt;_.bindAll&lt;/code&gt;), though it requires explicit inclusion of methods defined on the prototype&lt;/li&gt;
-	&lt;li&gt;You can learn more about prototypal inheritance from &lt;a href=&quot;http://javascript.crockford.com/prototypal.html&quot; title=&quot;prototypal inheritance&quot;&gt;Douglas Crockford&lt;/a&gt; and &lt;a href=&quot;http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/&quot; title=&quot;Yehuda Katz - Prototypes&quot;&gt;Yehuda Katz&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;One of the best examples I've found is Google's closure library. Whatever you may think of the library itself, the &lt;a href=&quot;http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/demos/samplecomponent.js&quot; title=&quot;Sample&quot;&gt;code&lt;/a&gt; is really nice to look through.
+    &lt;li&gt;Underscore.js provides a nice facility for binding all methods on an object to that object context (&lt;code&gt;_.bindAll&lt;/code&gt;), though it requires explicit inclusion of methods defined on the prototype&lt;/li&gt;
+    &lt;li&gt;You can learn more about prototypal inheritance from &lt;a href=&quot;http://javascript.crockford.com/prototypal.html&quot; title=&quot;prototypal inheritance&quot;&gt;Douglas Crockford&lt;/a&gt; and &lt;a href=&quot;http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/&quot; title=&quot;Yehuda Katz - Prototypes&quot;&gt;Yehuda Katz&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
-
 </content>
  </entry>
  
@@ -1985,32 +1987,32 @@ chef.json.merge!({ &lt;span class=&quot;constant&quot;&gt;:ghc_version&lt;/span&
    <link href="http://johnbender.github.com/2011/02/08/contributing-to-jquery-mobile"/>
    <updated>2011-02-08T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2011/02/08/contributing-to-jquery-mobile</id>
-   <content type="html">&lt;strong&gt;UPDATE&lt;/strong&gt;: I've updated the vagrant branch used below to support the newest version of Vagrant.
+   <content type="html">&lt;p&gt;&lt;strong&gt;UPDATE&lt;/strong&gt;: I&amp;#39;ve updated the vagrant branch used below to support the newest version of Vagrant.&lt;/p&gt;
 
-This is more substantial version of the lightning talk I gave at LA RubyConf last Saturday. If you're a &lt;a href=&quot;http://vagrantup.com&quot;&gt;Vagrant&lt;/a&gt; user already, this will be familiar. If not, don't worry, you're about to get a quick introduction to its power as a tool for web development. If you have any questions feel free to comment or find me on twitter &lt;a href=&quot;http://twitter.com/johnbender&quot;&gt;@johnbender&lt;/a&gt;.
+&lt;p&gt;This is more substantial version of the lightning talk I gave at LA RubyConf last Saturday. If you&amp;#39;re a &lt;a href=&quot;http://vagrantup.com&quot;&gt;Vagrant&lt;/a&gt; user already, this will be familiar. If not, don&amp;#39;t worry, you&amp;#39;re about to get a quick introduction to its power as a tool for web development. If you have any questions feel free to comment or find me on twitter &lt;a href=&quot;http://twitter.com/johnbender&quot;&gt;@johnbender&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2&gt;Vagrant&lt;/h2&gt;
 
-jQuery Mobile is set up to use php for serving the docs and tests, both of which you will need in order to start hacking on the library. Instead of installing apache and mod_php on your workstation though, we're going to build a vm using Vagrant that will serve it up. 
+&lt;p&gt;jQuery Mobile is set up to use php for serving the docs and tests, both of which you will need in order to start hacking on the library. Instead of installing apache and mod_php on your workstation though, we&amp;#39;re going to build a vm using Vagrant that will serve it up.&lt;/p&gt;
 
-First you'll need to install VirtualBox and Vagrant which is covered in glorious detail by Mitchell's &lt;a href=&quot;http://vagrantup.com/docs/getting-started/index.html&quot;&gt;documentation&lt;/a&gt;. If you're questioning the time investment at this point I can promise you that its worth it. Vagrant will change the way you look at web development.
+&lt;p&gt;First you&amp;#39;ll need to install VirtualBox and Vagrant which is covered in glorious detail by Mitchell&amp;#39;s &lt;a href=&quot;http://vagrantup.com/docs/getting-started/index.html&quot;&gt;documentation&lt;/a&gt;. If you&amp;#39;re questioning the time investment at this point I can promise you that its worth it. Vagrant will change the way you look at web development.&lt;/p&gt;
 
 &lt;h2&gt;Clone and build&lt;/h2&gt;
 
-The next step is to fork and clone the jQuery Mobile repo
+&lt;p&gt;The next step is to fork and clone the jQuery Mobile repo&lt;/p&gt;
 
 &lt;pre&gt;
 $ git clone git@github.com:yourgithandle/jquery-mobile.git
 $ cd jquery-mobile
 &lt;/pre&gt;
 
-add my fork as a remote 
+&lt;p&gt;add my fork as a remote&lt;/p&gt;
 
 &lt;pre&gt;
 $ git remote add geewilikers https://github.com/johnbender/jquery-mobile.git
 &lt;/pre&gt;
 
-track the branch with the Vagrant configuration
+&lt;p&gt;track the branch with the Vagrant configuration&lt;/p&gt;
 
 &lt;pre&gt;
 $ git fetch geewilikers
@@ -2018,27 +2020,27 @@ $ git branch --track vagrant geewilikers/vagrant
 $ git checkout vagrant
 &lt;/pre&gt;
 
-make sure to add a base box from which to build our JQM virtual machine
+&lt;p&gt;make sure to add a base box from which to build our JQM virtual machine&lt;/p&gt;
 
 &lt;pre&gt;
 $ vagrant box add base http://files.vagrantup.com/lucid32.box
 &lt;/pre&gt;
 
-and then fire that sucker up!
+&lt;p&gt;and then fire that sucker up!&lt;/p&gt;
 
 &lt;pre&gt;
 $ vagrant up
 &lt;/pre&gt;
 
-About 2 to 5 minutes later, depending on your connection speed, you should be able to hit the &lt;a href=&quot;http://33.33.33.10/&quot;&gt;docs site&lt;/a&gt; served by your brand new vm. You can also view some &lt;a href=&quot;http://33.33.33.10/tests/unit/core/&quot;&gt;tests&lt;/a&gt;. 
+&lt;p&gt;About 2 to 5 minutes later, depending on your connection speed, you should be able to hit the &lt;a href=&quot;http://33.33.33.10/&quot;&gt;docs site&lt;/a&gt; served by your brand new vm. You can also view some &lt;a href=&quot;http://33.33.33.10/tests/unit/core/&quot;&gt;tests&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2&gt;Making changes&lt;/h2&gt;
 
-So now that the site is running how do you make changes? What do you do with this new branch? What does the workflow look like? 
+&lt;p&gt;So now that the site is running how do you make changes? What do you do with this new branch? What does the workflow look like?&lt;/p&gt;
 
-Its actually quite simple. Vagrant lifts the project directory into the virtual machine as a &quot;shared folder&quot; ( it actually mounts the folder with NFS because VirtualBox's shared folders have extremely poor performance for complex file structures ). This means you can edit any files you like locally and the changes will be represented immediately in the vm. Just make sure that you checkout master first and use the vagrant branch any time you want to run a vagrant command.
+&lt;p&gt;Its actually quite simple. Vagrant lifts the project directory into the virtual machine as a &amp;quot;shared folder&amp;quot; ( it actually mounts the folder with NFS because VirtualBox&amp;#39;s shared folders have extremely poor performance for complex file structures ). This means you can edit any files you like locally and the changes will be represented immediately in the vm. Just make sure that you checkout master first and use the vagrant branch any time you want to run a vagrant command.&lt;/p&gt;
 
-For example, if you wanted to fix a typo in the docs and had just finished building the vm:
+&lt;p&gt;For example, if you wanted to fix a typo in the docs and had just finished building the vm:&lt;/p&gt;
 
 &lt;pre&gt;
 $ git branch
@@ -2050,27 +2052,27 @@ $ git add .
 $ git commit -m &quot;changed the docs to be more awesome&quot;
 &lt;/pre&gt;
 
-There's no need to stay on the vagrant branch, its only necessary when you want to interact with vagrant. For example if you wanted to suspend the vm after finishing some work:
+&lt;p&gt;There&amp;#39;s no need to stay on the vagrant branch, its only necessary when you want to interact with vagrant. For example if you wanted to suspend the vm after finishing some work:&lt;/p&gt;
 
 &lt;pre&gt;
 $ git checkout vagrant
 $ vagrant suspend
 &lt;/pre&gt;
 
-When you want to start working again, just resume the suspended vm:
+&lt;p&gt;When you want to start working again, just resume the suspended vm:&lt;/p&gt;
 
 &lt;pre&gt;
 $ vagrant resume
 $ git checkout master
 &lt;/pre&gt;
 
-And that pretty much covers the workflow. If you ever want to go rooting around in the vm itself, which in this case I find to be a rare occurrence, you can simply ssh in:
+&lt;p&gt;And that pretty much covers the workflow. If you ever want to go rooting around in the vm itself, which in this case I find to be a rare occurrence, you can simply ssh in:&lt;/p&gt;
 
 &lt;pre&gt;
 $ vagrant ssh
 &lt;/pre&gt;
 
-In the worst case where your vm just doesn't seem to be working at all, just destroy it and rebuild it from scratch.
+&lt;p&gt;In the worst case where your vm just doesn&amp;#39;t seem to be working at all, just destroy it and rebuild it from scratch.&lt;/p&gt;
 
 &lt;pre&gt;
 $ vagrant destroy
@@ -2079,25 +2081,25 @@ $ vagrant up
 
 &lt;h2&gt;Pull requests&lt;/h2&gt;
 
-Now that its dead easy to make changes to JQM and you're ready to dive in and help out, where's the best place to start? 
+&lt;p&gt;Now that its dead easy to make changes to JQM and you&amp;#39;re ready to dive in and help out, where&amp;#39;s the best place to start?&lt;/p&gt;
 
-As of this writing the team is focusing on bug fixes and testing. Feature requests are being moved to a backlog for post beta/1.0 consideration as we focus on platform support and stability. That means if you want to contribute your best bet is to find an unclaimed issue ( ie one that isn't tagged with a person's name ), in the &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues&quot;&gt;issues list&lt;/a&gt; on github and try your hand at a fix. 
+&lt;p&gt;As of this writing the team is focusing on bug fixes and testing. Feature requests are being moved to a backlog for post beta/1.0 consideration as we focus on platform support and stability. That means if you want to contribute your best bet is to find an unclaimed issue ( ie one that isn&amp;#39;t tagged with a person&amp;#39;s name ), in the &lt;a href=&quot;https://github.com/jquery/jquery-mobile/issues&quot;&gt;issues list&lt;/a&gt; on github and try your hand at a fix.&lt;/p&gt;
 
-Once you're happy with your solution submit a pull request and ... wait. We're doing our best to get to all the pull requests but we get a fair amount and you might have to wait a couple days to get a response while we sort through them.
+&lt;p&gt;Once you&amp;#39;re happy with your solution submit a pull request and ... wait. We&amp;#39;re doing our best to get to all the pull requests but we get a fair amount and you might have to wait a couple days to get a response while we sort through them.&lt;/p&gt;
 
-To speed the process along there are a couple important things you can do:
+&lt;p&gt;To speed the process along there are a couple important things you can do:&lt;/p&gt;
 
-&lt;strong&gt;1. Rebase!&lt;/strong&gt;
+&lt;p&gt;&lt;strong&gt;1. Rebase!&lt;/strong&gt;&lt;/p&gt;
 
-If/When your pull request branch falls behind master don't merge - rebase! By rebasing and resolving the conflicts you make the application of your commits to the existing master much easier for the reviewer. 
+&lt;p&gt;If/When your pull request branch falls behind master don&amp;#39;t merge - rebase! By rebasing and resolving the conflicts you make the application of your commits to the existing master much easier for the reviewer.&lt;/p&gt;
 
-First thing you'll want to do is add the original git repo
+&lt;p&gt;First thing you&amp;#39;ll want to do is add the original git repo&lt;/p&gt;
 
 &lt;pre&gt;
 $ git remote add jqm git://github.com/jquery/jquery-mobile.git
 &lt;/pre&gt;
 
-Then you can fetch the latest from the original jqm and rebase your changes on top of it
+&lt;p&gt;Then you can fetch the latest from the original jqm and rebase your changes on top of it&lt;/p&gt;
 
 &lt;pre&gt;
 $ git fetch jqm
@@ -2108,26 +2110,25 @@ $ git rebase jqm/master
 ... resolve conflicts ...
 &lt;/pre&gt;
 
+&lt;p&gt;&lt;strong&gt;2. Separate white space/refactor commits&lt;/strong&gt;&lt;/p&gt;
 
-&lt;strong&gt;2. Separate white space/refactor commits&lt;/strong&gt;
+&lt;p&gt;If you want to add in a quick refactor, like renaming a variable, or cleaning up some white space keep it in a seperate commit from the bug fix/feature. That way the reviewer doesn&amp;#39;t have to fight to separate the important changes from the rest.&lt;/p&gt;
 
-If you want to add in a quick refactor, like renaming a variable, or cleaning up some white space keep it in a seperate commit from the bug fix/feature. That way the reviewer doesn't have to fight to separate the important changes from the rest.
+&lt;p&gt;&lt;strong&gt;3. Test&lt;/strong&gt;&lt;/p&gt;
 
-&lt;strong&gt;3. Test&lt;/strong&gt;
-
-This really cannot be over emphasized. If you fix a bug please add a test for it. In this way we can guarantee that there aren't any regressions in the future as the project makes changes and improvements. Just take a gander at the other tests to see what they should look like and dive right in. Even better, if you want to learn the library, just start writing tests for whats already there, you'll be making a huge contribution to the stability of the code base.
+&lt;p&gt;This really cannot be over emphasized. If you fix a bug please add a test for it. In this way we can guarantee that there aren&amp;#39;t any regressions in the future as the project makes changes and improvements. Just take a gander at the other tests to see what they should look like and dive right in. Even better, if you want to learn the library, just start writing tests for whats already there, you&amp;#39;ll be making a huge contribution to the stability of the code base.&lt;/p&gt;
 
 &lt;h2&gt;Contributing to other projects&lt;/h2&gt;
 
-The most important part of all, which I didn't get enough time to talk about at the conference, is that you don't have to be a rocket scientist or hacker extraordinaire to contribute in a big way to an open source project you're interested in. How do I know this, you may ask? Because I'm neither one of those things.
+&lt;p&gt;The most important part of all, which I didn&amp;#39;t get enough time to talk about at the conference, is that you don&amp;#39;t have to be a rocket scientist or hacker extraordinaire to contribute in a big way to an open source project you&amp;#39;re interested in. How do I know this, you may ask? Because I&amp;#39;m neither one of those things.&lt;/p&gt;
 
-Sadly, I spent a lot of time on the outside looking in, thinking &quot;I'd just be making trouble&quot; or &quot;I doubt I'd have any meaningful impact even if they did accept my submission&quot;. If you tend to think on the same level, stop. Go fix a bug. Go write a test. Don't let the fear of someone rejecting your submission stop you from trying in the first place.
+&lt;p&gt;Sadly, I spent a lot of time on the outside looking in, thinking &amp;quot;I&amp;#39;d just be making trouble&amp;quot; or &amp;quot;I doubt I&amp;#39;d have any meaningful impact even if they did accept my submission&amp;quot;. If you tend to think on the same level, stop. Go fix a bug. Go write a test. Don&amp;#39;t let the fear of someone rejecting your submission stop you from trying in the first place.&lt;/p&gt;
 
-Even if it doesn't get accpeted, take the feedback to heart, get better, and try again. Good projects will have a polite and helpful response for you if they don't think your fix is quite ready to be merged in. As someone who reviews pull requests I know that the most important asset the project has is its contributors and users. I see it as my most important job to make sure they know we appreciate all their hard work. ( credit to Yehuda Katz's &lt;a href=&quot;http://www.infoq.com/presentations/Open-Source-Project-Like-Rails&quot;&gt;talk&lt;/a&gt;, and many discussions with Mitchell Hashimoto for those ideals).
+&lt;p&gt;Even if it doesn&amp;#39;t get accpeted, take the feedback to heart, get better, and try again. Good projects will have a polite and helpful response for you if they don&amp;#39;t think your fix is quite ready to be merged in. As someone who reviews pull requests I know that the most important asset the project has is its contributors and users. I see it as my most important job to make sure they know we appreciate all their hard work. ( credit to Yehuda Katz&amp;#39;s &lt;a href=&quot;http://www.infoq.com/presentations/Open-Source-Project-Like-Rails&quot;&gt;talk&lt;/a&gt;, and many discussions with Mitchell Hashimoto for those ideals).&lt;/p&gt;
 
 &lt;h2&gt;Dive right in&lt;/h2&gt;
 
-Hopefully if you were on the fence about contributing to JQM or any other oss project this was the nudge you needed to give it a try. Open source is dead if people don't jump in to contribute and make it better, so I hope to see your pull request in our queue sometime soon!
+&lt;p&gt;Hopefully if you were on the fence about contributing to JQM or any other oss project this was the nudge you needed to give it a try. Open source is dead if people don&amp;#39;t jump in to contribute and make it better, so I hope to see your pull request in our queue sometime soon!&lt;/p&gt;
 </content>
  </entry>
  
@@ -2509,9 +2510,7 @@ Next time I'd like to take the concepts we've applied here to our Haskell &quot;
    <link href="http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk"/>
    <updated>2010-01-10T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk</id>
-   <content type="html">&lt;h2&gt;Motivation&lt;/h2&gt;
-
-I've been using &lt;a href=&quot;http://monkrb.com&quot;&gt;Monk&lt;/a&gt; with the &lt;a href=&quot;http://github.com/tizoc/armonk-skeleton&quot;&gt;armonk&lt;/a&gt; skeleton for the last couple of weeks to build a little app that monitors Craig's List searches. Bebop aside, I've found it to be a really refreshing experience, but I knew when I started building the app that the vanilla routing DSL wasn't going to meet my needs (it wasn't built too!). I also knew I would end up missing the path helpers, targeted filters, resource nesting, and printable routing information from Rails. So! after mocking up a simple DSL and consulting some friends I built and tested this little Sinatra routing extension and dubbed it Bebop in honor of Thelonius Monk.
+   <content type="html">I've been using &lt;a href=&quot;http://monkrb.com&quot;&gt;Monk&lt;/a&gt; with the &lt;a href=&quot;http://github.com/tizoc/armonk-skeleton&quot;&gt;armonk&lt;/a&gt; skeleton for the last couple of weeks to build a little app that monitors Craig's List searches. Bebop aside, I've found it to be a really refreshing experience, but I knew when I started building the app that the vanilla routing DSL wasn't going to meet my needs (it wasn't built too!). I also knew I would end up missing the path helpers, targeted filters, resource nesting, and printable routing information from Rails. So! after mocking up a simple DSL and consulting some friends I built and tested this little Sinatra routing extension and dubbed it Bebop in honor of Thelonius Monk.
 
 &lt;h2&gt;Examples&lt;/h2&gt;
 
@@ -3142,9 +3141,7 @@ The internals have been simplified as well. At a glance, there is now a single c
    <link href="http://johnbender.github.com/2009/08/14/unraverl-partial-function-application"/>
    <updated>2009-08-14T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/08/14/unraverl-partial-function-application</id>
-   <content type="html">&lt;h2&gt;What is it?&lt;/h2&gt;
-
-Last weekend I hacked partial application into my parse transform for erlang, unraverl. The rules are very simple but the implications are interesting if nothing else.
+   <content type="html">Last weekend I hacked partial application into my parse transform for erlang, unraverl. The rules are very simple but the implications are interesting if nothing else.
 
 In other functional languages, haskell as an example, there's nothing inherently wrong with defining a function that requires two arguments but giving it one.
 
@@ -3152,7 +3149,6 @@ In other functional languages, haskell as an example, there's nothing inherently
 &lt;span class=&quot;function-name&quot;&gt;add&lt;/span&gt; x y &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; x &lt;span class=&quot;variable-name&quot;&gt;+&lt;/span&gt; y
 &lt;span class=&quot;function-name&quot;&gt;example&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;=&lt;/span&gt; add 1
 &lt;span class=&quot;comment-delimiter&quot;&gt;{- &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;=&amp;gt; \y -&amp;gt; 1 + y -}&lt;/span&gt;&lt;/pre&gt;
-&lt;br /&gt;
 
 The result is a lambda where the supplied argument is applied across the code in the function.
 
@@ -3165,22 +3161,19 @@ Using the initial example in Erlang
 
 &lt;span class=&quot;function-name&quot;&gt;example&lt;/span&gt;() -&amp;gt;&lt;span class=&quot;function-name&quot;&gt; &lt;/span&gt;add(1).
 &lt;/pre&gt;
-&lt;br /&gt;
 
 the parse transform sees that there are no local (only) functions named 'add' with an arity of 1. It then finds the next highest arity definition and changes the call to accommodate
 
 &lt;pre&gt;
 &lt;span class=&quot;comment-delimiter&quot;&gt;%% &lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;roughly
 &lt;/span&gt;&lt;span class=&quot;function-name&quot;&gt;example&lt;/span&gt;() -&amp;gt;&lt;span class=&quot;function-name&quot;&gt; &lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;fun&lt;/span&gt;(y) -&amp;gt;&lt;span class=&quot;function-name&quot;&gt; &lt;/span&gt;add(1, y) &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;.&lt;/pre&gt;
-&lt;br /&gt;
 
 So while haskell applies whatever arguments are available to the actual function (internally I'm not sure how its implemented), unraverl simply wraps a call to the actual function in a new fun requiring the remaining arguments.
 
 To make use of this feature in your own applications simply add the compiler directive
 
- &lt;pre&gt;
+&lt;pre&gt;
 &lt;span class=&quot;function-name&quot;&gt;-compile&lt;/span&gt;([{parse_transform, unraverl}]). &lt;/pre&gt;
-&lt;br /&gt;
 
 and make sure the &lt;a href=&quot;http://github.com/johnbender/unraverl/tree/master&quot;&gt;library&lt;/a&gt; is in the code path.
 

@@ -79,17 +79,22 @@ h1 > a:hover {
 }
 
 .navbar-inner {
+  background-image: -moz-linear-gradient(top, #eeeeee, #D8D8D8);
+  background-image: -ms-linear-gradient(top, #eeeeee, #D8D8D8);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#D8D8D8));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #D8D8D8);
+  background-image: -o-linear-gradient(top, #eeeeee, #D8D8D8);
+  background-image: linear-gradient(top, #eeeeee, #D8D8D8);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#D8D8D8', GradientType=0);
+
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
           border-radius: 0;
-          background-image: -moz-linear-gradient(top, #eeeeee, #D8D8D8);
-          background-image: -ms-linear-gradient(top, #eeeeee, #D8D8D8);
-          background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#D8D8D8));
-          background-image: -webkit-linear-gradient(top, #eeeeee, #D8D8D8);
-          background-image: -o-linear-gradient(top, #eeeeee, #D8D8D8);
-          background-image: linear-gradient(top, #eeeeee, #D8D8D8);
-          background-repeat: repeat-x;
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#D8D8D8', GradientType=0);
+
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 ,1}
 
 .content .page-header:nth-child(1) {

@@ -1,10 +1,110 @@
-<h1 id="toc_0">Faster Javascript Through Category Theory</h1>
 
-<p>This post started out as a <a href="https://gist.github.com/7242a7434195565b4a9d">gist</a> that I was using to work through what I&#39;ve learned about category theory by applying it to something I already know: JavaScript. The surprising result was a clearly defined set of JavaScript functions and jQuery helpers that could be optimized to reduce execution time.</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Faster Javascript Through Category Theory</title>
+    
+    
+    <meta name="author" content="John Bender">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="//johnbender.github.com/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+  
+
+
+
+          </ul>
+
+          <div class="social-media">
+            <a href="http://twitter.com/johnbender">
+              <img src="//johnbender.github.com/assets/themes/twitter/../../../assets/images/twitter.png">
+            </a>
+            <a href="http://github.com/johnbender">
+              <img src="//johnbender.github.com/assets/themes/twitter/../../../assets/images/github.png">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Faster Javascript Through Category Theory</h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span10">
+    <p>This post started out as a <a href="https://gist.github.com/7242a7434195565b4a9d">gist</a> that I was using to work through what I&#39;ve learned about category theory by applying it to something I already know: JavaScript. The surprising result was a clearly defined set of JavaScript functions and jQuery helpers that could be optimized to reduce execution time.</p>
 
 <p>In the course of this post we&#39;ll define two categories: one for HTMLElements and the other for jQuery objects. We&#39;ll then construct a Functor that maps from the category of HTMLElements to the category of jQuery objects. At the end we&#39;ll see how jQuery plugin authors can help user&#39;s speed up their JavaScript.</p>
 
-<h3 id="toc_1">Asumptions/Requirements</h3>
+<h3 id="toc_0">Asumptions/Requirements</h3>
 
 <p>Some things to know before getting started:</p>
 
@@ -14,7 +114,7 @@
 <li>My examples do not constitute proofs but I&#39;m fairly confident that both categories and the functor satisfy their respective laws.<sup>1</sup></li>
 </ol>
 
-<h3 id="toc_2">Categories</h3>
+<h3 id="toc_1">Categories</h3>
 
 <p>If you&#39;re perfectly happy taking the category definitions at face value, feel free to skip ahead to the next section.</p>
 
@@ -35,7 +135,7 @@
 
 <p>These laws are important for understanding the conclusions drawn from the rest of the post and we&#39;ll cover how both the <strong>Html</strong> and <strong>Jqry</strong> categories satisfies each.</p>
 
-<h3 id="toc_3">Html</h3>
+<h3 id="toc_2">Html</h3>
 
 <p>The Category <strong>Html</strong> is extremely simple and, if you&#39;re still interested in understanding categories more generally, it will help in building an intuition for them. The objects in <strong>Html</strong> are the HTMLElements that you&#39;re familiar with from JavaScript (eg, HTMLDivElement, HTMLAnchorElement). The morphisms are JavaScript functions that opperate on those objects, and <em>only</em> those objects.</p>
 
@@ -88,7 +188,7 @@ elem.getAttribute( <span class="string">"foo"</span> ); <span class="comment">//
 
 <p>The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in <strong>Html</strong> are closed under composition because of the type guarantees we&#39;ve placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there&#39;s no way to compose two of them that doesn&#39;t also have the same type signature. Having met the three requirements for a category with <strong>Html</strong> we can move on to the second, and more complex category <strong>Jqry</strong>.</p>
 
-<h3 id="toc_4">Jqry</h3>
+<h3 id="toc_3">Jqry</h3>
 
 <p><strong>Jqry</strong> is the category of <code>jQuery</code> objects and functions from <code>jQuery</code> objects to <code>jQuery</code> objects.<sup>3</sup> It&#39;s only slightly more complex than <strong>Html</strong> because the reader must accept <code>this</code> as an implicit parameter to the JavaScript functions that are the category&#39;s morphisms. Also, these morphisms must be defined on the <code>$.fn</code> object to guarantee the value of <code>this</code> is a <code>jQuery</code> object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like <code>$(&quot;div&quot;)</code>, and the functions are JavaScript functions that retun jQuery objects.</p>
 
@@ -156,7 +256,7 @@ $elem.aAndB().attr( <span class="string">"foo"</span> ); <span class="comment">/
 
 <p>Again, we know that the morphisms of <strong>Jqry</strong> are closed under composition because each accepts and returns only jQuery objects.</p>
 
-<h3 id="toc_5">$() ∉ Functors</h3>
+<h3 id="toc_4">$() ∉ Functors</h3>
 
 <p>Functors are a <em>single</em> morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &quot;works&quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating <code>$()</code> as a functor from <strong>Html</strong> to <strong>Jqry</strong>, shows that it translates the objects in the category <strong>Html</strong> (HTMLElements) properly to the objects in <strong>Jqry</strong> (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So <code>$()</code> is not, strictly speaking, a category theoretic functor.</p>
 
@@ -164,7 +264,7 @@ $elem.aAndB().attr( <span class="string">"foo"</span> ); <span class="comment">/
 
 <p>For the Haskell fans out there (and ciaranm in ##categorytheory) it&#39;s better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of <code>fmap</code>, but since this is flexible ol&#39; JavaScript, it&#39;s possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I&#39;ve chosen to deal with both in a single function.</p>
 
-<h3 id="toc_6">Functor Html -&gt; Jqry</h3>
+<h3 id="toc_5">Functor Html -&gt; Jqry</h3>
 
 <pre>
 <span class="doc">/** @sig {HTMLElement | html.morphism} -&gt; {jQuery | jqry.morphism} */</span>
@@ -244,13 +344,13 @@ $elem.sndAB().attr(<span class="string">"foo"</span>);                          
 
 <p>You might recognize the optimization as <a href="http://en.wikipedia.org/wiki/Loop_fusion">loop fusion</a>. By ensuring that the functor satisfies the requsite laws we&#39;ve stumbled upon an interesting relationship. That is, any time we use n &gt; 1 iterative <code>$.fn</code> methods that exist in <strong>Jqry</strong> it&#39;s possible to extract the pure HTMLElement-altering functions that <em>might</em> underly them, compose those functions, and save n-1 full iterations in the process.</p>
 
-<h3 id="toc_7">Loop Fusing Hipster</h3>
+<h3 id="toc_6">Loop Fusing Hipster</h3>
 
 <p>It&#39;s clear that someone using <code>$(&quot;foo&quot;).a().b()</code> could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying <code>a</code> and <code>b</code> could be unified to speed up execution and subsequently point out they&#39;ve been fusing loops since before it was cool. What&#39;s not clear is how to know in other cases when it&#39;s possible to extract the underlying functions from the <code>$.fn</code> methods for composition. Because of the Functor laws we&#39;ve unambiguously defined a specific subset of functions -- the set of <strong>Html</strong> morphisms with <code>$.fn.map</code> applied -- that we <em>know</em> can be fused and will produce the same result. Put differently:</p>
 
 <p>As long as the <em>n</em> functions being mapped over the jQuery object&#39;s contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set <em>once</em>, and be asured the resulting jQuery object will be the same.</p>
 
-<h3 id="toc_8">Package it up</h3>
+<h3 id="toc_7">Package it up</h3>
 
 <p>Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the <strong>Jqry</strong> category to see what this might look like.</p>
 
@@ -296,11 +396,11 @@ $elem.sndAB().attr(<span class="string">"foo"</span>);                          
 
 <p>Obviously these two examples are tiny and could easily be consolidated by hand, but two plugins with more complex DOM manipulations would be much harder to classify as &quot;fusable&quot;. By puting the onus on the plugin developer it gives the end user a better guarantee that it&#39;s safe.</p>
 
-<h3 id="toc_9">Did you make it?</h3>
+<h3 id="toc_8">Did you make it?</h3>
 
 <p>And there you have it. After defining a mathematical framework in which to view DOM alterations with jQuery and JavaScript we identified an important set of characteristics to use for speeding up our client side code. Maybe this isn&#39;t enough to get you interested, but for me it&#39;s an afirmation that, even this far from the its ivory towers, math has a role to play.</p>
 
-<h3 id="toc_10">Footnotes</h3>
+<h3 id="toc_9">Footnotes</h3>
 
 <ol>
 <li>Thanks again to edwardk and xplat from #haskell-blah and ciaranm from ##categorytheory for reviewing my categories and providing feedback. I&#39;d also like to thank <a href="http://twitter.com/keyist">Tim Goh</a> for taking the time to enhance my terrible writting.</li>
@@ -308,3 +408,63 @@ $elem.sndAB().attr(<span class="string">"foo"</span>);                          
 <li>If you&#39;re interested in digging a bit further into this topic <strong>Jqry</strong> is actually a monoidal category. Credit to both edwardk and xplat in #haskell-blah for pointing this out. As far as I can tell, the morphisms (<code>$.fn</code> methods) are muplication as they map from jQuery to jQuery and the unit element is <code>[]</code> since using it with <code>$()</code> as the unit morphism yields an empty jQuery object.</li>
 <li>Haskellers will recognize this, and the ultimate conclusion that the rest of the post draws as a degenerate version of <code>(fmap a) . (fmap b) == fmap (a . b)</code></li>
 </ol>
+
+    
+  </div>
+
+  <div id="info" class="span2">
+    <h4>Published</h4>
+    <div class="date"><span>09 February 2012</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="//johnbender.github.com/tags.html#javascript-ref">javascript <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/tags.html#jquery-ref">jquery <span>9</span></a></li>
+     
+    	<li><a href="//johnbender.github.com/tags.html#math-ref">math <span>9</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </div>
+</div>
+
+
+      </div>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api" title="jQuery is just a browser API">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="//johnbender.github.com/2012/02/22/leveraging-your-insecurities" title="Leveraging Your Insecurities">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; John Bender 2012
+        with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+        and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+    </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
