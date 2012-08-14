@@ -3,14 +3,14 @@
   <channel>
     <title>johnbender.us</title>
     <description>johnbender.us</description>
-    <link href="http://johnbender.github.com"/>
-    <lastBuildDate>2012-08-14T10:17:16-07:00</lastBuildDate>
+    <link>"http://johnbender.github.com"</link>
+    <lastBuildDate>2012-08-14T10:21:25-07:00</lastBuildDate>
 
     
     <item>
       <title>Splitting jQuery in Two, A Proposal</title>
       <description>Splitting jQuery in Two, A Proposal</description>
-      <link href="http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal"/>
+      <link>http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-07-19T00:00:00-07:00</pubDate>
     </item>
@@ -18,7 +18,7 @@
     <item>
       <title>Presentation: Faster JavaScript through Category Theory</title>
       <description>Presentation: Faster JavaScript through Category Theory</description>
-      <link href="http://johnbender.github.com/2012/06/15/presentation-faster-javascript-through-category-theory"/>
+      <link>http://johnbender.github.com/2012/06/15/presentation-faster-javascript-through-category-theory"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-06-15T00:00:00-07:00</pubDate>
     </item>
@@ -26,7 +26,7 @@
     <item>
       <title>Presentation: Middleware as a General Purpose Abstraction</title>
       <description>Presentation: Middleware as a General Purpose Abstraction</description>
-      <link href="http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction"/>
+      <link>http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-04-28T00:00:00-07:00</pubDate>
     </item>
@@ -34,7 +34,7 @@
     <item>
       <title>A Natural Transformation in JavaScript</title>
       <description>A Natural Transformation in JavaScript</description>
-      <link href="http://johnbender.github.com/2012/03/22/a-natural-transformation-in-javascript"/>
+      <link>http://johnbender.github.com/2012/03/22/a-natural-transformation-in-javascript"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-03-22T00:00:00-07:00</pubDate>
     </item>
@@ -42,7 +42,7 @@
     <item>
       <title>Faster JavaScript Through Category Theory</title>
       <description>Faster JavaScript Through Category Theory</description>
-      <link href="http://johnbender.github.com/2012/02/29/faster-javascript-through-category-theory"/>
+      <link>http://johnbender.github.com/2012/02/29/faster-javascript-through-category-theory"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-02-29T00:00:00-08:00</pubDate>
     </item>
@@ -50,7 +50,7 @@
     <item>
       <title>Leveraging Your Insecurities</title>
       <description>Leveraging Your Insecurities</description>
-      <link href="http://johnbender.github.com/2012/02/22/leveraging-your-insecurities"/>
+      <link>http://johnbender.github.com/2012/02/22/leveraging-your-insecurities"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-02-22T00:00:00-08:00</pubDate>
     </item>
@@ -58,7 +58,7 @@
     <item>
       <title>Faster Javascript Through Category Theory</title>
       <description>Faster Javascript Through Category Theory</description>
-      <link href="http://johnbender.github.com/2012/02/09/faster-javascript-through-category-theory"/>
+      <link>http://johnbender.github.com/2012/02/09/faster-javascript-through-category-theory"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-02-09T00:00:00-08:00</pubDate>
     </item>
@@ -66,7 +66,7 @@
     <item>
       <title>jQuery is just a browser API</title>
       <description>jQuery is just a browser API</description>
-      <link href="http://johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api"/>
+      <link>http://johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2011-11-25T00:00:00-08:00</pubDate>
     </item>
@@ -74,7 +74,7 @@
     <item>
       <title>You got your type class in my jQuery: Applicative Functors</title>
       <description>You got your type class in my jQuery: Applicative Functors</description>
-      <link href="http://johnbender.github.com/2011/07/20/you-got-your-type-class-in-my-jquery-applicative-functors"/>
+      <link>http://johnbender.github.com/2011/07/20/you-got-your-type-class-in-my-jquery-applicative-functors"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2011-07-20T00:00:00-07:00</pubDate>
     </item>
@@ -82,7 +82,7 @@
     <item>
       <title>You got your type class in my jQuery: Functors</title>
       <description>You got your type class in my jQuery: Functors</description>
-      <link href="http://johnbender.github.com/2011/07/08/you-got-your-type-class-in-my-jquery-functors"/>
+      <link>http://johnbender.github.com/2011/07/08/you-got-your-type-class-in-my-jquery-functors"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2011-07-08T00:00:00-07:00</pubDate>
     </item>
@@ -90,7 +90,7 @@
     <item>
       <title>Snap setup from scratch the Vagrant way</title>
       <description>Snap setup from scratch the Vagrant way</description>
-      <link href="http://johnbender.github.com/2011/03/05/snap-setup-from-scratch-the-vagrant-way"/>
+      <link>http://johnbender.github.com/2011/03/05/snap-setup-from-scratch-the-vagrant-way"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2011-03-05T00:00:00-08:00</pubDate>
     </item>
@@ -98,7 +98,7 @@
     <item>
       <title>Contributing to jQuery Mobile</title>
       <description>Contributing to jQuery Mobile</description>
-      <link href="http://johnbender.github.com/2011/02/08/contributing-to-jquery-mobile"/>
+      <link>http://johnbender.github.com/2011/02/08/contributing-to-jquery-mobile"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2011-02-08T00:00:00-08:00</pubDate>
     </item>
@@ -106,7 +106,7 @@
     <item>
       <title>Haskell and Vagrant’s Middleware</title>
       <description>Haskell and Vagrant’s Middleware</description>
-      <link href="http://johnbender.github.com/2010/10/18/haskell-and-vagrants-middleware"/>
+      <link>http://johnbender.github.com/2010/10/18/haskell-and-vagrants-middleware"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2010-10-18T00:00:00-07:00</pubDate>
     </item>
@@ -114,7 +114,7 @@
     <item>
       <title>Middleware, Composition, and Monads</title>
       <description>Middleware, Composition, and Monads</description>
-      <link href="http://johnbender.github.com/2010/07/22/middleware-composition-and-monads"/>
+      <link>http://johnbender.github.com/2010/07/22/middleware-composition-and-monads"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2010-07-22T00:00:00-07:00</pubDate>
     </item>
@@ -122,7 +122,7 @@
     <item>
       <title>bebop: resource routing for Sinatra/Monk</title>
       <description>bebop: resource routing for Sinatra/Monk</description>
-      <link href="http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk"/>
+      <link>http://johnbender.github.com/2010/01/10/bebop-resource-routing-for-sinatramonk"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2010-01-10T00:00:00-08:00</pubDate>
     </item>
@@ -130,7 +130,7 @@
     <item>
       <title>Using a haskell dfa type to match strings</title>
       <description>Using a haskell dfa type to match strings</description>
-      <link href="http://johnbender.github.com/2009/11/08/using-a-haskell-dfa-type-to-match-strings"/>
+      <link>http://johnbender.github.com/2009/11/08/using-a-haskell-dfa-type-to-match-strings"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-11-08T00:00:00-08:00</pubDate>
     </item>
@@ -138,7 +138,7 @@
     <item>
       <title>Ruby Cons</title>
       <description>Ruby Cons</description>
-      <link href="http://johnbender.github.com/2009/10/28/ruby-cons"/>
+      <link>http://johnbender.github.com/2009/10/28/ruby-cons"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-10-28T00:00:00-07:00</pubDate>
     </item>
@@ -146,7 +146,7 @@
     <item>
       <title>Algebra of Programming: Chapter 1 section 5</title>
       <description>Algebra of Programming: Chapter 1 section 5</description>
-      <link href="http://johnbender.github.com/2009/09/26/algebra-of-programming-chapter-1-sections-5"/>
+      <link>http://johnbender.github.com/2009/09/26/algebra-of-programming-chapter-1-sections-5"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-09-26T00:00:00-07:00</pubDate>
     </item>
@@ -154,7 +154,7 @@
     <item>
       <title>Algebra of Programming: Chapter 1 Section 3</title>
       <description>Algebra of Programming: Chapter 1 Section 3</description>
-      <link href="http://johnbender.github.com/2009/09/19/algebra-of-programming-chapter-1-section-3"/>
+      <link>http://johnbender.github.com/2009/09/19/algebra-of-programming-chapter-1-section-3"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-09-19T00:00:00-07:00</pubDate>
     </item>
@@ -162,7 +162,7 @@
     <item>
       <title>Algebra of Programming: Chapter 1 Section 2</title>
       <description>Algebra of Programming: Chapter 1 Section 2</description>
-      <link href="http://johnbender.github.com/2009/09/12/algebra-of-programming-chapter-1"/>
+      <link>http://johnbender.github.com/2009/09/12/algebra-of-programming-chapter-1"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-09-12T00:00:00-07:00</pubDate>
     </item>
@@ -170,7 +170,7 @@
     <item>
       <title>RQuery: refactored and simplified</title>
       <description>RQuery: refactored and simplified</description>
-      <link href="http://johnbender.github.com/2009/08/22/rquery-refactored-and-simplified"/>
+      <link>http://johnbender.github.com/2009/08/22/rquery-refactored-and-simplified"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-08-22T00:00:00-07:00</pubDate>
     </item>
@@ -178,7 +178,7 @@
     <item>
       <title>Unraverl: Partial Function Application</title>
       <description>Unraverl: Partial Function Application</description>
-      <link href="http://johnbender.github.com/2009/08/14/unraverl-partial-function-application"/>
+      <link>http://johnbender.github.com/2009/08/14/unraverl-partial-function-application"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-08-14T00:00:00-07:00</pubDate>
     </item>
@@ -186,7 +186,7 @@
     <item>
       <title>BootStraps: now with less crapyness</title>
       <description>BootStraps: now with less crapyness</description>
-      <link href="http://johnbender.github.com/2009/06/16/bootstraps-now-with-less-crapyness"/>
+      <link>http://johnbender.github.com/2009/06/16/bootstraps-now-with-less-crapyness"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-06-16T00:00:00-07:00</pubDate>
     </item>
@@ -194,7 +194,7 @@
     <item>
       <title>BootStrapping a Sinatra app</title>
       <description>BootStrapping a Sinatra app</description>
-      <link href="http://johnbender.github.com/2009/06/09/bootstrapping-a-sinatra-app"/>
+      <link>http://johnbender.github.com/2009/06/09/bootstrapping-a-sinatra-app"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-06-09T00:00:00-07:00</pubDate>
     </item>
@@ -202,7 +202,7 @@
     <item>
       <title>RQuery: now with | and &amp; operators</title>
       <description>RQuery: now with | and &amp; operators</description>
-      <link href="http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators"/>
+      <link>http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-04-26T00:00:00-07:00</pubDate>
     </item>
@@ -210,7 +210,7 @@
     <item>
       <title>Searching the abstract form in erlang</title>
       <description>Searching the abstract form in erlang</description>
-      <link href="http://johnbender.github.com/2009/04/22/searching-the-abstract-form-in-erlang"/>
+      <link>http://johnbender.github.com/2009/04/22/searching-the-abstract-form-in-erlang"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-04-22T00:00:00-07:00</pubDate>
     </item>
@@ -218,7 +218,7 @@
     <item>
       <title>non-deterministic description</title>
       <description>non-deterministic description</description>
-      <link href="http://johnbender.github.com/2009/04/17/non-deterministic-description"/>
+      <link>http://johnbender.github.com/2009/04/17/non-deterministic-description"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-04-17T00:00:00-07:00</pubDate>
     </item>
@@ -226,7 +226,7 @@
     <item>
       <title>Haskell learnings</title>
       <description>Haskell learnings</description>
-      <link href="http://johnbender.github.com/2009/04/12/haskell-learnings"/>
+      <link>http://johnbender.github.com/2009/04/12/haskell-learnings"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-04-12T00:00:00-07:00</pubDate>
     </item>
@@ -234,7 +234,7 @@
     <item>
       <title>Unraverl: filters and more for erlang</title>
       <description>Unraverl: filters and more for erlang</description>
-      <link href="http://johnbender.github.com/2009/03/30/unraverl-filters-and-more-for-erlang"/>
+      <link>http://johnbender.github.com/2009/03/30/unraverl-filters-and-more-for-erlang"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-03-30T00:00:00-07:00</pubDate>
     </item>
@@ -242,7 +242,7 @@
     <item>
       <title>rquery for Rails is ready</title>
       <description>rquery for Rails is ready</description>
-      <link href="http://johnbender.github.com/2009/03/21/rquery-for-rails-is-ready"/>
+      <link>http://johnbender.github.com/2009/03/21/rquery-for-rails-is-ready"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-03-21T00:00:00-07:00</pubDate>
     </item>
@@ -250,7 +250,7 @@
     <item>
       <title>Query DSL in Ruby</title>
       <description>Query DSL in Ruby</description>
-      <link href="http://johnbender.github.com/2009/03/12/query-dsl-in-ruby"/>
+      <link>http://johnbender.github.com/2009/03/12/query-dsl-in-ruby"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-03-12T00:00:00-07:00</pubDate>
     </item>
@@ -258,7 +258,7 @@
     <item>
       <title>Rails Dev Shortages</title>
       <description>Rails Dev Shortages</description>
-      <link href="http://johnbender.github.com/2009/02/17/rails-dev-shortages"/>
+      <link>http://johnbender.github.com/2009/02/17/rails-dev-shortages"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-02-17T00:00:00-08:00</pubDate>
     </item>
@@ -266,7 +266,7 @@
     <item>
       <title>grove is out</title>
       <description>grove is out</description>
-      <link href="http://johnbender.github.com/2009/02/16/grove-is-done"/>
+      <link>http://johnbender.github.com/2009/02/16/grove-is-done"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-02-16T00:00:00-08:00</pubDate>
     </item>
@@ -274,7 +274,7 @@
     <item>
       <title>Scale Rails Screencasts</title>
       <description>Scale Rails Screencasts</description>
-      <link href="http://johnbender.github.com/2009/02/11/scale-rails-screencasts"/>
+      <link>http://johnbender.github.com/2009/02/11/scale-rails-screencasts"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-02-11T00:00:00-08:00</pubDate>
     </item>
@@ -282,7 +282,7 @@
     <item>
       <title>testing = mochijson2 funnyness feature</title>
       <description>testing = mochijson2 funnyness feature</description>
-      <link href="http://johnbender.github.com/2009/01/31/unit-testing-finds-mochijson2-funnyness"/>
+      <link>http://johnbender.github.com/2009/01/31/unit-testing-finds-mochijson2-funnyness"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-01-31T00:00:00-08:00</pubDate>
     </item>
@@ -290,7 +290,7 @@
     <item>
       <title>Erlang: Pattern Matching Declarations vs Case Statements/Other</title>
       <description>Erlang: Pattern Matching Declarations vs Case Statements/Other</description>
-      <link href="http://johnbender.github.com/2009/01/17/erlang-pattern-matching-declarations-vs-case-statementsother"/>
+      <link>http://johnbender.github.com/2009/01/17/erlang-pattern-matching-declarations-vs-case-statementsother"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2009-01-17T00:00:00-08:00</pubDate>
     </item>
