@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-14T00:31:11-07:00</updated>
+ <updated>2012-08-14T00:36:51-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -263,9 +263,9 @@
  
  <entry>
    <title>Presentation: Middleware as a General Purpose Abstraction</title>
-   <link href="http://johnbender.github.com/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction"/>
+   <link href="http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction"/>
    <updated>2012-04-28T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2012/04/28/presentation-middleware-as-a-general-purpose-abstraction</id>
+   <id>http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction</id>
    <content type="html">It was my pleasure to give this presentation at LARubyConf in February. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-middleware/tree/master/samples&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-middleware&quot;&gt;presentation slides&lt;/a&gt; on Github and a big thanks to the fine folks at &lt;a href=&quot;http://confreaks.com&quot;&gt;Confreaks&lt;/a&gt; for posting the video.
 
 &lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/fcNaiP5tea0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
