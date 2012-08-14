@@ -99,7 +99,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span10">
+  <div class="span9">
     <p>Previously we saw how jQuery's <code>$()</code> can behave like Haskell's Functor typeclass, when it wraps raw DOM objects and how provides its own version of <code>fmap</code> (<code>$.map</code>) for lifting functions into that wrapper to work with those DOM objects. In this post I'll explain Haskell's Applicative typeclass, how it's slightly different from the Functor, and demonstrate how defining functions on <code>$.fn</code> behaves in a similar fashion to the Applicative function <code>pure</code>.</p>
 
 <p>The article assumes you've read the previous post and that you have some basic understanding of what it means to define a function on jQuery's <code>$.fn</code> object (<a href="http://docs.jquery.com/Plugins/Authoring" title="jQuery Plugin Authoring">docs</a> for reference).</p>
@@ -295,7 +295,7 @@ $( <span class="string">"div"</span> ).clearIds();</pre>
     
   </div>
 
-  <div id="info" class="span2">
+  <div id="info" class="span3">
     <h4>Published</h4>
     <div class="date"><span>20 July 2011</span></div>
 
