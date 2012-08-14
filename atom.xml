@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
- 
+
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-14T01:34:59-07:00</updated>
+ <updated>2012-08-14T10:03:46-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -3320,7 +3320,7 @@ It's quirky in some places (you have to specify something for a gem version even
  </entry>
  
  <entry>
-   <title>RQuery: now with | and & operators</title>
+   <title>RQuery: now with | and &amp; operators</title>
    <link href="http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators"/>
    <updated>2009-04-26T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2009/04/26/rquery-now-with-and-operators</id>
@@ -3940,5 +3940,5 @@ Also, I am proposing a new term for pattern matching in function declarations:
 </content>
  </entry>
  
- 
+
 </feed>
