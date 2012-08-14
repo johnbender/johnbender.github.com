@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-06T09:17:50-07:00</updated>
+ <updated>2012-08-14T00:31:11-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -242,7 +242,7 @@
 &lt;li&gt;The benefits here will vary widely depending on the complexity of the &amp;quot;user-friendliness&amp;quot; built into a given jQuery method. Disclaim all the things!&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;alterOne&lt;/code&gt; was, again, suggested by Yehuda during our discussion.&lt;/li&gt;
 &lt;li&gt;The reader will have noted the conspicuous absence of IE in my performance test results. For whatever reason there was a consistent exception raised when executing the test code in IE that I haven&amp;#39;t had time to investigate. For serious consideration of the content in this post those numbers need to be included.&lt;/li&gt;
-&lt;li&gt;perf links: &lt;a href=&quot;http://jsperf.com/chained-sequence-or-composition-removeattr/2&quot;&gt;chained, sequence, or composed&lt;/a&gt;, &lt;a href=&quot;http://jsperf.com/user-friendliness-overhead-for-remove-attr/2&quot;&gt;user friendlyness overhead&lt;/a&gt;, &lt;a href=&quot;http://jsperf.com/additional-function-call-overhead-for-remove-attr&quot;&gt;additional function call overhead&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;perf links: &lt;a href=&quot;http://jsperf.com/chained-sequence-or-composition-removeattr/2&quot;&gt;chained, sequence, or composed&lt;/a&gt;, &lt;a href=&quot;http://jsperf.com/user-friendliness-overhead-for-remove-attr/2&quot;&gt;user friendlyness overhead&lt;/a&gt;, &lt;a href=&quot;http://jsperf.com/additional-function-call-overhead-for-remove-attr/3&quot;&gt;additional function call overhead&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Special thanks to &lt;a href=&quot;http://twitter.com/keyist&quot;&gt;Tim Goh&lt;/a&gt; for reviewing this post.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
