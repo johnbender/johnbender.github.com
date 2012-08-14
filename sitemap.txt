@@ -5,6 +5,7 @@ http://johnbender.github.com/sitemap.txt
 http://johnbender.github.com/tags.html
 http://johnbender.github.com/pages.html
 http://johnbender.github.com/index.html
+http://johnbender.github.com/cv.html
 
 http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal
 http://johnbender.github.com/2012/06/15/presentation-faster-javascript-through-category-theory

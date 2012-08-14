@@ -1,0 +1,30 @@
+body.public > #cv {
+  /* current blog width */
+  width: 680px;
+  margin: 20px;
+}
+
+#cv #name {
+  border-bottom: 1px solid black;
+  margin-bottom: 1em;
+}
+
+#cv .row-fluid {
+  margin-bottom: 1em;
+}
+
+#cv .position {
+  margin-bottom: 1em;
+}
+
+#cv .citation {
+  margin-bottom: 0.5em;
+}
+
+#cv #contact {
+  text-align: right;
+}
+
+#cv .right {
+  float: right;
+}
