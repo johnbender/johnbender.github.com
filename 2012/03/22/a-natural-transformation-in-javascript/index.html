@@ -120,13 +120,13 @@
 Natural transformations are actually fairly simple once you have an example you can comprehend. One way to describe them is - a set of morphisms<sup>1</sup> that reconcile the way two functors from the same source to the same target categories alter morphisms of the source category<sup>2</sup>. Unfortunately the written descriptions seems to fall short in aiding comprehension, but as promised there are pretty pictures:
 
 <div style="text-align: center;">
-<img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+<img src="/../../../assets/images/transform/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
 </div>
 
 This equation is simple and captures the expected behavior of the natural transformation <code>N</code> (used in place of <code>η</code> hereafter). Namely, it must "prepare" input objects for a morphism transformed with <code>G</code>, ie <code>G(f)</code>, such that the result will be identical to that of "repairing" the output objects from a morphism transformed with <code>F</code>, ie <code>F(f)</code>. Again, this assumes that both <code>F</code> and <code>G</code> share that same source and target categories. Also it helps to remember that the input and output objects of <code>F(f)</code> and <code>G(f)</code> are in the target category, so if <code>F</code> and <code>G</code> are both from categories <strong>Html</strong> to <strong>jQuery</strong> we're just dealing with objects in <strong>Jqry</strong>. If the notation is confusing recall that <code>○</code> is the operator form of <code>$.compose</code> and that <code>F(f)</code> is that same as <code>$.Functor(f)</code> from the previous post, both of which result in JavaScript functions/morphisms. While this equation gives us an understanding of how the transformation should function, it doesn't help with comprehending the transformations directionality and purpose.
 
 <div style="text-align: center">
-<img src="http://johnbender.us/wp-content/uploads/2012/03/diagram.png" alt="diagram of composition"/>
+<img src="/../../../assets/images/transform/diagram.png" alt="diagram of composition"/>
 </div>
 
 Diagrams are used to clarify composition of morphisms, a (the?) key operation in category theory. This diagram represents the same concept as the equation but it makes the goal more obvious: from <code>F(X)</code> whether you take the road to the east - <code>Ny ○ F(f)</code> or the road to the south - <code>G(f) ○ Nx</code> - the result has to be the same. Again, the purpose of the natural tranformation is get the results to look like <code>G(f)</code> results whether the operation started with <code>F(f)</code> or ended with <code>G(f)</code>.
@@ -254,7 +254,7 @@ $( <span class="string">".foo"</span> ).FtoNy( <span class="string">"display"</s
 If you replace the application of <code>$.compose</code> with the infix operator <code>○</code> it looks just like the equation:
 
 <div style="text-align: center">
-  <img src="http://johnbender.us/wp-content/uploads/2012/03/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
+  <img src="/../../../assets/images/transform/equation.png" alt="n sub x compose F applied to f is equal to G applied to f compose n sub y" />
 </div>
 
 With the order reversed we can use the more idiomatic fluent invocation:
@@ -270,7 +270,7 @@ $( <span class="string">".foo"</span> ).mapCss( <span class="string">"display"</
 Let's alter the diagram to use the new method names:
 
 <div style="text-align: center">
-  <img src="http://johnbender.us/wp-content/uploads/2012/03/svg-methods.png" alt="altered diagram" title="svg-methods" width="200" height="162" class="aligncenter size-full wp-image-1695" />
+  <img src="/../../../assets/images/transform/svg-methods.png" alt="altered diagram" title="svg-methods" width="200" height="162" class="aligncenter size-full wp-image-1695" />
 </div>
 
 As you can see the southerly route first limits the jQuery object set and then applys the method that only operates on the first object, whereas the easterly route first applys the method that opperates on all the functions in the jQuery object set and then limits the set to one result. Most of the time you'll want to head South to save yourself some execution time.

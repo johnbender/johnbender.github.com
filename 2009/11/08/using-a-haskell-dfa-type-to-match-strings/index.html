@@ -116,7 +116,7 @@
     A <a href="http://mitchellhashimoto.com/">friend of mine </a>recently covered deterministic and non-deterministic finite state machines (automata for the cool kids) in one of his classes and passed along a sample problem for me to figure out. Informally, build a dfa that will match a given string against another string in the provided alphabet. An example of this class of problem would be to build one that matches 'aab' in any string for the alphabet [ab] ('aaba' would match, 'aba' would not).
 
 To help with visualizing the answer for this example I've built a graph of the states and edges that make up our dfa (yay graphviz):
-<img src="http://nickelcode.com/wp-content/uploads/2009/11/graph1.jpg" alt="graph" title="graph" width="158" height="635" class="aligncenter size-full" style="border: 0px; display: block; margin-right: auto; margin-left:auto;"/>
+<img src="/../../../assets/images/graph1.jpg" alt="graph" title="graph" width="158" height="635" class="aligncenter size-full" style="border: 0px; display: block; margin-right: auto; margin-left:auto;"/>
 
 
 At each state the machine follows the edge that matches the next input from a given string. If it ever hits the fourth state, it's found a match. Checking the string "baab" for  "aab" (for which our machine is built), starting at state one it would take the path 1 -b-> 1 -a-> 2 -a-> 3 -b-> 4, and conclude that "aab" was in fact contained within "baab".

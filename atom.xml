@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-08-14T10:21:25-07:00</updated>
+ <updated>2012-08-20T18:43:33-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -284,13 +284,13 @@
 Natural transformations are actually fairly simple once you have an example you can comprehend. One way to describe them is - a set of morphisms&lt;sup&gt;1&lt;/sup&gt; that reconcile the way two functors from the same source to the same target categories alter morphisms of the source category&lt;sup&gt;2&lt;/sup&gt;. Unfortunately the written descriptions seems to fall short in aiding comprehension, but as promised there are pretty pictures:
 
 &lt;div style=&quot;text-align: center;&quot;&gt;
-&lt;img src=&quot;http://johnbender.us/wp-content/uploads/2012/03/equation.png&quot; alt=&quot;n sub x compose F applied to f is equal to G applied to f compose n sub y&quot; /&gt;
+&lt;img src=&quot;/../../../assets/images/transform/equation.png&quot; alt=&quot;n sub x compose F applied to f is equal to G applied to f compose n sub y&quot; /&gt;
 &lt;/div&gt;
 
 This equation is simple and captures the expected behavior of the natural transformation &lt;code&gt;N&lt;/code&gt; (used in place of &lt;code&gt;η&lt;/code&gt; hereafter). Namely, it must &quot;prepare&quot; input objects for a morphism transformed with &lt;code&gt;G&lt;/code&gt;, ie &lt;code&gt;G(f)&lt;/code&gt;, such that the result will be identical to that of &quot;repairing&quot; the output objects from a morphism transformed with &lt;code&gt;F&lt;/code&gt;, ie &lt;code&gt;F(f)&lt;/code&gt;. Again, this assumes that both &lt;code&gt;F&lt;/code&gt; and &lt;code&gt;G&lt;/code&gt; share that same source and target categories. Also it helps to remember that the input and output objects of &lt;code&gt;F(f)&lt;/code&gt; and &lt;code&gt;G(f)&lt;/code&gt; are in the target category, so if &lt;code&gt;F&lt;/code&gt; and &lt;code&gt;G&lt;/code&gt; are both from categories &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;jQuery&lt;/strong&gt; we're just dealing with objects in &lt;strong&gt;Jqry&lt;/strong&gt;. If the notation is confusing recall that &lt;code&gt;○&lt;/code&gt; is the operator form of &lt;code&gt;$.compose&lt;/code&gt; and that &lt;code&gt;F(f)&lt;/code&gt; is that same as &lt;code&gt;$.Functor(f)&lt;/code&gt; from the previous post, both of which result in JavaScript functions/morphisms. While this equation gives us an understanding of how the transformation should function, it doesn't help with comprehending the transformations directionality and purpose.
 
 &lt;div style=&quot;text-align: center&quot;&gt;
-&lt;img src=&quot;http://johnbender.us/wp-content/uploads/2012/03/diagram.png&quot; alt=&quot;diagram of composition&quot;/&gt;
+&lt;img src=&quot;/../../../assets/images/transform/diagram.png&quot; alt=&quot;diagram of composition&quot;/&gt;
 &lt;/div&gt;
 
 Diagrams are used to clarify composition of morphisms, a (the?) key operation in category theory. This diagram represents the same concept as the equation but it makes the goal more obvious: from &lt;code&gt;F(X)&lt;/code&gt; whether you take the road to the east - &lt;code&gt;Ny ○ F(f)&lt;/code&gt; or the road to the south - &lt;code&gt;G(f) ○ Nx&lt;/code&gt; - the result has to be the same. Again, the purpose of the natural tranformation is get the results to look like &lt;code&gt;G(f)&lt;/code&gt; results whether the operation started with &lt;code&gt;F(f)&lt;/code&gt; or ended with &lt;code&gt;G(f)&lt;/code&gt;.
@@ -418,7 +418,7 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;.foo&quot;&lt;/span&gt; ).FtoNy( &
 If you replace the application of &lt;code&gt;$.compose&lt;/code&gt; with the infix operator &lt;code&gt;○&lt;/code&gt; it looks just like the equation:
 
 &lt;div style=&quot;text-align: center&quot;&gt;
-  &lt;img src=&quot;http://johnbender.us/wp-content/uploads/2012/03/equation.png&quot; alt=&quot;n sub x compose F applied to f is equal to G applied to f compose n sub y&quot; /&gt;
+  &lt;img src=&quot;/../../../assets/images/transform/equation.png&quot; alt=&quot;n sub x compose F applied to f is equal to G applied to f compose n sub y&quot; /&gt;
 &lt;/div&gt;
 
 With the order reversed we can use the more idiomatic fluent invocation:
@@ -434,7 +434,7 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;.foo&quot;&lt;/span&gt; ).mapCss( 
 Let's alter the diagram to use the new method names:
 
 &lt;div style=&quot;text-align: center&quot;&gt;
-  &lt;img src=&quot;http://johnbender.us/wp-content/uploads/2012/03/svg-methods.png&quot; alt=&quot;altered diagram&quot; title=&quot;svg-methods&quot; width=&quot;200&quot; height=&quot;162&quot; class=&quot;aligncenter size-full wp-image-1695&quot; /&gt;
+  &lt;img src=&quot;/../../../assets/images/transform/svg-methods.png&quot; alt=&quot;altered diagram&quot; title=&quot;svg-methods&quot; width=&quot;200&quot; height=&quot;162&quot; class=&quot;aligncenter size-full wp-image-1695&quot; /&gt;
 &lt;/div&gt;
 
 As you can see the southerly route first limits the jQuery object set and then applys the method that only operates on the first object, whereas the easterly route first applys the method that opperates on all the functions in the jQuery object set and then limits the set to one result. Most of the time you'll want to head South to save yourself some execution time.
@@ -2692,7 +2692,7 @@ As always feedback and suggestions are welcome!
    <content type="html">A &lt;a href=&quot;http://mitchellhashimoto.com/&quot;&gt;friend of mine &lt;/a&gt;recently covered deterministic and non-deterministic finite state machines (automata for the cool kids) in one of his classes and passed along a sample problem for me to figure out. Informally, build a dfa that will match a given string against another string in the provided alphabet. An example of this class of problem would be to build one that matches 'aab' in any string for the alphabet [ab] ('aaba' would match, 'aba' would not).
 
 To help with visualizing the answer for this example I've built a graph of the states and edges that make up our dfa (yay graphviz):
-&lt;img src=&quot;http://nickelcode.com/wp-content/uploads/2009/11/graph1.jpg&quot; alt=&quot;graph&quot; title=&quot;graph&quot; width=&quot;158&quot; height=&quot;635&quot; class=&quot;aligncenter size-full&quot; style=&quot;border: 0px; display: block; margin-right: auto; margin-left:auto;&quot;/&gt;
+&lt;img src=&quot;/../../../assets/images/graph1.jpg&quot; alt=&quot;graph&quot; title=&quot;graph&quot; width=&quot;158&quot; height=&quot;635&quot; class=&quot;aligncenter size-full&quot; style=&quot;border: 0px; display: block; margin-right: auto; margin-left:auto;&quot;/&gt;
 
 
 At each state the machine follows the edge that matches the next input from a given string. If it ever hits the fourth state, it's found a match. Checking the string &quot;baab&quot; for  &quot;aab&quot; (for which our machine is built), starting at state one it would take the path 1 -b-&gt; 1 -a-&gt; 2 -a-&gt; 3 -b-&gt; 4, and conclude that &quot;aab&quot; was in fact contained within &quot;baab&quot;.
