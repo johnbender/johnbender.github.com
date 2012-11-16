@@ -368,3 +368,17 @@ b .variable-name {
 .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
 .o { color: #ce5c00; font-weight: bold } /* Operator */
 .p { color: #000000; } /* Punctuation */
+
+div.center {
+  text-align: center;
+}
+
+div.center > img {
+  max-width: 75%;
+  margin: 3em auto 3em auto;
+}
+
+div.side-by-side > img {
+  max-height: 250px;
+  margin: 2em 4em;
+}

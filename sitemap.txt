@@ -12,7 +12,6 @@ http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-c
 http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal
 http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction
 http://johnbender.github.com/2012/03/22/a-natural-transformation-in-javascript
-http://johnbender.github.com/2012/02/29/faster-javascript-through-category-theory
 http://johnbender.github.com/2012/02/22/leveraging-your-insecurities
 http://johnbender.github.com/2012/02/09/faster-javascript-through-category-theory
 http://johnbender.github.com/2011/11/25/jquery-is-just-a-browser-api
