@@ -105,15 +105,15 @@
 
 <div class="row-fluid">
   <div class="span9">
-    <p>At Strange Loop 2011 while participating in a <a href="http://www.infoq.com/presentations/Language-Panel">language panel (5:06)</a> Jeremy Ashkenas was asked, &quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&quot; He responded, &quot;... mathematics envy&quot;. I can&#39;t completely disagree with Mr. Ashkenas. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For an example look no further than the <a href="kwingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler">inner workings</a> of V8&#39;s optimizing compiler that runs a lot of Jeremy&#39;s code.</p>
+    <p>At Strange Loop 2011 in a <a href="http://www.infoq.com/presentations/Language-Panel">language panel (5:06)</a>, Jeremy Ashkenas was asked, &quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&quot; He responded, &quot;... mathematics envy&quot;. I can&#39;t completely disagree with Mr. Ashkenas. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a recent example look no further than the <a href="kwingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler">inner workings</a> of V8&#39;s optimizing compiler that runs a lot of Jeremy&#39;s code.</p>
 
-<p>Fast forward a year and issues with CoffeeScript&#39;s flexible syntax start popping up in <a href="http://surana.wordpress.com/2011/02/08/coffeescript-oddities/">blog</a> <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">posts</a>. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of runtime confusion. To be fair it seems that they are rarely the cause of serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&#39;s genesis?</p>
+<p>Fast forward a year and issues with CoffeeScript&#39;s flexible syntax start popping up in <a href="http://surana.wordpress.com/2011/02/08/coffeescript-oddities/">blog</a> <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">posts</a>. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it seems they are rarely the cause of serious problems. Still, it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&#39;s genesis?</p>
 
 <p>What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and a definition of the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more generally. The background needed to understand the math is covered, but the post generally follows my thought process.</p>
 
 <h2 id="toc_24">CoffeeScript Confusion</h2>
 
-<p>I&#39;ve chosen to address the lambda syntax that has been cited by both of the previously linked posts. Specifically the ability in CoffeeScript to omit parenthesis in lambda declarations and how that affects using 0-arity lambdas as arguments. Here&#39;s an example borrowed from Manuel Cerón&#39;s <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">post</a> on the topic with both the CoffeeScript and the JavaScript output for clarity</p>
+<p>I&#39;ve chosen to address the lambda syntax cited by both of the previously linked posts. Specifically the ability in CoffeeScript to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&#39;s an example borrowed from Manuel Cerón&#39;s <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">post</a>.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="nv">deSomething = </span><span class="nf">() -&gt;</span> <span class="kc">true</span>
 
 <span class="nx">doSomething</span> <span class="nf">() -&gt;</span>  <span class="kc">false</span>
@@ -123,7 +123,7 @@
 </code></pre>
 </div>
 
-<p>The first invocation of <code>doSomething</code> applies it to the inline lambda. The second invokes it directly with the <code>()</code> operator and then attempts to apply the result <code>true</code> to lambda defined with <code>-&gt; false</code>. This results in a type error. For clarity here&#39;s the equivalent in JavaScript.</p>
+<p>The first invocation of <code>doSomething</code> applies it to the inline lambda. The second invokes it directly with the <code>()</code> operator and then attempts to apply the result <code>true</code> to a lambda defined with <code>-&gt; false</code>. This results in a type error. For clarity here&#39;s the equivalent in JavaScript.</p>
 <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">doSomething</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="k">return</span> <span class="kc">true</span>
 <span class="p">};</span>
@@ -139,7 +139,7 @@
 </code></pre>
 </div>
 
-<p>It&#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can point out (or would have pointed out) problems like this to a language designer <em>during</em> the process of language creation.</p>
+<p>It&#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer <em>during</em> language creation.</p>
 
 <h2 id="toc_25">Operational Semantics</h2>
 
@@ -149,7 +149,7 @@
   <img style="width: 60%" src="/assets/images/diagrams/bool-grammar.png"></img>
 </div>
 
-<p>The grammar definition is made of up of two &quot;meta variables&quot; <code>t</code> and <code>v</code>. Assigned to those meta variables is a set of possible terms in the language each separated by a <code>|</code>. <code>t</code> represents all of the ways to construct terms in the language (see the example below). <code>v</code> is a subset of <code>t</code>, as witnessed by its inclusion in <code>t</code> but it is distinct for a reason. <code>v</code> is the set of terms that are acceptable as the final result of evaluation.</p>
+<p>The grammar definition is made of up of two &quot;meta variables&quot; <code>t</code> and <code>v</code>. Assigned to those meta variables is a set of possible terms each separated by a <code>|</code>. <code>t</code> represents all of the ways to construct terms (see example below). <code>v</code> is the set of terms that are acceptable as the final result of evaluation. <code>v</code> is a subset of <code>t</code>, as witnessed by its inclusion in <code>t</code>, but it is distinct for a reason.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- simple values</span>
 <span class="nf">true</span>
 <span class="nf">false</span>
@@ -162,38 +162,38 @@
 </code></pre>
 </div>
 
-<p><code>v</code>&#39;s distinction means that any term like the second and third in the example has to eventually evaluate to either <code>true</code> or <code>false</code>. Any other result means that something is &quot;stuck&quot;. It also means that <code>true</code> or <code>false</code> themselves cannot evaluate further. What it means for a term to get &quot;stuck&quot; will be covered later.</p>
+<p><code>v</code>&#39;s distinction means that any term like the second and third in the example has to eventually evaluate to a term in <code>v</code>, either <code>true</code> or <code>false</code>. Any other result means that something is &quot;stuck&quot; (a definition for &quot;stuck&quot; will be covered later). It also means that <code>true</code> and <code>false</code> cannot evaluate further.</p>
 
-<p>Also, notice that that the only other construct in the grammar <code>if t then t else t</code> has sub terms represented with the meta variable <code>t</code>. This captures the ability to use <code>true</code>, <code>false</code>, or another <code>if t then t else t</code> in place of each sub term <code>t</code> as in examples two and three.</p>
+<p>Notice that that the only other construct in the grammar, <code>if t then t else t</code>, has subterms represented with the meta variable <code>t</code>. This captures the ability to use <code>true</code>, <code>false</code>, or another <code>if t then t else t</code> for each subterm (eg, second and third examples).</p>
 
-<p>With the building blocks of the example language in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to <code>true</code> or <code>false</code>, and in what order. Superficially this language seems extremely simple, but there are some subtle details about how term evaluation that need to be captured.</p>
+<p>With the building blocks in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to <code>true</code> or <code>false</code>, and in what order they should be taken. Superficially this language seems extremely simple, but there are some subtle details of term evaluation that need to be captured.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-inference-rules.png"></img>
 </div>
 
-<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> [!!] of the example language which instructs the reader in how to evaluate any term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful later when referring to the rules and also for keeping them conceptually distinct from the type rules.</p>
+<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> [!!] of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
 
-<p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. Equation 3, <em>e-if</em> is more interesting in its construction and how it captures an important subtlety of the evaluation strategy.</p>
+<p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. <em>e-if</em> is more interesting in its construction and how it captures an important part of the evaluation strategy.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-inference-rules-guard.png"></img>
 </div>
 
-<p>There are two parts to this rule. Above the line is the <em>premise</em> and below is the <em>conclusion</em>. The premise establishes a requirement or precondition for applying the conclusion to a given term. For <em>e-if</em> the premise says that if the first subterm <code>t</code> can be evaluated to <code>t&#39;</code> then the parent term <code>if t then t else t</code> should evaluate to <code>if t&#39; then t else t</code>. The importance here is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.</p>
+<p>There are two parts to this rule. Above the line is the <em>premise</em> and below is the <em>conclusion</em>. The premise establishes a requirement or precondition for applying the conclusion to a given term. Later we&#39;ll see how the premise is replaced by the conclusion of another rule. For <em>e-if</em> the premise says that if the first subterm <code>t</code> can be evaluated to <code>t&#39;</code> then the parent term <code>if t then t else t</code> should evaluate to <code>if t&#39; then t else t</code>. The importance is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- parenthesis are supplied for clarity only</span>
 <span class="c1">-- |     first/guard subterm     |      |       second subterm        |</span>
 <span class="kr">if</span> <span class="p">(</span><span class="kr">if</span> <span class="n">true</span> <span class="kr">then</span> <span class="n">false</span> <span class="kr">else</span> <span class="n">false</span><span class="p">)</span> <span class="kr">then</span> <span class="p">(</span><span class="kr">if</span> <span class="n">false</span> <span class="kr">then</span> <span class="n">true</span> <span class="kr">else</span> <span class="n">false</span><span class="p">)</span> <span class="kr">else</span> <span class="n">false</span>
 </code></pre>
 </div>
 
-<p>This term could conceivably take two evaluation paths without <em>e-if</em>. One alternative strategy would first evaluate the second subterm <code>if false then true else false</code> to <code>false</code>, then evaluate the guard <code>if true then false else false</code> to <code>false</code>, and finally the full term to <code>false</code>. Obviously that evaluation of the second subterm is unnecessary because the guard term evaluates to <code>false</code> and the second subterm is ignored completely.</p>
+<p>This term could take two different evaluation paths without <em>e-if</em>. An alternative strategy would first evaluate the second subterm <code>if false then true else false</code> to <code>false</code>, then evaluate the guard <code>if true then false else false</code> to <code>false</code>, and finally the full term to <code>false</code>. Obviously the evaluation of the second subterm is unnecessary because the guard term evaluates to <code>false</code> and the second subterm is ignored completely.</p>
 
-<p>There is enough information here for someone interested in implementing this language without wondering about how to combine terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.</p>
+<p>There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.</p>
 
 <h2 id="toc_26">CoffeeScript Grammar</h2>
 
-<p>In the interest of keeping this post semi-digestible the grammar will represent a small subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
+<p>The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span> <span class="nf">() -&gt;</span>  <span class="kc">false</span>
 <span class="c1"># =&gt; true</span>
 
@@ -202,7 +202,7 @@
 </code></pre>
 </div>
 
-<p>Which of course translates into JavaScript similarly to the original example:</p>
+<p>This translates into JavaScript like the original example:</p>
 <div class="highlight"><pre><code class="javascript"><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span> <span class="p">})(</span><span class="kd">function</span><span class="p">(){</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">});</span>
 <span class="c1">// =&gt; true</span>
 
@@ -211,15 +211,13 @@
 </code></pre>
 </div>
 
-<p>Here the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.</p>
+<p>Note that the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/cs-grammar.png"></img>
 </div>
 
-<p>To reiterate, the left hand side of each <code>::=</code> assignment is a meta variable that can be used in other parts of the grammar. In the case of <code>\t</code> it was easier to create a meta term than to repeat each possible lambda form in <code>t</code>. <code>v</code> on the other hand is the set of acceptable final results of evaluation. Finally <code>t</code> is complete set of terms and possible compound terms. Notable among them is the invocation and application of lambda terms (<code>\t</code>).</p>
-
-<p>Some translated examples should help to clarify:</p>
+<p>To reiterate, the left hand side of each <code>::=</code> assignment is a meta variable that can be used in other parts of the grammar. In the case of <code>\t</code> it was easier to create a meta term than to repeat each possible lambda form in <code>t</code>. <code>v</code> on the other hand is the set of acceptable final results of evaluation. Finally <code>t</code> is complete set of forms used to build terms. Notable among them is the invocation and application of lambda terms, <code>\t</code>.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="c1"># invocation</span>
 <span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">)()</span>
 
@@ -365,7 +363,7 @@
 <h3 id="toc_31">footnotes</h3>
 
 <ol>
-<li>An example is the confusion over Monads/Functors due in part to their odd names and relationship with mathematics.</li>
+<li>An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.</li>
 <li><a href="http://en.wikipedia.org/wiki/Denotational_semantics">Denotational Semantics</a> and <a href="http://en.wikipedia.org/wiki/Axiomatic_semantics">Axiomatic Semantics</a> are alternate ways to define language semantics.</li>
 <li>This example language is borrowed almost verbatim from Types and Programming Languages but I&#39;ve added in my own explanation. I cannot over emphasize how much this book has contributed to my education over the last year or so.</li>
 <li>This Theorem is referred to as Determinacy of Evaluation. I may go back and do some simple proofs for my own education after this post and a possible follow up.</li>
