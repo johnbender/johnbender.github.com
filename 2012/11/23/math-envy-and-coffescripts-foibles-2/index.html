@@ -105,7 +105,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-    <h2 id="toc_27">Type Rules</h2>
+    <h2 id="toc_19">Type Rules</h2>
 
 <p>Type rules are similar in construction to evaluation rules consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion.</p>
 
@@ -133,7 +133,7 @@
 
 <p>Equation 11 is the type rule for lambda applications such as <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>\t</code> on the left has the type <code>\top \to T_1</code> and the term on the right as the type <code>T_2</code> the conclusion is that the application of the lambda term will have the type <code>T_1</code>. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code>.</p>
 
-<h2 id="toc_28">Type Rule Stacking</h2>
+<h2 id="toc_20">Type Rule Stacking</h2>
 
 <p>This notation makes it easy to establish the type of a term by stacking the type rules on one another. Taking a very timple example, some diagrams will illustrate how this works:</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span>
@@ -155,7 +155,7 @@
 
 <p>Since there are two subterms involved in application, each branch extends upward until it reaches the atomic value types <code>true : Bool</code> and <code>false : Bool</code>. The subterm on the left is identical to equation 13. On the right, the nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code>.</p>
 
-<h2 id="toc_29">Not Quite There</h2>
+<h2 id="toc_21">Not Quite There</h2>
 
 <p>At this point the CoffeeScript subset has enough definition to describe the original issue in terms of evaluation or typing. That is, using the inference rules it&#39;s clear that the evaluation of <code>(-&gt; true)() -&gt; false</code> &quot;gets stuck&quot; from the following derivation tree:</p>
 
@@ -173,7 +173,7 @@
 
 <p>So what&#39;s been gained thusfar by applying the formalism of operational semantics and type derivations? It&#39;s clear that types, inferred or otherwise, would prevent at least the original case <code>(-&gt; true)() -&gt; false</code> as you can see from the type derivation. Unfortunately type derivation or type inference would only alert the end user and not an author in the middle of creating a language and then only if the result of the leftmost lambda term is not a lambda term. That is, if the leftmost lambda term evaluates to a lambda term the the whole thing is well typed. This means type information/derivations alone can&#39;t help identify this syntactic ambiguity.</p>
 
-<h2 id="toc_30">Detecting Ambiguity</h2>
+<h2 id="toc_22">Detecting Ambiguity</h2>
 
 <p>Even if the two terms will <em>not</em> result in a type error under evaluation (See the snippet below for an example), they have different types and different derivation trees. Taken together with the fact that the two expresions are &quot;similar&quot; might be enough.</p>
 
@@ -197,7 +197,7 @@
 
 <p><em>For two terms with inconsistent types, we say they are more or less ambigous based on the calculation Levenshtein Distance/max(Length<sub>1</sub>, Length<sub>2</sub>)</em>.</p>
 
-<h3 id="toc_31">footnotes</h3>
+<h3 id="toc_23">footnotes</h3>
 
 <p>!! See the confusion over Monads/Functors due in part to their relationship with mathematics</p>
 
@@ -250,11 +250,11 @@
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="//johnbender.github.com/2012/10/09/math-envy-and-coffeescripts-foibles" title="Math Envy and CoffeeScript's Foibles, Part 1">&larr; Previous</a></li>
+        <li class="prev"><a href="//johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory" title="Presentation: Faster JavaScript through Category Theory">&larr; Previous</a></li>
       
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       
-        <li class="next disabled"><a>Next &rarr;</a>
+        <li class="next"><a href="//johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles" title="Math Envy and CoffeeScript's Foibles, Part 1">Next &rarr;</a></li>
       
       </ul>
     </div>
