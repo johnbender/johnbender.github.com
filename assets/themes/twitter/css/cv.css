@@ -28,3 +28,7 @@ body #cv {
 #cv .right {
   float: right;
 }
+
+iframe {
+  margin-bottom: 3em;
+}

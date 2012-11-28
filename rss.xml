@@ -4,8 +4,24 @@
     <title>johnbender.us</title>
     <description>johnbender.us</description>
     <link>"http://johnbender.github.com"</link>
-    <lastBuildDate>2012-11-17T00:31:35-08:00</lastBuildDate>
+    <lastBuildDate>2012-11-27T21:46:44-08:00</lastBuildDate>
 
+    
+    <item>
+      <title>Math Envy and CoffeeScript's Foibles, Part 2</title>
+      <description>Math Envy and CoffeeScript's Foibles, Part 2</description>
+      <link>http://johnbender.github.com/2012/11/23/math-envy-and-coffescripts-foibles-2"</link>
+      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
+      <pubDate>2012-11-23T00:00:00-08:00</pubDate>
+    </item>
+    
+    <item>
+      <title>Math Envy and CoffeeScript's Foibles, Part 1</title>
+      <description>Math Envy and CoffeeScript's Foibles, Part 1</description>
+      <link>http://johnbender.github.com/2012/10/09/math-envy-and-coffeescripts-foibles"</link>
+      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
+      <pubDate>2012-10-09T00:00:00-07:00</pubDate>
+    </item>
     
     <item>
       <title>Presentation: Faster JavaScript through Category Theory</title>
