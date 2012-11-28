@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-27T21:47:49-08:00</updated>
+ <updated>2012-11-27T21:54:22-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -35,7 +35,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The first invocation of &lt;code&gt;doSomething&lt;/code&gt; applies it to the inline lambda. The second invokes it directly with the &lt;code&gt;()&lt;/code&gt; operator and then attempts to apply the result &lt;code&gt;true&lt;/code&gt; to lambda defined with &lt;code&gt;-&amp;gt; false&lt;/code&gt;. This results in a type error. For clarity here&amp;#39;s the equivelant in JavaScript.&lt;/p&gt;
+&lt;p&gt;The first invocation of &lt;code&gt;doSomething&lt;/code&gt; applies it to the inline lambda. The second invokes it directly with the &lt;code&gt;()&lt;/code&gt; operator and then attempts to apply the result &lt;code&gt;true&lt;/code&gt; to lambda defined with &lt;code&gt;-&amp;gt; false&lt;/code&gt;. This results in a type error. For clarity here&amp;#39;s the equivalent in JavaScript.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
@@ -55,7 +55,7 @@
 
 &lt;h2 id=&quot;toc_25&quot;&gt;Operational Semantics&lt;/h2&gt;
 
-&lt;p&gt;Operational Semantics is one way [2] to formalise the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Lanaguages&lt;/em&gt; [3].&lt;/p&gt;
+&lt;p&gt;Operational Semantics is one way [2] to formalize the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Languages&lt;/em&gt; [3].&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img style=&quot;width: 60%&quot; src=&quot;/assets/images/diagrams/bool-grammar.png&quot;&gt;&lt;/img&gt;
@@ -69,7 +69,7 @@
 &lt;span class=&quot;c1&quot;&gt;-- a simple compound term&lt;/span&gt;
 &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;
 
-&lt;span class=&quot;c1&quot;&gt;-- a more complex compund term, parens for clarity&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- a more complex compound term, parens for clarity&lt;/span&gt;
 &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -99,13 +99,13 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;This term could concevably take two evaluation paths without &lt;em&gt;e-if&lt;/em&gt;. One alternative strategy would first evaluate the second subterm &lt;code&gt;if false then true else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, then evaluate the guard &lt;code&gt;if true then false else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, and finally the full term to &lt;code&gt;false&lt;/code&gt;. Obviously that evaluation of the second subterm is unnecessary because the guard term evaluates to &lt;code&gt;false&lt;/code&gt; and the second subterm is ignored completely.&lt;/p&gt;
+&lt;p&gt;This term could conceivably take two evaluation paths without &lt;em&gt;e-if&lt;/em&gt;. One alternative strategy would first evaluate the second subterm &lt;code&gt;if false then true else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, then evaluate the guard &lt;code&gt;if true then false else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, and finally the full term to &lt;code&gt;false&lt;/code&gt;. Obviously that evaluation of the second subterm is unnecessary because the guard term evaluates to &lt;code&gt;false&lt;/code&gt; and the second subterm is ignored completely.&lt;/p&gt;
 
 &lt;p&gt;There is enough information here for someone interested in implementing this language without wondering about how to combine terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&amp;#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_26&quot;&gt;CoffeeScript Grammar&lt;/h2&gt;
 
-&lt;p&gt;In the interest of keeping this post semi-digestable the grammar will represent a small subset of CoffeeScript necessary to reproduce the aformentioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.&lt;/p&gt;
+&lt;p&gt;In the interest of keeping this post semi-digestible the grammar will represent a small subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; true&lt;/span&gt;
 
@@ -123,7 +123,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Here the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definiton of terms in the form of a language grammar.&lt;/p&gt;
+&lt;p&gt;Here the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-grammar.png&quot;&gt;&lt;/img&gt;
@@ -194,7 +194,7 @@
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-simplify.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;From among the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to simplify the term. The obvious place to start seems to be applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the user/reader which will take precendence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
+&lt;p&gt;From among the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to simplify the term. The obvious place to start seems to be applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-first-rule.png&quot;&gt;&lt;/img&gt;
@@ -255,9 +255,9 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambigous.&lt;/p&gt;
+&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambiguous.&lt;/p&gt;
 
-&lt;p&gt;There are two problems with this definition if the goal is to come up with something useful for actual language implementors. First, &amp;quot;very similar&amp;quot; is nebulous. Luckily computer science is litered with string &amp;quot;distance&amp;quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.&lt;/p&gt;
+&lt;p&gt;There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &amp;quot;very similar&amp;quot; is nebulous. Luckily computer science is littered with string &amp;quot;distance&amp;quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.&lt;/p&gt;
 
 &lt;p&gt;It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&amp;#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- example one&lt;/span&gt;

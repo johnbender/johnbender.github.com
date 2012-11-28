@@ -123,7 +123,7 @@
 </code></pre>
 </div>
 
-<p>The first invocation of <code>doSomething</code> applies it to the inline lambda. The second invokes it directly with the <code>()</code> operator and then attempts to apply the result <code>true</code> to lambda defined with <code>-&gt; false</code>. This results in a type error. For clarity here&#39;s the equivelant in JavaScript.</p>
+<p>The first invocation of <code>doSomething</code> applies it to the inline lambda. The second invokes it directly with the <code>()</code> operator and then attempts to apply the result <code>true</code> to lambda defined with <code>-&gt; false</code>. This results in a type error. For clarity here&#39;s the equivalent in JavaScript.</p>
 <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">doSomething</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="k">return</span> <span class="kc">true</span>
 <span class="p">};</span>
@@ -143,7 +143,7 @@
 
 <h2 id="toc_25">Operational Semantics</h2>
 
-<p>Operational Semantics is one way [2] to formalise the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Lanaguages</em> [3].</p>
+<p>Operational Semantics is one way [2] to formalize the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Languages</em> [3].</p>
 
 <div class="center">
   <img style="width: 60%" src="/assets/images/diagrams/bool-grammar.png"></img>
@@ -157,7 +157,7 @@
 <span class="c1">-- a simple compound term</span>
 <span class="kr">if</span> <span class="n">true</span> <span class="kr">then</span> <span class="n">false</span> <span class="kr">else</span> <span class="n">true</span>
 
-<span class="c1">-- a more complex compund term, parens for clarity</span>
+<span class="c1">-- a more complex compound term, parens for clarity</span>
 <span class="kr">if</span> <span class="n">false</span> <span class="kr">then</span> <span class="n">false</span> <span class="kr">else</span> <span class="p">(</span><span class="kr">if</span> <span class="n">true</span> <span class="kr">then</span> <span class="n">false</span> <span class="kr">else</span> <span class="n">true</span><span class="p">)</span>
 </code></pre>
 </div>
@@ -187,13 +187,13 @@
 </code></pre>
 </div>
 
-<p>This term could concevably take two evaluation paths without <em>e-if</em>. One alternative strategy would first evaluate the second subterm <code>if false then true else false</code> to <code>false</code>, then evaluate the guard <code>if true then false else false</code> to <code>false</code>, and finally the full term to <code>false</code>. Obviously that evaluation of the second subterm is unnecessary because the guard term evaluates to <code>false</code> and the second subterm is ignored completely.</p>
+<p>This term could conceivably take two evaluation paths without <em>e-if</em>. One alternative strategy would first evaluate the second subterm <code>if false then true else false</code> to <code>false</code>, then evaluate the guard <code>if true then false else false</code> to <code>false</code>, and finally the full term to <code>false</code>. Obviously that evaluation of the second subterm is unnecessary because the guard term evaluates to <code>false</code> and the second subterm is ignored completely.</p>
 
 <p>There is enough information here for someone interested in implementing this language without wondering about how to combine terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.</p>
 
 <h2 id="toc_26">CoffeeScript Grammar</h2>
 
-<p>In the interest of keeping this post semi-digestable the grammar will represent a small subset of CoffeeScript necessary to reproduce the aformentioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
+<p>In the interest of keeping this post semi-digestible the grammar will represent a small subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span> <span class="nf">() -&gt;</span>  <span class="kc">false</span>
 <span class="c1"># =&gt; true</span>
 
@@ -211,7 +211,7 @@
 </code></pre>
 </div>
 
-<p>Here the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definiton of terms in the form of a language grammar.</p>
+<p>Here the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/cs-grammar.png"></img>
@@ -282,7 +282,7 @@
   <img src="/assets/images/diagrams/bool-derivation-tree-example-simplify.png"></img>
 </div>
 
-<p>From among the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to simplify the term. The obvious place to start seems to be applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the user/reader which will take precendence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
+<p>From among the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to simplify the term. The obvious place to start seems to be applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-derivation-tree-first-rule.png"></img>
@@ -343,9 +343,9 @@
   <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png"></img>
 </div>
 
-<p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambigous.</p>
+<p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambiguous.</p>
 
-<p>There are two problems with this definition if the goal is to come up with something useful for actual language implementors. First, &quot;very similar&quot; is nebulous. Luckily computer science is litered with string &quot;distance&quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.</p>
+<p>There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &quot;very similar&quot; is nebulous. Luckily computer science is littered with string &quot;distance&quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.</p>
 
 <p>It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- example one</span>
