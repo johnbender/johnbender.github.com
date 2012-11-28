@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-28T00:20:32-08:00</updated>
+ <updated>2012-11-28T00:39:05-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -163,13 +163,13 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The &lt;code&gt;v&lt;/code&gt; in &lt;em&gt;e-app&lt;/em&gt; means that any argument a lambda term is applied to should be fully evaluated. In other words it should be a term in the meta variable set &lt;code&gt;v&lt;/code&gt;. Once applied the result is the lambda&amp;#39;s unaltered subterm.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;v&lt;/code&gt; in &lt;em&gt;e-app&lt;/em&gt; means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set &lt;code&gt;v&lt;/code&gt;. Once applied, the result is the lambda&amp;#39;s unaltered subterm.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application-argument.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;em&gt;e-arg-eval&lt;/em&gt; stipulates in the premise (above the bar) that if the term a lambda will be applied to can take a step of evaluation it should. &lt;em&gt;e-app&lt;/em&gt; informs the reader when lambda application can take place and &lt;em&gt;e-arg-eval&lt;/em&gt; informs the reader how to get there. Taken together these three rules define how terms in the CoffeeScript subset get evaluated [6].&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;e-arg-eval&lt;/em&gt; stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. &lt;em&gt;e-app&lt;/em&gt; informs the reader when lambda application can take place and &lt;em&gt;e-arg-eval&lt;/em&gt; informs the reader how to get there. Taken together these three rules define how terms get evaluated [6].&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_28&quot;&gt;Derivation Trees&lt;/h2&gt;
 
@@ -180,7 +180,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Again, depending on the way the inference rules are defined this example could evaluate two different ways. Here the derivation tree for the evaluation of this term results in false (bottom right)&lt;/p&gt;
+&lt;p&gt;The derivation tree for the evaluation of this term results in &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
@@ -192,7 +192,7 @@
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-simplify.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;From among the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to simplify the term. The obvious place to start seems to be applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
+&lt;p&gt;From among the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to begin simplifying the term. The obvious place to start seems to be applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-first-rule.png&quot;&gt;&lt;/img&gt;
@@ -216,7 +216,7 @@
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The final evaluation result is &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call it a derivation &amp;quot;tree&amp;quot;, but a more complex grammar could have multiple terms in the premise that require evaluation resulting in a tree like structure.&lt;/p&gt;
+&lt;p&gt;The final evaluation result is &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call it a derivation &amp;quot;tree&amp;quot;, but a more complex grammar could have multiple terms in a premise that require evaluation resulting in a tree like structure.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_29&quot;&gt;Evaluating a Solution&lt;/h2&gt;
 
@@ -253,7 +253,7 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambiguous.&lt;/p&gt;
+&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambiguous.&lt;/p&gt;
 
 &lt;p&gt;There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &amp;quot;very similar&amp;quot; is nebulous. Luckily computer science is littered with string &amp;quot;distance&amp;quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.&lt;/p&gt;
 
@@ -266,7 +266,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with two rules (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;) against the second examples stack of three (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You simply can&amp;#39;t tell without a lot of effort how different the evaluation is and in a language with side effects the difference could be critical.&lt;/p&gt;
+&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;) against the second&amp;#39;s stack of four (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You simply can&amp;#39;t tell without a lot of effort how different the evaluation is and in a language with side effects the difference could be critical.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_30&quot;&gt;Next Time&lt;/h2&gt;
 

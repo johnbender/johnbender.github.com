@@ -251,13 +251,13 @@
   <img src="/assets/images/diagrams/cs-inference-rules-application.png"></img>
 </div>
 
-<p>The <code>v</code> in <em>e-app</em> means that any argument a lambda term is applied to should be fully evaluated. In other words it should be a term in the meta variable set <code>v</code>. Once applied the result is the lambda&#39;s unaltered subterm.</p>
+<p>The <code>v</code> in <em>e-app</em> means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set <code>v</code>. Once applied, the result is the lambda&#39;s unaltered subterm.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/cs-inference-rules-application-argument.png"></img>
 </div>
 
-<p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the term a lambda will be applied to can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms in the CoffeeScript subset get evaluated [6].</p>
+<p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated [6].</p>
 
 <h2 id="toc_28">Derivation Trees</h2>
 
@@ -268,7 +268,7 @@
 </code></pre>
 </div>
 
-<p>Again, depending on the way the inference rules are defined this example could evaluate two different ways. Here the derivation tree for the evaluation of this term results in false (bottom right)</p>
+<p>The derivation tree for the evaluation of this term results in <code>false</code>.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
@@ -280,7 +280,7 @@
   <img src="/assets/images/diagrams/bool-derivation-tree-example-simplify.png"></img>
 </div>
 
-<p>From among the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to simplify the term. The obvious place to start seems to be applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
+<p>From among the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to begin simplifying the term. The obvious place to start seems to be applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-derivation-tree-first-rule.png"></img>
@@ -304,7 +304,7 @@
   <img src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
 </div>
 
-<p>The final evaluation result is <code>false</code>. At this point it may seem odd to call it a derivation &quot;tree&quot;, but a more complex grammar could have multiple terms in the premise that require evaluation resulting in a tree like structure.</p>
+<p>The final evaluation result is <code>false</code>. At this point it may seem odd to call it a derivation &quot;tree&quot;, but a more complex grammar could have multiple terms in a premise that require evaluation resulting in a tree like structure.</p>
 
 <h2 id="toc_29">Evaluating a Solution</h2>
 
@@ -341,7 +341,7 @@
   <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png"></img>
 </div>
 
-<p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to start thinking about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambiguous.</p>
+<p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambiguous.</p>
 
 <p>There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &quot;very similar&quot; is nebulous. Luckily computer science is littered with string &quot;distance&quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.</p>
 
@@ -354,7 +354,7 @@
 </code></pre>
 </div>
 
-<p>The fact that the evaluation path is very different gets lost in a forest of <code>true</code>&#39;s and <code>false</code>&#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with two rules (<em>e-true</em>, <em>e-if</em>) against the second examples stack of three (<em>e-true</em>, <em>e-if</em>, <em>e-true</em>). Again, this is in spite of the fact that the evaluation <em>result</em> is <code>false</code> in both cases. You simply can&#39;t tell without a lot of effort how different the evaluation is and in a language with side effects the difference could be critical.</p>
+<p>The fact that the evaluation path is very different gets lost in a forest of <code>true</code>&#39;s and <code>false</code>&#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>) against the second&#39;s stack of four (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>, <em>e-true</em>). Again, this is in spite of the fact that the evaluation <em>result</em> is <code>false</code> in both cases. You simply can&#39;t tell without a lot of effort how different the evaluation is and in a language with side effects the difference could be critical.</p>
 
 <h2 id="toc_30">Next Time</h2>
 
