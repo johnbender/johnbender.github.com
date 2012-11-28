@@ -261,17 +261,17 @@
 
 <h2 id="toc_28">Derivation Trees</h2>
 
-<p>The inference rules in an operational semantics definition can be used in a <em>derivation tree</em> to show how a term will evaluate. Rules are &quot;stacked&quot; on one another to show how they work in succession to produce an evaluation result.</p>
+<p>The inference rules in an operational semantics definition can be used in <em>derivation trees</em> to show how a terms will evaluate. Rules are &quot;stacked&quot; on one another to show how they work in succession to produce an evaluation result.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- parenthesis are supplied for clarity only</span>
 <span class="c1">-- |     first/guard subterm     |      |       second subterm        |</span>
 <span class="kr">if</span> <span class="p">(</span><span class="kr">if</span> <span class="n">true</span> <span class="kr">then</span> <span class="n">false</span> <span class="kr">else</span> <span class="n">false</span><span class="p">)</span> <span class="kr">then</span> <span class="p">(</span><span class="kr">if</span> <span class="n">false</span> <span class="kr">then</span> <span class="n">true</span> <span class="kr">else</span> <span class="n">false</span><span class="p">)</span> <span class="kr">else</span> <span class="n">false</span>
 </code></pre>
 </div>
 
-<p>The derivation tree for the evaluation of this term results in <code>false</code>.</p>
+<p>The derivation trees for the evaluation of this term result in <code>false</code>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
+  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
 </div>
 
 <p>Unfortunately the way these two &quot;trees&quot; are constructed isn&#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&#39;t important in the final evaluation (see the introductory section on operational semantics) and it&#39;s easier to read the equations when they aren&#39;t squished</p>
@@ -280,7 +280,7 @@
   <img src="/assets/images/diagrams/bool-derivation-tree-example-simplify.png"></img>
 </div>
 
-<p>From the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to begin simplifying the term. The obvious place to start seems to be applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
+<p>From the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to begin simplifying the term. The obvious place to start is applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/bool-derivation-tree-first-rule.png"></img>
@@ -295,13 +295,13 @@
 <p><em>e-if</em>&#39;s precondition requires that the first subterm of an <code>if t then t else t</code> evaluate before the other two subterms. In other words it requires that <code>t -&gt; t&#39;</code> be replaced by some evaluation.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-second-rule.png"></img>
+  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-second-rule.png"></img>
 </div>
 
 <p>Here, it&#39;s been replaced by <code>if true then false else false -&gt; false</code> from the application of <em>e-true</em>. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with <code>false</code>. It&#39;s a &quot;stack&quot; of the two inference rules <em>e-true</em> and <em>e-if</em>. All that&#39;s left is to build a derivation tree for <code>if false then t else false</code>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-example-assoc.png"></img>
+  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example-assoc.png"></img>
 </div>
 
 <p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex grammar could have multiple terms in a premise that resulting in a tree like structure.</p>
@@ -319,7 +319,7 @@
   <img src="/assets/images/diagrams/cs-derivation-trees-stuck.png"></img>
 </div>
 
-<p><em>e-inv</em> is applied because <code>-&gt; false</code> can&#39;t evaluate any further (it&#39;s a value in <code>v</code>), but then what? The only rule that has evaluation in it&#39;s premise is <em>e-arg-eval</em> and that only allows for the second term <code>-&gt; false</code> to be evaluated. It does <strong>not</strong> allow for the consumption of an argument. <em>e-inv</em> and <em>e-app</em> are only good for terms with lambdas as the first subterm which is <code>true</code> after the initial application of <em>e-inv</em>. It&#39;s &quot;stuck&quot;.</p>
+<p><em>e-inv</em> is applied to <code>(-&gt; true)()</code> because <code>-&gt; false</code> can&#39;t evaluate any further (it&#39;s a value in <code>v</code>), but then what? The only rule that has evaluation in it&#39;s premise is <em>e-arg-eval</em> and that only allows for the second term <code>-&gt; false</code> to be evaluated. It does <strong>not</strong> allow for the consumption of an argument. <em>e-inv</em> and <em>e-app</em> are only good for terms with lambdas as the first subterm which is <code>true</code> after the initial application of <em>e-inv</em>. It&#39;s &quot;stuck&quot;.</p>
 
 <p>Here someone will say, &quot;We already knew that because there&#39;s a type error when you evaluate the JavaScript!&quot;. Consider a slightly more complex example.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">))</span><span class="nf">() -&gt;</span> <span class="kc">false</span>

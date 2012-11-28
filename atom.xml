@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-28T13:56:25-08:00</updated>
+ <updated>2012-11-28T14:10:58-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -173,17 +173,17 @@
 
 &lt;h2 id=&quot;toc_28&quot;&gt;Derivation Trees&lt;/h2&gt;
 
-&lt;p&gt;The inference rules in an operational semantics definition can be used in a &lt;em&gt;derivation tree&lt;/em&gt; to show how a term will evaluate. Rules are &amp;quot;stacked&amp;quot; on one another to show how they work in succession to produce an evaluation result.&lt;/p&gt;
+&lt;p&gt;The inference rules in an operational semantics definition can be used in &lt;em&gt;derivation trees&lt;/em&gt; to show how a terms will evaluate. Rules are &amp;quot;stacked&amp;quot; on one another to show how they work in succession to produce an evaluation result.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- parenthesis are supplied for clarity only&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;-- |     first/guard subterm     |      |       second subterm        |&lt;/span&gt;
 &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The derivation tree for the evaluation of this term results in &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The derivation trees for the evaluation of this term result in &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Unfortunately the way these two &amp;quot;trees&amp;quot; are constructed isn&amp;#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&amp;#39;t important in the final evaluation (see the introductory section on operational semantics) and it&amp;#39;s easier to read the equations when they aren&amp;#39;t squished&lt;/p&gt;
@@ -192,7 +192,7 @@
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-simplify.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;From the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to begin simplifying the term. The obvious place to start seems to be applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the user/reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
+&lt;p&gt;From the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to begin simplifying the term. The obvious place to start is applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-first-rule.png&quot;&gt;&lt;/img&gt;
@@ -207,13 +207,13 @@
 &lt;p&gt;&lt;em&gt;e-if&lt;/em&gt;&amp;#39;s precondition requires that the first subterm of an &lt;code&gt;if t then t else t&lt;/code&gt; evaluate before the other two subterms. In other words it requires that &lt;code&gt;t -&amp;gt; t&amp;#39;&lt;/code&gt; be replaced by some evaluation.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-second-rule.png&quot;&gt;&lt;/img&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-second-rule.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Here, it&amp;#39;s been replaced by &lt;code&gt;if true then false else false -&amp;gt; false&lt;/code&gt; from the application of &lt;em&gt;e-true&lt;/em&gt;. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with &lt;code&gt;false&lt;/code&gt;. It&amp;#39;s a &amp;quot;stack&amp;quot; of the two inference rules &lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-if&lt;/em&gt;. All that&amp;#39;s left is to build a derivation tree for &lt;code&gt;if false then t else false&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-assoc.png&quot;&gt;&lt;/img&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example-assoc.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;e-false&lt;/em&gt; is all that&amp;#39;s needed for the second tree to complete the evaluation to &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call any part of this a derivation &amp;quot;tree&amp;quot;, but a more complex grammar could have multiple terms in a premise that resulting in a tree like structure.&lt;/p&gt;
@@ -231,7 +231,7 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-stuck.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? The only rule that has evaluation in it&amp;#39;s premise is &lt;em&gt;e-arg-eval&lt;/em&gt; and that only allows for the second term &lt;code&gt;-&amp;gt; false&lt;/code&gt; to be evaluated. It does &lt;strong&gt;not&lt;/strong&gt; allow for the consumption of an argument. &lt;em&gt;e-inv&lt;/em&gt; and &lt;em&gt;e-app&lt;/em&gt; are only good for terms with lambdas as the first subterm which is &lt;code&gt;true&lt;/code&gt; after the initial application of &lt;em&gt;e-inv&lt;/em&gt;. It&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied to &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? The only rule that has evaluation in it&amp;#39;s premise is &lt;em&gt;e-arg-eval&lt;/em&gt; and that only allows for the second term &lt;code&gt;-&amp;gt; false&lt;/code&gt; to be evaluated. It does &lt;strong&gt;not&lt;/strong&gt; allow for the consumption of an argument. &lt;em&gt;e-inv&lt;/em&gt; and &lt;em&gt;e-app&lt;/em&gt; are only good for terms with lambdas as the first subterm which is &lt;code&gt;true&lt;/code&gt; after the initial application of &lt;em&gt;e-inv&lt;/em&gt;. It&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
 
 &lt;p&gt;Here someone will say, &amp;quot;We already knew that because there&amp;#39;s a type error when you evaluate the JavaScript!&amp;quot;. Consider a slightly more complex example.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
