@@ -387,3 +387,11 @@ div.side-by-side > img {
   margin: 2em 4em;
 }
 
+#vote {
+  list-style: none;
+  margin: 4px 0 0 0;
+}
+
+#hn {
+  color: #ff6600;
+}

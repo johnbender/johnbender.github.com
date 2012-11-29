@@ -107,7 +107,7 @@
   <div class="span9">
     <p>At Strange Loop 2011 in a <a href="http://www.infoq.com/presentations/Language-Panel">language panel (5:06)</a>, Jeremy Ashkenas was asked, &quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&quot; He responded, &quot;... mathematics envy&quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the <a href="kwingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler">inner workings</a> of V8&#39;s optimizing compiler that runs a lot of Jeremy&#39;s code.</p>
 
-<p>Fast forward a year and issues with CoffeeScript&#39;s flexible syntax start popping up in <a href="http://surana.wordpress.com/2011/02/08/coffeescript-oddities/">blog</a> <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">posts</a>. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&#39;s genesis?</p>
+<p>Fast forward a year and issues with CoffeeScript&#39;s flexible syntax start popping up in <a href="http://surana.wordpress.com/2011/02/08/coffeescript-oddities/">blog</a> <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">posts</a>. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&#39;s creation?</p>
 
 <p>What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.</p>
 
@@ -257,7 +257,7 @@
   <img src="/assets/images/diagrams/cs-inference-rules-application-argument.png"></img>
 </div>
 
-<p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated [6].</p>
+<p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated.</p>
 
 <h2 id="toc_28">Derivation Trees</h2>
 
@@ -304,7 +304,7 @@
   <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example-assoc.png"></img>
 </div>
 
-<p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex grammar could have multiple terms in a premise that resulting in a tree like structure.</p>
+<p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.</p>
 
 <h2 id="toc_29">Evaluating a Solution</h2>
 
@@ -370,13 +370,14 @@
 <li>This example language is borrowed almost verbatim from Types and Programming Languages but I&#39;ve added in my own explanation. I cannot over emphasize how much this book has contributed to my education over the last year or so.</li>
 <li>This Theorem is referred to as Determinacy of Evaluation. I may go back and do some simple proofs for my own education after this post and a possible follow up.</li>
 <li>Technically JavaScript uses a strategy known as Call by Sharing, which differs from Call by Value in how deals with objects. More information at <a href="http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/">http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/</a> courtesy of <a href="https://twitter.com/raganwald">@raganwald</a>.</li>
-<li>For my own education I&#39;m <em>planning</em> to post a proof of determinacy in a later post.</li>
 </ol>
 
     
   </div>
 
-  <div id="info" class="span3">
+  <div id="info" class="span3 last">
+  
+
     <h4>Published</h4>
     <div class="date"><span>27 November 2012</span></div>
 
