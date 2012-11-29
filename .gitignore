@@ -1,3 +1,8 @@
-_site
-_cache
-_cv
+_site/*
+_cache/*
+_cv/*
+_diagrams/_TZ*
+_diagrams/*.aux
+_diagrams/*.log
+_diagrams/*.pdf
+_diagrams/*.svg
