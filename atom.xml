@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-28T14:10:58-08:00</updated>
+ <updated>2012-11-28T16:10:46-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -231,7 +231,7 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-stuck.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied to &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? The only rule that has evaluation in it&amp;#39;s premise is &lt;em&gt;e-arg-eval&lt;/em&gt; and that only allows for the second term &lt;code&gt;-&amp;gt; false&lt;/code&gt; to be evaluated. It does &lt;strong&gt;not&lt;/strong&gt; allow for the consumption of an argument. &lt;em&gt;e-inv&lt;/em&gt; and &lt;em&gt;e-app&lt;/em&gt; are only good for terms with lambdas as the first subterm which is &lt;code&gt;true&lt;/code&gt; after the initial application of &lt;em&gt;e-inv&lt;/em&gt;. It&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied to &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? After applying &lt;em&gt;e-inv&lt;/em&gt; the first subterm is &lt;code&gt;true&lt;/code&gt; and there are no evaluation rules that apply values to an arguement. Without any rules to apply to a term that isn&amp;#39;t a value, it&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
 
 &lt;p&gt;Here someone will say, &amp;quot;We already knew that because there&amp;#39;s a type error when you evaluate the JavaScript!&amp;quot;. Consider a slightly more complex example.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
@@ -244,10 +244,12 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The value returned by the first lambda can be applied to an argument with &lt;em&gt;e-app&lt;/em&gt; so the result of evaluation is &lt;code&gt;true&lt;/code&gt;. Viewing the accompanying term with an additional space will provide contrast.&lt;/p&gt;
+&lt;p&gt;The value returned by the first lambda &lt;strong&gt;can&lt;/strong&gt; be applied to an argument with &lt;em&gt;e-app&lt;/em&gt; so the result of evaluation is &lt;code&gt;true&lt;/code&gt;. Viewing the accompanying term with an additional space will provide contrast.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;In this case, the derivation tree consists of a single inference rule, &lt;em&gt;e-app&lt;/em&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png&quot;&gt;&lt;/img&gt;
