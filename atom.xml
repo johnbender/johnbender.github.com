@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-29T09:39:38-08:00</updated>
+ <updated>2012-11-29T09:45:31-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -17,7 +17,7 @@
    <link href="http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles"/>
    <updated>2012-11-27T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles</id>
-   <content type="html">&lt;p&gt;At Strange Loop 2011 in a &lt;a href=&quot;http://www.infoq.com/presentations/Language-Panel&quot;&gt;language panel (5:06)&lt;/a&gt;, Jeremy Ashkenas was asked, &amp;quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&amp;quot; He responded, &amp;quot;... mathematics envy&amp;quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the &lt;a href=&quot;kwingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler&quot;&gt;inner workings&lt;/a&gt; of V8&amp;#39;s optimizing compiler that runs a lot of Jeremy&amp;#39;s code.&lt;/p&gt;
+   <content type="html">&lt;p&gt;At Strange Loop 2011 in a &lt;a href=&quot;http://www.infoq.com/presentations/Language-Panel&quot;&gt;language panel (5:06)&lt;/a&gt;, Jeremy Ashkenas was asked, &amp;quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&amp;quot; He responded, &amp;quot;... mathematics envy&amp;quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the &lt;a href=&quot;http://wingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler&quot;&gt;inner workings&lt;/a&gt; of V8&amp;#39;s optimizing compiler that runs a lot of Jeremy&amp;#39;s code.&lt;/p&gt;
 
 &lt;p&gt;Fast forward a year and issues with CoffeeScript&amp;#39;s flexible syntax start popping up in &lt;a href=&quot;http://surana.wordpress.com/2011/02/08/coffeescript-oddities/&quot;&gt;blog&lt;/a&gt; &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;posts&lt;/a&gt;. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&amp;#39;s creation?&lt;/p&gt;
 
@@ -26,7 +26,7 @@
 &lt;h2 id=&quot;toc_24&quot;&gt;CoffeeScript Confusion&lt;/h2&gt;
 
 &lt;p&gt;I&amp;#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&amp;#39;s an example borrowed from Manuel Cerón&amp;#39;s &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;post&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;deSomething = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;doSomething = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
 
 &lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 

@@ -105,7 +105,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-    <p>At Strange Loop 2011 in a <a href="http://www.infoq.com/presentations/Language-Panel">language panel (5:06)</a>, Jeremy Ashkenas was asked, &quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&quot; He responded, &quot;... mathematics envy&quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the <a href="kwingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler">inner workings</a> of V8&#39;s optimizing compiler that runs a lot of Jeremy&#39;s code.</p>
+    <p>At Strange Loop 2011 in a <a href="http://www.infoq.com/presentations/Language-Panel">language panel (5:06)</a>, Jeremy Ashkenas was asked, &quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&quot; He responded, &quot;... mathematics envy&quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the <a href="http://wingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler">inner workings</a> of V8&#39;s optimizing compiler that runs a lot of Jeremy&#39;s code.</p>
 
 <p>Fast forward a year and issues with CoffeeScript&#39;s flexible syntax start popping up in <a href="http://surana.wordpress.com/2011/02/08/coffeescript-oddities/">blog</a> <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">posts</a>. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&#39;s creation?</p>
 
@@ -114,7 +114,7 @@
 <h2 id="toc_24">CoffeeScript Confusion</h2>
 
 <p>I&#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&#39;s an example borrowed from Manuel Cerón&#39;s <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">post</a>.</p>
-<div class="highlight"><pre><code class="coffeescript"><span class="nv">deSomething = </span><span class="nf">() -&gt;</span> <span class="kc">true</span>
+<div class="highlight"><pre><code class="coffeescript"><span class="nv">doSomething = </span><span class="nf">() -&gt;</span> <span class="kc">true</span>
 
 <span class="nx">doSomething</span> <span class="nf">() -&gt;</span>  <span class="kc">false</span>
 
