@@ -1,7 +1,7 @@
-body #cv {
+body.public > #cv {
   /* current blog width */
   width: 680px;
-  margin: 0px;
+  margin: 20px;
 }
 
 #cv #name {
@@ -27,8 +27,4 @@ body #cv {
 
 #cv .right {
   float: right;
-}
-
-iframe {
-  margin-bottom: 3em;
 }
