@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-11-30T09:18:06-08:00</updated>
+ <updated>2012-12-19T13:03:30-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -288,30 +288,38 @@
  
  <entry>
    <title>Math Envy and CoffeeScript's Foibles, Part 2</title>
-   <link href="http://johnbender.github.com/2012/11/23/math-envy-and-coffescripts-foibles-2"/>
+   <link href="http://johnbender.github.com/2012/11/23/math-envy-and-coffeescripts-foibles-2"/>
    <updated>2012-11-23T00:00:00-08:00</updated>
-   <id>http://johnbender.github.com/2012/11/23/math-envy-and-coffescripts-foibles-2</id>
-   <content type="html">&lt;h2 id=&quot;toc_19&quot;&gt;Type Rules&lt;/h2&gt;
+   <id>http://johnbender.github.com/2012/11/23/math-envy-and-coffeescripts-foibles-2</id>
+   <content type="html">&lt;p&gt;In the &lt;a href=&quot;CoffeeScript/2012/11/27/math-envy-and-coffeescripts-foibles/&quot;&gt;previous post&lt;/a&gt; I presented the basics of operational semantics and showed how derivations trees could be used to differentiate two terms that were syntactically similar. This post develops the closing thoughts from that post further by introducing type rules, the concept of &amp;quot;progress and preservation&amp;quot;, and the first draft of a tool for detecting semantic ambiguity.&lt;/p&gt;
 
-&lt;p&gt;Type rules are similar in construction to evaluation rules consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion.&lt;/p&gt;
+&lt;p&gt;! progress and preservation&lt;/p&gt;
+
+&lt;p&gt;! haskell parser with ast + type tags&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_19&quot;&gt;Type Rules&lt;/h2&gt;
+
+&lt;p&gt;Type rules are similar in construction to evaluation rules consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a &lt;em&gt;t&lt;/em&gt; in this case to distinguish them from inference rules (&lt;em&gt;e-*&lt;/em&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-type-rules.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The type rules for this subset of CoffeeScript are fairly intuitive. For the type rules without a premise like &lt;code&gt;true : Bool&lt;/code&gt; and &lt;code&gt;false : Bool&lt;/code&gt;, we take them to be true out of hand. That is, the terms &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; both have the type &lt;code&gt;Bool&lt;/code&gt;. The others are more complicated.&lt;/p&gt;
+&lt;p&gt;For type rules without a premise like &lt;em&gt;t-true&lt;/em&gt; and &lt;em&gt;t-false&lt;/em&gt; we take them to be true out of hand. That is, the terms &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; both have the type &lt;code&gt;Bool&lt;/code&gt;. The others are more complicated.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-type-rules-lambda-term.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Equation 9 illustrates how to determine the type of a lambda term like &lt;code&gt;(-&amp;gt; true)&lt;/code&gt;. The premise above the line states that if the subterm &lt;code&gt;t&lt;/code&gt; has the type &lt;code&gt;T&lt;/code&gt;, then the conclusion on the bottom, &lt;code&gt;\t&lt;/code&gt;, has the type &lt;code&gt;\top \to T&lt;/code&gt;. Translated to our mini example &lt;code&gt;(-&amp;gt; true)&lt;/code&gt;, because the subterm &lt;code&gt;true&lt;/code&gt; has the type &lt;code&gt;Bool&lt;/code&gt;, the lambda term has the type &lt;code&gt;\top \to Bool&lt;/code&gt;. One extremely important note: because neither of the lambda expressions make use of arguments, Top (&lt;code&gt;Top&lt;/code&gt;) is used to represent the acceptance of any type. So when &lt;code&gt;t&lt;/code&gt; in &lt;code&gt;\t&lt;/code&gt; has the type &lt;code&gt;T&lt;/code&gt; it means that &lt;code&gt;\t&lt;/code&gt; will, under invocation or application, result in an expresion of typ &lt;code&gt;T&lt;/code&gt; regardless of what it&amp;#39;s applied to or invoked with. As an example:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;t-lambda&lt;/em&gt; illustrates how to determine the type of a lambda term like &lt;code&gt;(-&amp;gt; true)&lt;/code&gt;. The premise above the line states that if the subterm &lt;code&gt;t&lt;/code&gt; has the type &lt;code&gt;T&lt;/code&gt;, then the conclusion &lt;code&gt;\t&lt;/code&gt; has the type &lt;code&gt;\top \to T&lt;/code&gt;. Here &lt;code&gt;T&lt;/code&gt; is a &lt;em&gt;type variable&lt;/em&gt;. For example, in &lt;code&gt;(-&amp;gt; true)&lt;/code&gt; the subterm &lt;code&gt;true&lt;/code&gt; has the type &lt;code&gt;Bool&lt;/code&gt; so the lambda term has the type &lt;code&gt;\top \to Bool&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;One likely point of confusion is &lt;code&gt;\top&lt;/code&gt;, not to be confused with &lt;code&gt;T&lt;/code&gt;. Neither of the lambda expressions make use of arguments so &lt;code&gt;\top&lt;/code&gt; is used to represent that lambda terms accept any type under invocation or application. For example, when the subterm &lt;code&gt;t&lt;/code&gt; in a lambda term has the type &lt;code&gt;T&lt;/code&gt; it means that the lambda term will result in a term with the type &lt;code&gt;T&lt;/code&gt; regardless of what it&amp;#39;s applied to or invoked with.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-type-rules-lambda-invocation.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Equation 10 shows how to determine the type of lambda invocation like &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt;. The premise states if the lambda term has the type &lt;code&gt;\top \to T&lt;/code&gt; the term &lt;code&gt;\t()&lt;/code&gt; has the type &lt;code&gt;T&lt;/code&gt;. This fits with the CoffeeScript &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; which obviously evaluates to &lt;code&gt;true&lt;/code&gt; which has the type &lt;code&gt;Bool&lt;/code&gt;. Again, &lt;code&gt;\top&lt;/code&gt; is used to denote the fact that the argument type is unimportant and in this case non existent.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;t-inv&lt;/em&gt; shows how to determine the type of lambda invocation like &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt;. The premise states if the lambda term has the type &lt;code&gt;\top \to T&lt;/code&gt; the term &lt;code&gt;\t()&lt;/code&gt; has the type &lt;code&gt;T&lt;/code&gt;. This fits with the CoffeeScript &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; which obviously evaluates to &lt;code&gt;true&lt;/code&gt; which has the type &lt;code&gt;Bool&lt;/code&gt;. Again, &lt;code&gt;\top&lt;/code&gt; is used to denote the fact that the argument type is unimportant and in this case non existent.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/cs-type-rules-lambda-application.png&quot;&gt;&lt;/img&gt;
@@ -408,16 +416,16 @@
    <id>http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory</id>
    <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;p&gt;
 
-&lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the same material at JQCON 2012 has been posted. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
 
-&lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 
 
 &lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;p&gt;
 
-&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;640&quot; height=&quot; 360&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;560&quot; height=&quot;315&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
 </content>

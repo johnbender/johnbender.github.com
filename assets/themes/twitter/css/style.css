@@ -6,6 +6,7 @@ html, body {
 
 p {
   font-size: 14px;
+  line-height: 1.5em;
 }
 
 iframe {
@@ -16,8 +17,8 @@ iframe {
   margin-bottom: 0;
 }
 
-h2, h3 {
-  margin: 0.5em 0 0.2em 0;
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.5em 0;
 }
 
 img {
@@ -41,7 +42,7 @@ html, body, .page-header {
 }
 
 .container, .navbar {
-  width: 940px;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -212,6 +213,7 @@ code {
 }
 
 pre, code {
+  font-family: Menlo, Monaco, monospace;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;

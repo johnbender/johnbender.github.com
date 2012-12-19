@@ -1,0 +1,15 @@
+(TeX-add-style-hook "coffee-script-fix"
+ (lambda ()
+    (TeX-add-symbols
+     '("ruletag" 1)
+     '("rulelabel" 1))
+    (TeX-run-style-hooks
+     "trfrac"
+     "syntax"
+     "mathtools"
+     "amsmath"
+     "latex2e"
+     "art10"
+     "article"
+     "")))
+
