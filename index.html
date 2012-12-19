@@ -173,7 +173,7 @@
   <img src="/assets/images/diagrams/bool-inference-rules.png"></img>
 </div>
 
-<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> [!!] of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
+<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
 
 <p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. <em>e-if</em> is more interesting in its construction and how it captures an important part of the evaluation strategy.</p>
 

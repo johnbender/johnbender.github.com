@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-12-19T13:03:30-08:00</updated>
+ <updated>2012-12-19T15:09:01-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -84,7 +84,7 @@
   &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; [!!] of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;&lt;em&gt;e-&lt;/em&gt;&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
+&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;&lt;em&gt;e-&lt;/em&gt;&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-false&lt;/em&gt; are fairly simple. They represent the expected evaluation results for the different guard values in an &lt;code&gt;if t then t else t&lt;/code&gt; term. With &lt;code&gt;true&lt;/code&gt; you get the first subterm and with &lt;code&gt;false&lt;/code&gt; you get the second subterm. Also, notice that there are no rules for either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; by themselves. This further reinforces that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; are values and that there&amp;#39;s no way to evaluate them further. &lt;em&gt;e-if&lt;/em&gt; is more interesting in its construction and how it captures an important part of the evaluation strategy.&lt;/p&gt;
 
