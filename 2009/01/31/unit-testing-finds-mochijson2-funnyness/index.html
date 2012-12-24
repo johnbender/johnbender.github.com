@@ -8,6 +8,7 @@
     
     
     <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -104,7 +105,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span10">
+  <div class="span10 text">
     [Update] I filed a ticket on the mochiweb google code site, and they pointed out that this <strong>IS</strong> expected behaviour. Mochijson2 expects binary strings, which makes good sense since when you decode with mochijson2, strings are converted to just that! Also, string operations in Erlang are faster on binary strings (or so I've been told). See the gist for an example.
 
 So I'm working on my test coverage for grove, which has been otherwise abysmal and late to the game. The bright side is that I caught some funnyness with my testing that I was not dealing with before, and I thought I would share my good fortune with everyone.

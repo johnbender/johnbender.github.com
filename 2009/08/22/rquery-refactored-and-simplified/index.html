@@ -8,6 +8,7 @@
     
     
     <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -104,7 +105,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span10">
+  <div class="span10 text">
     I've gone back and knocked off a couple of big todos in rquery. Namely, removing the Symbol capability, and using instances of the new OperationCollector in place of the global class variable + mutex required by the Symbol alterations. Also, as a consequence, I was able to remove the Declarations methods ( .is, .is_not )  previously required for use with overloaded operators like ==.
 
 <h2>No More Symbols</h2>

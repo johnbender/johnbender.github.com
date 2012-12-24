@@ -8,6 +8,7 @@
     
     
     <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -104,7 +105,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span10">
+  <div class="span10 text">
     <p>Previously we saw how jQuery's <code>$()</code> can behave like Haskell's Functor typeclass, when it wraps raw DOM objects and how provides its own version of <code>fmap</code> (<code>$.map</code>) for lifting functions into that wrapper to work with those DOM objects. In this post I'll explain Haskell's Applicative typeclass, how it's slightly different from the Functor, and demonstrate how defining functions on <code>$.fn</code> behaves in a similar fashion to the Applicative function <code>pure</code>.</p>
 
 <p>The article assumes you've read the previous post and that you have some basic understanding of what it means to define a function on jQuery's <code>$.fn</code> object (<a href="http://docs.jquery.com/Plugins/Authoring" title="jQuery Plugin Authoring">docs</a> for reference).</p>

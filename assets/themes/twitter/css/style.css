@@ -1,12 +1,11 @@
 /* Override some defaults */
-html, body {
-  font-size: 14px;
+html, body, p {
+  font-size: 16px;
   line-height: 1.4em;
 }
 
-p {
-  font-size: 14px;
-  line-height: 1.5em;
+body {
+  width: auto;
 }
 
 iframe {
@@ -17,12 +16,16 @@ iframe {
   margin-bottom: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0.5em 0;
+.navbar .brand {
+  font-weight: normal;
 }
 
-img {
-  margin: 1em;
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.25em 0;
+}
+
+h4 {
+  font-size: 1em;
 }
 
 ol {
@@ -42,7 +45,8 @@ html, body, .page-header {
 }
 
 .container, .navbar {
-  width: 800px;
+  width: auto;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -142,6 +146,10 @@ h1 > a:hover {
   margin-bottom: 0px;
 }
 
+.navbar .nav {
+  margin: 0;
+}
+
 hr, .page-header, .content {
   border-bottom: 1px solid #DDD;
   border-top: 0;
@@ -157,7 +165,6 @@ hr, .page-header, .content {
 
 .social-media {
   float: right;
-  margin-right: 30px;
 }
 
 .social-media img {
@@ -400,4 +407,47 @@ div.side-by-side > img {
 
 #hn {
   color: #ff6600;
+}
+
+.video-link {
+  display: none;
+}
+
+@media all and (max-width: 720px) {
+  .row-fluid > .text {
+    width: 100%;
+  }
+
+  div.center > img {
+    max-width: 100%;
+  }
+
+  .social-media, #info {
+    display: none;
+  }
+
+  .navbar .nav {
+    float: right;
+  }
+}
+
+@media all and (max-width: 580px) {
+  iframe {
+    display: none;
+  }
+
+  .video-link {
+    display: inline;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .navbar .nav {
+    display: none;
+  }
+
+  html, body, p {
+    font-size: 14px;
+    line-height: 1.4em;
+  }
 }

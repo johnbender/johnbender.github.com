@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2012-12-22T00:18:41-08:00</updated>
+ <updated>2012-12-23T16:26:49-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -58,7 +58,7 @@
 &lt;p&gt;Operational Semantics is one way [2] to formalize the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Languages&lt;/em&gt; [3].&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
-  &lt;img style=&quot;width: 40%&quot; src=&quot;/assets/images/diagrams/bool-grammar.png&quot;&gt;&lt;/img&gt;
+  &lt;img style=&quot;width: 40%; min-width: 200px;&quot; src=&quot;/assets/images/diagrams/bool-grammar.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
 &lt;p&gt;The grammar definition is made of up of two &amp;quot;meta variables&amp;quot; &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt;. Assigned to those meta variables is a set of possible terms each separated by a &lt;code&gt;|&lt;/code&gt;. &lt;code&gt;t&lt;/code&gt; represents all of the ways to construct terms (see example below). &lt;code&gt;v&lt;/code&gt; is the set of terms that are acceptable as the final result of evaluation. &lt;code&gt;v&lt;/code&gt; is a subset of &lt;code&gt;t&lt;/code&gt;, as witnessed by its inclusion in &lt;code&gt;t&lt;/code&gt;, but it is distinct for a reason.&lt;/p&gt;
@@ -281,7 +281,7 @@
 &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Denotational_semantics&quot;&gt;Denotational Semantics&lt;/a&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Axiomatic_semantics&quot;&gt;Axiomatic Semantics&lt;/a&gt; are alternate ways to define language semantics.&lt;/li&gt;
 &lt;li&gt;This example language is borrowed almost verbatim from Types and Programming Languages but I&amp;#39;ve added in my own explanation. I cannot over emphasize how much this book has contributed to my education over the last year or so.&lt;/li&gt;
 &lt;li&gt;This Theorem is referred to as Determinacy of Evaluation. I may go back and do some simple proofs for my own education after this post and a possible follow up.&lt;/li&gt;
-&lt;li&gt;Technically JavaScript uses a strategy known as Call by Sharing, which differs from Call by Value in how deals with objects. More information at &lt;a href=&quot;http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/&quot;&gt;http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/&lt;/a&gt; courtesy of &lt;a href=&quot;https://twitter.com/raganwald&quot;&gt;@raganwald&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Technically JavaScript uses a strategy known as Call by Sharing, which differs from Call by Value in how deals with objects. More information &lt;a href=&quot;http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/%20courtesy%20of%20%5B@raganwald%5D(https://twitter.com/raganwald&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
  </entry>
@@ -414,18 +414,20 @@
    <link href="http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory"/>
    <updated>2012-08-26T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory</id>
-   <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;p&gt;
+   <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the same material at JQCON 2012 has been posted. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;/p&gt;
 
-&lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;p&gt;
-
-&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;560&quot; height=&quot;315&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;560&quot; height=&quot;315&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://player.vimeo.com/video/44085271&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
 </content>

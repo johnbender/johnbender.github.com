@@ -8,6 +8,7 @@
     
     
     <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -104,7 +105,7 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span10">
+  <div class="span10 text">
     A <a href="http://mitchellhashimoto.com/">friend of mine </a>recently covered deterministic and non-deterministic finite state machines (automata for the cool kids) in one of his classes and passed along a sample problem for me to figure out. Informally, build a dfa that will match a given string against another string in the provided alphabet. An example of this class of problem would be to build one that matches 'aab' in any string for the alphabet [ab] ('aaba' would match, 'aba' would not).
 
 To help with visualizing the answer for this example I've built a graph of the states and edges that make up our dfa (yay graphviz):
