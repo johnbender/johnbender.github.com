@@ -112,7 +112,7 @@
 
 <p>What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.</p>
 
-<h2 id="toc_24">CoffeeScript Confusion</h2>
+<h2 id="toc_29">CoffeeScript Confusion</h2>
 
 <p>I&#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&#39;s an example borrowed from Manuel Cerón&#39;s <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">post</a>.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="nv">doSomething = </span><span class="nf">() -&gt;</span> <span class="kc">true</span>
@@ -142,7 +142,7 @@
 
 <p>It&#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer <em>during</em> language creation.</p>
 
-<h2 id="toc_25">Operational Semantics</h2>
+<h2 id="toc_30">Operational Semantics</h2>
 
 <p>Operational Semantics is one way [2] to formalize the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Languages</em> [3].</p>
 
@@ -192,7 +192,7 @@
 
 <p>There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.</p>
 
-<h2 id="toc_26">CoffeeScript Grammar</h2>
+<h2 id="toc_31">CoffeeScript Grammar</h2>
 
 <p>The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span> <span class="nf">() -&gt;</span>  <span class="kc">false</span>
@@ -238,7 +238,7 @@
 
 <p>Looking at the examples it&#39;s reasonable to ask whether there&#39;s value in providing a grammar that looks a lot like it&#39;s own language. First, it maps the two different lambda forms to one form in the grammar, which makes reasoning about evaluation and types easier. Second, differentiating values (<code>true</code>, <code>false</code>, and <code>-&gt; t</code>) from other terms by calling them values is important for knowing when evaluation has finished.</p>
 
-<h2 id="toc_27">Inference Rules</h2>
+<h2 id="toc_32">Inference Rules</h2>
 
 <p>With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.</p>
 
@@ -260,7 +260,7 @@
 
 <p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated.</p>
 
-<h2 id="toc_28">Derivation Trees</h2>
+<h2 id="toc_33">Derivation Trees</h2>
 
 <p>The inference rules in an operational semantics definition can be used in <em>derivation trees</em> to show how a terms will evaluate. Rules are &quot;stacked&quot; on one another to show how they work in succession to produce an evaluation result.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- parenthesis are supplied for clarity only</span>
@@ -307,7 +307,7 @@
 
 <p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.</p>
 
-<h2 id="toc_29">Evaluating a Solution</h2>
+<h2 id="toc_34">Evaluating a Solution</h2>
 
 <p>Finally we know enough to apply the operational semantics to our problem. First the least complex term that prevents evaluation.</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span><span class="nf">() -&gt;</span> <span class="kc">false</span>
@@ -359,11 +359,11 @@
 
 <p>The fact that the evaluation path is very different gets lost in a forest of <code>true</code>&#39;s and <code>false</code>&#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>) against the second&#39;s four (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>, <em>e-true</em>). Again, this is in spite of the fact that the evaluation <em>result</em> is <code>false</code> in both cases. You really can&#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&#39;t crop up with the CoffeeScript guinea pig.</p>
 
-<h2 id="toc_30">Next Time</h2>
+<h2 id="toc_35">Next Time</h2>
 
 <p>In the next post I&#39;ll take a look at how type information could replace the derivation trees as the semantic differentiator. Type information is often readily available even in languages like CoffeeScript that don&#39;t have type annotations. If finding a difference between two terms is simple enough maybe a tool can be built to automate the process of ferreting out confusing term pairings.</p>
 
-<h3 id="toc_31">footnotes</h3>
+<h3 id="toc_36">footnotes</h3>
 
 <ol>
 <li>An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.</li>
@@ -387,7 +387,7 @@
   
 
     <h4>Published</h4>
-    <div class="date"><span>27 November 2012</span></div>
+    <div class="date"><span>27 Nov 2012</span></div>
 
   
     <h4>Tags</h4>
