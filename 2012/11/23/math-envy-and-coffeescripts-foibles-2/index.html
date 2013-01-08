@@ -106,7 +106,7 @@
 
 <div class="row-fluid">
   <div class="span10 text">
-    <p>In the <a href="CoffeeScript/2012/11/27/math-envy-and-coffeescripts-foibles/">previous post</a> I presented the basics of operational semantics and showed how derivations trees could be used to differentiate two terms that were syntactically similar. This post develops the closing thoughts from that post further with the introduction of type rules, example tools for detecting semantic ambiguity, and a concrete definition of semantic ambiguity itself.</p>
+    <p>In the <a href="/2012/11/27/math-envy-and-coffeescripts-foibles/">previous post</a> I presented the basics of operational semantics and showed how derivations trees could be used to differentiate two terms that were syntactically similar. This post develops the closing thoughts from that post further with the introduction of type rules, example tools for automating evaluation and type derivation, and a concrete definition of semantic ambiguity itself. The primary goal is to establish the best possible way to detect ambiguous term pairings and then outline what will work for a tool that can be generalized beyond the CoffeeScript subset.</p>
 
 <h2 id="toc_19">Type Rules</h2>
 
@@ -134,7 +134,7 @@
   <img src="/assets/images/diagrams/cs-type-rules-lambda-application.png"></img>
 </div>
 
-<p><em>t-app</em> is the type rule for lambda applications, eg. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> and the term on the right as second type <code>T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the argument that it consumes.</p>
+<p><em>t-app</em> is the type rule for lambda applications, eg. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the argument that it consumes.</p>
 
 <h2 id="toc_20">Type Rule Stacking</h2>
 
@@ -147,26 +147,26 @@
   <img src="/assets/images/diagrams/cs-type-derivation-simple.png"></img>
 </div>
 
-<p>This higlights how to derive the type at the bottom from it&#39;s subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em>. That can then be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
-<div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span><span class="p">)</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">))()</span>
+<p>This highlights how to derive the type at the bottom from it&#39;s subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em>. That can then be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
+<div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">))()</span> <span class="kc">true</span>
 </code></pre>
 </div>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-derivation-complex.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-complex.png"></img>
 </div>
 
-<p>Since there are two subterms involved in application, each branch extends upward until it reaches the atomic value types <code>true : Bool</code> and <code>false : Bool</code>. The subterm on the left is identical to equation 13. On the right, the nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code>.</p>
+<p>The second subterm of the application is unimportant where the type of the term is concerned and as a result it&#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, <code>false : Bool</code>. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code> when compared with the previous example.</p>
 
 <h2 id="toc_21">Not Quite There</h2>
 
 <p>At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, <code>(-&gt; true)() -&gt; false</code>:</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-derivation-original-issue.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-original-issue.png"></img>
 </div>
 
-<p>Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of <code>true</code> to a lambda term like <code>(-&gt; false)</code>. It&#39;s a type error.</p>
+<p>Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of <code>true</code> to a lambda term like <code>(-&gt; false)</code> since <em>t-app</em> requires the first term to have the type <code>X -&gt; T</code> in its premise. It&#39;s a type error.</p>
 
 <p>Previously we saw that this this would result in a type error under evaluation by the CoffeeScript interpreter. We also saw that it was easy to construct a term that suffered the same semantic confusion without the type error <code>(-&gt; (-&gt; true))() -&gt; false</code>. This issue applies to the type derivation as well.</p>
 
@@ -174,7 +174,7 @@
 
 <p>In both cases useful information is lost when the derivation is discarded in favor of the final value or type. The advantage with the type information is obviously that no evaluation is required to determine if two terms are &quot;different&quot; in some way other than their syntax. The disadvantage is that not all languages make determining type information easy.</p>
 
-<p>Ultimately the type information provides a second way to differentiate syntactically similar terms. Indeed there are cases where both the evalution and type information are necessary to distinguish terms. For example <code>((x, y) -&gt; x + y)(1, 2)</code> has a type derivation identical to <code>((x, y) -&gt; x * y)(1, 2)</code>, but it clearly evaluates differently [1].</p>
+<p>Ultimately the type information provides a second way to differentiate syntactically similar terms. Indeed there are cases where both the evaluation and type information are necessary to distinguish terms. For example <code>((x, y) -&gt; x + y)(1, 1)</code> has a type derivation identical to <code>((x, y) -&gt; x * y)(1, 2)</code> and the same evaluation result, but it clearly takes a different evaluation path [1].</p>
 
 <p><em>Note: The next five sections cover an implementation of a lexer, parser, evaluator and mechanisms for type/evaluation derivation. If you&#39;d rather just read about how the generated evaluation and type derivations are used to find confusing term pairings you can skip to Detecting Ambiguity</em></p>
 
@@ -206,17 +206,21 @@ Value  : bool                       { BooleanExpr $1 }
 
 <p>There are two differences from the original grammar definition. Lambda terms in parenthesis are just a convenience for readability. More importantly application requires that any term be permitted as the left side. This enables the grammar to reproduce the original issue since <code>(-&gt; true)() -&gt; false</code> translates to an invocation applied to a lambda term. The corrected grammar:</p>
 
-<p>!! include image of whole fixed grammar</p>
+<div class="center">
+  <img style="width: 200px;" src="/assets/images/diagrams/cs-grammar-corrected.png"></img>
+</div>
 
-<p>With the corrected grammar an additional inference rule is required to ensure the left term of an application is fully evaluated befor applying it [!!].</p>
+<p>Also, a correction and an addition must be made to the inference rules to ensure that any term type is permitted as the left half of an application, and that it is fully evaluated before applying it [!!].</p>
 
-<p>!! include image of e-arg-eval and e-app-eval</p>
+<div class="center">
+  <img src="/assets/images/diagrams/cs-inference-rules-corrected.png"></img>
+</div>
 
-<p>Where <em>e-arg-eval</em> ensures that the argument of an application is fully evaluated, <em>e-app-eval</em> ensures that the applicand is fully evaluated before the application takes place. The AST result from the parser is built with Haskell types. Pattern matching can be used with the type and inference rules to produce evaluation and derivation results.</p>
+<p>Where <em>e-arg-eval</em> ensures that the argument of an application is fully evaluated, <em>e-app-eval</em> ensures that the applicand is fully evaluated before the application takes place.</p>
 
 <h2 id="toc_23">Matching Rules</h2>
 
-<p>To start let&#39;s look at a simple evaluator and derivation builder implementation.</p>
+<p>The abstract representation produced by the parser is simple tree structure built with Haskell types. Pattern matching can be used with the type and inference rules to produce evaluation and derivation results. To start let&#39;s look at a simple evaluator and derivation builder implementation.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- an enumeration of each inference rule</span>
 <span class="kr">data</span> <span class="kt">InfRule</span> <span class="ow">=</span> <span class="kt">Inv</span> <span class="o">|</span> <span class="kt">App</span> <span class="o">|</span> <span class="kt">ArgEval</span> <span class="o">|</span> <span class="kt">AppEval</span>
 </code></pre>
@@ -231,7 +235,7 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>Both the evaluator and the derivation builder will opperate based on the inference rule that applys to each term and its subterms. The function <code>matchRule</code> takes an expression, <code>Expr</code>, and provides three pieces of information in a <code>RuleMatch</code> result: the inference rule that applies to the term, an optional term for the premise of an inference rule pulled from the body of the parent term, and a term for the conclusion of the inference rule also pulled from the body of the parent term. There are pattern matching definitions for each rule.</p>
+<p>Both the evaluator and the derivation builder will operate based on the inference rule that apply to each term and its subterms. The function <code>matchRule</code> takes an expression, <code>Expr</code>, and provides three pieces of information in a <code>RuleMatch</code> result: the inference rule that applies to the term, an optional term for the premise of an inference rule pulled from the body of the parent term, and a term for the conclusion of the inference rule also pulled from the body of the parent term. There are pattern matching definitions for each rule.</p>
 <div class="highlight"><pre><code class="haskell"><span class="nf">matchRule</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kr">_</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">None</span>
 <span class="nf">matchRule</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="kr">_</span><span class="p">)</span>      <span class="ow">=</span> <span class="kt">None</span>
 </code></pre>
@@ -243,7 +247,7 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>Invocation is simple. It can only be applied to a lambda term and the result of the invocation is the lambda&#39;s subterm; eg. <code>(-&gt; true)()</code> evaluates to <code>true</code>. An invocation on anything else will simply drop through this match and ultimately to the catch all <code>error</code> case. For example the CoffeeScript <code>true()</code> is invalid. Its abstract representation from the parser is <code>Invoke (BooleanExpr True)</code> which clearly won&#39;t match here. On a match, the <code>RuleMatch</code> result contains the rule tag for invocation <code>Inv</code>, nothing for an inference rule premise since there isn&#39;t one for <em>e-inv</em> and the subterm <code>t</code> for futher derivation in the conclusion.</p>
+<p>Invocation is simple. It can only be applied to a lambda term and the result of the invocation is the lambda&#39;s subterm; eg. <code>(-&gt; true)()</code> evaluates to <code>true</code>. An invocation on anything else will simply drop through this match and ultimately to the catch all <code>error</code> case. For example the CoffeeScript <code>true()</code> is invalid. Its abstract representation from the parser is <code>Invoke (BooleanExpr True)</code> which clearly won&#39;t match here. On a match, the <code>RuleMatch</code> result contains the rule tag for invocation <code>Inv</code>, nothing for an inference rule premise since there isn&#39;t one for <em>e-inv</em> and the subterm <code>t</code> for further derivation in the conclusion.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- Rule: e-app</span>
 <span class="nf">matchRule</span> <span class="p">(</span><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kr">_</span><span class="p">))</span> <span class="ow">=</span> <span class="kt">RuleMatch</span> <span class="kt">App</span> <span class="kt">Nothing</span> <span class="n">t</span>
 <span class="nf">matchRule</span> <span class="p">(</span><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="kr">_</span><span class="p">))</span>      <span class="ow">=</span> <span class="kt">RuleMatch</span> <span class="kt">App</span> <span class="kt">Nothing</span> <span class="n">t</span>
@@ -263,10 +267,12 @@ Value  : bool                       { BooleanExpr $1 }
 
 <p><em>e-arg-eval</em> and <em>e-app-eval</em> are more complicated than either <em>e-inv</em> or <em>e-app</em> which makes sense when comparing them as inference rules. Both <em>e-arg-eval</em> and <em>e-app-eval</em> carry a premise.</p>
 
-<p>!! include image of both of inference rules</p>
+<div class="center">
+  <img src="/assets/images/diagrams/cs-inference-rules-app-argeval.png"></img>
+</div>
 
 <p>Both rules require that some evaluation take place on one of the subterms. More importantly the shape of the term remains the same. Neither <em>e-arg-eval</em> or <em>e-app-eval</em> change the shape of the term to which they apply, only the shape of the sub terms. This is in contrast to <em>e-inv</em> and <em>e-app</em> which discard the invocation operator and second term respectively. As a result the <code>RuleMatch</code> contains the subterm that needs to be evaluated further and the other subterm that remains stagnant. Note that the <em>e-arg-eval</em> rule is applied first so that the <em>e-app-eval</em> rule can ignore the second subterm under the assumption that it&#39;s a value term (ie, not <code>Invoke</code> or <code>Apply</code>).</p>
-<div class="highlight"><pre><code class="haskell"><span class="nf">matchRule</span> <span class="n">t</span> <span class="ow">=</span> <span class="ne">error</span> <span class="o">$</span> <span class="s">&quot;No inference rule apply&#39;s for: &quot;</span> <span class="o">++</span> <span class="p">(</span><span class="n">show</span> <span class="n">t</span><span class="p">)</span>
+<div class="highlight"><pre><code class="haskell"><span class="nf">matchRule</span> <span class="n">t</span> <span class="ow">=</span> <span class="ne">error</span> <span class="o">$</span> <span class="s">&quot;No inference rule applies for: &quot;</span> <span class="o">++</span> <span class="p">(</span><span class="n">show</span> <span class="n">t</span><span class="p">)</span>
 </code></pre>
 </div>
 
@@ -307,22 +313,31 @@ Value  : bool                       { BooleanExpr $1 }
 <h2 id="toc_25">Automating Evaluation Derivation</h2>
 
 <p>The <code>RuleMatch</code> instance is primarily geared toward building derivation trees. That&#39;s why the structure appears so awkward in use with <code>eval</code>.</p>
-<div class="highlight"><pre><code class="haskell"><span class="kr">data</span> <span class="kt">Derivation</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Empty</span> <span class="o">|</span> <span class="kt">Derivation</span> <span class="kt">InfRule</span> <span class="kt">Derivation</span> <span class="kt">Derivation</span>
+<div class="highlight"><pre><code class="haskell"><span class="kr">data</span> <span class="kt">Derivation</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Empty</span> <span class="o">|</span> <span class="kt">Derivation</span> <span class="kt">InfRule</span> <span class="kt">Derivation</span> <span class="kt">Derivation</span> <span class="kt">Expr</span>
 </code></pre>
 </div>
 
-<p>The <code>Derivation</code> data type is comprised of a tag from the <code>InfRule</code> enumeration, one <em>possible</em> derivation as a premise, and the final derivation as the conclusion. Taking the derivation tree of a simple example <code>(-&gt; (-&gt; true))() false</code> which is parsed to:</p>
+<p>The <code>Derivation</code> data type is comprised of a tag from the <code>InfRule</code> enumeration, one <em>possible</em> derivation as a premise, the final derivation as the conclusion, and the expression representing the state of evaluation at a given moment. Taking the derivation tree of a simple example <code>(-&gt; (-&gt; true))() false</code> which is parsed to:</p>
 <div class="highlight"><pre><code class="haskell"><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Invoke</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">True</span><span class="p">))))</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">False</span><span class="p">)</span>
 </code></pre>
 </div>
 
 <p>In english, the application of an invocation of a lambda with a lambda subterm to a boolean value. The resulting derivation tree in the original derivation tree notation takes the form:</p>
 
-<p>!! include image derivation tree</p>
+<div class="center">
+  <img src="/assets/images/diagrams/cs-derivation-trees-ast-example.png"></img>
+</div>
 
 <p>The <code>Derivation</code> instance has to work from the outside in so it&#39;s much harder to read than the notation, but it contains the same information</p>
-<div class="highlight"><pre><code class="haskell"><span class="c1">--                 |----------premise---------| |-------&quot;conclusion&quot;-------|</span>
-<span class="kt">Derivation</span> <span class="kt">AppEval</span> <span class="p">(</span><span class="kt">Derivation</span> <span class="kt">Inv</span> <span class="kt">Empty</span> <span class="kt">Empty</span><span class="p">)</span> <span class="p">(</span><span class="kt">Derivation</span> <span class="kt">App</span> <span class="kt">Empty</span> <span class="kt">Empty</span><span class="p">)</span>
+<div class="highlight"><pre><code class="haskell"><span class="kt">Derivation</span> <span class="kt">AppEval</span>
+  <span class="c1">-- |       premise        | |   e-inv value            |</span>
+  <span class="p">(</span><span class="kt">Derivation</span> <span class="kt">Inv</span> <span class="kt">Empty</span> <span class="kt">Empty</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">True</span><span class="p">)))</span>
+
+  <span class="c1">-- |      conclusion      | |   e-app value   |</span>
+  <span class="p">(</span><span class="kt">Derivation</span> <span class="kt">App</span> <span class="kt">Empty</span> <span class="kt">Empty</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">True</span><span class="p">))</span>
+
+  <span class="c1">-- |                e-app-eval value                  |</span>
+  <span class="p">(</span><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">True</span><span class="p">))</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">False</span><span class="p">))</span>
 </code></pre>
 </div>
 
@@ -387,7 +402,7 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>The type of an invocation is determined by the lambda&#39;s subterm, so <code>matchRule</code> provides that as <code>t1</code> here for futher type information. The type of an application is dependent on the type of it&#39;s first argument, so we cheat a bit here and use the single step <code>eval</code> to get at the result of the application.</p>
+<p>The type of an invocation is determined by the lambda&#39;s subterm, so <code>matchRule</code> provides that as <code>t1</code> here for further type information. The type of an application is dependent on the type of it&#39;s first argument, so we cheat a bit here and use the single step <code>eval</code> to get at the result of the application.</p>
 <div class="highlight"><pre><code class="haskell"><span class="nf">derive</span> <span class="ow">::</span> <span class="kt">Expr</span> <span class="ow">-&gt;</span> <span class="kt">Derivation</span>
 <span class="nf">derive</span> <span class="n">t</span> <span class="ow">=</span>
     <span class="kr">case</span> <span class="p">(</span><span class="n">matchRule</span> <span class="n">t</span><span class="p">)</span> <span class="kr">of</span>
@@ -404,7 +419,9 @@ Value  : bool                       { BooleanExpr $1 }
 
 <p>The type derivation using logic notation looks like:</p>
 
-<p>!! include image derivation tree</p>
+<div class="center">
+  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-ast-example.png"></img>
+</div>
 
 <p>The <code>Derivation</code> instance corresponding the the logic notation is again much larger but captures the same information (formatting added after the fact):</p>
 <div class="highlight"><pre><code class="haskell"><span class="kt">Derivation</span> <span class="kt">App</span>
@@ -421,31 +438,35 @@ Value  : bool                       { BooleanExpr $1 }
 
 <h2 id="toc_27">Detecting Ambiguity</h2>
 
-<p>For this CoffeeScript subset we&#39;ve seen that it&#39;s possible to build an understanding of evaluation and typing that provides more information than the evaluation result or the fixed type of a individually. Capturing that extra infomation a term can be represented by a triple <code>(S, E, T)</code>, where <code>S</code> is the syntax string of the term, <code>E</code> is the evalutation derivation, and <code>T</code> is the type derivation. This triple can be used to determine whether two terms will cause confusion.</p>
+<p>For this CoffeeScript subset we&#39;ve seen that it&#39;s possible to build an understanding of evaluation and typing that provides more information than the evaluation result or the fixed type of a individually. Capturing that extra information a term can be represented by a triple <code>(S, E, T)</code>, where <code>S</code> is the syntax string of the term, <code>E</code> is the evaluation derivation, and <code>T</code> is the type derivation. This triple can be used to determine whether two terms will cause confusion.</p>
 
-<p>One approach would be to first compare the <code>S</code> values for two triples and then determinine if the <code>E</code> and <code>T</code> values match. Terms with &quot;similar&quot; <code>S</code> values but different <code>E</code> or <code>T</code> values might be ambigous and could be flagged for review. Using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Distance</a> to keep the calculation for similarity simple:</p>
+<p>One approach would be to first compare the <code>S</code> values for two triples and then determine if the <code>E</code> and <code>T</code> values match. Terms with &quot;similar&quot; <code>S</code> values but different <code>E</code> or <code>T</code> values might be ambiguous and could be flagged for review. Using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Distance</a> to keep the calculation for similarity simple:</p>
 
-<p>!! insert image of dist func</p>
+<div class="center">
+  <img src="/assets/images/diagrams/cs-dist.png"></img>
+</div>
 
 <p><em>dist</em> is the Levenshtein distance function and <em>dist</em> is just the ratio of the distance between the two strings and the maximum length of both. This is sometimes referred to as the Levenshtein Ratio. Providing a ratio allows for a baseline with a given grammar that might capture all &quot;very similar&quot; terms regardless of the term length. For <code>(-&gt; true)() -&gt; false</code> and <code>(-&gt; true) () -&gt; false</code>:</p>
 
-<p>!! insert image of dist invocation</p>
+<div class="center">
+  <img style="width: 300px" src="/assets/images/diagrams/cs-dist-example.png"></img>
+</div>
 
-<p>An exact value for string distance that can be reconciled as a threshold &quot;setting&quot; makes building an automated tool a bit easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a pre-determined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged.</p>
+<p>An exact value for string distance that can be reconciled as a threshold &quot;setting&quot; makes building an automated tool a bit easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged.</p>
 
 <h2 id="toc_28">Fuzzy Search</h2>
 
-<p>With a more complete understanding of semantic ambiguity and some tooling to provide the derivation info the next step is to analyze terms and detect ambiguous pairings. A system that will automate the exploration of the &quot;term space&quot; (all term combinations), and run a check against existing known terms for ambiguous pairs for each generated term, is needed.</p>
+<p>With a more complete understanding of semantic ambiguity and some tooling to provide the derivation info the next step is to analyze terms and detect ambiguous pairings. That is, we can now define a system that will automate the exploration of the &quot;term space&quot; (all term combinations), and run a check against existing known terms for ambiguous pairs for each generated term.</p>
 
-<p>Storing the triple of known terms for comparison would be fairly easy with the text search capabilities available in most modern databases. You could even <a href="http://www.artfulsoftware.com/infotree/qrytip.php?id=552">implement</a> the Levenshtein Distance function and ratio and use it to check an new term against known terms. It may be that a purpose built data structure for the storage and retrieval based on a text search algorithm would perform better, but a good all purpose rdbms would suffice for a first pass [4].</p>
+<p>Storing the triple of known terms for comparison would be fairly easy with the text search capabilities available in most modern databases. You could even <a href="http://www.artfulsoftware.com/infotree/qrytip.php?id=552">implement</a> the Levenshtein Distance function and ratio and use it to check an new term against known terms. It may be that a purpose built data structure for the storage and retrieval based on a text search algorithm would perform better, but a good all purpose RDBMS would suffice for a first pass.</p>
 
 <p>More interesting is the generation of terms for a non-trivial language. It&#39;s seems likely that a <em>term generator</em> would have to start with atomic types and successively wrap them in terms defined with subterms. That part can likely be performed with nothing more than knowledge of the grammar, but there are two issues.</p>
 
-<p>First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &quot;resuming&quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, It&#39;s easy to tag a piece of syntax with the result of execution or typeing but information is lost.</p>
+<p>First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &quot;resuming&quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, It&#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.</p>
 
 <h2 id="toc_29">Quick and Dirty</h2>
 
-<p>To avoid the extra effort required of the language creator in generating the derivations, a less complicated represenation of a term could still be effective, namely the tuple <code>(S, A)</code>. Where <code>S</code> remains the synatx of the term and <code>A</code> is the AST representation. Using the lambda term example, and haskell parser detailed earlier:</p>
+<p>To avoid the extra effort required of the language creator in generating the evaluation and type derivations, a less complicated representation of a term might still be effective, namely the tuple <code>(S, A)</code>. Where <code>S</code> remains the syntax of the term and <code>A</code> is the AST representation. Using the lambda term example, and haskell parser detailed earlier:</p>
 <div class="highlight"><pre><code class="haskell"><span class="p">(</span> <span class="s">&quot;(-&gt; true)() -&gt; false&quot;</span><span class="p">,</span>
   <span class="kt">Apply</span> <span class="p">(</span><span class="kt">Invoke</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">True</span><span class="p">)))</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kt">False</span><span class="p">))</span> <span class="p">)</span>
 
@@ -454,16 +475,23 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>It&#39;s obvious that the abstract representations capture the issue at hand and the AST for a term would be available regardless of the host language. Serialization is the only extra requirement. With a term generator that works with a BNF, a way to generate the AST for a term (presumably through the language parser), and a database equiped with the ability to find like terms it seems entirely possible to alert the language creator of complex or convoluted pairings [5].</p>
+<p>It&#39;s obvious that the abstract representations captures the issue at hand even if there is some information lost [4]. Best of all the AST for a term would be available regardless of the host language and serialization is the only extra requirement. With a term generator that works with a (E)BNF, a way to generate the AST for a term (presumably through the language parser), and a database equipped with the ability to find like terms it seems entirely possible to alert the language creator of complex or convoluted pairings.</p>
 
-<h3 id="toc_30">footnotes</h3>
+<h2 id="toc_30">Further Work</h2>
+
+<p>First I have to apologize for not building out a tool for generating terms and even a schema for term storage. I wanted to do the automated evaluation and type derivations to get a feel for the effort involved and the result was an exceptionally long post. If I find the time to return to this I&#39;d like to build out the term generator and couple it with a simple database. I think that going through the process of building a BNF parser would be a lot of fun by itself.</p>
+
+<p>In the course of these two posts we&#39;ve seen what it looks like to formalize both the evaluation and type semantics of a simple programming language. We&#39;ve also come to a relatively satisfying formalization of semantic ambiguity that could be used in conjunction with a common language definition form (BNF, EBNF) to alert a language designer of potential issues [5] [6].</p>
+
+<h3 id="toc_31">footnotes</h3>
 
 <ol>
-<li>It might be that when a function identifier is the only difference between terms, here <code>*</code> and <code>+</code>, it&#39;s reasonable to ignore ambigous terms. In this case because the total string length for both terms is small it might be that a single character difference is enough to break some arbitrary threshold. I&#39;m leaving this for futher consideration.</li>
-<li>Assuming it&#39;s possible, it&#39;s interesting to think abougt what the inverse result means. That is, when two terms are very syntactically different but have identical types/evaluation derivations. This might signal the two terms or the parent language as antithetical to Python&#39;s slogan of &quot;one and only one way to do it&quot;.</li>
+<li>It might be that when a function identifier is the only difference between terms, here <code>*</code> and <code>+</code>, it&#39;s reasonable to ignore ambiguous terms. In this case because the total string length for both terms is small it might be that a single character difference is enough to break some arbitrary threshold. I&#39;m leaving this for further consideration.</li>
+<li>Assuming it&#39;s possible, it&#39;s interesting to think about what the inverse result means. That is, when two terms are very syntactically different but have identical types/evaluation derivations. This might signal the two terms or the parent language as antithetical to Python&#39;s slogan of &quot;one and only one way to do it&quot;.</li>
 <li>The implementation in Haskell forced these issues out into the open. I&#39;m curious if proving progress and preservation would have pointed out the flaws in my approach (this may be obvious one way or another to a better educated reader).</li>
-<li>I&#39;m going to leave this as a further exercise for myself when time permits.</li>
-<li>See 4</li>
+<li>For example, the AST doesn&#39;t capture the type of lambda form that was used. This may be useful information even if this particular example doesn&#39;t require it.</li>
+<li>Though it would be infinitely more satisfying if we could build a tool based on the ideas and arrive at that same conclusions about this CoffeeScript subset and a few other BNF friendly languages.</li>
+<li>It&#39;s worth pointing out that the CoffeScript issue with lambdas and invocation has been/was known to Jeremy. It was simply a choice in favor of flexibility. I like to think that the hypothetical tool presented here would be useful in cases where ambiguous term pairings are less obvious and for people who may want less flexibility.</li>
 </ol>
 
     
