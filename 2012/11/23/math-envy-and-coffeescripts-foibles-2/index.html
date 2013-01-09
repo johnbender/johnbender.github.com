@@ -134,7 +134,7 @@
   <img src="/assets/images/diagrams/cs-type-rules-lambda-application.png"></img>
 </div>
 
-<p><em>t-app</em> is the type rule for lambda applications, eg. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the type of the argument that it&#39;s applied to.</p>
+<p><em>t-app</em> is the type rule for lambda applications, e.g. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the type of the argument that it&#39;s applied to.</p>
 
 <h2 id="toc_20">Type Rule Stacking</h2>
 
@@ -147,7 +147,7 @@
   <img src="/assets/images/diagrams/cs-type-derivation-simple.png"></img>
 </div>
 
-<p>This highlights how to derive the type at the bottom from it&#39;s subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em>. That can then be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
+<p>This highlights how to derive the type at the bottom from its subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em> can be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
 <div class="highlight"><pre><code class="coffeescript"><span class="p">(</span><span class="o">-&gt;</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">))()</span> <span class="kc">true</span>
 </code></pre>
 </div>
@@ -168,7 +168,7 @@
 
 <p>Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of something with type <code>Bool</code> to something with type <code>X -&gt; Bool</code> since <em>t-app</em> requires the first term have the type <code>X -&gt; T</code> in its premise. It&#39;s a type error.</p>
 
-<p>Previously we saw that this this would result in a type error under evaluation by the CoffeeScript interpreter. We also saw that it was easy to construct a term that suffered the same semantic confusion without the type error <code>(-&gt; (-&gt; true))() -&gt; false</code>. This issue applies to the type derivation as well.</p>
+<p>Previously we saw that this would result in a type error under evaluation by the CoffeeScript interpreter. We also saw that it was easy to construct a term that suffered the same semantic confusion without the type error <code>(-&gt; (-&gt; true))() -&gt; false</code>. This issue applies to the type derivation as well.</p>
 
 <p>In addition we saw that it&#39;s possible to construct terms, albeit in the boolean example language, that might produce the same value through different evaluation paths. That is, they had different derivation trees in the evaluation relation but the same evaluation result. This issue also applies to type derivations.</p>
 
@@ -204,7 +204,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 <p>You can view the full lexer and parser implementations <a href="https://gist.github.com/8d7db37e8a6dc99e1ea3">here</a>.</p>
 
-<p>There are two differences from the original grammar definition. Lambda terms in parenthesis are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the <em>applicand</em>) [2]. This enables the grammar to reproduce the original issue, since <code>(-&gt; true)() -&gt; false</code> translates to an invocation applied to a lambda term. The corrected grammar:</p>
+<p>There are two differences from the original grammar definition. Lambda terms in parentheses are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the <em>applicand</em>) [2]. This enables the grammar to reproduce the original issue, since <code>(-&gt; true)() -&gt; false</code> translates to an invocation applied to a lambda term. The corrected grammar:</p>
 
 <div class="center">
   <img style="width: 200px;" src="/assets/images/diagrams/cs-grammar-corrected.png"></img>
@@ -247,7 +247,7 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>Invocation can only be applied to a lambda term and the result of the invocation is the lambda&#39;s subterm, eg. <code>(-&gt; true)()</code> evaluates to <code>true</code>. An invocation on anything else will simply drop through this match and ultimately to the catch all <code>error</code> case. For example the CoffeeScript <code>true()</code> is invalid. Its abstract representation from the parser is <code>Invoke (BooleanExpr True)</code> which clearly won&#39;t match here. On a match, the <code>RuleMatch</code> result contains the rule tag for invocation <code>Inv</code>, nothing for an inference rule premise since there isn&#39;t one for <em>e-inv</em> and the subterm <code>t</code> for further derivation in the conclusion.</p>
+<p>Invocation can only be applied to a lambda term and the result of the invocation is the lambda&#39;s subterm, e.g. <code>(-&gt; true)()</code> evaluates to <code>true</code>. An invocation on anything else will simply drop through this match and ultimately to the catch all <code>error</code> case. For example the CoffeeScript <code>true()</code> is invalid. Its abstract representation from the parser is <code>Invoke (BooleanExpr True)</code> which clearly won&#39;t match here. On a match, the <code>RuleMatch</code> result contains the rule tag for invocation <code>Inv</code>, nothing for an inference rule premise since there isn&#39;t one for <em>e-inv</em> and the subterm <code>t</code> for further derivation in the conclusion.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- Rule: e-app</span>
 <span class="nf">matchRule</span> <span class="p">(</span><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="kt">BooleanExpr</span> <span class="kr">_</span><span class="p">))</span> <span class="ow">=</span> <span class="kt">RuleMatch</span> <span class="kt">App</span> <span class="kt">Nothing</span> <span class="n">t</span>
 <span class="nf">matchRule</span> <span class="p">(</span><span class="kt">Apply</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="n">t</span><span class="p">)</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="kr">_</span><span class="p">))</span>      <span class="ow">=</span> <span class="kt">RuleMatch</span> <span class="kt">App</span> <span class="kt">Nothing</span> <span class="n">t</span>
@@ -383,7 +383,7 @@ Value  : bool                       { BooleanExpr $1 }
 </code></pre>
 </div>
 
-<p>The <code>Apply</code> matches capture only valid applicands and let the rest fall through to the error case. It&#39;s also worth noting that each of the <code>Apply</code> matches discard the argument term because it&#39;s unnecessary to the type of the expression. This fits with the definition of the type rules.</p>
+<p>The <code>Apply</code> matches capture only valid applicands and let the rest fall through to the error case. It&#39;s also worth noting that each of the <code>Apply</code> matches discards the argument term because it&#39;s unnecessary to the type of the expression. This fits with the definition of the type rules.</p>
 
 <p>Fixing the type of a given expression is a simple recursive effort on applications. The <code>Type</code> data type captures both the <code>Bool</code> result, and the recursive <code>Arrow</code> type. For example <code>(-&gt; (-&gt; true))</code> has the type <code>Arrow (Arrow Bool)</code>.</p>
 <div class="highlight"><pre><code class="haskell"><span class="c1">-- the two possible types for a given expression</span>
@@ -439,7 +439,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 <h2 id="toc_27">Detecting Ambiguity</h2>
 
-<p>So far we&#39;ve seen that it&#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information a can be represented by a triple <code>(S, E, T)</code>, where <code>S</code> is the syntax string of the term, <code>E</code> is the evaluation derivation, and <code>T</code> is the type derivation. This triple can be used to determine whether two terms will cause confusion.</p>
+<p>So far we&#39;ve seen that it&#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information, a term can be represented by a triple <code>(S, E, T)</code>, where <code>S</code> is the syntax string of the term, <code>E</code> is the evaluation derivation, and <code>T</code> is the type derivation. This triple can be used to determine whether two terms will cause confusion.</p>
 
 <p>One approach is to first compare the <code>S</code> values for two terms and then determine if the <code>E</code> and <code>T</code> values match. Terms with &quot;similar&quot; <code>S</code> values but different <code>E</code> or <code>T</code> values might be ambiguous and could be flagged for review. Using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Distance</a> to keep the calculation for similarity simple:</p>
 
@@ -453,7 +453,7 @@ Value  : bool                       { BooleanExpr $1 }
   <img style="width: 300px" src="/assets/images/diagrams/cs-dist-example.png"></img>
 </div>
 
-<p>An relative value for string distance that can be used as a threshold &quot;setting&quot; makes building a tool for automating the process easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged [3].</p>
+<p>A relative value for string distance that can be used as a threshold &quot;setting&quot; makes building a tool for automating the process easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged [3].</p>
 
 <h2 id="toc_28">Fuzzy Search</h2>
 
@@ -463,7 +463,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 <p>More interesting is the generation of terms for a non-trivial language. A <em>term generator</em> would start with atomic types and successively wrap them in terms defined to have subterms. That part can likely be performed with nothing more than knowledge of the grammar. There are two issues with this.</p>
 
-<p>First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &quot;resuming&quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, It&#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.</p>
+<p>First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &quot;resuming&quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, it&#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.</p>
 
 <h2 id="toc_29">Quick and Dirty</h2>
 
@@ -493,6 +493,7 @@ Value  : bool                       { BooleanExpr $1 }
 <li>For example, the AST doesn&#39;t capture the type of lambda form that was used. This may be useful information even if this particular example doesn&#39;t require it.</li>
 <li>Though it would be infinitely more satisfying if we could build a tool based on the ideas and arrive at that same conclusions about this CoffeeScript subset and a few other BNF friendly languages.</li>
 <li>It&#39;s worth pointing out that the CoffeeScript issue with lambdas and invocation <a href="http://news.ycombinator.com/item?id=4849151">has been/was known to Jeremy</a>. It was simply a choice in favor of flexibility. I like to think that the hypothetical tool presented here would be useful in cases where ambiguous term pairings are less obvious and for people who may want less flexibility.</li>
+<li>A special thanks to <a href="http://twitter.com/keyist">keyist</a> for proofreading.</li>
 </ol>
 
     

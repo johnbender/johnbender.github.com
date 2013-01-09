@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-01-08T21:11:26-08:00</updated>
+ <updated>2013-01-08T21:32:28-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -319,7 +319,7 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-type-rules-lambda-application.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;em&gt;t-app&lt;/em&gt; is the type rule for lambda applications, eg. &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt;. The premise says that if the lambda term &lt;code&gt;λt&lt;/code&gt; on the left has the type &lt;code&gt;X -&amp;gt; T&lt;/code&gt; the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the &lt;em&gt;first&lt;/em&gt; lambda&amp;#39;s subterm &lt;code&gt;t&lt;/code&gt; and it ignores the type of the argument that it&amp;#39;s applied to.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;t-app&lt;/em&gt; is the type rule for lambda applications, e.g. &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt;. The premise says that if the lambda term &lt;code&gt;λt&lt;/code&gt; on the left has the type &lt;code&gt;X -&amp;gt; T&lt;/code&gt; the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the &lt;em&gt;first&lt;/em&gt; lambda&amp;#39;s subterm &lt;code&gt;t&lt;/code&gt; and it ignores the type of the argument that it&amp;#39;s applied to.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_20&quot;&gt;Type Rule Stacking&lt;/h2&gt;
 
@@ -332,7 +332,7 @@
   &lt;img src=&quot;/assets/images/diagrams/cs-type-derivation-simple.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;This highlights how to derive the type at the bottom from it&amp;#39;s subterms. Typing the innermost subterm &lt;code&gt;true&lt;/code&gt; with &lt;em&gt;t-true&lt;/em&gt;. That can then be &amp;quot;stacked&amp;quot; by using it to replace the premise of type rule &lt;em&gt;t-lambda&lt;/em&gt;. The type derivation expands from the subterm to establish each subsequent parent term&amp;#39;s type. Another more complex derivation:&lt;/p&gt;
+&lt;p&gt;This highlights how to derive the type at the bottom from its subterms. Typing the innermost subterm &lt;code&gt;true&lt;/code&gt; with &lt;em&gt;t-true&lt;/em&gt; can be &amp;quot;stacked&amp;quot; by using it to replace the premise of type rule &lt;em&gt;t-lambda&lt;/em&gt;. The type derivation expands from the subterm to establish each subsequent parent term&amp;#39;s type. Another more complex derivation:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))()&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -353,7 +353,7 @@
 
 &lt;p&gt;Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of something with type &lt;code&gt;Bool&lt;/code&gt; to something with type &lt;code&gt;X -&amp;gt; Bool&lt;/code&gt; since &lt;em&gt;t-app&lt;/em&gt; requires the first term have the type &lt;code&gt;X -&amp;gt; T&lt;/code&gt; in its premise. It&amp;#39;s a type error.&lt;/p&gt;
 
-&lt;p&gt;Previously we saw that this this would result in a type error under evaluation by the CoffeeScript interpreter. We also saw that it was easy to construct a term that suffered the same semantic confusion without the type error &lt;code&gt;(-&amp;gt; (-&amp;gt; true))() -&amp;gt; false&lt;/code&gt;. This issue applies to the type derivation as well.&lt;/p&gt;
+&lt;p&gt;Previously we saw that this would result in a type error under evaluation by the CoffeeScript interpreter. We also saw that it was easy to construct a term that suffered the same semantic confusion without the type error &lt;code&gt;(-&amp;gt; (-&amp;gt; true))() -&amp;gt; false&lt;/code&gt;. This issue applies to the type derivation as well.&lt;/p&gt;
 
 &lt;p&gt;In addition we saw that it&amp;#39;s possible to construct terms, albeit in the boolean example language, that might produce the same value through different evaluation paths. That is, they had different derivation trees in the evaluation relation but the same evaluation result. This issue also applies to type derivations.&lt;/p&gt;
 
@@ -389,7 +389,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;You can view the full lexer and parser implementations &lt;a href=&quot;https://gist.github.com/8d7db37e8a6dc99e1ea3&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;There are two differences from the original grammar definition. Lambda terms in parenthesis are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the &lt;em&gt;applicand&lt;/em&gt;) [2]. This enables the grammar to reproduce the original issue, since &lt;code&gt;(-&amp;gt; true)() -&amp;gt; false&lt;/code&gt; translates to an invocation applied to a lambda term. The corrected grammar:&lt;/p&gt;
+&lt;p&gt;There are two differences from the original grammar definition. Lambda terms in parentheses are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the &lt;em&gt;applicand&lt;/em&gt;) [2]. This enables the grammar to reproduce the original issue, since &lt;code&gt;(-&amp;gt; true)() -&amp;gt; false&lt;/code&gt; translates to an invocation applied to a lambda term. The corrected grammar:&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img style=&quot;width: 200px;&quot; src=&quot;/assets/images/diagrams/cs-grammar-corrected.png&quot;&gt;&lt;/img&gt;
@@ -432,7 +432,7 @@ Value  : bool                       { BooleanExpr $1 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Invocation can only be applied to a lambda term and the result of the invocation is the lambda&amp;#39;s subterm, eg. &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; evaluates to &lt;code&gt;true&lt;/code&gt;. An invocation on anything else will simply drop through this match and ultimately to the catch all &lt;code&gt;error&lt;/code&gt; case. For example the CoffeeScript &lt;code&gt;true()&lt;/code&gt; is invalid. Its abstract representation from the parser is &lt;code&gt;Invoke (BooleanExpr True)&lt;/code&gt; which clearly won&amp;#39;t match here. On a match, the &lt;code&gt;RuleMatch&lt;/code&gt; result contains the rule tag for invocation &lt;code&gt;Inv&lt;/code&gt;, nothing for an inference rule premise since there isn&amp;#39;t one for &lt;em&gt;e-inv&lt;/em&gt; and the subterm &lt;code&gt;t&lt;/code&gt; for further derivation in the conclusion.&lt;/p&gt;
+&lt;p&gt;Invocation can only be applied to a lambda term and the result of the invocation is the lambda&amp;#39;s subterm, e.g. &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; evaluates to &lt;code&gt;true&lt;/code&gt;. An invocation on anything else will simply drop through this match and ultimately to the catch all &lt;code&gt;error&lt;/code&gt; case. For example the CoffeeScript &lt;code&gt;true()&lt;/code&gt; is invalid. Its abstract representation from the parser is &lt;code&gt;Invoke (BooleanExpr True)&lt;/code&gt; which clearly won&amp;#39;t match here. On a match, the &lt;code&gt;RuleMatch&lt;/code&gt; result contains the rule tag for invocation &lt;code&gt;Inv&lt;/code&gt;, nothing for an inference rule premise since there isn&amp;#39;t one for &lt;em&gt;e-inv&lt;/em&gt; and the subterm &lt;code&gt;t&lt;/code&gt; for further derivation in the conclusion.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- Rule: e-app&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;matchRule&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Apply&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BooleanExpr&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;RuleMatch&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;App&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Nothing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;
 &lt;span class=&quot;nf&quot;&gt;matchRule&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Apply&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Lambda&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;      &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;RuleMatch&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;App&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Nothing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;
@@ -568,7 +568,7 @@ Value  : bool                       { BooleanExpr $1 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The &lt;code&gt;Apply&lt;/code&gt; matches capture only valid applicands and let the rest fall through to the error case. It&amp;#39;s also worth noting that each of the &lt;code&gt;Apply&lt;/code&gt; matches discard the argument term because it&amp;#39;s unnecessary to the type of the expression. This fits with the definition of the type rules.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;Apply&lt;/code&gt; matches capture only valid applicands and let the rest fall through to the error case. It&amp;#39;s also worth noting that each of the &lt;code&gt;Apply&lt;/code&gt; matches discards the argument term because it&amp;#39;s unnecessary to the type of the expression. This fits with the definition of the type rules.&lt;/p&gt;
 
 &lt;p&gt;Fixing the type of a given expression is a simple recursive effort on applications. The &lt;code&gt;Type&lt;/code&gt; data type captures both the &lt;code&gt;Bool&lt;/code&gt; result, and the recursive &lt;code&gt;Arrow&lt;/code&gt; type. For example &lt;code&gt;(-&amp;gt; (-&amp;gt; true))&lt;/code&gt; has the type &lt;code&gt;Arrow (Arrow Bool)&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- the two possible types for a given expression&lt;/span&gt;
@@ -624,7 +624,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;h2 id=&quot;toc_27&quot;&gt;Detecting Ambiguity&lt;/h2&gt;
 
-&lt;p&gt;So far we&amp;#39;ve seen that it&amp;#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information a can be represented by a triple &lt;code&gt;(S, E, T)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; is the syntax string of the term, &lt;code&gt;E&lt;/code&gt; is the evaluation derivation, and &lt;code&gt;T&lt;/code&gt; is the type derivation. This triple can be used to determine whether two terms will cause confusion.&lt;/p&gt;
+&lt;p&gt;So far we&amp;#39;ve seen that it&amp;#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information, a term can be represented by a triple &lt;code&gt;(S, E, T)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; is the syntax string of the term, &lt;code&gt;E&lt;/code&gt; is the evaluation derivation, and &lt;code&gt;T&lt;/code&gt; is the type derivation. This triple can be used to determine whether two terms will cause confusion.&lt;/p&gt;
 
 &lt;p&gt;One approach is to first compare the &lt;code&gt;S&lt;/code&gt; values for two terms and then determine if the &lt;code&gt;E&lt;/code&gt; and &lt;code&gt;T&lt;/code&gt; values match. Terms with &amp;quot;similar&amp;quot; &lt;code&gt;S&lt;/code&gt; values but different &lt;code&gt;E&lt;/code&gt; or &lt;code&gt;T&lt;/code&gt; values might be ambiguous and could be flagged for review. Using the &lt;a href=&quot;http://en.wikipedia.org/wiki/Levenshtein_distance&quot;&gt;Levenshtein Distance&lt;/a&gt; to keep the calculation for similarity simple:&lt;/p&gt;
 
@@ -638,7 +638,7 @@ Value  : bool                       { BooleanExpr $1 }
   &lt;img style=&quot;width: 300px&quot; src=&quot;/assets/images/diagrams/cs-dist-example.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;An relative value for string distance that can be used as a threshold &amp;quot;setting&amp;quot; makes building a tool for automating the process easier. That is, if two terms are deemed &amp;quot;close enough&amp;quot; by virtue of their &lt;em&gt;dist&lt;/em&gt; value being below a predetermined threshold and they have different information in either &lt;code&gt;E&lt;/code&gt; or &lt;code&gt;T&lt;/code&gt; then they might be flagged [3].&lt;/p&gt;
+&lt;p&gt;A relative value for string distance that can be used as a threshold &amp;quot;setting&amp;quot; makes building a tool for automating the process easier. That is, if two terms are deemed &amp;quot;close enough&amp;quot; by virtue of their &lt;em&gt;dist&lt;/em&gt; value being below a predetermined threshold and they have different information in either &lt;code&gt;E&lt;/code&gt; or &lt;code&gt;T&lt;/code&gt; then they might be flagged [3].&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_28&quot;&gt;Fuzzy Search&lt;/h2&gt;
 
@@ -648,7 +648,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;More interesting is the generation of terms for a non-trivial language. A &lt;em&gt;term generator&lt;/em&gt; would start with atomic types and successively wrap them in terms defined to have subterms. That part can likely be performed with nothing more than knowledge of the grammar. There are two issues with this.&lt;/p&gt;
 
-&lt;p&gt;First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &amp;quot;resuming&amp;quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, It&amp;#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.&lt;/p&gt;
+&lt;p&gt;First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &amp;quot;resuming&amp;quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, it&amp;#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_29&quot;&gt;Quick and Dirty&lt;/h2&gt;
 
@@ -678,6 +678,7 @@ Value  : bool                       { BooleanExpr $1 }
 &lt;li&gt;For example, the AST doesn&amp;#39;t capture the type of lambda form that was used. This may be useful information even if this particular example doesn&amp;#39;t require it.&lt;/li&gt;
 &lt;li&gt;Though it would be infinitely more satisfying if we could build a tool based on the ideas and arrive at that same conclusions about this CoffeeScript subset and a few other BNF friendly languages.&lt;/li&gt;
 &lt;li&gt;It&amp;#39;s worth pointing out that the CoffeeScript issue with lambdas and invocation &lt;a href=&quot;http://news.ycombinator.com/item?id=4849151&quot;&gt;has been/was known to Jeremy&lt;/a&gt;. It was simply a choice in favor of flexibility. I like to think that the hypothetical tool presented here would be useful in cases where ambiguous term pairings are less obvious and for people who may want less flexibility.&lt;/li&gt;
+&lt;li&gt;A special thanks to &lt;a href=&quot;http://twitter.com/keyist&quot;&gt;keyist&lt;/a&gt; for proofreading.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
  </entry>
