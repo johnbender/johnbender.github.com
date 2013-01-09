@@ -4,8 +4,16 @@
     <title>johnbender.us</title>
     <description>johnbender.us</description>
     <link>"http://johnbender.github.com"</link>
-    <lastBuildDate>2013-01-08T21:32:28-08:00</lastBuildDate>
+    <lastBuildDate>2013-01-09T09:58:48-08:00</lastBuildDate>
 
+    
+    <item>
+      <title>Math Envy and CoffeeScript's Foibles, Part 2</title>
+      <description>Math Envy and CoffeeScript's Foibles, Part 2</description>
+      <link>http://johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2"</link>
+      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
+      <pubDate>2013-01-09T00:00:00-08:00</pubDate>
+    </item>
     
     <item>
       <title>Math Envy and CoffeeScript's Foibles, Part 1</title>
@@ -13,14 +21,6 @@
       <link>http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles"</link>
       <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
       <pubDate>2012-11-27T00:00:00-08:00</pubDate>
-    </item>
-    
-    <item>
-      <title>Math Envy and CoffeeScript's Foibles, Part 2</title>
-      <description>Math Envy and CoffeeScript's Foibles, Part 2</description>
-      <link>http://johnbender.github.com/2012/11/23/math-envy-and-coffeescripts-foibles-2"</link>
-      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
-      <pubDate>2012-11-23T00:00:00-08:00</pubDate>
     </item>
     
     <item>

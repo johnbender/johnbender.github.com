@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-01-08T21:32:28-08:00</updated>
+ <updated>2013-01-09T09:58:48-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -13,287 +13,13 @@
 
  
  <entry>
-   <title>Math Envy and CoffeeScript's Foibles, Part 1</title>
-   <link href="http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles"/>
-   <updated>2012-11-27T00:00:00-08:00</updated>
-   <id>http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles</id>
-   <content type="html">&lt;p&gt;At Strange Loop 2011 in a &lt;a href=&quot;http://www.infoq.com/presentations/Language-Panel&quot;&gt;language panel (5:06)&lt;/a&gt;, Jeremy Ashkenas was asked, &amp;quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&amp;quot; He responded, &amp;quot;... mathematics envy&amp;quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the &lt;a href=&quot;http://wingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler&quot;&gt;inner workings&lt;/a&gt; of V8&amp;#39;s optimizing compiler that runs a lot of Jeremy&amp;#39;s code.&lt;/p&gt;
-
-&lt;p&gt;Fast forward a year and issues with CoffeeScript&amp;#39;s flexible syntax start popping up in &lt;a href=&quot;http://surana.wordpress.com/2011/02/08/coffeescript-oddities/&quot;&gt;blog&lt;/a&gt; &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;posts&lt;/a&gt;. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&amp;#39;s creation?&lt;/p&gt;
-
-&lt;p&gt;What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_32&quot;&gt;CoffeeScript Confusion&lt;/h2&gt;
-
-&lt;p&gt;I&amp;#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&amp;#39;s an example borrowed from Manuel Cerón&amp;#39;s &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;post&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;doSomething = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# !!! =&amp;gt; true(-&amp;gt; false);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The first invocation of &lt;code&gt;doSomething&lt;/code&gt; applies it to the inline lambda. The second invokes it directly with the &lt;code&gt;()&lt;/code&gt; operator and then attempts to apply the result &lt;code&gt;true&lt;/code&gt; to a lambda defined with &lt;code&gt;-&amp;gt; false&lt;/code&gt;. This results in a type error. For clarity here&amp;#39;s the equivalent in JavaScript.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;It&amp;#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer &lt;em&gt;during&lt;/em&gt; language creation.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_33&quot;&gt;Operational Semantics&lt;/h2&gt;
-
-&lt;p&gt;Operational Semantics is one way [2] to formalize the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Languages&lt;/em&gt; [3].&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img style=&quot;width: 40%; min-width: 200px;&quot; src=&quot;/assets/images/diagrams/bool-grammar.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The grammar definition is made of up of two &amp;quot;meta variables&amp;quot; &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt;. Assigned to those meta variables is a set of possible terms each separated by a &lt;code&gt;|&lt;/code&gt;. &lt;code&gt;t&lt;/code&gt; represents all of the ways to construct terms (see example below). &lt;code&gt;v&lt;/code&gt; is the set of terms that are acceptable as the final result of evaluation. &lt;code&gt;v&lt;/code&gt; is a subset of &lt;code&gt;t&lt;/code&gt;, as witnessed by its inclusion in &lt;code&gt;t&lt;/code&gt;, but it is distinct for a reason.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- simple values&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;false&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;-- a simple compound term&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;-- a more complex compound term, parens for clarity&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code&gt;v&lt;/code&gt;&amp;#39;s distinction means that any term like the second and third in the example has to eventually evaluate to a term in &lt;code&gt;v&lt;/code&gt;, either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;. Any other result means that something is &amp;quot;stuck&amp;quot; (a definition for &amp;quot;stuck&amp;quot; will be covered later). It also means that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; cannot evaluate further.&lt;/p&gt;
-
-&lt;p&gt;Notice that that the only other construct in the grammar, &lt;code&gt;if t then t else t&lt;/code&gt;, has subterms represented with the meta variable &lt;code&gt;t&lt;/code&gt;. This captures the ability to use &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;, or another &lt;code&gt;if t then t else t&lt;/code&gt; for each subterm (eg, second and third examples).&lt;/p&gt;
-
-&lt;p&gt;With the building blocks in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;, and in what order they should be taken. Superficially this language seems extremely simple, but there are some subtle details of term evaluation that need to be captured.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;&lt;em&gt;e-&lt;/em&gt;&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-false&lt;/em&gt; are fairly simple. They represent the expected evaluation results for the different guard values in an &lt;code&gt;if t then t else t&lt;/code&gt; term. With &lt;code&gt;true&lt;/code&gt; you get the first subterm and with &lt;code&gt;false&lt;/code&gt; you get the second subterm. Also, notice that there are no rules for either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; by themselves. This further reinforces that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; are values and that there&amp;#39;s no way to evaluate them further. &lt;em&gt;e-if&lt;/em&gt; is more interesting in its construction and how it captures an important part of the evaluation strategy.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules-guard.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;There are two parts to this rule. Above the line is the &lt;em&gt;premise&lt;/em&gt; and below is the &lt;em&gt;conclusion&lt;/em&gt;. The premise establishes a requirement or precondition for applying the conclusion to a given term. Later we&amp;#39;ll see how the premise is replaced by the conclusion of another rule. For &lt;em&gt;e-if&lt;/em&gt; the premise says that if the first subterm &lt;code&gt;t&lt;/code&gt; can be evaluated to &lt;code&gt;t&amp;#39;&lt;/code&gt; then the parent term &lt;code&gt;if t then t else t&lt;/code&gt; should evaluate to &lt;code&gt;if t&amp;#39; then t else t&lt;/code&gt;. The importance is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- parenthesis are supplied for clarity only&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;-- |     first/guard subterm     |      |       second subterm        |&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This term could take two different evaluation paths without &lt;em&gt;e-if&lt;/em&gt;. An alternative strategy would first evaluate the second subterm &lt;code&gt;if false then true else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, then evaluate the guard &lt;code&gt;if true then false else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, and finally the full term to &lt;code&gt;false&lt;/code&gt;. Obviously the evaluation of the second subterm is unnecessary because the guard term evaluates to &lt;code&gt;false&lt;/code&gt; and the second subterm is ignored completely.&lt;/p&gt;
-
-&lt;p&gt;There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&amp;#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_34&quot;&gt;CoffeeScript Grammar&lt;/h2&gt;
-
-&lt;p&gt;The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# =&amp;gt; true&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This translates into JavaScript like the original example:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// =&amp;gt; true&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})()(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Note that the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-grammar.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;To reiterate, the left hand side of each &lt;code&gt;::=&lt;/code&gt; assignment is a meta variable that can be used in other parts of the grammar. In the case of &lt;code&gt;\t&lt;/code&gt; it was easier to create a meta term than to repeat each possible lambda form in &lt;code&gt;t&lt;/code&gt;. &lt;code&gt;v&lt;/code&gt; on the other hand is the set of acceptable final results of evaluation. Finally &lt;code&gt;t&lt;/code&gt; is complete set of forms used to build terms. Notable among them is the invocation and application of lambda terms, &lt;code&gt;\t&lt;/code&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# invocation&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)()&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# application&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# both&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-grammar-examples.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The most important part to note is that lambda terms capture the subterm be it &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; or another lambda.&lt;/p&gt;
-
-&lt;p&gt;Looking at the examples it&amp;#39;s reasonable to ask whether there&amp;#39;s value in providing a grammar that looks a lot like it&amp;#39;s own language. First, it maps the two different lambda forms to one form in the grammar, which makes reasoning about evaluation and types easier. Second, differentiating values (&lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;, and &lt;code&gt;-&amp;gt; t&lt;/code&gt;) from other terms by calling them values is important for knowing when evaluation has finished.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_35&quot;&gt;Inference Rules&lt;/h2&gt;
-
-&lt;p&gt;With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The only impact of the evaluation strategy (call-by-value l-to-r) is that arguments to lambda terms must be fully evaluated before application can take place. For example &lt;code&gt;(-&amp;gt; true) (-&amp;gt; false)()&lt;/code&gt; would first evaluate to &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt; as a result of the &lt;code&gt;()&lt;/code&gt; operator.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The &lt;code&gt;v&lt;/code&gt; in &lt;em&gt;e-app&lt;/em&gt; means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set &lt;code&gt;v&lt;/code&gt;. Once applied, the result is the lambda&amp;#39;s unaltered subterm.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application-argument.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;e-arg-eval&lt;/em&gt; stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. &lt;em&gt;e-app&lt;/em&gt; informs the reader when lambda application can take place and &lt;em&gt;e-arg-eval&lt;/em&gt; informs the reader how to get there. Taken together these three rules define how terms get evaluated.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_36&quot;&gt;Derivation Trees&lt;/h2&gt;
-
-&lt;p&gt;The inference rules in an operational semantics definition can be used in &lt;em&gt;derivation trees&lt;/em&gt; to show how a terms will evaluate. Rules are &amp;quot;stacked&amp;quot; on one another to show how they work in succession to produce an evaluation result.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- parenthesis are supplied for clarity only&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;-- |     first/guard subterm     |      |       second subterm        |&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The derivation trees for the evaluation of this term result in &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Unfortunately the way these two &amp;quot;trees&amp;quot; are constructed isn&amp;#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&amp;#39;t important in the final evaluation (see the introductory section on operational semantics) and it&amp;#39;s easier to read the equations when they aren&amp;#39;t squished&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-simplify.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;From the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to begin simplifying the term. The obvious place to start is applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-first-rule.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;It&amp;#39;s easy to see that this looks just like the &amp;quot;raw&amp;quot; form of the &lt;em&gt;e-true&lt;/em&gt; rule. The only difference is the replacement of the last two subterms with &lt;code&gt;false&lt;/code&gt; on the left side of the arrow and the resulting subterm with &lt;code&gt;false&lt;/code&gt; on the right side of the arrow. It might look a little confusing with the bar resting on top of the &lt;em&gt;e-true&lt;/em&gt; rule, but that signifies the applied rule has no premise/precondition. Next, since  &lt;em&gt;e-if&lt;/em&gt; forced the application of &lt;em&gt;e-true&lt;/em&gt;, it makes sense that it figures in to the derivation tree. Importantly &lt;em&gt;e-if&lt;/em&gt; has a precondition, one which the application of &lt;em&gt;e-true&lt;/em&gt; satisfies.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules-guard.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;e-if&lt;/em&gt;&amp;#39;s precondition requires that the first subterm of an &lt;code&gt;if t then t else t&lt;/code&gt; evaluate before the other two subterms. In other words it requires that &lt;code&gt;t -&amp;gt; t&amp;#39;&lt;/code&gt; be replaced by some evaluation.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-second-rule.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Here, it&amp;#39;s been replaced by &lt;code&gt;if true then false else false -&amp;gt; false&lt;/code&gt; from the application of &lt;em&gt;e-true&lt;/em&gt;. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with &lt;code&gt;false&lt;/code&gt;. It&amp;#39;s a &amp;quot;stack&amp;quot; of the two inference rules &lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-if&lt;/em&gt;. All that&amp;#39;s left is to build a derivation tree for &lt;code&gt;if false then t else false&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example-assoc.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;e-false&lt;/em&gt; is all that&amp;#39;s needed for the second tree to complete the evaluation to &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call any part of this a derivation &amp;quot;tree&amp;quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_37&quot;&gt;Evaluating a Solution&lt;/h2&gt;
-
-&lt;p&gt;Finally we know enough to apply the operational semantics to our problem. First the least complex term that prevents evaluation.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Translating this example into the grammar representation yields a form that will work with the inference rules.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-stuck.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied to &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? After applying &lt;em&gt;e-inv&lt;/em&gt; the first subterm is &lt;code&gt;true&lt;/code&gt; and there are no evaluation rules that apply values to an arguement. Without any rules to apply to a term that isn&amp;#39;t a value, it&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
-
-&lt;p&gt;Here someone will say, &amp;quot;We already knew that because there&amp;#39;s a type error when you evaluate the JavaScript!&amp;quot;. Consider a slightly more complex example.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And the derivation tree to match.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The value returned by the first lambda &lt;strong&gt;can&lt;/strong&gt; be applied to an argument with &lt;em&gt;e-app&lt;/em&gt; so the result of evaluation is &lt;code&gt;true&lt;/code&gt;. Viewing the accompanying term with an additional space will provide contrast.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;In this case, the derivation tree consists of a single inference rule, &lt;em&gt;e-app&lt;/em&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;center&quot;&gt;
-  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png&quot;&gt;&lt;/img&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambiguous.&lt;/p&gt;
-
-&lt;p&gt;There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &amp;quot;very similar&amp;quot; is nebulous. Luckily computer science is littered with string &amp;quot;distance&amp;quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.&lt;/p&gt;
-
-&lt;p&gt;It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&amp;#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- example one&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;-- example two&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;) against the second&amp;#39;s four (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You really can&amp;#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&amp;#39;t crop up with the CoffeeScript guinea pig.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_38&quot;&gt;Next Time&lt;/h2&gt;
-
-&lt;p&gt;In the next post I&amp;#39;ll take a look at how type information could replace the derivation trees as the semantic differentiator. Type information is often readily available even in languages like CoffeeScript that don&amp;#39;t have type annotations. If finding a difference between two terms is simple enough maybe a tool can be built to automate the process of ferreting out confusing term pairings.&lt;/p&gt;
-
-&lt;h3 id=&quot;toc_39&quot;&gt;footnotes&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Denotational_semantics&quot;&gt;Denotational Semantics&lt;/a&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Axiomatic_semantics&quot;&gt;Axiomatic Semantics&lt;/a&gt; are alternate ways to define language semantics.&lt;/li&gt;
-&lt;li&gt;This example language is borrowed almost verbatim from Types and Programming Languages but I&amp;#39;ve added in my own explanation. I cannot over emphasize how much this book has contributed to my education over the last year or so.&lt;/li&gt;
-&lt;li&gt;This Theorem is referred to as Determinacy of Evaluation. I may go back and do some simple proofs for my own education after this post and a possible follow up.&lt;/li&gt;
-&lt;li&gt;Technically JavaScript uses a strategy known as Call by Sharing, which differs from Call by Value in how deals with objects. More information &lt;a href=&quot;http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/%20courtesy%20of%20%5B@raganwald%5D(https://twitter.com/raganwald&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-</content>
- </entry>
- 
- <entry>
    <title>Math Envy and CoffeeScript's Foibles, Part 2</title>
-   <link href="http://johnbender.github.com/2012/11/23/math-envy-and-coffeescripts-foibles-2"/>
-   <updated>2012-11-23T00:00:00-08:00</updated>
-   <id>http://johnbender.github.com/2012/11/23/math-envy-and-coffeescripts-foibles-2</id>
+   <link href="http://johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2"/>
+   <updated>2013-01-09T00:00:00-08:00</updated>
+   <id>http://johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2</id>
    <content type="html">&lt;p&gt;In the &lt;a href=&quot;/2012/11/27/math-envy-and-coffeescripts-foibles/&quot;&gt;previous post&lt;/a&gt; I presented the basics of operational semantics and showed how derivations trees can be used to differentiate two terms that are syntactically similar. This post develops the closing thoughts further with the introduction of type rules, example tools for automating evaluation and type derivation, and a concrete definition of semantic ambiguity. The primary goal is to establish the best way to detect ambiguous term pairings and then outline what will work for a tool that can be generalized beyond the CoffeeScript subset.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_19&quot;&gt;Type Rules&lt;/h2&gt;
+&lt;h2 id=&quot;toc_27&quot;&gt;Type Rules&lt;/h2&gt;
 
 &lt;p&gt;Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a &lt;em&gt;t-&lt;/em&gt; in this case to distinguish them from inference rules (&lt;em&gt;e-&lt;/em&gt;).&lt;/p&gt;
 
@@ -321,7 +47,7 @@
 
 &lt;p&gt;&lt;em&gt;t-app&lt;/em&gt; is the type rule for lambda applications, e.g. &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt;. The premise says that if the lambda term &lt;code&gt;λt&lt;/code&gt; on the left has the type &lt;code&gt;X -&amp;gt; T&lt;/code&gt; the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the &lt;em&gt;first&lt;/em&gt; lambda&amp;#39;s subterm &lt;code&gt;t&lt;/code&gt; and it ignores the type of the argument that it&amp;#39;s applied to.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_20&quot;&gt;Type Rule Stacking&lt;/h2&gt;
+&lt;h2 id=&quot;toc_28&quot;&gt;Type Rule Stacking&lt;/h2&gt;
 
 &lt;p&gt;This notation makes it easy to establish the type of a term by stacking the type rules on one another in the same fashion as evaluation rules. Taking a very simple example, some diagrams will illustrate how this works:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -343,7 +69,7 @@
 
 &lt;p&gt;The second subterm of the application is unimportant where the type of the term is concerned and as a result it&amp;#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, &lt;code&gt;false : Bool&lt;/code&gt;. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic &lt;code&gt;false&lt;/code&gt; when compared with the previous example.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_21&quot;&gt;Not Quite There&lt;/h2&gt;
+&lt;h2 id=&quot;toc_29&quot;&gt;Not Quite There&lt;/h2&gt;
 
 &lt;p&gt;At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, &lt;code&gt;(-&amp;gt; true)() -&amp;gt; false&lt;/code&gt;:&lt;/p&gt;
 
@@ -363,7 +89,7 @@
 
 &lt;p&gt;&lt;em&gt;Note: The next five sections cover an implementation of a lexer, parser, evaluator and mechanisms for type/evaluation derivation. If you&amp;#39;d rather just read about how the generated evaluation and type derivations are used to find confusing term pairings you can skip to Detecting Ambiguity&lt;/em&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_22&quot;&gt;Happy Parsing&lt;/h2&gt;
+&lt;h2 id=&quot;toc_30&quot;&gt;Happy Parsing&lt;/h2&gt;
 
 &lt;p&gt;It&amp;#39;s time to build something concrete from the formal notion of evaluation and types. An AST for this CoffeeScript subset will provide enough information to perform evaluation and establish derivation trees for both evaluation and types. I&amp;#39;ve chosen Haskell along with the &lt;a href=&quot;http://www.haskell.org/alex/&quot;&gt;Alex&lt;/a&gt; and &lt;a href=&quot;http://www.haskell.org/happy/&quot;&gt;Happy&lt;/a&gt; tools to implement a simple lexer and parser. As you would expect the parser grammar definition looks very similar to the grammar definition presented in the previous post:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;%token
@@ -403,7 +129,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;Where &lt;em&gt;e-arg-eval&lt;/em&gt; ensures that the argument of an application is fully evaluated, &lt;em&gt;e-app-eval&lt;/em&gt; ensures that the applicand is fully evaluated before the application takes place.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_23&quot;&gt;Matching Rules&lt;/h2&gt;
+&lt;h2 id=&quot;toc_31&quot;&gt;Matching Rules&lt;/h2&gt;
 
 &lt;p&gt;The abstract representation produced by the parser is a simple tree structure built with Haskell types. Pattern matching can be used with the type and inference rules to produce evaluation and derivation results. To start let&amp;#39;s look at a simple evaluator and derivation builder.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- an enumeration of each inference rule&lt;/span&gt;
@@ -463,7 +189,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;Finally, in situations like &lt;code&gt;true()&lt;/code&gt; or &lt;code&gt;true (-&amp;gt; true)&lt;/code&gt; where no rule applies, an error is raised.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_24&quot;&gt;Evaluating the Options&lt;/h2&gt;
+&lt;h2 id=&quot;toc_32&quot;&gt;Evaluating the Options&lt;/h2&gt;
 
 &lt;p&gt;The information contained in a &lt;code&gt;RuleMatch&lt;/code&gt; instance can be used to evaluate or derive a given term. Evaluation is a simple matter of applying the rules recursively.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- perform a single evaluation step&lt;/span&gt;
@@ -495,7 +221,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;&lt;code&gt;fullEval&lt;/code&gt; simply applies &lt;code&gt;eval&lt;/code&gt; to &lt;code&gt;t&lt;/code&gt; until it reaches a value term.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_25&quot;&gt;Automating Evaluation Derivation&lt;/h2&gt;
+&lt;h2 id=&quot;toc_33&quot;&gt;Automating Evaluation Derivation&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;RuleMatch&lt;/code&gt; instance is primarily geared toward building derivation trees. That&amp;#39;s why the structure appears so awkward in use with &lt;code&gt;eval&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;kr&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Derivation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Empty&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Derivation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;InfRule&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Derivation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Derivation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Expr&lt;/span&gt;
@@ -540,7 +266,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;The &lt;code&gt;derive&lt;/code&gt; function works in a similar fashion to &lt;code&gt;eval&lt;/code&gt;. For a value/&lt;code&gt;None&lt;/code&gt; result from &lt;code&gt;matchRules&lt;/code&gt; there are no inference rules that apply. For &lt;em&gt;e-inv&lt;/em&gt; or &lt;em&gt;e-app&lt;/em&gt;, &lt;code&gt;derive&lt;/code&gt; can recurse and build a derivation from the lambda&amp;#39;s subterm. For &lt;em&gt;e-arg-eval&lt;/em&gt; or &lt;em&gt;e-app-eval&lt;/em&gt; the premise must be further derived and the conclusion is a derivation for the original term &lt;code&gt;t&lt;/code&gt; with one evaluation step applied. That is, evaluating the subterm &lt;code&gt;t1&lt;/code&gt; once inside the original term &lt;code&gt;t&lt;/code&gt;. The use of &lt;code&gt;eval&lt;/code&gt; to do that may look funny but it&amp;#39;s just a convenience.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_26&quot;&gt;Automating Type Derivation&lt;/h2&gt;
+&lt;h2 id=&quot;toc_34&quot;&gt;Automating Type Derivation&lt;/h2&gt;
 
 &lt;p&gt;Deriving the type for a term in the CoffeeScript subset is slightly less complex than deriving the evaluation. Again, a type rule is matched to each valid AST construction.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;kr&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;RuleMatch&lt;/span&gt;  &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;RuleMatch&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TypeRule&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Expr&lt;/span&gt;
@@ -622,7 +348,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;As noted in the comments each step in the derivation resolves the type at that step based on the inference rules.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_27&quot;&gt;Detecting Ambiguity&lt;/h2&gt;
+&lt;h2 id=&quot;toc_35&quot;&gt;Detecting Ambiguity&lt;/h2&gt;
 
 &lt;p&gt;So far we&amp;#39;ve seen that it&amp;#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information, a term can be represented by a triple &lt;code&gt;(S, E, T)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; is the syntax string of the term, &lt;code&gt;E&lt;/code&gt; is the evaluation derivation, and &lt;code&gt;T&lt;/code&gt; is the type derivation. This triple can be used to determine whether two terms will cause confusion.&lt;/p&gt;
 
@@ -640,7 +366,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;A relative value for string distance that can be used as a threshold &amp;quot;setting&amp;quot; makes building a tool for automating the process easier. That is, if two terms are deemed &amp;quot;close enough&amp;quot; by virtue of their &lt;em&gt;dist&lt;/em&gt; value being below a predetermined threshold and they have different information in either &lt;code&gt;E&lt;/code&gt; or &lt;code&gt;T&lt;/code&gt; then they might be flagged [3].&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_28&quot;&gt;Fuzzy Search&lt;/h2&gt;
+&lt;h2 id=&quot;toc_36&quot;&gt;Fuzzy Search&lt;/h2&gt;
 
 &lt;p&gt;We now have enough information to define a system that will automate the exploration of the &amp;quot;term space&amp;quot; (all term combinations), and run a check against existing known terms for ambiguous pairs for each generated term.&lt;/p&gt;
 
@@ -650,7 +376,7 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &amp;quot;resuming&amp;quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, it&amp;#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_29&quot;&gt;Quick and Dirty&lt;/h2&gt;
+&lt;h2 id=&quot;toc_37&quot;&gt;Quick and Dirty&lt;/h2&gt;
 
 &lt;p&gt;A less complicated representation of a term might still be effective, and could avoid extra effort required of the language creator in generating the evaluation and type derivations. For example the tuple &lt;code&gt;(S, A)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; remains the syntax of the term and &lt;code&gt;A&lt;/code&gt; is the AST representation.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;(-&amp;gt; true)() -&amp;gt; false&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -663,13 +389,13 @@ Value  : bool                       { BooleanExpr $1 }
 
 &lt;p&gt;It&amp;#39;s obvious that the abstract representations capture the issue at hand even if there is some information lost [4]. Best of all the AST for a term is available regardless of the host language and serialization is the only extra requirement. Having a term generator that works with a (E)BNF, a way to generate the AST for a term (presumably through the language parser), and a database equipped with the ability to find like terms it seems entirely possible to alert the language creator of complex or convoluted pairings.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_30&quot;&gt;Further Work&lt;/h2&gt;
+&lt;h2 id=&quot;toc_38&quot;&gt;Further Work&lt;/h2&gt;
 
 &lt;p&gt;First I have to apologize for not building out a tool for generating terms or a schema for term storage. I wanted to do the automated evaluation and type derivations to get a feel for the effort involved and the result was an exceptionally long post. If I find the time to return to this I&amp;#39;d like to build out the term generator and couple it with a simple database. I think that going through the process of building a BNF parser would be a lot of fun by itself.&lt;/p&gt;
 
 &lt;p&gt;In the course of these two posts we&amp;#39;ve seen what it looks like to formalize both the evaluation and type semantics of a simple programming language. We&amp;#39;ve also come to a relatively satisfying formalization of semantic ambiguity that could be used in conjunction with a common language definition form (BNF, EBNF) to alert a language designer of potential issues [5] [6].&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_31&quot;&gt;footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_39&quot;&gt;footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;It might be that when a function identifier is the only difference between terms, here &lt;code&gt;*&lt;/code&gt; and &lt;code&gt;+&lt;/code&gt;, it&amp;#39;s reasonable to ignore ambiguous terms. In this case because the total string length for both terms is small it might be that a single character difference is enough to break some arbitrary threshold. I&amp;#39;m leaving this for further consideration.&lt;/li&gt;
@@ -679,6 +405,280 @@ Value  : bool                       { BooleanExpr $1 }
 &lt;li&gt;Though it would be infinitely more satisfying if we could build a tool based on the ideas and arrive at that same conclusions about this CoffeeScript subset and a few other BNF friendly languages.&lt;/li&gt;
 &lt;li&gt;It&amp;#39;s worth pointing out that the CoffeeScript issue with lambdas and invocation &lt;a href=&quot;http://news.ycombinator.com/item?id=4849151&quot;&gt;has been/was known to Jeremy&lt;/a&gt;. It was simply a choice in favor of flexibility. I like to think that the hypothetical tool presented here would be useful in cases where ambiguous term pairings are less obvious and for people who may want less flexibility.&lt;/li&gt;
 &lt;li&gt;A special thanks to &lt;a href=&quot;http://twitter.com/keyist&quot;&gt;keyist&lt;/a&gt; for proofreading.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Math Envy and CoffeeScript's Foibles, Part 1</title>
+   <link href="http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles"/>
+   <updated>2012-11-27T00:00:00-08:00</updated>
+   <id>http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles</id>
+   <content type="html">&lt;p&gt;At Strange Loop 2011 in a &lt;a href=&quot;http://www.infoq.com/presentations/Language-Panel&quot;&gt;language panel (5:06)&lt;/a&gt;, Jeremy Ashkenas was asked, &amp;quot;What is the worst idea that was ever introduced into programming languages that continues to afflict us today?&amp;quot; He responded, &amp;quot;... mathematics envy&amp;quot;. I agree with Mr. Ashkenas in part. Math appears to get in the way on occasion [1]. Even so it struck me as an odd response given that much of computing is built on the work of great mathematicians. For a modern example look no further than the &lt;a href=&quot;http://wingolog.org/archives/2011/08/02/a-closer-look-at-crankshaft-v8s-optimizing-compiler&quot;&gt;inner workings&lt;/a&gt; of V8&amp;#39;s optimizing compiler that runs a lot of Jeremy&amp;#39;s code.&lt;/p&gt;
+
+&lt;p&gt;Fast forward a year and issues with CoffeeScript&amp;#39;s flexible syntax start popping up in &lt;a href=&quot;http://surana.wordpress.com/2011/02/08/coffeescript-oddities/&quot;&gt;blog&lt;/a&gt; &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;posts&lt;/a&gt;. Interactions between whitespace, operators, comprehensions, and lambda declarations appear to be a source of confusion. To be fair, it sounds like these examples rarely cause serious problems, but it left me wondering if they could have been avoided during the creation of the language. That is, could the timely application of mathematics have prevented these problems early in CoffeeScript&amp;#39;s creation?&lt;/p&gt;
+
+&lt;p&gt;What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_19&quot;&gt;CoffeeScript Confusion&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&amp;#39;s an example borrowed from Manuel Cerón&amp;#39;s &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;post&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;doSomething = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# !!! =&amp;gt; true(-&amp;gt; false);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The first invocation of &lt;code&gt;doSomething&lt;/code&gt; applies it to the inline lambda. The second invokes it directly with the &lt;code&gt;()&lt;/code&gt; operator and then attempts to apply the result &lt;code&gt;true&lt;/code&gt; to a lambda defined with &lt;code&gt;-&amp;gt; false&lt;/code&gt;. This results in a type error. For clarity here&amp;#39;s the equivalent in JavaScript.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It&amp;#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer &lt;em&gt;during&lt;/em&gt; language creation.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_20&quot;&gt;Operational Semantics&lt;/h2&gt;
+
+&lt;p&gt;Operational Semantics is one way [2] to formalize the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Languages&lt;/em&gt; [3].&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img style=&quot;width: 40%; min-width: 200px;&quot; src=&quot;/assets/images/diagrams/bool-grammar.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The grammar definition is made of up of two &amp;quot;meta variables&amp;quot; &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt;. Assigned to those meta variables is a set of possible terms each separated by a &lt;code&gt;|&lt;/code&gt;. &lt;code&gt;t&lt;/code&gt; represents all of the ways to construct terms (see example below). &lt;code&gt;v&lt;/code&gt; is the set of terms that are acceptable as the final result of evaluation. &lt;code&gt;v&lt;/code&gt; is a subset of &lt;code&gt;t&lt;/code&gt;, as witnessed by its inclusion in &lt;code&gt;t&lt;/code&gt;, but it is distinct for a reason.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- simple values&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;false&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- a simple compound term&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- a more complex compound term, parens for clarity&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;v&lt;/code&gt;&amp;#39;s distinction means that any term like the second and third in the example has to eventually evaluate to a term in &lt;code&gt;v&lt;/code&gt;, either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;. Any other result means that something is &amp;quot;stuck&amp;quot; (a definition for &amp;quot;stuck&amp;quot; will be covered later). It also means that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; cannot evaluate further.&lt;/p&gt;
+
+&lt;p&gt;Notice that that the only other construct in the grammar, &lt;code&gt;if t then t else t&lt;/code&gt;, has subterms represented with the meta variable &lt;code&gt;t&lt;/code&gt;. This captures the ability to use &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;, or another &lt;code&gt;if t then t else t&lt;/code&gt; for each subterm (eg, second and third examples).&lt;/p&gt;
+
+&lt;p&gt;With the building blocks in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;, and in what order they should be taken. Superficially this language seems extremely simple, but there are some subtle details of term evaluation that need to be captured.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;&lt;em&gt;e-&lt;/em&gt;&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-false&lt;/em&gt; are fairly simple. They represent the expected evaluation results for the different guard values in an &lt;code&gt;if t then t else t&lt;/code&gt; term. With &lt;code&gt;true&lt;/code&gt; you get the first subterm and with &lt;code&gt;false&lt;/code&gt; you get the second subterm. Also, notice that there are no rules for either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; by themselves. This further reinforces that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; are values and that there&amp;#39;s no way to evaluate them further. &lt;em&gt;e-if&lt;/em&gt; is more interesting in its construction and how it captures an important part of the evaluation strategy.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules-guard.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There are two parts to this rule. Above the line is the &lt;em&gt;premise&lt;/em&gt; and below is the &lt;em&gt;conclusion&lt;/em&gt;. The premise establishes a requirement or precondition for applying the conclusion to a given term. Later we&amp;#39;ll see how the premise is replaced by the conclusion of another rule. For &lt;em&gt;e-if&lt;/em&gt; the premise says that if the first subterm &lt;code&gt;t&lt;/code&gt; can be evaluated to &lt;code&gt;t&amp;#39;&lt;/code&gt; then the parent term &lt;code&gt;if t then t else t&lt;/code&gt; should evaluate to &lt;code&gt;if t&amp;#39; then t else t&lt;/code&gt;. The importance is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- parenthesis are supplied for clarity only&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- |     first/guard subterm     |      |       second subterm        |&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This term could take two different evaluation paths without &lt;em&gt;e-if&lt;/em&gt;. An alternative strategy would first evaluate the second subterm &lt;code&gt;if false then true else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, then evaluate the guard &lt;code&gt;if true then false else false&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;, and finally the full term to &lt;code&gt;false&lt;/code&gt;. Obviously the evaluation of the second subterm is unnecessary because the guard term evaluates to &lt;code&gt;false&lt;/code&gt; and the second subterm is ignored completely.&lt;/p&gt;
+
+&lt;p&gt;There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&amp;#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_21&quot;&gt;CoffeeScript Grammar&lt;/h2&gt;
+
+&lt;p&gt;The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# =&amp;gt; true&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This translates into JavaScript like the original example:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// =&amp;gt; true&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})()(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// !!! =&amp;gt; true(function(){ return false; });&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note that the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-grammar.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To reiterate, the left hand side of each &lt;code&gt;::=&lt;/code&gt; assignment is a meta variable that can be used in other parts of the grammar. In the case of &lt;code&gt;\t&lt;/code&gt; it was easier to create a meta term than to repeat each possible lambda form in &lt;code&gt;t&lt;/code&gt;. &lt;code&gt;v&lt;/code&gt; on the other hand is the set of acceptable final results of evaluation. Finally &lt;code&gt;t&lt;/code&gt; is complete set of forms used to build terms. Notable among them is the invocation and application of lambda terms, &lt;code&gt;\t&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# invocation&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# application&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# both&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-grammar-examples.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The most important part to note is that lambda terms capture the subterm be it &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; or another lambda.&lt;/p&gt;
+
+&lt;p&gt;Looking at the examples it&amp;#39;s reasonable to ask whether there&amp;#39;s value in providing a grammar that looks a lot like it&amp;#39;s own language. First, it maps the two different lambda forms to one form in the grammar, which makes reasoning about evaluation and types easier. Second, differentiating values (&lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;, and &lt;code&gt;-&amp;gt; t&lt;/code&gt;) from other terms by calling them values is important for knowing when evaluation has finished.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_22&quot;&gt;Inference Rules&lt;/h2&gt;
+
+&lt;p&gt;With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The only impact of the evaluation strategy (call-by-value l-to-r) is that arguments to lambda terms must be fully evaluated before application can take place. For example &lt;code&gt;(-&amp;gt; true) (-&amp;gt; false)()&lt;/code&gt; would first evaluate to &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt; as a result of the &lt;code&gt;()&lt;/code&gt; operator.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;v&lt;/code&gt; in &lt;em&gt;e-app&lt;/em&gt; means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set &lt;code&gt;v&lt;/code&gt;. Once applied, the result is the lambda&amp;#39;s unaltered subterm.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-inference-rules-application-argument.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;e-arg-eval&lt;/em&gt; stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. &lt;em&gt;e-app&lt;/em&gt; informs the reader when lambda application can take place and &lt;em&gt;e-arg-eval&lt;/em&gt; informs the reader how to get there. Taken together these three rules define how terms get evaluated.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_23&quot;&gt;Derivation Trees&lt;/h2&gt;
+
+&lt;p&gt;The inference rules in an operational semantics definition can be used in &lt;em&gt;derivation trees&lt;/em&gt; to show how a terms will evaluate. Rules are &amp;quot;stacked&amp;quot; on one another to show how they work in succession to produce an evaluation result.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- parenthesis are supplied for clarity only&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- |     first/guard subterm     |      |       second subterm        |&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The derivation trees for the evaluation of this term result in &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Unfortunately the way these two &amp;quot;trees&amp;quot; are constructed isn&amp;#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&amp;#39;t important in the final evaluation (see the introductory section on operational semantics) and it&amp;#39;s easier to read the equations when they aren&amp;#39;t squished&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-example-simplify.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;From the inference rules &lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, and &lt;em&gt;e-if&lt;/em&gt; one will apply to begin simplifying the term. The obvious place to start is applying &lt;em&gt;e-true&lt;/em&gt; to the first subterm &lt;code&gt;(if true then false else false)&lt;/code&gt;, but the second subterm &lt;code&gt;(if false then true else false)&lt;/code&gt; could just as easily have &lt;em&gt;e-false&lt;/em&gt; applied to it. Recall that the third rule &lt;em&gt;e-if&lt;/em&gt; tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using &lt;em&gt;e-true&lt;/em&gt; as the first part of the derivation tree.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/bool-derivation-tree-first-rule.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It&amp;#39;s easy to see that this looks just like the &amp;quot;raw&amp;quot; form of the &lt;em&gt;e-true&lt;/em&gt; rule. The only difference is the replacement of the last two subterms with &lt;code&gt;false&lt;/code&gt; on the left side of the arrow and the resulting subterm with &lt;code&gt;false&lt;/code&gt; on the right side of the arrow. It might look a little confusing with the bar resting on top of the &lt;em&gt;e-true&lt;/em&gt; rule, but that signifies the applied rule has no premise/precondition. Next, since  &lt;em&gt;e-if&lt;/em&gt; forced the application of &lt;em&gt;e-true&lt;/em&gt;, it makes sense that it figures in to the derivation tree. Importantly &lt;em&gt;e-if&lt;/em&gt; has a precondition, one which the application of &lt;em&gt;e-true&lt;/em&gt; satisfies.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/bool-inference-rules-guard.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;e-if&lt;/em&gt;&amp;#39;s precondition requires that the first subterm of an &lt;code&gt;if t then t else t&lt;/code&gt; evaluate before the other two subterms. In other words it requires that &lt;code&gt;t -&amp;gt; t&amp;#39;&lt;/code&gt; be replaced by some evaluation.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-second-rule.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here, it&amp;#39;s been replaced by &lt;code&gt;if true then false else false -&amp;gt; false&lt;/code&gt; from the application of &lt;em&gt;e-true&lt;/em&gt;. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with &lt;code&gt;false&lt;/code&gt;. It&amp;#39;s a &amp;quot;stack&amp;quot; of the two inference rules &lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-if&lt;/em&gt;. All that&amp;#39;s left is to build a derivation tree for &lt;code&gt;if false then t else false&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img class=&quot;wide&quot; src=&quot;/assets/images/diagrams/bool-derivation-tree-example-assoc.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;e-false&lt;/em&gt; is all that&amp;#39;s needed for the second tree to complete the evaluation to &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call any part of this a derivation &amp;quot;tree&amp;quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_24&quot;&gt;Evaluating a Solution&lt;/h2&gt;
+
+&lt;p&gt;Finally we know enough to apply the operational semantics to our problem. First the least complex term that prevents evaluation.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Translating this example into the grammar representation yields a form that will work with the inference rules.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-stuck.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;e-inv&lt;/em&gt; is applied to &lt;code&gt;(-&amp;gt; true)()&lt;/code&gt; because &lt;code&gt;-&amp;gt; false&lt;/code&gt; can&amp;#39;t evaluate any further (it&amp;#39;s a value in &lt;code&gt;v&lt;/code&gt;), but then what? After applying &lt;em&gt;e-inv&lt;/em&gt; the first subterm is &lt;code&gt;true&lt;/code&gt; and there are no evaluation rules that apply values to an arguement. Without any rules to apply to a term that isn&amp;#39;t a value, it&amp;#39;s &amp;quot;stuck&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;Here someone will say, &amp;quot;We already knew that because there&amp;#39;s a type error when you evaluate the JavaScript!&amp;quot;. Consider a slightly more complex example.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And the derivation tree to match.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The value returned by the first lambda &lt;strong&gt;can&lt;/strong&gt; be applied to an argument with &lt;em&gt;e-app&lt;/em&gt; so the result of evaluation is &lt;code&gt;true&lt;/code&gt;. Viewing the accompanying term with an additional space will provide contrast.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;() -&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this case, the derivation tree consists of a single inference rule, &lt;em&gt;e-app&lt;/em&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;img src=&quot;/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png&quot;&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are &lt;em&gt;very similar&lt;/em&gt; syntactically but have different derivation trees they are semantically ambiguous.&lt;/p&gt;
+
+&lt;p&gt;There are two problems with this definition if the goal is to come up with something useful for actual language implementers. First, &amp;quot;very similar&amp;quot; is nebulous. Luckily computer science is littered with string &amp;quot;distance&amp;quot; algorithms. Second, automatically generating derivation trees for terms is likely to be difficult.&lt;/p&gt;
+
+&lt;p&gt;It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&amp;#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;haskell&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- example one&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- example two&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;) against the second&amp;#39;s four (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You really can&amp;#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&amp;#39;t crop up with the CoffeeScript guinea pig.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_25&quot;&gt;Next Time&lt;/h2&gt;
+
+&lt;p&gt;In the next post I&amp;#39;ll take a look at how type information could replace the derivation trees as the semantic differentiator. Type information is often readily available even in languages like CoffeeScript that don&amp;#39;t have type annotations. If finding a difference between two terms is simple enough maybe a tool can be built to automate the process of ferreting out confusing term pairings.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_26&quot;&gt;footnotes&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Denotational_semantics&quot;&gt;Denotational Semantics&lt;/a&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Axiomatic_semantics&quot;&gt;Axiomatic Semantics&lt;/a&gt; are alternate ways to define language semantics.&lt;/li&gt;
+&lt;li&gt;This example language is borrowed almost verbatim from Types and Programming Languages but I&amp;#39;ve added in my own explanation. I cannot over emphasize how much this book has contributed to my education over the last year or so.&lt;/li&gt;
+&lt;li&gt;This Theorem is referred to as Determinacy of Evaluation. I may go back and do some simple proofs for my own education after this post and a possible follow up.&lt;/li&gt;
+&lt;li&gt;Technically JavaScript uses a strategy known as Call by Sharing, which differs from Call by Value in how deals with objects. More information &lt;a href=&quot;http://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/%20courtesy%20of%20%5B@raganwald%5D(https://twitter.com/raganwald&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
  </entry>
