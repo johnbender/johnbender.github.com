@@ -85,14 +85,10 @@ h1 > a:hover {
 }
 
 .navbar-inner {
-  background-image: -moz-linear-gradient(top, #eeeeee, #D8D8D8);
-  background-image: -ms-linear-gradient(top, #eeeeee, #D8D8D8);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#D8D8D8));
-  background-image: -webkit-linear-gradient(top, #eeeeee, #D8D8D8);
-  background-image: -o-linear-gradient(top, #eeeeee, #D8D8D8);
-  background-image: linear-gradient(top, #eeeeee, #D8D8D8);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#D8D8D8', GradientType=0);
+  background-image: none;
+  background-color: #dedede;
+  text-transform: lowercase;
+  padding-right: 20px;
 
   -webkit-border-radius: 0;
      -moz-border-radius: 0;
@@ -101,7 +97,8 @@ h1 > a:hover {
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-,1}
+,1
+}
 
 .content .page-header:nth-child(1) {
   border-top: none;
@@ -168,8 +165,10 @@ hr, .page-header, .content {
   float: right;
 }
 
-.social-media img {
-  margin: 8px 8px 0 0;
+.social-media i {
+  margin: 8px 4px 0 0;
+  font-size: 24px;
+  color: #555;
 }
 
 .social-media a:hover {
@@ -455,3 +454,4 @@ div.side-by-side > img {
 .highlight .vi { color: #008080; }
 .highlight .il { color: #009999; }
 .highlight .gc { background-color: #EAF2F5; color: #999; }
+
