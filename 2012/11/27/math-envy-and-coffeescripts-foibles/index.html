@@ -147,7 +147,7 @@
 <p>Operational Semantics is one way [2] to formalize the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Languages</em> [3].</p>
 
 <div class="center">
-  <img style="width: 40%; min-width: 200px;" src="/assets/images/diagrams/bool-grammar.png"></img>
+  <img style="width: 40%; min-width: 200px;" src="/assets/images/diagrams/math-envy-cs/bool-grammar.png"></img>
 </div>
 
 <p>The grammar definition is made of up of two &quot;meta variables&quot; <code>t</code> and <code>v</code>. Assigned to those meta variables is a set of possible terms each separated by a <code>|</code>. <code>t</code> represents all of the ways to construct terms (see example below). <code>v</code> is the set of terms that are acceptable as the final result of evaluation. <code>v</code> is a subset of <code>t</code>, as witnessed by its inclusion in <code>t</code>, but it is distinct for a reason.</p>
@@ -170,7 +170,7 @@
 <p>With the building blocks in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to <code>true</code> or <code>false</code>, and in what order they should be taken. Superficially this language seems extremely simple, but there are some subtle details of term evaluation that need to be captured.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules.png"></img>
 </div>
 
 <p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
@@ -178,7 +178,7 @@
 <p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. <em>e-if</em> is more interesting in its construction and how it captures an important part of the evaluation strategy.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules-guard.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules-guard.png"></img>
 </div>
 
 <p>There are two parts to this rule. Above the line is the <em>premise</em> and below is the <em>conclusion</em>. The premise establishes a requirement or precondition for applying the conclusion to a given term. Later we&#39;ll see how the premise is replaced by the conclusion of another rule. For <em>e-if</em> the premise says that if the first subterm <code>t</code> can be evaluated to <code>t&#39;</code> then the parent term <code>if t then t else t</code> should evaluate to <code>if t&#39; then t else t</code>. The importance is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.</p>
@@ -215,7 +215,7 @@
 <p>Note that the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-grammar.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-grammar.png"></img>
 </div>
 
 <p>To reiterate, the left hand side of each <code>::=</code> assignment is a meta variable that can be used in other parts of the grammar. In the case of <code>\t</code> it was easier to create a meta term than to repeat each possible lambda form in <code>t</code>. <code>v</code> on the other hand is the set of acceptable final results of evaluation. Finally <code>t</code> is complete set of forms used to build terms. Notable among them is the invocation and application of lambda terms, <code>\t</code>.</p>
@@ -231,7 +231,7 @@
 </div>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-grammar-examples.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-grammar-examples.png"></img>
 </div>
 
 <p>The most important part to note is that lambda terms capture the subterm be it <code>true</code>, <code>false</code> or another lambda.</p>
@@ -243,19 +243,19 @@
 <p>With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules.png"></img>
 </div>
 
 <p>The only impact of the evaluation strategy (call-by-value l-to-r) is that arguments to lambda terms must be fully evaluated before application can take place. For example <code>(-&gt; true) (-&gt; false)()</code> would first evaluate to <code>(-&gt; true) false</code> as a result of the <code>()</code> operator.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-application.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-application.png"></img>
 </div>
 
 <p>The <code>v</code> in <em>e-app</em> means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set <code>v</code>. Once applied, the result is the lambda&#39;s unaltered subterm.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-application-argument.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-application-argument.png"></img>
 </div>
 
 <p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated.</p>
@@ -272,37 +272,37 @@
 <p>The derivation trees for the evaluation of this term result in <code>false</code>.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example.png"></img>
 </div>
 
 <p>Unfortunately the way these two &quot;trees&quot; are constructed isn&#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&#39;t important in the final evaluation (see the introductory section on operational semantics) and it&#39;s easier to read the equations when they aren&#39;t squished</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-example-simplify.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example-simplify.png"></img>
 </div>
 
 <p>From the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to begin simplifying the term. The obvious place to start is applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-first-rule.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-first-rule.png"></img>
 </div>
 
 <p>It&#39;s easy to see that this looks just like the &quot;raw&quot; form of the <em>e-true</em> rule. The only difference is the replacement of the last two subterms with <code>false</code> on the left side of the arrow and the resulting subterm with <code>false</code> on the right side of the arrow. It might look a little confusing with the bar resting on top of the <em>e-true</em> rule, but that signifies the applied rule has no premise/precondition. Next, since  <em>e-if</em> forced the application of <em>e-true</em>, it makes sense that it figures in to the derivation tree. Importantly <em>e-if</em> has a precondition, one which the application of <em>e-true</em> satisfies.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules-guard.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules-guard.png"></img>
 </div>
 
 <p><em>e-if</em>&#39;s precondition requires that the first subterm of an <code>if t then t else t</code> evaluate before the other two subterms. In other words it requires that <code>t -&gt; t&#39;</code> be replaced by some evaluation.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-second-rule.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-second-rule.png"></img>
 </div>
 
 <p>Here, it&#39;s been replaced by <code>if true then false else false -&gt; false</code> from the application of <em>e-true</em>. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with <code>false</code>. It&#39;s a &quot;stack&quot; of the two inference rules <em>e-true</em> and <em>e-if</em>. All that&#39;s left is to build a derivation tree for <code>if false then t else false</code>.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example-assoc.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example-assoc.png"></img>
 </div>
 
 <p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.</p>
@@ -317,7 +317,7 @@
 <p>Translating this example into the grammar representation yields a form that will work with the inference rules.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-stuck.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-stuck.png"></img>
 </div>
 
 <p><em>e-inv</em> is applied to <code>(-&gt; true)()</code> because <code>-&gt; false</code> can&#39;t evaluate any further (it&#39;s a value in <code>v</code>), but then what? After applying <em>e-inv</em> the first subterm is <code>true</code> and there are no evaluation rules that apply values to an arguement. Without any rules to apply to a term that isn&#39;t a value, it&#39;s &quot;stuck&quot;.</p>
@@ -330,7 +330,7 @@
 <p>And the derivation tree to match.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-not-stuck.png"></img>
 </div>
 
 <p>The value returned by the first lambda <strong>can</strong> be applied to an argument with <em>e-app</em> so the result of evaluation is <code>true</code>. Viewing the accompanying term with an additional space will provide contrast.</p>
@@ -341,7 +341,7 @@
 <p>In this case, the derivation tree consists of a single inference rule, <em>e-app</em>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-not-stuck-with-space.png"></img>
 </div>
 
 <p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambiguous.</p>
@@ -398,11 +398,11 @@
 
   
     
-    	<li><a href="#coffeescript-ref">coffeescript <span>2</span></a></li>
+    	<li><a href="#coffeescript-ref">coffeescript <span>3</span></a></li>
     
     	<li><a href="#javascript-ref">javascript <span>10</span></a></li>
     
-    	<li><a href="#math-ref">math <span>10</span></a></li>
+    	<li><a href="#math-ref">math <span>11</span></a></li>
     
   
 

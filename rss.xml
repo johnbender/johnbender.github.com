@@ -4,8 +4,16 @@
     <title>johnbender.us</title>
     <description>johnbender.us</description>
     <link>"http://johnbender.github.com"</link>
-    <lastBuildDate>2013-01-14T10:12:50-08:00</lastBuildDate>
+    <lastBuildDate>2013-01-17T22:40:12-08:00</lastBuildDate>
 
+    
+    <item>
+      <title>System F in CoffeeScript</title>
+      <description>System F in CoffeeScript</description>
+      <link>http://johnbender.github.com/2013/01/15/system-f-in-coffeescript"</link>
+      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
+      <pubDate>2013-01-15T00:00:00-08:00</pubDate>
+    </item>
     
     <item>
       <title>Math Envy and CoffeeScript's Foibles, Part 2</title>

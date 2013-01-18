@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>System F in CoffeeScript</title>
+    
+    
+    <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/cv.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+
+          <div class="social-media">
+            <a href="http://twitter.com/johnbender">
+              <i class="icon-twitter-sign"></i>
+            </a>
+            <a href="http://github.com/johnbender">
+              <i class="icon-github-sign"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>System F in CoffeeScript</h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span10 text">
+    <p>System F is a variant of the Lambda Calculus. It &quot;mixes&quot; types and terms relatively freely compared with the average statically typed programming language. System F and it&#39;s variants are used frequently in the study of typed computation and an extended form, System FC, plays an important role in GHC&#39;s compilation process [1]. This post will translate the grammars of the Lambda Calculus, Simply Typed Lambda Calculus, and finally System F into a small subset of CoffeeScript while covering the basics of application and abstraction in each.</p>
+
+<h2 id="toc_40">Lambda Calculus</h2>
+
+<p>Representing the Lambda Calculus only requires a small subset of CoffeeScript&#39;s total synatx. Let&#39;s define both grammars side by side.</p>
+
+<div class="center">
+  <img class="slim" src="/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-grammars.png"></img>
+</div>
+
+<p>In both cases <code>x</code> represents a variable and <code>t t</code> represents application of one term to another. The only real difference is the lambda abstraction syntax.</p>
+
+<div class="center">
+  <img class="slim" style="width: 50%" src="/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-abstraction-examples.png"></img>
+</div>
+
+<p>In the Lambda Calculus, abstraction involves preceding or wrapping a term <code>t</code> with <code>λx.t</code> which captures or binds the variable <code>x</code> inside the term <code>t</code>. In the example <code>t</code> is <code>λx.y</code>, using the abstraction <code>λy.t</code> creates a new term <code>λy.λx.y</code> (otherwise known as the K-combinator). Note that the <code>x</code> in <code>λx.t</code> shown in the grammar could be any variable like <code>y</code> or <code>z</code>.</p>
+
+<p>In CoffeeScript the same term is <code>(x) -&gt; y</code> and applying the CoffeeScript version of abstraction yields <code>(y) -&gt; (x) -&gt; y</code>. Viewing the <a href="http://coffeescript.org/#try:(y)%20-%3E%20(x)%20-%3E%20y">translation</a> to JavaScript is informative because both behave the same way when applied to a single argument.</p>
+
+<div class="center">
+  <img src="/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-application-examples.png"></img>
+</div>
+
+<p>The application of a term that shows two abstractions (<code>y</code> and <code>x</code>) to a single argument results in a lambda term that can be applied to another term. The <a href="http://coffeescript.org/#try:console.log%20((y)%20-%3E%20(x)%20-%3E%20y)%20((x)%20-%3E%20y)">translation</a> to JavaScript shows that a function object is returned ready for application. The concept of <em>application</em> in the Lambda Calculus is really the idea of substitution. You can see that the <code>z</code> is substituted for the instances of <code>y</code> in the body of the lambda term. Similarly in CoffeeScript the scope captures the value for <code>y</code> and now all occurences in the body of the lambda term will behave as <code>z</code>.</p>
+
+<p>The notion of <em>closed</em> terms in the Lambda Calculus is a point of departure with CoffeeScript. A closed term has no free variables. For example, in <code>λx.y</code> the <code>y</code> variable is called <em>free</em> because it hasn&#39;t been bound by an enclosing abstractions. Adding an additional abstraction to get <code>λy.λx.y</code> captures the <code>y</code>. The JavaScript generated by the CoffeeScript <code>(x) -&gt; y</code> will throw a reference error without a definition for <code>y</code> in scope, in constrast to the lambda term which will simply discard it&#39;s argument and produce the <code>y</code>.</p>
+
+<h2 id="toc_41">Simply Typed Lambda Calculus</h2>
+
+<p>The Simply Typed Lambda Calculus expands on the Lambda Calculus with type information in abstractions.</p>
+
+<div class="center">
+  <img src="/assets/images/diagrams/system-f-cs/simply-typed-lambda-calculus-grammars.png"></img>
+</div>
+
+<p>It adds a type requirement to the argument of abstractions. The CoffeeScript equivelant adds a function that compares a type argument to the argument term. To keep things simple, <code>ifft</code> will throw an exception when the types don&#39;t line up. This will be more interesting later with System F when the type <code>τ</code> can be defined after the fact instead of inside or with the abstraction.</p>
+<div class="highlight"><pre><code class="coffeescript"><span class="c1"># If and only if (iff) the type (t) is correct</span>
+<span class="nv">ifft = </span><span class="nf">(type, obj) -&gt;</span>
+  <span class="k">if</span> <span class="nx">obj</span> <span class="k">instanceof</span> <span class="nx">type</span>
+    <span class="k">throw</span> <span class="s">&quot;Type mismatch&quot;</span>
+</code></pre>
+</div>
+
+<p>This definition assumes that the browser&#39;s <code>instanceof</code> implementation is behaving properly but certainly serves the purpose here. Assuming the type <code>Foo</code> is defined for the calculus and with <code>class Foo</code> in the CoffeeScript, we can add types to the original K-combinator example.</p>
+
+<div class="center">
+  <img class="slim" src="/assets/images/diagrams/system-f-cs/simply-typed-lambda-calculus-typing-examples.png"></img>
+</div>
+
+<p>There&#39;s a larger discussion to be had about how the types are used in both settings. In the CoffeeScript it&#39;s very much a delayed form of typing but in the Lambda Calculus it defines the term and it&#39;s capabilities [2].</p>
+
+<p>Also worth discussing are the forms <code>τ</code> can take. Some definition of the Simply Typed Lambda Calculus define a set of base types like natural numbers or booleans. Along with that though they must define a set of base constant values that can represent those types. For natural numbers a base constant of <code>0</code> and <a href="http://en.wikipedia.org/wiki/Church_encoding">church numerals</a> allows users to represent all the natural numbers. In this case we&#39;ll keep it simple by allowing only the function type <code>τ → τ</code>, which means that every argument must be a lambda term.</p>
+
+<h2 id="toc_42">System F</h2>
+
+<p>System F adds the notion of <em>polymorphic types</em> to the Simply Typed Lambda Calculus. The term polymorphic carries a lot of baggage, but here it is <em>parametric polymorhpism</em> [3]. That is, the type of a term can change depending on the setting. Unsurprisingly this is very similar to the parametric polymoprhism in Haskell.</p>
+
+<div class="center">
+  <img src="/assets/images/diagrams/system-f-cs/system-f-grammars.png"></img>
+</div>
+
+<p>System F makes two extensions. <code>Λα.e</code> is a type abstraction on the type variables in terms and <code>e [τ]</code> is the application of a type to a term that has been wrapped by a type abstraction. Note that the abstraction uses <code>α</code> to represent a type variable and <code>τ</code> to represent concrete types. Since CoffeeScript&#39;s &quot;types&quot; are really constructors functions, all that&#39;s needed is an enclosing lambda to pull the type argument to <code>ifft</code> into scope and an application to a constructor function at runtime.</p>
+
+<div class="center">
+  <img class="slim" src="/assets/images/diagrams/system-f-cs/system-f-type-abstraction-examples.png"></img>
+</div>
+
+<p>For System F the type abstraction is very specific. It works at the type level [4]. In CoffeeScript, on the other hand, it&#39;s just another lambda abstraction that puts the constuctor function in scope as a lambda argument. In both cases when the term is applied to a type, the type variable <code>α</code> changes to that type.</p>
+
+<div class="center">
+  <img src="/assets/images/diagrams/system-f-cs/system-f-type-application-examples.png"></img>
+</div>
+
+<p>It&#39;s possible to make the type abstraction a bit more robust in the CoffeeScript by verifying that the argument is at least a function. A more adventuresome individual might alter CoffeeScript to annotate constructor function objects with a property that could be used to set them appart and compare them [5].</p>
+
+<h2 id="toc_43">Strong and Normal</h2>
+
+<p>System F has some really neat properties. Most importantly System F is <em>strongly normalizing</em>. That means that it always terminates and always reduces to a normal form when the terms are well typed (the types line up properly).</p>
+
+<h3 id="toc_44">Footnotes</h3>
+
+<ol>
+<li>There are some <a href="http://research.microsoft.com/en-us/um/people/simonpj/papers/ext-f/">interesting papers</a> to read from Microsoft Research this particular extension of System F.</li>
+<li>This is a more <a href="http://en.wikipedia.org/wiki/Simply_typed_lambda_calculus#Intrinsic_vs._extrinsic_interpretations">intrinsic</a> approach to the translation as we aren&#39;t attempting to use types to reason about the terms/grammars.</li>
+<li>Specifically <em>rank-n</em> polymorphism since the type variable <code>α</code> can be replaced by a quantified type.</li>
+<li>This is actually captured in the reduction rules for System F.</li>
+<li><em>Gasp!</em> types in CoffeeScript.</li>
+</ol>
+
+    
+  </div>
+
+  <div id="info" class="span2">
+  
+    <h4>Vote/Comment</h4>
+    <ul id="vote">
+      <li>
+        <a id="hn" href="CHANGE" alt="Hacker News">Hacker News</a>
+      </li>
+    </ul>
+  
+
+    <h4>Published</h4>
+    <div class="date"><span>15 Jan 2013</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+    
+    	<li><a href="#coffeescript-ref">coffeescript <span>3</span></a></li>
+    
+    	<li><a href="#math-ref">math <span>11</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </div>
+</div>
+
+
+      </div>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2" title="Math Envy and CoffeeScript's Foibles, Part 2">&larr; Previous</a></li>
+      
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      
+        <li class="next disabled"><a>Next &rarr;</a>
+      
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; John Bender 2012
+        with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+        and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+    </footer>
+
+    </div>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21257360-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+  </body>
+</html>
+

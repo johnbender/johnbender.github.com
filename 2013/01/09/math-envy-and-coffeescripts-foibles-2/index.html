@@ -113,25 +113,25 @@
 <p>Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a <em>t-</em> in this case to distinguish them from inference rules (<em>e-</em>).</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules.png"></img>
 </div>
 
 <p>Type rules without a premise like <em>t-true</em> and <em>t-false</em> are taken to be true out of hand. That is, the terms <code>true</code> and <code>false</code> both have the type <code>Bool</code>. The others are more complicated.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-term.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-term.png"></img>
 </div>
 
 <p><em>t-lambda</em> illustrates how to determine the type of a lambda term like <code>(-&gt; true)</code>. The premise above the line states that if the subterm <code>t</code> has the <em>concrete</em> type <code>T</code>, then the conclusion <code>λt</code> has the type <code>X -&gt; T</code>. Here <code>X</code> is a <em>type variable</em> because we don&#39;t know whether the lambda will be evaluated with the invocation operator <code>()</code> or applied to an argument. <code>T</code> will be concrete because it can be determined from the body of the lambda expression. For example, in <code>(-&gt; true)</code> the subterm <code>true</code> has the type <code>Bool</code> so the lambda term has the type <code>X -&gt; Bool</code>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-invocation.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-invocation.png"></img>
 </div>
 
 <p><em>t-inv</em> shows how to determine the type of lambda invocation like <code>(-&gt; true)()</code>. The premise states if the lambda term has the type <code>X -&gt; T</code> the term <code>λt()</code> has the type <code>T</code>. For example, <code>(-&gt; true)()</code> evaluates to <code>true</code> and has the type <code>Bool</code>. It&#39;s worth noting that <code>X</code> is constrained to be the <code>Unit</code> or empty type since no argument is used.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-application.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-application.png"></img>
 </div>
 
 <p><em>t-app</em> is the type rule for lambda applications, e.g. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the type of the argument that it&#39;s applied to.</p>
@@ -144,7 +144,7 @@
 </div>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-derivation-simple.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-simple.png"></img>
 </div>
 
 <p>This highlights how to derive the type at the bottom from its subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em> can be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
@@ -153,7 +153,7 @@
 </div>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-complex.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-complex.png"></img>
 </div>
 
 <p>The second subterm of the application is unimportant where the type of the term is concerned and as a result it&#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, <code>false : Bool</code>. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code> when compared with the previous example.</p>
@@ -163,7 +163,7 @@
 <p>At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, <code>(-&gt; true)() -&gt; false</code>:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-original-issue.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-original-issue.png"></img>
 </div>
 
 <p>Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of something with type <code>Bool</code> to something with type <code>X -&gt; Bool</code> since <em>t-app</em> requires the first term have the type <code>X -&gt; T</code> in its premise. It&#39;s a type error.</p>
@@ -207,13 +207,13 @@ Value  : bool                       { BooleanExpr $1 }
 <p>There are two differences from the original grammar definition. Lambda terms in parentheses are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the <em>applicand</em>) [2]. This enables the grammar to reproduce the original issue, since <code>(-&gt; true)() -&gt; false</code> translates to an invocation applied to a lambda term. The corrected grammar:</p>
 
 <div class="center">
-  <img style="width: 200px;" src="/assets/images/diagrams/cs-grammar-corrected.png"></img>
+  <img style="width: 200px;" src="/assets/images/diagrams/math-envy-cs/cs-grammar-corrected.png"></img>
 </div>
 
 <p>Also, a correction and an addition must be made to the inference rules presented in the previous post. This will ensure that any term type is permitted as the left half of an application, and that it is fully evaluated before applying it.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-corrected.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-corrected.png"></img>
 </div>
 
 <p>Where <em>e-arg-eval</em> ensures that the argument of an application is fully evaluated, <em>e-app-eval</em> ensures that the applicand is fully evaluated before the application takes place.</p>
@@ -268,7 +268,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p><em>e-arg-eval</em> and <em>e-app-eval</em> are more complicated than either <em>e-inv</em> or <em>e-app</em> which makes sense when comparing them as inference rules. Both <em>e-arg-eval</em> and <em>e-app-eval</em> carry a premise.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-app-argeval.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-app-argeval.png"></img>
 </div>
 
 <p>Both rules require that some evaluation take place on one of the subterms. More importantly the shape of the term remains the same. Neither <em>e-arg-eval</em> or <em>e-app-eval</em> change the shape of the term to which they apply, only the shape of the sub terms. This is in contrast to <em>e-inv</em> and <em>e-app</em> which discard the invocation operator and second term respectively. As a result the <code>RuleMatch</code> contains the subterm that needs to be evaluated further and the other subterm that remains stagnant. Note that in the function definition the <em>e-arg-eval</em> rule is matched first so that the <em>e-app-eval</em> rule can ignore the second subterm under the assumption that it&#39;s a value term (not <code>Invoke</code> or <code>Apply</code>).</p>
@@ -325,7 +325,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>In english, the application of an invocation of a lambda with a lambda subterm to a boolean value. The resulting tree in the original notation takes the form:</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-ast-example.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-ast-example.png"></img>
 </div>
 
 <p>The <code>Derivation</code> instance has to work from the outside in so it&#39;s much harder to read than the notation, but it contains the same information</p>
@@ -421,7 +421,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>The type derivation using logic notation looks like:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-ast-example.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-ast-example.png"></img>
 </div>
 
 <p>The <code>Derivation</code> instance corresponding the the logic notation is again much larger but captures the same information (formatting added after the fact):</p>
@@ -444,13 +444,13 @@ Value  : bool                       { BooleanExpr $1 }
 <p>One approach is to first compare the <code>S</code> values for two terms and then determine if the <code>E</code> and <code>T</code> values match. Terms with &quot;similar&quot; <code>S</code> values but different <code>E</code> or <code>T</code> values might be ambiguous and could be flagged for review. Using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Distance</a> to keep the calculation for similarity simple:</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-dist.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-dist.png"></img>
 </div>
 
 <p><em>lev</em> is the Levenshtein distance function and <em>dist</em> is just the ratio of the distance between the two strings and the maximum length of both. This is sometimes referred to as the Levenshtein Ratio. For <code>(-&gt; true)() -&gt; false</code> and <code>(-&gt; true) () -&gt; false</code>:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-dist-example.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-dist-example.png"></img>
 </div>
 
 <p>A relative value for string distance that can be used as a threshold &quot;setting&quot; makes building a tool for automating the process easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged [3].</p>
@@ -521,11 +521,11 @@ Value  : bool                       { BooleanExpr $1 }
 
   
     
-    	<li><a href="#coffeescript-ref">coffeescript <span>2</span></a></li>
+    	<li><a href="#coffeescript-ref">coffeescript <span>3</span></a></li>
     
     	<li><a href="#javascript-ref">javascript <span>10</span></a></li>
     
-    	<li><a href="#math-ref">math <span>10</span></a></li>
+    	<li><a href="#math-ref">math <span>11</span></a></li>
     
   
 
@@ -546,7 +546,7 @@ Value  : bool                       { BooleanExpr $1 }
       
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       
-        <li class="next disabled"><a>Next &rarr;</a>
+        <li class="next"><a href="//johnbender.github.com/2013/01/15/system-f-in-coffeescript" title="System F in CoffeeScript">Next &rarr;</a></li>
       
       </ul>
     </div>

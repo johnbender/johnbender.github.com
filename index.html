@@ -114,25 +114,25 @@
 <p>Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a <em>t-</em> in this case to distinguish them from inference rules (<em>e-</em>).</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules.png"></img>
 </div>
 
 <p>Type rules without a premise like <em>t-true</em> and <em>t-false</em> are taken to be true out of hand. That is, the terms <code>true</code> and <code>false</code> both have the type <code>Bool</code>. The others are more complicated.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-term.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-term.png"></img>
 </div>
 
 <p><em>t-lambda</em> illustrates how to determine the type of a lambda term like <code>(-&gt; true)</code>. The premise above the line states that if the subterm <code>t</code> has the <em>concrete</em> type <code>T</code>, then the conclusion <code>λt</code> has the type <code>X -&gt; T</code>. Here <code>X</code> is a <em>type variable</em> because we don&#39;t know whether the lambda will be evaluated with the invocation operator <code>()</code> or applied to an argument. <code>T</code> will be concrete because it can be determined from the body of the lambda expression. For example, in <code>(-&gt; true)</code> the subterm <code>true</code> has the type <code>Bool</code> so the lambda term has the type <code>X -&gt; Bool</code>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-invocation.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-invocation.png"></img>
 </div>
 
 <p><em>t-inv</em> shows how to determine the type of lambda invocation like <code>(-&gt; true)()</code>. The premise states if the lambda term has the type <code>X -&gt; T</code> the term <code>λt()</code> has the type <code>T</code>. For example, <code>(-&gt; true)()</code> evaluates to <code>true</code> and has the type <code>Bool</code>. It&#39;s worth noting that <code>X</code> is constrained to be the <code>Unit</code> or empty type since no argument is used.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-rules-lambda-application.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules-lambda-application.png"></img>
 </div>
 
 <p><em>t-app</em> is the type rule for lambda applications, e.g. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the type of the argument that it&#39;s applied to.</p>
@@ -145,7 +145,7 @@
 </div>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-type-derivation-simple.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-simple.png"></img>
 </div>
 
 <p>This highlights how to derive the type at the bottom from its subterms. Typing the innermost subterm <code>true</code> with <em>t-true</em> can be &quot;stacked&quot; by using it to replace the premise of type rule <em>t-lambda</em>. The type derivation expands from the subterm to establish each subsequent parent term&#39;s type. Another more complex derivation:</p>
@@ -154,7 +154,7 @@
 </div>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-complex.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-complex.png"></img>
 </div>
 
 <p>The second subterm of the application is unimportant where the type of the term is concerned and as a result it&#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, <code>false : Bool</code>. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code> when compared with the previous example.</p>
@@ -164,7 +164,7 @@
 <p>At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, <code>(-&gt; true)() -&gt; false</code>:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-original-issue.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-original-issue.png"></img>
 </div>
 
 <p>Once the derivation tree reaches the outermost term it breaks. There is no type rule for the application of something with type <code>Bool</code> to something with type <code>X -&gt; Bool</code> since <em>t-app</em> requires the first term have the type <code>X -&gt; T</code> in its premise. It&#39;s a type error.</p>
@@ -208,13 +208,13 @@ Value  : bool                       { BooleanExpr $1 }
 <p>There are two differences from the original grammar definition. Lambda terms in parentheses are just a convenience for readability. More importantly a correction must be made to application of two terms, allowing for any term as the left side (the <em>applicand</em>) [2]. This enables the grammar to reproduce the original issue, since <code>(-&gt; true)() -&gt; false</code> translates to an invocation applied to a lambda term. The corrected grammar:</p>
 
 <div class="center">
-  <img style="width: 200px;" src="/assets/images/diagrams/cs-grammar-corrected.png"></img>
+  <img style="width: 200px;" src="/assets/images/diagrams/math-envy-cs/cs-grammar-corrected.png"></img>
 </div>
 
 <p>Also, a correction and an addition must be made to the inference rules presented in the previous post. This will ensure that any term type is permitted as the left half of an application, and that it is fully evaluated before applying it.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-corrected.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-corrected.png"></img>
 </div>
 
 <p>Where <em>e-arg-eval</em> ensures that the argument of an application is fully evaluated, <em>e-app-eval</em> ensures that the applicand is fully evaluated before the application takes place.</p>
@@ -269,7 +269,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p><em>e-arg-eval</em> and <em>e-app-eval</em> are more complicated than either <em>e-inv</em> or <em>e-app</em> which makes sense when comparing them as inference rules. Both <em>e-arg-eval</em> and <em>e-app-eval</em> carry a premise.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-app-argeval.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-app-argeval.png"></img>
 </div>
 
 <p>Both rules require that some evaluation take place on one of the subterms. More importantly the shape of the term remains the same. Neither <em>e-arg-eval</em> or <em>e-app-eval</em> change the shape of the term to which they apply, only the shape of the sub terms. This is in contrast to <em>e-inv</em> and <em>e-app</em> which discard the invocation operator and second term respectively. As a result the <code>RuleMatch</code> contains the subterm that needs to be evaluated further and the other subterm that remains stagnant. Note that in the function definition the <em>e-arg-eval</em> rule is matched first so that the <em>e-app-eval</em> rule can ignore the second subterm under the assumption that it&#39;s a value term (not <code>Invoke</code> or <code>Apply</code>).</p>
@@ -326,7 +326,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>In english, the application of an invocation of a lambda with a lambda subterm to a boolean value. The resulting tree in the original notation takes the form:</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-ast-example.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-ast-example.png"></img>
 </div>
 
 <p>The <code>Derivation</code> instance has to work from the outside in so it&#39;s much harder to read than the notation, but it contains the same information</p>
@@ -422,7 +422,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>The type derivation using logic notation looks like:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-type-derivation-ast-example.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-type-derivation-ast-example.png"></img>
 </div>
 
 <p>The <code>Derivation</code> instance corresponding the the logic notation is again much larger but captures the same information (formatting added after the fact):</p>
@@ -445,13 +445,13 @@ Value  : bool                       { BooleanExpr $1 }
 <p>One approach is to first compare the <code>S</code> values for two terms and then determine if the <code>E</code> and <code>T</code> values match. Terms with &quot;similar&quot; <code>S</code> values but different <code>E</code> or <code>T</code> values might be ambiguous and could be flagged for review. Using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein Distance</a> to keep the calculation for similarity simple:</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-dist.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-dist.png"></img>
 </div>
 
 <p><em>lev</em> is the Levenshtein distance function and <em>dist</em> is just the ratio of the distance between the two strings and the maximum length of both. This is sometimes referred to as the Levenshtein Ratio. For <code>(-&gt; true)() -&gt; false</code> and <code>(-&gt; true) () -&gt; false</code>:</p>
 
 <div class="center">
-  <img style="width: 300px" src="/assets/images/diagrams/cs-dist-example.png"></img>
+  <img style="width: 300px" src="/assets/images/diagrams/math-envy-cs/cs-dist-example.png"></img>
 </div>
 
 <p>A relative value for string distance that can be used as a threshold &quot;setting&quot; makes building a tool for automating the process easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged [3].</p>
@@ -523,11 +523,11 @@ Value  : bool                       { BooleanExpr $1 }
 
   
     
-    	<li><a href="#coffeescript-ref">coffeescript <span>2</span></a></li>
+    	<li><a href="#coffeescript-ref">coffeescript <span>3</span></a></li>
     
     	<li><a href="#javascript-ref">javascript <span>10</span></a></li>
     
-    	<li><a href="#math-ref">math <span>10</span></a></li>
+    	<li><a href="#math-ref">math <span>11</span></a></li>
     
   
 
@@ -585,7 +585,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>Operational Semantics is one way [2] to formalize the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Languages</em> [3].</p>
 
 <div class="center">
-  <img style="width: 40%; min-width: 200px;" src="/assets/images/diagrams/bool-grammar.png"></img>
+  <img style="width: 40%; min-width: 200px;" src="/assets/images/diagrams/math-envy-cs/bool-grammar.png"></img>
 </div>
 
 <p>The grammar definition is made of up of two &quot;meta variables&quot; <code>t</code> and <code>v</code>. Assigned to those meta variables is a set of possible terms each separated by a <code>|</code>. <code>t</code> represents all of the ways to construct terms (see example below). <code>v</code> is the set of terms that are acceptable as the final result of evaluation. <code>v</code> is a subset of <code>t</code>, as witnessed by its inclusion in <code>t</code>, but it is distinct for a reason.</p>
@@ -608,7 +608,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>With the building blocks in place the next step is to establish a set of rules that will define the way terms are evaluated. That is, what steps should be used to reduce any term to <code>true</code> or <code>false</code>, and in what order they should be taken. Superficially this language seems extremely simple, but there are some subtle details of term evaluation that need to be captured.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules.png"></img>
 </div>
 
 <p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
@@ -616,7 +616,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. <em>e-if</em> is more interesting in its construction and how it captures an important part of the evaluation strategy.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules-guard.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules-guard.png"></img>
 </div>
 
 <p>There are two parts to this rule. Above the line is the <em>premise</em> and below is the <em>conclusion</em>. The premise establishes a requirement or precondition for applying the conclusion to a given term. Later we&#39;ll see how the premise is replaced by the conclusion of another rule. For <em>e-if</em> the premise says that if the first subterm <code>t</code> can be evaluated to <code>t&#39;</code> then the parent term <code>if t then t else t</code> should evaluate to <code>if t&#39; then t else t</code>. The importance is that evaluation will focus on the guard term and not the other subterms. A different evaluation strategy might fully evaluate the second or third subterms before evaluating the first subterm.</p>
@@ -653,7 +653,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>Note that the use of atomic boolean values alleviates the need for arguments in the lambda syntax. Again, simplicity in reproducing the issue is preferred for the sake of brevity. Next is a precise definition of terms in the form of a language grammar.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-grammar.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-grammar.png"></img>
 </div>
 
 <p>To reiterate, the left hand side of each <code>::=</code> assignment is a meta variable that can be used in other parts of the grammar. In the case of <code>\t</code> it was easier to create a meta term than to repeat each possible lambda form in <code>t</code>. <code>v</code> on the other hand is the set of acceptable final results of evaluation. Finally <code>t</code> is complete set of forms used to build terms. Notable among them is the invocation and application of lambda terms, <code>\t</code>.</p>
@@ -669,7 +669,7 @@ Value  : bool                       { BooleanExpr $1 }
 </div>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-grammar-examples.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-grammar-examples.png"></img>
 </div>
 
 <p>The most important part to note is that lambda terms capture the subterm be it <code>true</code>, <code>false</code> or another lambda.</p>
@@ -681,19 +681,19 @@ Value  : bool                       { BooleanExpr $1 }
 <p>With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules.png"></img>
 </div>
 
 <p>The only impact of the evaluation strategy (call-by-value l-to-r) is that arguments to lambda terms must be fully evaluated before application can take place. For example <code>(-&gt; true) (-&gt; false)()</code> would first evaluate to <code>(-&gt; true) false</code> as a result of the <code>()</code> operator.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-application.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-application.png"></img>
 </div>
 
 <p>The <code>v</code> in <em>e-app</em> means that any argument to a lambda term should be fully evaluated. In other words it should be a term in the meta variable set <code>v</code>. Once applied, the result is the lambda&#39;s unaltered subterm.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-inference-rules-application-argument.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-inference-rules-application-argument.png"></img>
 </div>
 
 <p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated.</p>
@@ -710,37 +710,37 @@ Value  : bool                       { BooleanExpr $1 }
 <p>The derivation trees for the evaluation of this term result in <code>false</code>.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example.png"></img>
 </div>
 
 <p>Unfortunately the way these two &quot;trees&quot; are constructed isn&#39;t obvious. First, taking the second subterm and replacing it with a variable prevents the equations from getting too long. We already know that the second sub term isn&#39;t important in the final evaluation (see the introductory section on operational semantics) and it&#39;s easier to read the equations when they aren&#39;t squished</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-example-simplify.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example-simplify.png"></img>
 </div>
 
 <p>From the inference rules <em>e-true</em>, <em>e-false</em>, and <em>e-if</em> one will apply to begin simplifying the term. The obvious place to start is applying <em>e-true</em> to the first subterm <code>(if true then false else false)</code>, but the second subterm <code>(if false then true else false)</code> could just as easily have <em>e-false</em> applied to it. Recall that the third rule <em>e-if</em> tells the reader which will take precedence. It says that if the guard (first subterm) can be evaluated it should be, leaving us to evaluate the first subterm using <em>e-true</em> as the first part of the derivation tree.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-derivation-tree-first-rule.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-first-rule.png"></img>
 </div>
 
 <p>It&#39;s easy to see that this looks just like the &quot;raw&quot; form of the <em>e-true</em> rule. The only difference is the replacement of the last two subterms with <code>false</code> on the left side of the arrow and the resulting subterm with <code>false</code> on the right side of the arrow. It might look a little confusing with the bar resting on top of the <em>e-true</em> rule, but that signifies the applied rule has no premise/precondition. Next, since  <em>e-if</em> forced the application of <em>e-true</em>, it makes sense that it figures in to the derivation tree. Importantly <em>e-if</em> has a precondition, one which the application of <em>e-true</em> satisfies.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/bool-inference-rules-guard.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules-guard.png"></img>
 </div>
 
 <p><em>e-if</em>&#39;s precondition requires that the first subterm of an <code>if t then t else t</code> evaluate before the other two subterms. In other words it requires that <code>t -&gt; t&#39;</code> be replaced by some evaluation.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-second-rule.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-second-rule.png"></img>
 </div>
 
 <p>Here, it&#39;s been replaced by <code>if true then false else false -&gt; false</code> from the application of <em>e-true</em>. The bottom/conclusion of the inference rule is replaced by the whole term evaluated to replace the first subterm with <code>false</code>. It&#39;s a &quot;stack&quot; of the two inference rules <em>e-true</em> and <em>e-if</em>. All that&#39;s left is to build a derivation tree for <code>if false then t else false</code>.</p>
 
 <div class="center">
-  <img class="wide" src="/assets/images/diagrams/bool-derivation-tree-example-assoc.png"></img>
+  <img class="wide" src="/assets/images/diagrams/math-envy-cs/bool-derivation-tree-example-assoc.png"></img>
 </div>
 
 <p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.</p>
@@ -755,7 +755,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>Translating this example into the grammar representation yields a form that will work with the inference rules.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-stuck.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-stuck.png"></img>
 </div>
 
 <p><em>e-inv</em> is applied to <code>(-&gt; true)()</code> because <code>-&gt; false</code> can&#39;t evaluate any further (it&#39;s a value in <code>v</code>), but then what? After applying <em>e-inv</em> the first subterm is <code>true</code> and there are no evaluation rules that apply values to an arguement. Without any rules to apply to a term that isn&#39;t a value, it&#39;s &quot;stuck&quot;.</p>
@@ -768,7 +768,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>And the derivation tree to match.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-not-stuck.png"></img>
 </div>
 
 <p>The value returned by the first lambda <strong>can</strong> be applied to an argument with <em>e-app</em> so the result of evaluation is <code>true</code>. Viewing the accompanying term with an additional space will provide contrast.</p>
@@ -779,7 +779,7 @@ Value  : bool                       { BooleanExpr $1 }
 <p>In this case, the derivation tree consists of a single inference rule, <em>e-app</em>.</p>
 
 <div class="center">
-  <img src="/assets/images/diagrams/cs-derivation-trees-not-stuck-with-space.png"></img>
+  <img src="/assets/images/diagrams/math-envy-cs/cs-derivation-trees-not-stuck-with-space.png"></img>
 </div>
 
 <p>Clearly the two terms are syntactically similar but each has a very different meaning. This semantic differentiation makes it possible to think about a concrete notion of semantic ambiguity in a programming language. Informally, if two terms are <em>very similar</em> syntactically but have different derivation trees they are semantically ambiguous.</p>
@@ -837,11 +837,11 @@ Value  : bool                       { BooleanExpr $1 }
 
   
     
-    	<li><a href="#coffeescript-ref">coffeescript <span>2</span></a></li>
+    	<li><a href="#coffeescript-ref">coffeescript <span>3</span></a></li>
     
     	<li><a href="#javascript-ref">javascript <span>10</span></a></li>
     
-    	<li><a href="#math-ref">math <span>10</span></a></li>
+    	<li><a href="#math-ref">math <span>11</span></a></li>
     
   
 
@@ -900,276 +900,7 @@ Value  : bool                       { BooleanExpr $1 }
     
     	<li><a href="#jquery-ref">jquery <span>8</span></a></li>
     
-    	<li><a href="#math-ref">math <span>10</span></a></li>
-    
-  
-
-
-
-    </ul>
-    
-  </div>
-</div>
-
-<div class="page-header">
-  <h1><a href="//johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal">Splitting jQuery in Two, A Proposal</a></h1>
-</div>
-
-<div class="row-fluid">
-  <div class="span10 text">
-    <p>Previously I&#39;ve described applications of Category Theory in JavaScript and with jQuery. An earlier post, <a href="http://johnbender.us/2012/02/29/faster-javascript-through-category-theory/">Faster JavaScript with Category Theory</a>, identified a possible performance benefit where composition could be shown to hold for a Functor from <strong>Html</strong> to <strong>Jqry</strong>. This post follows up with a more concrete look at that optimization and suggests an additional, farther reaching, implication for the two categories.</p>
-
-<h2 id="toc_10">Quick Recap</h2>
-
-<p>Previously we defined the categories <strong>Html</strong> and <strong>Jqry</strong>, providing a concrete mathematical representation of DOM manipulations in raw form and their counterparts used inside the jQuery library.</p>
-
-<p><strong>Html</strong> is the category of all DOM elements and JavaScript functions that manipulate them. It represents the basic building blocks of client side web applications that most web developers are familiar with, eg</p>
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">setFoo</span><span class="p">(</span> <span class="nx">elem</span> <span class="p">){</span>
-  <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
-  <span class="k">return</span> <span class="nx">elem</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p>where <code>elem</code> is any object implementing the <code>HTMLElement</code> interface.</p>
-
-<p><strong>Jqry</strong> is the category of jQuery objects (sets of DOM elements) and jQuery methods, eg</p>
-<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">addClass</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
-</code></pre>
-</div>
-
-<p>Where the jQuery &quot;object-set&quot; of divs selected from the DOM is an example object in <strong>Jqry</strong> and <code>addClass</code> is an example morphism.</p>
-
-<p>We also saw that defining a mapping (Functor) from <strong>Html</strong> to <strong>Jqry</strong> and proving that composition is preserved suggests a possible performance win in the form of loop fusion. The two components of the mapping turned out to be jQuery&#39;s dollar function and <code>$.map</code> for objects and morphisms respectively. The important equivalence, preserving composition:</p>
-<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">g</span><span class="p">().</span><span class="nx">f</span><span class="p">()</span> <span class="o">===</span> <span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="nx">cmps</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">g</span><span class="p">)</span> <span class="p">)</span>
-</code></pre>
-</div>
-
-<p>which is an equivalence of two approaches (one of which requires one less iteration to accomplish the same task). This, viewed in the light of &quot;interesting results from math&quot;, is relatively exciting but the performance implications warranted some further exploration, which takes us to the meat of this post.</p>
-
-<h2 id="toc_11">Performance Reality</h2>
-
-<p>The most obvious and the least labor-intensive candidates for profiling loop fusion are jQuery methods that already rely on an <em>abstracted</em> <strong>Html</strong> morphism. They represent a real use case for that separation of functionality within the library.</p>
-
-<p>The one I chose was <code>jQuery.fn.removeAttr</code>. It relies on <code>jQuery.removeAttr</code> (note that this is not defined on the jQuery object prototype <code>jQuery.fn</code>) for its DOM manipulations and uses the <code>jQuery.fn.each</code> method to iterate over the set of elements.</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Current jQuery.fn.removeAttr implementation in jQuery Core</span>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">jQuery</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="k">this</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span>
-</code></pre>
-</div>
-
-<p>Testing a set of chained calls to <code>jQuery.fn.removeAttr</code> against a single loop with three inlined invocations of <code>jQuery.removeAttr</code> <a href="http://jsperf.com/remove-attr-composed-vs-chained-simple-methods/2">yielded</a> a fairly consistent 5-10 percent performance increase (blue bars). This was an <a href="http://johnbender.github.com/presentation-faster-js/#24">incentive</a> of sorts that I used to keep people from running for the exits during my JQCON talk.</p>
-
-<p><img src="http://i.imgur.com/alVRh.png" alt="incentive"></p>
-
-<p>Unfortunately this doesn&#39;t accurately represent the reality of most jQuery methods. The majority of the performance benefit appears to arise from the reduction in the number of function calls when a single loop with many invocations is used in place of multiple loop callbacks and function invocations. In the majority of jQuery methods the DOM alterations are actually inlined. That is, they don&#39;t live in an abstracted <strong>Html</strong> morphism at all -- the DOM elements are manipulated inside the loop and then returned to the jQuery &quot;object-set&quot;.</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// More likely/performant version with inlined dom manipulation</span>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">value</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">elem</span><span class="p">;</span>
-
-    <span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">){</span>
-        <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">length</span><span class="p">];</span>
-
-        <span class="c1">// ...</span>
-        <span class="c1">// attr removal in jQuery.removeAttr</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre>
-</div>
-
-<p>Running a similar test but with an inlined implementation of <code>jQuery.fn.removeAttr</code> for the chained version resulted in a <a href="http://jsperf.com/chained-sequence-or-composition-removeattr/2">performance profile</a> mostly indistinguishable from the manually fused alternative (blue and yellow bars in the graph below). While this might require more investigation it was fair to conclude that fusion isn&#39;t compelling enough to warrant further work. Luckily a fruitful conversation with some of the attendees at my talk gave me a few ideas that might ultimately provide more value in terms of library architecture and performance.</p>
-
-<p><img src="http://i.imgur.com/Qtq7Q.png" alt="performance profile"></p>
-
-<h2 id="toc_12">Even My Presentation had Side Effects</h2>
-
-<p>Most of the jQuery Core team was at the breakout session doing dramatic readings of bugs when I gave my presentation<sup>1</sup> but there was a notable attendee in the front row, Yehuda Katz. He asked after my talk if the test methods were implemented using actual composition or simply invoked directly in serial (they were), alluding to the fact that the additional function call added with <code>cmps</code> would negate the reduced loop iteration operations.</p>
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">cmps</span><span class="p">(</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// the closure creates an additional function call</span>
-  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">a</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">f</span><span class="p">(</span><span class="nx">g</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
-  <span class="p">};</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p>As we saw earlier, even when DOM manipulation is abstracted into a function and invoked directly it&#39;s likely in the best case to perform at/near parity with a jQuery method built on inlined DOM manipulation code. Consequently, adding the extra function wrapper and call to the execution path with <code>cmps</code> may result in a slowdown (red bars in the previous graph).</p>
-
-<p>Yehuda subsequently also expressed interest in the idea of clearly separating the <strong>Html</strong> morphisms from the <strong>Jqry</strong> morphisms that rely on them. That is, every jQuery method that manipulates the DOM has some form of an <strong>Html</strong> morphism living inside it, be it inlined or abstracted into its own function (like <code>removeAttr</code>). To illustrate we&#39;ll take a naive implementation of <code>jQuery.fn.addClass</code> and separate the DOM manipulation out. First, the current norm as inlined functionality:</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// !! Inlined DOM element manipulation</span>
-        <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
-        <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span>
-</code></pre>
-</div>
-
-<p>And then, abstracted:</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
-<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// !! Abstracted manipulation. Too expensive?</span>
-        <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span>
-
-<span class="c1">// Html morphism</span>
-<span class="kd">function</span> <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
-    <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
-<span class="p">};</span>
-</code></pre>
-</div>
-
-<p>He rightly pointed out that from an architectural standpoint, this is a fairly compelling idea, so long as the extra function call doesn&#39;t affect performance too drastically. Taking <code>jQuery.fn.removeAttr</code> as the test subject again, I inlined the contents of <code>jQuery.removeAttr</code> and compared it to the original. For small sets it appears that the extra function call is negligible<sup>2</sup>.</p>
-
-<p><img src="http://i.imgur.com/6XOM0.png" alt="extra function call"></p>
-
-<p>Just to be sure, it&#39;s worth checking against larger jQuery object-sets. For large sets, as with loop fusion, the DOM manipulations outweigh something as fundamental as function invocation.</p>
-
-<p><img src="http://i.imgur.com/cTeMr.png" alt="extra function call larger set"></p>
-
-<p>You can see in both cases that the overhead of abstracting the DOM manipulation into a function is mostly tenable, the notable exception being smaller sets of elements in Opera. If that small additional overhead in the common case is acceptable it exposes some benefits that the library can provide to framework authors and performance-minded developers.</p>
-
-<h2 id="toc_13">Architecture Benefits</h2>
-
-<p>Clearly, there are benefits from a clean separation for both the library itself and for advanced users relying on jQuery&#39;s inbuilt &quot;experience&quot; with browser compatibility. If the two sides are kept separate jQuery Core could provide a build target that only includes the DOM manipulation and reduces the overall size of the gzipped include. Mobile devices have made file size a serious concern (belaboring the obvious) not just because of wire weight but also parsing time, and the reduction of code in this case could be significant.</p>
-
-<p>What&#39;s more, external framework authors and other advanced users would have a more foundational building block to make use of without the commitment to the entire jQuery source. For example users who are happy to rely on <code>querySelectorAll</code> (which enjoys relatively broad support) and who don&#39;t need selectors/effects/etc could simply use the distilled knowledge in this hypothetical DOM manipulation core.</p>
-
-<p>Less interesting for end-users is the benefit to the Core team in terms of separating concerns and testing. For the DOM manipulations this change delineates <code>jQuery.fn</code> methods as a usability layer on top of the underlying <strong>Html</strong> morphism. If you ascribe to the ideas that fall out of the dependency between the two categories then <strong>Jqry</strong> has always had this role. Also, where testing is concerned, the DOM manipulation methods can be tested in isolation from the code that makes jQuery easy to use (with stubbing in the latter case).</p>
-
-<h2 id="toc_14">Performance Benefits</h2>
-
-<p>Assuming a perfect world where every jQuery method involved in DOM element manipulation is built on an <strong>Html</strong> morphism there are a couple of possible performance benefits. First, and least impactful is that it makes rewrapping DOM elements using the <code>$</code>/<code>jQuery</code> function unnecessary in many cases.</p>
-<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;.foo&quot;</span> <span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Current popular idiom</span>
-    <span class="nx">$</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
-
-    <span class="c1">// - In favor of -&gt;</span>
-
-    <span class="c1">// Using the underlying morphism</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
-<span class="p">});</span>
-</code></pre>
-</div>
-
-<p>Rewrapping DOM objects with a jQuery object in event and loop callbacks to get access to jQuery methods is common practice. If the same functionality on jQuery objects can be used to directly manipulate DOM elements, the rewrapping can be avoided all together. This isn&#39;t likely to be a huge win, but the reduction in setup for iterating over jQuery objects cannot be overlooked.</p>
-
-<p>Much more interesting though is the possibility of stripping down the functionality provided by the DOM element manipulations. That is, removing the user-friendly layer associated with many jQuery methods and only providing the cross platform working core of each manipulation could have a serious performance and size impact. Again, looking at the <code>jQuery.fn.removeAttr</code> implementation, it&#39;s built to accept a whitespace-delimited list for the attribute name value as a concession to terse manipulations.</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Friendly</span>
-<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo bar&quot;</span> <span class="p">);</span>
-
-<span class="c1">// Not-friendly?</span>
-<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
-</code></pre>
-</div>
-
-<p>The performance benefits of using the manipulations directly without this additional feature are real. Simply stripping the split and loop from <code>jQuery.fn.removeAttr</code> provided nearly a 25% gain<sup>3</sup>.</p>
-
-<p><img src="http://i.imgur.com/wA8wf.png" alt="friendliness"></p>
-
-<p>Again, the jQuery method would retain all its old functionality. The proposed underlying morphism is a new API. It can stick to what it does best: cross-platform manipulation of DOM elements. When a user is concerned about performance they can start looking at the ways their application uses jQuery and leverage a less friendly but still beautiful &quot;low-level&quot; API for DOM manipulations to save execution time.</p>
-
-<h2 id="toc_15">Beautiful API Design</h2>
-
-<p>Given the benefits in library size reduction a separate set of methods can provide, these methods should all be available on some top level namespace. <code>$</code>/<code>jQuery</code> may be the most obvious choice but this requires some consideration due to compatibility concerns with existing methods like <code>jQuery.removeAttr</code> and <code>jQuery.css</code>.</p>
-
-<p>More importantly it might be useful, as suggested in the previous posts, to provide the method as an attribute of its associated jQuery method. That is, <code>jQuery.removeAttr</code> would exist on the <code>jQuery</code> object and also as something like <code>jQuery.fn.removeAttr.domManip</code> or <code>jQuery.fn.removeAttr.alterOne</code><sup>4</sup>.</p>
-
-<p>To illustrate, let&#39;s look at an example with two conversions of a simple method chain assuming the jQuery function as the pure DOM manipulation namespace:</p>
-<div class="highlight"><pre><code class="javascript"><span class="c1">// 1. Unoptimized</span>
-<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">attr</span><span class="p">(</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">).</span><span class="nx">css</span><span class="p">(</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
-
-<span class="c1">// 2. Optimized with jQuery.fn.each</span>
-<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// without check for null to remove, and hooks</span>
-  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
-
-  <span class="c1">// without hook</span>
-  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
-<span class="p">});</span>
-
-<span class="c1">// 3. Optimized in a while loop to avoid extra calls</span>
-<span class="kd">var</span> <span class="nx">$divs</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">),</span>
-    <span class="nx">length</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-    <span class="nx">elem</span><span class="p">;</span>
-
-<span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="nx">elem</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">[</span><span class="nx">elem</span><span class="p">];</span>
-
-  <span class="c1">// without check for null to remove, and hooks</span>
-  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
-
-  <span class="c1">// without hook</span>
-  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<h2 id="toc_16">What happened to the Math?</h2>
-
-<p>Long story short: I&#39;m looking into it. There is certainly a dependent relationship between the set of <strong>Jqry</strong> morphisms that operate on the contents of <strong>Jqry</strong> objects (remember there are <strong>Jqry</strong> morphisms that don&#39;t, eg. <code>jQuery.fn.first</code> only alters the container) and the underlying <strong>Html</strong> morphisms. That subset of morphisms and all jQuery objects may form a subcategory <strong>Jqry</strong><sub>h</sub>.</p>
-
-<p><img src="http://i.imgur.com/tTwkz.png" alt="jquery sub h equation"></p>
-
-<p>Where <em>F</em> is the functor previously defined (eq 1), the objects of <strong>Jqry</strong><sub>h</sub> are the objects of <strong>Jqry</strong> (eq 3) and the morphisms of <strong>Jqry</strong><sub>h</sub> are <strong>Html</strong> morphisms lifted into <strong>Jqry</strong> with <em>F</em> (eq 3). Do note that morphisms of <strong>Jqry</strong><sub>h</sub> are a proper subset of <strong>Jqry</strong> because of methods like <code>jQuery.fn.first</code> (eq 4).</p>
-
-<p>I&#39;m sure there&#39;s a more elegant way to represent the two sets, objects and morphisms, of this subcategory but this works for me now. Also, it&#39;s not clear that there are useful practical implications for the dependency aside from how it might otherwise affect our perception of jQuery as a library. I intend to look into this a bit more when I have time.</p>
-
-<h2 id="toc_17">Further Investigation Required</h2>
-
-<p>If the goals presented here turn out to be of real value there&#39;s a lot of work left to do. Most importantly the performance overhead of an extra function call in so many jQuery methods needs to be examined thoroughly, not just in jQuery Core but in dependent projects like UI, Mobile, and possibly plugins. Hopefully the initial impression of fast function calls bears out in further testing.</p>
-
-<p>It would also be useful to examine the conversion of some complex applications to the <strong>Html</strong> morphisms to see what kind of cognitive overhead is incurred. If no one wants to use the underlying functions because they are a pain, then the exercise would be futile. This examination should includes aspects like namespacing and how each function is made available to the end user in both the full and &quot;stripped down&quot; builds.</p>
-
-<p>Ultimately the ideas here are a rough sketch.</p>
-
-<h3 id="toc_18">Footnotes</h3>
-
-<ol>
-<li>To be totally clear this isn&#39;t a jab at the core team. I&#39;m under the impression that the readings are really entertaining. Moreover the talks at conferences are rarely really interesting to the presenters in my experience. Most of the time you can find them chatting/hacking in the halls, which might indicate some level of boredom with the material and may even be a leading indicator of when someone is ready to start submitting talk proposals in terms of experience/content knowledge.</li>
-<li><em>Appears</em> is the key word here. More testing in varied situations is really required to make sure this small sample set is consistent with other jQuery methods.</li>
-<li>The benefits here will vary widely depending on the complexity of the &quot;user-friendliness&quot; built into a given jQuery method. Disclaim all the things!</li>
-<li><code>alterOne</code> was, again, suggested by Yehuda during our discussion.</li>
-<li>The reader will have noted the conspicuous absence of IE in my performance test results. For whatever reason there was a consistent exception raised when executing the test code in IE that I haven&#39;t had time to investigate. For serious consideration of the content in this post those numbers need to be included.</li>
-<li>perf links: <a href="http://jsperf.com/chained-sequence-or-composition-removeattr/2">chained, sequence, or composed</a>, <a href="http://jsperf.com/user-friendliness-overhead-for-remove-attr/2">user friendlyness overhead</a>, <a href="http://jsperf.com/additional-function-call-overhead-for-remove-attr/3">additional function call overhead</a></li>
-<li>Special thanks to <a href="http://twitter.com/keyist">Tim Goh</a> for reviewing this post.</li>
-</ol>
-
-  </div>
-
-  <div id="info" class="span2">
-    
-
-    <h4>Published</h4>
-    <div class="date">
-      <span>19 Jul 2012</span>
-    </div>
-
-    
-    <h4>Tags</h4>
-    <ul class="tag_box">
-      
-      
-
-
-  
-    
-    	<li><a href="#javascript-ref">javascript <span>10</span></a></li>
-    
-    	<li><a href="#jquery-ref">jquery <span>8</span></a></li>
-    
-    	<li><a href="#math-ref">math <span>10</span></a></li>
+    	<li><a href="#math-ref">math <span>11</span></a></li>
     
   
 
