@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-01-17T23:24:25-08:00</updated>
+ <updated>2013-01-18T09:54:05-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -17,7 +17,7 @@
    <link href="http://johnbender.github.com/2013/01/15/system-f-in-coffeescript"/>
    <updated>2013-01-15T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2013/01/15/system-f-in-coffeescript</id>
-   <content type="html">&lt;p&gt;System F is a variant of the Lambda Calculus. It &amp;quot;mixes&amp;quot; types and terms relatively freely compared with the average statically typed programming language. System F and its variants are used frequently in the study of typed computation and an extended form, System FC, plays an important role in GHC&amp;#39;s compilation process [1]. This post will translate the grammars of the Lambda Calculus, Simply Typed Lambda Calculus, and finally System F into a small subset of CoffeeScript while covering the basics of application and abstraction in each.&lt;/p&gt;
+   <content type="html">&lt;p&gt;System F and its variants are used frequently in the study of typed computation and an extended form, System FC, plays an important role in GHC&amp;#39;s compilation process [1]. This post will attempt to translate the grammars of the Lambda Calculus, Simply Typed Lambda Calculus, and finally System F into a small subset of CoffeeScript while covering the basics of application and abstraction in each. Hopefully, through studying the basics here, readers who are interested in learning more about type theory and the lambda calculi will feel a little less intimidated by the notation and concepts.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_40&quot;&gt;Lambda Calculus&lt;/h2&gt;
 
@@ -27,7 +27,7 @@
   &lt;img class=&quot;slim&quot; src=&quot;/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-grammars.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;In both cases &lt;code&gt;x&lt;/code&gt; represents a variable and &lt;code&gt;t t&lt;/code&gt; represents application of one term to another. The only real difference is the lambda abstraction syntax.&lt;/p&gt;
+&lt;p&gt;In both cases &lt;code&gt;x&lt;/code&gt; represents a variable and &lt;code&gt;t t&lt;/code&gt; represents application of one term to another. The only real difference is the lambda abstraction syntax (red).&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img class=&quot;slim&quot; style=&quot;width: 50%&quot; src=&quot;/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-abstraction-examples.png&quot;&gt;&lt;/img&gt;
@@ -35,13 +35,13 @@
 
 &lt;p&gt;In the Lambda Calculus, abstraction involves preceding or wrapping a term &lt;code&gt;t&lt;/code&gt; with &lt;code&gt;λx.t&lt;/code&gt; which captures or binds the variable &lt;code&gt;x&lt;/code&gt; inside the term &lt;code&gt;t&lt;/code&gt;. In the example &lt;code&gt;t&lt;/code&gt; is &lt;code&gt;λx.y&lt;/code&gt;, using the abstraction &lt;code&gt;λy.t&lt;/code&gt; creates a new term &lt;code&gt;λy.λx.y&lt;/code&gt; (otherwise known as the K-combinator). Note that the &lt;code&gt;x&lt;/code&gt; in &lt;code&gt;λx.t&lt;/code&gt; shown in the grammar could be any variable like &lt;code&gt;y&lt;/code&gt; or &lt;code&gt;z&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;In CoffeeScript the same term is &lt;code&gt;(x) -&amp;gt; y&lt;/code&gt; and applying the CoffeeScript version of abstraction yields &lt;code&gt;(y) -&amp;gt; (x) -&amp;gt; y&lt;/code&gt;. Viewing the &lt;a href=&quot;http://coffeescript.org/#try:(y)%20-%3E%20(x)%20-%3E%20y&quot;&gt;translation&lt;/a&gt; to JavaScript is informative because both behave the same way when applied to a single argument.&lt;/p&gt;
+&lt;p&gt;In CoffeeScript we can do that same thing with the term &lt;code&gt;(x) -&amp;gt; y&lt;/code&gt; by applying the CoffeeScript version of abstraction, yielding &lt;code&gt;(y) -&amp;gt; (x) -&amp;gt; y&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/system-f-cs/untyped-lambda-calculus-application-examples.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The application of a term that shows two abstractions (&lt;code&gt;y&lt;/code&gt; and &lt;code&gt;x&lt;/code&gt;) to a single argument results in a lambda term that can be applied to another term. The &lt;a href=&quot;http://coffeescript.org/#try:console.log%20((y)%20-%3E%20(x)%20-%3E%20y)%20((x)%20-%3E%20y)&quot;&gt;translation&lt;/a&gt; to JavaScript shows that a function object is returned ready for application. The concept of &lt;em&gt;application&lt;/em&gt; in the Lambda Calculus is really the idea of substitution. You can see that the &lt;code&gt;z&lt;/code&gt; is substituted for the instances of &lt;code&gt;y&lt;/code&gt; in the body of the lambda term. Similarly in CoffeeScript the scope captures the value for &lt;code&gt;y&lt;/code&gt; and now all occurrences in the body of the lambda term will behave as &lt;code&gt;z&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The application of a term that shows two abstractions (&lt;code&gt;y&lt;/code&gt; and &lt;code&gt;x&lt;/code&gt;) to a single argument results in another term. The &lt;a href=&quot;http://coffeescript.org/#try:z%20%3D%20undefined%0A%0A((y)%20-%3E%20(x)%20-%3E%20y)%20z&quot;&gt;translation&lt;/a&gt; to JavaScript shows that a function object is returned ready for application. The concept of &lt;em&gt;application&lt;/em&gt; in the Lambda Calculus is really the idea of substitution. You can see that the &lt;code&gt;z&lt;/code&gt; is substituted for the instances of &lt;code&gt;y&lt;/code&gt; in the body of the inner lambda term. Similarly in CoffeeScript the outer lambda puts &lt;code&gt;y&lt;/code&gt; in scope and now all occurrences in the body of the lambda term will behave as &lt;code&gt;z&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The notion of &lt;em&gt;closed&lt;/em&gt; terms in the Lambda Calculus is a point of departure with CoffeeScript. A closed term has no free variables. For example, in &lt;code&gt;λx.y&lt;/code&gt; the &lt;code&gt;y&lt;/code&gt; variable is called &lt;em&gt;free&lt;/em&gt; because it hasn&amp;#39;t been bound by an enclosing abstractions. Adding an additional abstraction to get &lt;code&gt;λy.λx.y&lt;/code&gt; captures the &lt;code&gt;y&lt;/code&gt;. The JavaScript generated by the CoffeeScript &lt;code&gt;(x) -&amp;gt; y&lt;/code&gt; will throw a reference error without a definition for &lt;code&gt;y&lt;/code&gt; in scope, in contrast to the lambda term which will simply discard its argument and produce the &lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
 
@@ -53,7 +53,7 @@
   &lt;img src=&quot;/assets/images/diagrams/system-f-cs/simply-typed-lambda-calculus-grammars.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;It adds a type requirement to the argument of abstractions. The CoffeeScript equivalent adds a function that compares a type argument to the argument term. To keep things simple, &lt;code&gt;ifft&lt;/code&gt; will throw an exception when the types don&amp;#39;t line up. This will be more interesting later with System F when the type &lt;code&gt;τ&lt;/code&gt; can be defined after the fact instead of inside or with the abstraction.&lt;/p&gt;
+&lt;p&gt;It adds a type requirement to the argument of abstractions. The CoffeeScript equivalent adds a function that compares a type argument to the argument term. To keep things simple, &lt;code&gt;ifft&lt;/code&gt; will throw an exception when the types don&amp;#39;t line up.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;coffeescript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# If and only if (iff) the type (t) is correct&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;ifft = &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;(type, obj) -&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;instanceof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;
@@ -61,47 +61,47 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;This definition assumes that the browser&amp;#39;s &lt;code&gt;instanceof&lt;/code&gt; implementation is behaving properly but certainly serves the purpose here. Assuming the type &lt;code&gt;Foo&lt;/code&gt; is defined for the calculus and with &lt;code&gt;class Foo&lt;/code&gt; in the CoffeeScript, we can add types to the original K-combinator example.&lt;/p&gt;
+&lt;p&gt;This definition assumes that the browser&amp;#39;s &lt;code&gt;instanceof&lt;/code&gt; implementation is behaving properly but certainly serves the purpose of illustration here. Assuming the type &lt;code&gt;Foo&lt;/code&gt; is defined for the calculus and with &lt;code&gt;class Foo&lt;/code&gt; in the CoffeeScript, we can add types to a simple example.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img class=&quot;slim&quot; src=&quot;/assets/images/diagrams/system-f-cs/simply-typed-lambda-calculus-typing-examples.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;There&amp;#39;s a larger discussion to be had about how the types are used in both settings. In the CoffeeScript it&amp;#39;s very much a delayed form of typing but in the Lambda Calculus it defines the term and its capabilities [2].&lt;/p&gt;
-
-&lt;p&gt;Also worth discussing are the forms &lt;code&gt;τ&lt;/code&gt; can take. Some definition of the Simply Typed Lambda Calculus define a set of base types like natural numbers or booleans. Along with that though they must define a set of base constant values that can represent those types. For natural numbers a base constant of &lt;code&gt;0&lt;/code&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Church_encoding&quot;&gt;church numerals&lt;/a&gt; allows users to represent all the natural numbers. Here we&amp;#39;ve assumed the simple case allowing only the function type &lt;code&gt;τ → τ&lt;/code&gt;, meaning every argument must be a lambda term.&lt;/p&gt;
+&lt;p&gt;The types &lt;code&gt;τ&lt;/code&gt; can represent are an important part of the Simply Typed Lambda Calculus. Some definitions provide a set of base types like natural numbers or booleans. Along with that comes a set of base constant values that can represent those types. For natural numbers a base constant of &lt;code&gt;0&lt;/code&gt; and &lt;a href=&quot;http://en.wikipedia.org/wiki/Church_encoding&quot;&gt;church numerals&lt;/a&gt; allows users to represent all the natural numbers. Here we&amp;#39;ve assumed the simple case allowing only the function type &lt;code&gt;τ → τ&lt;/code&gt;, meaning every argument must be a lambda term.&lt;/p&gt;
 
 &lt;p&gt;Unfortunately even the simple case throws a rather large monkey wrench into the works. That&amp;#39;s because there&amp;#39;s no way to write &lt;code&gt;ifft&lt;/code&gt; such that it can know or inspect the arguments type and return type of a lambda term (JavaScript function). In spite of that let&amp;#39;s proceed to see what we can learn about System F.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_42&quot;&gt;System F&lt;/h2&gt;
 
-&lt;p&gt;System F adds the notion of &lt;em&gt;polymorphic types&lt;/em&gt; to the Simply Typed Lambda Calculus. The term polymorphic carries a lot of baggage, but here it is &lt;em&gt;parametric polymorphism&lt;/em&gt; [3]. That is, the type of a term can change depending on the setting. Unsurprisingly this is very similar to the parametric polymorphism in Haskell.&lt;/p&gt;
+&lt;p&gt;System F adds the notion of &lt;em&gt;polymorphic types&lt;/em&gt; to the Simply Typed Lambda Calculus. The term polymorphic carries a lot of baggage, but here it is &lt;em&gt;parametric polymorphism&lt;/em&gt; [3]. That is, the type of a term can change depending on the setting.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/system-f-cs/system-f-grammars.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;System F makes two extensions. &lt;code&gt;Λα.e&lt;/code&gt; is a type abstraction on the type variables in terms and &lt;code&gt;e [τ]&lt;/code&gt; is the application of a type to a term that has been wrapped by a type abstraction. Note that the abstraction uses &lt;code&gt;α&lt;/code&gt; to represent a type variable and &lt;code&gt;τ&lt;/code&gt; to represent concrete types. Since CoffeeScript&amp;#39;s &amp;quot;types&amp;quot; are really constructors functions, all that&amp;#39;s needed is an enclosing lambda to pull the type argument to &lt;code&gt;ifft&lt;/code&gt; into scope and an application to a constructor function at runtime.&lt;/p&gt;
+&lt;p&gt;System F makes two extensions. &lt;code&gt;Λα.e&lt;/code&gt; is a type abstraction on the type variables in terms and &lt;code&gt;e [τ]&lt;/code&gt; is the application of a type to a term that has been wrapped by a type abstraction. Note that the abstraction uses &lt;code&gt;α&lt;/code&gt; to represent a type variable and &lt;code&gt;τ&lt;/code&gt; to represent types that may or may not contain type variables. Since CoffeeScript&amp;#39;s &amp;quot;types&amp;quot; are really constructor functions, all that&amp;#39;s needed is an enclosing lambda to pull the type argument to &lt;code&gt;ifft&lt;/code&gt; into scope and an application to a constructor function at runtime.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img class=&quot;slim&quot; src=&quot;/assets/images/diagrams/system-f-cs/system-f-type-abstraction-examples.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;For System F the type abstraction is very specific. It works at the type level [4]. In CoffeeScript, on the other hand, it&amp;#39;s just another lambda abstraction that puts the constructor function in scope as a lambda argument. In both cases when the term is applied to a type, the type variable &lt;code&gt;α&lt;/code&gt; changes to that type.&lt;/p&gt;
+&lt;p&gt;For System F the type abstraction is very specific. It works at the type level [4]. In CoffeeScript, on the other hand, it&amp;#39;s just another lambda abstraction that puts the constructor function in scope as a lambda argument. In both cases when the term is applied to a type a substitution of the type for the type variable &lt;code&gt;α&lt;/code&gt; takes place, just like regular (term) abstractions.&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/system-f-cs/system-f-type-application-examples.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;It&amp;#39;s possible to make the type abstraction a bit more robust in the CoffeeScript by verifying that the argument is at least a function. A more adventuresome individual might alter CoffeeScript to annotate constructor function objects with a property that could be used to set them apart and compare them [5].&lt;/p&gt;
+&lt;p&gt;Again there is an important exception with regards to the types permitted in System F that makes the &lt;code&gt;ifft&lt;/code&gt; even more inadequate than it was with the Simply Typed Lambda Calculus. Not only is there no way to write &lt;code&gt;ifft&lt;/code&gt; so that it can properly check against lambda types but in addition System F defines universally quantified types. This means that a lambda can be polymorphic and operate without knowing anything about the type of its argument.&lt;/p&gt;
 
-&lt;p&gt;Again there is an important exception with regards to the types that are permitted in System F that makes the &lt;code&gt;ifft&lt;/code&gt; even more inadequate than it was with the Simply Typed Lambda Calculus. Not only is there no way to write &lt;code&gt;ifft&lt;/code&gt; so that it can properly check against lambda types but in addition System F defines universally quantified types. This means that a lambda can be polymorphic and operate without knowing anything about the type of its argument.&lt;/p&gt;
-
-&lt;p&gt;For example the identity combinator &lt;code&gt;Λα.λx:α.x&lt;/code&gt;, or in CoffeeScript &lt;code&gt;(α) -&amp;gt; (x) -&amp;gt; ifft(α, x); x&lt;/code&gt;, has the polymorphic type &lt;code&gt;∀α.α → α&lt;/code&gt;. That is, its type isn&amp;#39;t determined until a type application takes place. The issue arises when the a combinator like identity is passed as an argument to another lambda term that expects a polymorphic function. Again, &lt;code&gt;ifft&lt;/code&gt; can&amp;#39;t check the types of a combinator if a type has been applied and it certainly can&amp;#39;t check that the combinator is type agnostic in its dealings (polymorphic).&lt;/p&gt;
+&lt;p&gt;For example the identity combinator &lt;code&gt;Λα.λx:α.x&lt;/code&gt;, or in CoffeeScript &lt;code&gt;(α) -&amp;gt; (x) -&amp;gt; ifft(α, x); x&lt;/code&gt;, has the polymorphic type &lt;code&gt;∀α.α → α&lt;/code&gt;. That is, its type isn&amp;#39;t determined until a type application takes place or it &amp;quot;works&amp;quot; for all types. The issue arises when a combinator like identity is passed as an argument to another lambda term that expects a polymorphic function. Again, &lt;code&gt;ifft&lt;/code&gt; can&amp;#39;t check the types of a combinator if a type has been applied and it certainly can&amp;#39;t check that the combinator is type agnostic in its dealings (polymorphic).&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_43&quot;&gt;Strong and Normal&lt;/h2&gt;
 
-&lt;p&gt;System F has some really neat properties. Most importantly System F is &lt;em&gt;strongly normalizing&lt;/em&gt;. That means that it always terminates and always reduces to a normal form when the terms are well typed (the types line up properly). We might have come up short of a really meaningful translation but hopefully it has demystified some of these calculi.&lt;/p&gt;
+&lt;p&gt;System F has some really neat properties. Most importantly System F is &lt;em&gt;strongly normalizing&lt;/em&gt;. That means that it always terminates and always reduces to a normal form when the terms are well typed (the types line up properly). That alone makes it worth studying.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s also possible to make the type abstraction a bit more robust in the CoffeeScript by verifying that the argument is at least a function. A more adventuresome individual might alter CoffeeScript to annotate constructor function objects with a property that could be used to set them apart and compare them [5].&lt;/p&gt;
+
+&lt;p&gt;Even if we came up short of a really meaningful translation, hopefully it has demystified parts of how these calculi work. If you want to learn more I suggest reading &lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce/dp/0262162091&quot;&gt;&lt;em&gt;Types and Programming Languages&lt;/em&gt;&lt;/a&gt; by Pierce (not an affiliate link)1.&lt;/p&gt;
 
 &lt;h3 id=&quot;toc_44&quot;&gt;Footnotes&lt;/h3&gt;
 

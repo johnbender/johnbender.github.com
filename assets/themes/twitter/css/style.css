@@ -86,7 +86,7 @@ h1 > a:hover {
 
 .navbar-inner {
   background-image: none;
-  background-color: #dedede;
+  background-color: #ebebeb;
   text-transform: lowercase;
   padding-right: 20px;
   border-radius: 0;
@@ -121,7 +121,7 @@ h1 > a:hover {
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
   color: #333;
   text-decoration: none;
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
 }
 
 .nav > li, nav > li.active {
