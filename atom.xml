@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-01-23T12:19:53-08:00</updated>
+ <updated>2013-01-28T10:22:51-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -101,7 +101,7 @@
 
 &lt;p&gt;It&amp;#39;s also possible to make the type abstraction a bit more robust in the CoffeeScript by verifying that the argument is at least a function. A more adventuresome individual might alter CoffeeScript to annotate constructor function objects with a property that could be used to set them apart and compare them [5].&lt;/p&gt;
 
-&lt;p&gt;Even if we came up short of a really meaningful translation, hopefully it has demystified parts of how these calculi work. If you want to learn more I suggest reading &lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce/dp/0262162091&quot;&gt;&lt;em&gt;Types and Programming Languages&lt;/em&gt;&lt;/a&gt; by Pierce (not an affiliate link)1.&lt;/p&gt;
+&lt;p&gt;Even if we came up short of a really meaningful translation, hopefully it has demystified parts of how these calculi work. If you want to learn more I suggest reading &lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce/dp/0262162091&quot;&gt;&lt;em&gt;Types and Programming Languages&lt;/em&gt;&lt;/a&gt; by Pierce (not an affiliate link).&lt;/p&gt;
 
 &lt;h3 id=&quot;toc_44&quot;&gt;Footnotes&lt;/h3&gt;
 
