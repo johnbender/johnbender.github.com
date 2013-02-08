@@ -4,13 +4,29 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-01-28T10:22:51-08:00</updated>
+ <updated>2013-02-07T22:22:40-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
    <email>john.m.bender@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Presentation: Math Envy and CoffeeScript's Foibles</title>
+   <link href="http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles"/>
+   <updated>2013-02-07T00:00:00-08:00</updated>
+   <id>http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles</id>
+   <content type="html">&lt;p&gt;I&amp;#39;d like to thank the good folks at &lt;a href=&quot;http://js.la&quot;&gt;js.la&lt;/a&gt; for putting on a great meetup and having me out to participate. You can see the slides at &lt;a href=&quot;http://johnbender.us/presentation-cs-foibles&quot;&gt;http://johnbender.us/presentation-cs-foibles&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;iframe src=&quot;http://player.vimeo.com/video/58872586&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://vimeo.com/58872586&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/58872586&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>System F in CoffeeScript</title>
@@ -793,17 +809,17 @@ Value  : bool                       { BooleanExpr $1 }
    <id>http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory</id>
    <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 &lt;a href=&quot;http://www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the same material at JQCON 2012 has been posted. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 &lt;a href=&quot;http://www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;560&quot; height=&quot;315&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
 &lt;a href=&quot;http://player.vimeo.com/video/44085271&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
@@ -1053,7 +1069,7 @@ Value  : bool                       { BooleanExpr $1 }
    <id>http://johnbender.github.com/2012/04/28/middleware-as-a-general-purpose-abstraction</id>
    <content type="html">It was my pleasure to give this presentation at LARubyConf in February. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-middleware/tree/master/samples&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-middleware&quot;&gt;presentation slides&lt;/a&gt; on Github and a big thanks to the fine folks at &lt;a href=&quot;http://confreaks.com&quot;&gt;Confreaks&lt;/a&gt; for posting the video.
 
-&lt;iframe width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/fcNaiP5tea0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/fcNaiP5tea0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 </content>
  </entry>
  

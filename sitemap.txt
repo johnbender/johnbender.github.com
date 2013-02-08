@@ -7,6 +7,7 @@ http://johnbender.github.com/rss.xml
 http://johnbender.github.com/cv.html
 http://johnbender.github.com/portfolio.html
 
+http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles
 http://johnbender.github.com/2013/01/15/system-f-in-coffeescript
 http://johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2
 http://johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles
