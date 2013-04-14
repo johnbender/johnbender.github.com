@@ -29,8 +29,7 @@
   -->
   </head>
 
-  <body>
-
+  <body class="">
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
@@ -49,15 +48,25 @@
     
       
       	
-        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
       	
       
     
   
     
       
+      	
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      	
+      
     
   
+    
+  
+    
+  
+    
+      
     
   
     
@@ -68,14 +77,6 @@
       
       	
         <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
-      	
-      
-    
-  
-    
-      
-      	
-        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
       	
       
     
@@ -132,23 +133,23 @@
 </span>  });
 })( jQuery );</pre>
 
-<p>Developers altering the <code>click</code> callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.</p>
+Developers altering the <code>click</code> callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.
 
 <h2>Objects Not Functions</h2>
 
-<p>As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It&#39;s also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.</p>
+As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It's also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.
 
-<p>With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. <a href="http://mootools.net/" title="MooTools">MooTools</a> is a prime example in that it&#39;s <a href="http://mootools.net/docs/core/Class/Class" title="class system">Class</a> constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.</p>
+With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. <a href="http://mootools.net/" title="MooTools">MooTools</a> is a prime example in that it's <a href="http://mootools.net/docs/core/Class/Class" title="class system">Class</a> constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.
 
-<p>Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like <a href="http://documentcloud.github.com/backbone/#Model" title="Backbone Model">Backbone</a> and <a href="http://docs.sproutcore.com/#doc=SC.Object&src=false" title="Sproutcore Object">Sproutcore</a> provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his <a href="http://vimeo.com/22687694" title="Getting Truth from the DOM">presentation</a> &quot;Getting Truth Out of the DOM&quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.</p>
+Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like <a href="http://documentcloud.github.com/backbone/#Model" title="Backbone Model">Backbone</a> and <a href="http://docs.sproutcore.com/#doc=SC.Object&src=false" title="Sproutcore Object">Sproutcore</a> provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his <a href="http://vimeo.com/22687694" title="Getting Truth from the DOM">presentation</a> "Getting Truth Out of the DOM", attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.
 
-<p>Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript&#39;s object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it&#39;s prototype you can group, organize, and reuse common functionality quite easily<sup>1</sup>. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.</p>
+Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript's object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it's prototype you can group, organize, and reuse common functionality quite easily<sup>1</sup>. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.
 
-<p>Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it&#39;s necessary to address binding context (ie <code>this</code>) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).</p>
+Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it's necessary to address binding context (ie <code>this</code>) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).
 
 <h2>jQuery and Function.prototype.bind</h2>
 
-<p><del>One conspicuous absence from jQuery is a helper for function context binding</del> jQuery&#39;s answer for context binding is the <code>$.proxy</code> method. That is, it provides a way to guarantee the value of <code>this</code> during the invocation of a given function. <code>this</code> becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we&#39;ll build a library agnostic version.</p>
+<del>One conspicuous absence from jQuery is a helper for function context binding</del> jQuery's answer for context binding is the <code>$.proxy</code> method. That is, it provides a way to guarantee the value of <code>this</code> during the invocation of a given function. <code>this</code> becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we'll build a library agnostic version.
 
 <pre>
 <span class="keyword">function</span> <span class="function-name">AlertArea</span>( <span class="js2-function-param">$domElement</span> ){
@@ -169,7 +170,7 @@ AlertArea.prototype.<span class="function-name">onCloseClick</span> = <span clas
 </span>  <span class="builtin">this</span>.$domElement.hide();
 };</pre>
 
-<p>In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it&#39;s displayed. It also binds the prototype method <code>onCloseClick</code> to clicks on child elements matching the <code>div.close</code> selector. The problem here is that <code>this</code> in <code>onCloseClick</code> won&#39;t be the <code>AlertArea</code> object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the <code>this</code> value upon invocation a binding function is required.</p>
+In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it's displayed. It also binds the prototype method <code>onCloseClick</code> to clicks on child elements matching the <code>div.close</code> selector. The problem here is that <code>this</code> in <code>onCloseClick</code> won't be the <code>AlertArea</code> object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the <code>this</code> value upon invocation a binding function is required.
 
 <pre>
 <span class="keyword">function</span> <span class="function-name">bindContext</span>(<span class="js2-function-param">newThis</span>, <span class="js2-function-param">fn</span>) {
@@ -178,20 +179,18 @@ AlertArea.prototype.<span class="function-name">onCloseClick</span> = <span clas
   };
 }</pre>
 
-<p>This function takes as arguments a context (<code>newThis</code>) and a function (<code>fn</code>). It then creates a new function that, when invoked, will use the <code>apply</code> method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.</p>
-<div class="highlight"><pre><code class="text">&lt;pre&gt;
-</code></pre>
-</div>
+This function takes as arguments a context (<code>newThis</code>) and a function (<code>fn</code>). It then creates a new function that, when invoked, will use the <code>apply</code> method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.
 
-<p>Function.prototype.<span class="function-name">bind</span> = <span class="keyword">function</span>(<span class="js2-function-param">newThis</span>) {
-  <span class="keyword">var</span> <span class="variable-name">self</span> = <span class="builtin">this</span>;</p>
+    <pre>
+Function.prototype.<span class="function-name">bind</span> = <span class="keyword">function</span>(<span class="js2-function-param">newThis</span>) {
+  <span class="keyword">var</span> <span class="variable-name">self</span> = <span class="builtin">this</span>;
 
-<p><span class="keyword">return</span> <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">function</span>() {
     self.apply(newThis, arguments);
   };
-};</pre></p>
+};</pre>
 
-<p>With that in place the <code>this</code> value of the <code>onCloseClick</code> method can be guaranteed by altering the click binding</p>
+With that in place the <code>this</code> value of the <code>onCloseClick</code> method can be guaranteed by altering the click binding
 
 <pre>
 <span class="comment">// bind to the instances onCloseClick
@@ -266,9 +265,6 @@ $(<span class="string">"textarea"</span>).each(<span class="keyword">function</s
 <p>The only additional overhead is the function context bindings<sup>2</sup>, typing <code>TextArea</code> and <code>prototype</code>, and the instantiation. The upshot is a purpose built constructor where the <code>each</code> closure served before and a very specific portal through which state contained in the object is accessed (<code>this</code>).</p>
 
 <p>Now consider another developer working on the same project needs to manage textareas in a different context with a minor alteration. The closure based solution requires something of an overhaul, but the <code>TextArea</code> prototype can remain nearly untouched while it&#39;s repurposed elsewhere.</p>
-<div class="highlight"><pre><code class="text">&lt;pre&gt;
-</code></pre>
-</div>
 
 <p><span class="keyword">function</span> <span class="function-name">DialogWarnTextArea</span>( <span class="js2-function-param">$textArea</span>, <span class="js2-function-param">limit</span>, <span class="js2-function-param">$dialog</span> ) {
   TextArea.apply(<span class="builtin">this</span>, arguments);</p>
@@ -297,9 +293,6 @@ $(<span class="string">"textarea"</span>).each(<span class="keyword">function</s
 </pre>
 
 <p>Third, defining a <code>limitWarn</code> attribute on the <code>DialogWarnTextArea</code> prototype means that objects created with the <code>DialogWarnTextArea</code> will use that definition since it appears earlier in the prototype chain.</p>
-<div class="highlight"><pre><code class="text">&lt;pre&gt;
-</code></pre>
-</div>
 
 <p>DialogWarnTextArea.prototype.<span class="function-name">limitWarn</span> = <span class="keyword">function</span>() {
   <span class="keyword">if</span>( <span class="builtin">this</span>.$textArea.val().length &gt; <span class="builtin">this</span>.limit ) {

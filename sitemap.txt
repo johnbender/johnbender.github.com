@@ -1,11 +1,12 @@
 
-http://johnbender.github.com/atom.xml
-http://johnbender.github.com/archive.html
-http://johnbender.github.com/sitemap.txt
-http://johnbender.github.com/index.html
 http://johnbender.github.com/rss.xml
-http://johnbender.github.com/cv.html
 http://johnbender.github.com/portfolio.html
+http://johnbender.github.com/archive.html
+http://johnbender.github.com/index.html
+http://johnbender.github.com/404.html
+http://johnbender.github.com/sitemap.txt
+http://johnbender.github.com/atom.xml
+http://johnbender.github.com/cv.html
 
 http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles
 http://johnbender.github.com/2013/01/15/system-f-in-coffeescript
