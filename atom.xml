@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-09-16T08:15:12-07:00</updated>
+ <updated>2013-09-16T09:25:15-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -69,9 +69,9 @@
 
 &lt;p&gt;More and more though, the word &amp;quot;academic&amp;quot; is being used as a pejorative to mean irrelevant, unimportant, or a wasted effort. It&amp;#39;s easy to wave this away as an issue of sloppy semantics but I think it highlights the suffering perception of academics. In my experience working on research projects and doing a lot of reading over the last few years, much of the stigma appears to result from two issues. The first is, what people think research should be for, and the second is the occasionally impenetrable nature of formalism.&lt;/p&gt;
 
-&lt;p&gt;Computer Science research is frequently accompanied by proof of concept software. Many times it&amp;#39;s poorly constructed or at least hard to get working. In turn, that can lead to a poor opinion of the research and researchers. This is understandable, but the implementations are rarely the primary contribution of the work. The goal of the researcher is &lt;em&gt;not&lt;/em&gt; to provide implementations or information directly to industry but rather to produce a solution to an outstanding problem. The work of translating that solution into something &amp;quot;well built&amp;quot; or even concrete is frequently left to the reader ...&lt;/p&gt;
+&lt;p&gt;Computer Science research is frequently accompanied by proof of concept software. It might be poorly constructed, hard to get working, or even hard to find. In turn, that can lead to a poor opinion of the research and researchers, but the implementations are rarely the primary contribution of the work. The goal of the researcher is &lt;em&gt;not&lt;/em&gt; to provide implementations or information directly to industry, but rather to produce a solution to an outstanding problem. The work of translating that solution into something &amp;quot;well built&amp;quot; or even concrete is frequently left to the reader.&lt;/p&gt;
 
-&lt;p&gt;... and reading Computer Science papers can be hard work. The deluge of notation can be discouraging. It can even seem like unnecessary ceremony at times. Again, this is understandable, but a lot of ground has to be covered in the limited space provided for conference publications. Moreover, formalism and logic are the most important tools we have when coming to consensus on a good solution. In a perfect world all the necessary context would be easily accessible, and the formal tools used to establish the desired properties of a solution would be easy to understand. Sadly, that&amp;#39;s not the case, but that doesn&amp;#39;t diminish the value of the &amp;quot;encoded&amp;quot; contribution.&lt;/p&gt;
+&lt;p&gt;Unfortunately, reading Computer Science papers can be hard work. The deluge of notation can be discouraging. It can even seem like unnecessary ceremony, but a lot of ground has to be covered in the limited space provided for conference publications. Moreover, formalism and logic are the most important tools we have when streamlining and finding consensus on a good solution. In a perfect world all the necessary context would be easily accessible, and the formal tools used to establish properties of a solution would be easy to understand. Sadly that&amp;#39;s not the case, but it doesn&amp;#39;t diminish the value of the &amp;quot;encoded&amp;quot; contribution.&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s &lt;em&gt;because&lt;/em&gt; of these things and not in spite of them that I&amp;#39;m going back to school. I want to work in an environment that explicitly promotes a focus on the fundamentals of a problem and requires that the utmost care be taken when presenting a solution.&lt;/p&gt;
 
