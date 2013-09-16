@@ -119,14 +119,26 @@
 <p>Previously we defined the categories <strong>Html</strong> and <strong>Jqry</strong>, providing a concrete mathematical representation of DOM manipulations in raw form and their counterparts used inside the jQuery library.</p>
 
 <p><strong>Html</strong> is the category of all DOM elements and JavaScript functions that manipulate them. It represents the basic building blocks of client side web applications that most web developers are familiar with, eg</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">setFoo</span><span class="p">(</span> <span class="nx">elem</span> <span class="p">){</span>
+  <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
+  <span class="k">return</span> <span class="nx">elem</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 <p>where <code>elem</code> is any object implementing the <code>HTMLElement</code> interface.</p>
 
 <p><strong>Jqry</strong> is the category of jQuery objects (sets of DOM elements) and jQuery methods, eg</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">addClass</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">);</span>
+</code></pre>
+</div>
 
 <p>Where the jQuery &quot;object-set&quot; of divs selected from the DOM is an example object in <strong>Jqry</strong> and <code>addClass</code> is an example morphism.</p>
 
 <p>We also saw that defining a mapping (Functor) from <strong>Html</strong> to <strong>Jqry</strong> and proving that composition is preserved suggests a possible performance win in the form of loop fusion. The two components of the mapping turned out to be jQuery&#39;s dollar function and <code>$.map</code> for objects and morphisms respectively. The important equivalence, preserving composition:</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">g</span><span class="p">().</span><span class="nx">f</span><span class="p">()</span> <span class="o">===</span> <span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">map</span><span class="p">(</span> <span class="nx">cmps</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">g</span><span class="p">)</span> <span class="p">)</span>
+</code></pre>
+</div>
 
 <p>which is an equivalence of two approaches (one of which requires one less iteration to accomplish the same task). This, viewed in the light of &quot;interesting results from math&quot;, is relatively exciting but the performance implications warranted some further exploration, which takes us to the meat of this post.</p>
 
@@ -135,12 +147,36 @@
 <p>The most obvious and the least labor-intensive candidates for profiling loop fusion are jQuery methods that already rely on an <em>abstracted</em> <strong>Html</strong> morphism. They represent a real use case for that separation of functionality within the library.</p>
 
 <p>The one I chose was <code>jQuery.fn.removeAttr</code>. It relies on <code>jQuery.removeAttr</code> (note that this is not defined on the jQuery object prototype <code>jQuery.fn</code>) for its DOM manipulations and uses the <code>jQuery.fn.each</code> method to iterate over the set of elements.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Current jQuery.fn.removeAttr implementation in jQuery Core</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jQuery</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="k">this</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</code></pre>
+</div>
 
 <p>Testing a set of chained calls to <code>jQuery.fn.removeAttr</code> against a single loop with three inlined invocations of <code>jQuery.removeAttr</code> <a href="http://jsperf.com/remove-attr-composed-vs-chained-simple-methods/2">yielded</a> a fairly consistent 5-10 percent performance increase (blue bars). This was an <a href="http://johnbender.github.com/presentation-faster-js/#24">incentive</a> of sorts that I used to keep people from running for the exits during my JQCON talk.</p>
 
 <p><img src="http://i.imgur.com/alVRh.png" alt="incentive"></p>
 
 <p>Unfortunately this doesn&#39;t accurately represent the reality of most jQuery methods. The majority of the performance benefit appears to arise from the reduction in the number of function calls when a single loop with many invocations is used in place of multiple loop callbacks and function invocations. In the majority of jQuery methods the DOM alterations are actually inlined. That is, they don&#39;t live in an abstracted <strong>Html</strong> morphism at all -- the DOM elements are manipulated inside the loop and then returned to the jQuery &quot;object-set&quot;.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// More likely/performant version with inlined dom manipulation</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">value</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">elem</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">){</span>
+        <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">length</span><span class="p">];</span>
+
+        <span class="c1">// ...</span>
+        <span class="c1">// attr removal in jQuery.removeAttr</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
 
 <p>Running a similar test but with an inlined implementation of <code>jQuery.fn.removeAttr</code> for the chained version resulted in a <a href="http://jsperf.com/chained-sequence-or-composition-removeattr/2">performance profile</a> mostly indistinguishable from the manually fused alternative (blue and yellow bars in the graph below). While this might require more investigation it was fair to conclude that fusion isn&#39;t compelling enough to warrant further work. Luckily a fruitful conversation with some of the attendees at my talk gave me a few ideas that might ultimately provide more value in terms of library architecture and performance.</p>
 
@@ -149,12 +185,45 @@
 <h2 id="toc_12">Even My Presentation had Side Effects</h2>
 
 <p>Most of the jQuery Core team was at the breakout session doing dramatic readings of bugs when I gave my presentation<sup>1</sup> but there was a notable attendee in the front row, Yehuda Katz. He asked after my talk if the test methods were implemented using actual composition or simply invoked directly in serial (they were), alluding to the fact that the additional function call added with <code>cmps</code> would negate the reduced loop iteration operations.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">cmps</span><span class="p">(</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// the closure creates an additional function call</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">a</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">f</span><span class="p">(</span><span class="nx">g</span><span class="p">(</span><span class="nx">a</span><span class="p">));</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 <p>As we saw earlier, even when DOM manipulation is abstracted into a function and invoked directly it&#39;s likely in the best case to perform at/near parity with a jQuery method built on inlined DOM manipulation code. Consequently, adding the extra function wrapper and call to the execution path with <code>cmps</code> may result in a slowdown (red bars in the previous graph).</p>
 
 <p>Yehuda subsequently also expressed interest in the idea of clearly separating the <strong>Html</strong> morphisms from the <strong>Jqry</strong> morphisms that rely on them. That is, every jQuery method that manipulates the DOM has some form of an <strong>Html</strong> morphism living inside it, be it inlined or abstracted into its own function (like <code>removeAttr</code>). To illustrate we&#39;ll take a naive implementation of <code>jQuery.fn.addClass</code> and separate the DOM manipulation out. First, the current norm as inlined functionality:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// !! Inlined DOM element manipulation</span>
+        <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</code></pre>
+</div>
 
 <p>And then, abstracted:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Jqry morphism</span>
+<span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">addClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// !! Abstracted manipulation. Too expensive?</span>
+        <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// Html morphism</span>
+<span class="kd">function</span> <span class="nx">addClass</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">name</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">oldClassVal</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span> <span class="s2">&quot;class&quot;</span> <span class="p">);</span>
+    <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">oldClassVal</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
+<span class="p">};</span>
+</code></pre>
+</div>
 
 <p>He rightly pointed out that from an architectural standpoint, this is a fairly compelling idea, so long as the extra function call doesn&#39;t affect performance too drastically. Taking <code>jQuery.fn.removeAttr</code> as the test subject again, I inlined the contents of <code>jQuery.removeAttr</code> and compared it to the original. For small sets it appears that the extra function call is negligible<sup>2</sup>.</p>
 
@@ -177,10 +246,28 @@
 <h2 id="toc_14">Performance Benefits</h2>
 
 <p>Assuming a perfect world where every jQuery method involved in DOM element manipulation is built on an <strong>Html</strong> morphism there are a couple of possible performance benefits. First, and least impactful is that it makes rewrapping DOM elements using the <code>$</code>/<code>jQuery</code> function unnecessary in many cases.</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;.foo&quot;</span> <span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Current popular idiom</span>
+    <span class="nx">$</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+
+    <span class="c1">// - In favor of -&gt;</span>
+
+    <span class="c1">// Using the underlying morphism</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
 
 <p>Rewrapping DOM objects with a jQuery object in event and loop callbacks to get access to jQuery methods is common practice. If the same functionality on jQuery objects can be used to directly manipulate DOM elements, the rewrapping can be avoided all together. This isn&#39;t likely to be a huge win, but the reduction in setup for iterating over jQuery objects cannot be overlooked.</p>
 
 <p>Much more interesting though is the possibility of stripping down the functionality provided by the DOM element manipulations. That is, removing the user-friendly layer associated with many jQuery methods and only providing the cross platform working core of each manipulation could have a serious performance and size impact. Again, looking at the <code>jQuery.fn.removeAttr</code> implementation, it&#39;s built to accept a whitespace-delimited list for the attribute name value as a concession to terse manipulations.</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Friendly</span>
+<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo bar&quot;</span> <span class="p">);</span>
+
+<span class="c1">// Not-friendly?</span>
+<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;foo&quot;</span> <span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span> <span class="s2">&quot;bar&quot;</span> <span class="p">);</span>
+</code></pre>
+</div>
 
 <p>The performance benefits of using the manipulations directly without this additional feature are real. Simply stripping the split and loop from <code>jQuery.fn.removeAttr</code> provided nearly a 25% gain<sup>3</sup>.</p>
 
@@ -195,6 +282,34 @@
 <p>More importantly it might be useful, as suggested in the previous posts, to provide the method as an attribute of its associated jQuery method. That is, <code>jQuery.removeAttr</code> would exist on the <code>jQuery</code> object and also as something like <code>jQuery.fn.removeAttr.domManip</code> or <code>jQuery.fn.removeAttr.alterOne</code><sup>4</sup>.</p>
 
 <p>To illustrate, let&#39;s look at an example with two conversions of a simple method chain assuming the jQuery function as the pure DOM manipulation namespace:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// 1. Unoptimized</span>
+<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">attr</span><span class="p">(</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">).</span><span class="nx">css</span><span class="p">(</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+
+<span class="c1">// 2. Optimized with jQuery.fn.each</span>
+<span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">elem</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// without check for null to remove, and hooks</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
+
+  <span class="c1">// without hook</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// 3. Optimized in a while loop to avoid extra calls</span>
+<span class="kd">var</span> <span class="nx">$divs</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span> <span class="s2">&quot;div&quot;</span> <span class="p">),</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="nx">elem</span><span class="p">;</span>
+
+<span class="k">while</span><span class="p">(</span> <span class="nx">length</span><span class="o">--</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="nx">elem</span> <span class="o">=</span> <span class="nx">$divs</span><span class="p">[</span><span class="nx">elem</span><span class="p">];</span>
+
+  <span class="c1">// without check for null to remove, and hooks</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;data-foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="p">);</span>
+
+  <span class="c1">// without hook</span>
+  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="nx">elem</span><span class="p">,</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 <h2 id="toc_16">What happened to the Math?</h2>
 
