@@ -30,6 +30,8 @@
   </head>
 
   <body class="">
+    <a href="https://plus.google.com/112550334078819814430?rel=author" style="display:none">Google</a>
+
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
@@ -93,6 +95,9 @@
             <a href="http://github.com/johnbender">
               <i class="icon-github-sign"></i>
             </a>
+            <a href="https://plus.google.com/112550334078819814430" rel="publisher">
+              <i class="icon-google-plus-sign"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -109,9 +114,9 @@
   <div class="span10 text">
     <p>In the <a href="/2012/11/27/math-envy-and-coffeescripts-foibles/">previous post</a> I presented the basics of operational semantics and showed how derivations trees can be used to differentiate two terms that are syntactically similar. This post develops the closing thoughts further with the introduction of type rules, example tools for automating evaluation and type derivation, and a concrete definition of semantic ambiguity. The primary goal is to establish the best way to detect ambiguous term pairings and then outline what will work for a tool that can be generalized beyond the CoffeeScript subset.</p>
 
-<h2 id="toc_22">Type Rules</h2>
+<h2 id="toc_27">Type Rules</h2>
 
-<p>Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a <em>t-</em> in this case to distinguish them from inference rules (_e-_).</p>
+<p>Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a <em>t-</em> in this case to distinguish them from inference rules (<em>e-</em>).</p>
 
 <div class="center">
   <img src="/assets/images/diagrams/math-envy-cs/cs-type-rules.png"></img>
@@ -137,7 +142,7 @@
 
 <p><em>t-app</em> is the type rule for lambda applications, e.g. <code>(-&gt; true) false</code>. The premise says that if the lambda term <code>λt</code> on the left has the type <code>X -&gt; T</code> the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the <em>first</em> lambda&#39;s subterm <code>t</code> and it ignores the type of the argument that it&#39;s applied to.</p>
 
-<h2 id="toc_23">Type Rule Stacking</h2>
+<h2 id="toc_28">Type Rule Stacking</h2>
 
 <p>This notation makes it easy to establish the type of a term by stacking the type rules on one another in the same fashion as evaluation rules. Taking a very simple example, some diagrams will illustrate how this works:</p>
 
@@ -153,7 +158,7 @@
 
 <p>The second subterm of the application is unimportant where the type of the term is concerned and as a result it&#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, <code>false : Bool</code>. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic <code>false</code> when compared with the previous example.</p>
 
-<h2 id="toc_24">Not Quite There</h2>
+<h2 id="toc_29">Not Quite There</h2>
 
 <p>At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, <code>(-&gt; true)() -&gt; false</code>:</p>
 
@@ -173,7 +178,7 @@
 
 <p><em>Note: The next five sections cover an implementation of a lexer, parser, evaluator and mechanisms for type/evaluation derivation. If you&#39;d rather just read about how the generated evaluation and type derivations are used to find confusing term pairings you can skip to Detecting Ambiguity</em></p>
 
-<h2 id="toc_25">Happy Parsing</h2>
+<h2 id="toc_30">Happy Parsing</h2>
 
 <p>It&#39;s time to build something concrete from the formal notion of evaluation and types. An AST for this CoffeeScript subset will provide enough information to perform evaluation and establish derivation trees for both evaluation and types. I&#39;ve chosen Haskell along with the <a href="http://www.haskell.org/alex/">Alex</a> and <a href="http://www.haskell.org/happy/">Happy</a> tools to implement a simple lexer and parser. As you would expect the parser grammar definition looks very similar to the grammar definition presented in the previous post:</p>
 
@@ -193,7 +198,7 @@
 
 <p>Where <em>e-arg-eval</em> ensures that the argument of an application is fully evaluated, <em>e-app-eval</em> ensures that the applicand is fully evaluated before the application takes place.</p>
 
-<h2 id="toc_26">Matching Rules</h2>
+<h2 id="toc_31">Matching Rules</h2>
 
 <p>The abstract representation produced by the parser is a simple tree structure built with Haskell types. Pattern matching can be used with the type and inference rules to produce evaluation and derivation results. To start let&#39;s look at a simple evaluator and derivation builder.</p>
 
@@ -217,7 +222,7 @@
 
 <p>Finally, in situations like <code>true()</code> or <code>true (-&gt; true)</code> where no rule applies, an error is raised.</p>
 
-<h2 id="toc_27">Evaluating the Options</h2>
+<h2 id="toc_32">Evaluating the Options</h2>
 
 <p>The information contained in a <code>RuleMatch</code> instance can be used to evaluate or derive a given term. Evaluation is a simple matter of applying the rules recursively.</p>
 
@@ -227,7 +232,7 @@
 
 <p><code>fullEval</code> simply applies <code>eval</code> to <code>t</code> until it reaches a value term.</p>
 
-<h2 id="toc_28">Automating Evaluation Derivation</h2>
+<h2 id="toc_33">Automating Evaluation Derivation</h2>
 
 <p>The <code>RuleMatch</code> instance is primarily geared toward building derivation trees. That&#39;s why the structure appears so awkward in use with <code>eval</code>.</p>
 
@@ -245,7 +250,7 @@
 
 <p>The <code>derive</code> function works in a similar fashion to <code>eval</code>. For a value/<code>None</code> result from <code>matchRules</code> there are no inference rules that apply. For <em>e-inv</em> or <em>e-app</em>, <code>derive</code> can recurse and build a derivation from the lambda&#39;s subterm. For <em>e-arg-eval</em> or <em>e-app-eval</em> the premise must be further derived and the conclusion is a derivation for the original term <code>t</code> with one evaluation step applied. That is, evaluating the subterm <code>t1</code> once inside the original term <code>t</code>. The use of <code>eval</code> to do that may look funny but it&#39;s just a convenience.</p>
 
-<h2 id="toc_29">Automating Type Derivation</h2>
+<h2 id="toc_34">Automating Type Derivation</h2>
 
 <p>Deriving the type for a term in the CoffeeScript subset is slightly less complex than deriving the evaluation. Again, a type rule is matched to each valid AST construction.</p>
 
@@ -269,7 +274,7 @@
 
 <p>As noted in the comments each step in the derivation resolves the type at that step based on the inference rules.</p>
 
-<h2 id="toc_30">Detecting Ambiguity</h2>
+<h2 id="toc_35">Detecting Ambiguity</h2>
 
 <p>So far we&#39;ve seen that it&#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information, a term can be represented by a triple <code>(S, E, T)</code>, where <code>S</code> is the syntax string of the term, <code>E</code> is the evaluation derivation, and <code>T</code> is the type derivation. This triple can be used to determine whether two terms will cause confusion.</p>
 
@@ -287,7 +292,7 @@
 
 <p>A relative value for string distance that can be used as a threshold &quot;setting&quot; makes building a tool for automating the process easier. That is, if two terms are deemed &quot;close enough&quot; by virtue of their <em>dist</em> value being below a predetermined threshold and they have different information in either <code>E</code> or <code>T</code> then they might be flagged [3].</p>
 
-<h2 id="toc_31">Fuzzy Search</h2>
+<h2 id="toc_36">Fuzzy Search</h2>
 
 <p>We now have enough information to define a system that will automate the exploration of the &quot;term space&quot; (all term combinations), and run a check against existing known terms for ambiguous pairs for each generated term.</p>
 
@@ -297,19 +302,19 @@
 
 <p>First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &quot;resuming&quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, it&#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.</p>
 
-<h2 id="toc_32">Quick and Dirty</h2>
+<h2 id="toc_37">Quick and Dirty</h2>
 
 <p>A less complicated representation of a term might still be effective, and could avoid extra effort required of the language creator in generating the evaluation and type derivations. For example the tuple <code>(S, A)</code>, where <code>S</code> remains the syntax of the term and <code>A</code> is the AST representation.</p>
 
 <p>It&#39;s obvious that the abstract representations capture the issue at hand even if there is some information lost [4]. Best of all the AST for a term is available regardless of the host language and serialization is the only extra requirement. Having a term generator that works with a (E)BNF, a way to generate the AST for a term (presumably through the language parser), and a database equipped with the ability to find like terms it seems entirely possible to alert the language creator of complex or convoluted pairings.</p>
 
-<h2 id="toc_33">Further Work</h2>
+<h2 id="toc_38">Further Work</h2>
 
 <p>First I have to apologize for not building out a tool for generating terms or a schema for term storage. I wanted to do the automated evaluation and type derivations to get a feel for the effort involved and the result was an exceptionally long post. If I find the time to return to this I&#39;d like to build out the term generator and couple it with a simple database. I think that going through the process of building a BNF parser would be a lot of fun by itself.</p>
 
 <p>In the course of these two posts we&#39;ve seen what it looks like to formalize both the evaluation and type semantics of a simple programming language. We&#39;ve also come to a relatively satisfying formalization of semantic ambiguity that could be used in conjunction with a common language definition form (BNF, EBNF) to alert a language designer of potential issues [5] [6].</p>
 
-<h3 id="toc_34">footnotes</h3>
+<h3 id="toc_39">footnotes</h3>
 
 <ol>
 <li>It might be that when a function identifier is the only difference between terms, here <code>*</code> and <code>+</code>, it&#39;s reasonable to ignore ambiguous terms. In this case because the total string length for both terms is small it might be that a single character difference is enough to break some arbitrary threshold. I&#39;m leaving this for further consideration.</li>
@@ -350,7 +355,7 @@
     
     	<li><a href="/archive.html#javascript">javascript <span>10</span></a></li>
     
-    	<li><a href="/archive.html#math">math <span>12</span></a></li>
+    	<li><a href="/archive.html#math">math <span>14</span></a></li>
     
   
 
@@ -364,14 +369,18 @@
 
       </div>
 
+      
+
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="//johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles" title="Math Envy and CoffeeScript's Foibles, Part 1">&larr; Previous</a></li>
+        <li class="prev"><a href="//johnbender.github.com/2012/11/27/math-envy-and-coffeescripts-foibles" title="Math Envy and CoffeeScript's Foibles, Part 1">&larr; Older</a></li>
       
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       
-        <li class="next"><a href="//johnbender.github.com/2013/01/15/system-f-in-coffeescript" title="System F in CoffeeScript">Next &rarr;</a></li>
+        <li class="next">
+          <a href="//johnbender.github.com/2013/01/15/system-f-in-coffeescript" title="System F in CoffeeScript">Newer &rarr;</a>
+        </li>
       
       </ul>
     </div>
@@ -386,22 +395,6 @@
     </div>
 
     
-
-
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-21257360-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-
 
   </body>
 </html>

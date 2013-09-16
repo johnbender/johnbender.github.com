@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-04-14T07:16:50-07:00</updated>
+ <updated>2013-09-16T00:40:29-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -13,11 +13,225 @@
 
  
  <entry>
+   <title>Why I'm getting a PhD</title>
+   <link href="http://johnbender.github.com/2013/09/16/why-im-getting-a-phd"/>
+   <updated>2013-09-16T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/09/16/why-im-getting-a-phd</id>
+   <content type="html">&lt;p&gt;The 26th is the first day of instruction in the first academic year of my PhD in Computer Science at UCLA. I have a two year old daughter, an incredibly supportive wife, and I just turned 30.&lt;/p&gt;
+
+&lt;p&gt;Unsurprisingly, I&amp;#39;ve been asked many times why I want to get a PhD and I rarely get a chance to explain my thinking fully. This post is both a detailed account of my reasons and a counterpoint to the popular opinion that there isn&amp;#39;t much value in higher education in Computer Science.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_59&quot;&gt;Why Bother?&lt;/h2&gt;
+
+&lt;p&gt;Any confusion or surprise over my decision to go back to school can generally be reduced to a simple idea: the success I would otherwise have while getting my PhD is of greater absolute value than the education.&lt;/p&gt;
+
+&lt;p&gt;This comes in many reasonable forms. Why are you leaving such a high paying job? Will you be able to speak at conferences? When will you find time to contribute to open source? Couldn&amp;#39;t you just work on those ideas in your free time? These questions are asked directly and without implication.&lt;/p&gt;
+
+&lt;p&gt;In some cases there is a subtle suggestion that academia and higher eduction are loosing their value. Why would someone pursue a PhD when there are people without any higher education earning comparable salaries and working on important projects? I never hear this asked explicitly, but it comes through in many conversations and the idea that education isn&amp;#39;t important is pervasive in the software &amp;quot;meritocracy&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;In each case, I&amp;#39;m consistently left wanting more time to describe my thinking and the personal experiences that landed me in a PhD program.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_60&quot;&gt;Career Path&lt;/h2&gt;
+
+&lt;p&gt;When I got my first legitimate management position as the director of engineering at a consultancy/incubator it quickly became clear that management wasn&amp;#39;t for me. I enjoyed seeing my teammates succeed. I enjoyed building and refining Process. I enjoyed winning business. I enjoyed the subtleties of communicating complex technical ideas to people with all types of backgrounds and experience. By my own estimation I was even pretty good at all those things.&lt;/p&gt;
+
+&lt;p&gt;The thing that got to me was the amount of time I spent staring at my email client. After a year I missed the technical aspects of the job, and I started to think about my long-term career options. At the time I saw three paths that didn&amp;#39;t route back through school.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Avoid titles and stick with engineering&lt;/strong&gt; This was, at least initially, the path I took. I left for Adobe and a position working full time on jQuery Mobile.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grab the title and climb the ladder&lt;/strong&gt; Management positions pay a lot of money, and there&amp;#39;s a lot of room for advancement. Not all require you to hand over your keyboard.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Employee Number One or Co-Founder&lt;/strong&gt; First employee/Co-Founder positions are available for experienced &amp;quot;generalists&amp;quot; as far as I can tell. This is purely based on personal observations and conversation with friends who are better informed on the topic.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Of course, there are a lot of subtle variants to each of these, but this was my assessment. I can say with confidence that my move to Adobe put me in an ideal engineering position. Working on an OSS project full time gave me the freedom to pursue long term solutions to difficult problems and I still had access to the good parts of a large corporate support infrastructure.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the problems I gravitate towards are not normally assigned to engineers and attempts to marry my interests with my domain of expertise [1,2] have met with understandably tepid responses. The ideas are hard to follow in short presentations, most people don&amp;#39;t have time to read marathon blog posts, and the underlying work isn&amp;#39;t funded by my employer. All of that makes perfect sense but it means I can&amp;#39;t focus on the problems that I&amp;#39;m interested in.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_61&quot;&gt;What Interests Me&lt;/h2&gt;
+
+&lt;p&gt;The things that keep me up past midnight working and learning are technical. Problems both large and small that remain unsolved or problems where the solution seems unsatisfactory to me. A short and incomplete list in no particular order:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Descriptive declarative languages that aren&amp;#39;t&lt;/li&gt;
+&lt;li&gt;Correctness in dynamic languages&lt;/li&gt;
+&lt;li&gt;System configuration and state management&lt;/li&gt;
+&lt;li&gt;Adoption, understanding, and value of advanced type systems&lt;/li&gt;
+&lt;li&gt;Direct applications of mathematics to programming languages&lt;/li&gt;
+&lt;li&gt;Semantics based approaches to hot code loading&lt;/li&gt;
+&lt;li&gt;Preventing language bugs/quirks during language creation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A few of these might align with a job posting somewhere but most don&amp;#39;t. More importantly, I&amp;#39;m not as interested in the implementation as I am in conceiving a solution and understanding its value. I&amp;#39;m sure that will sound like laziness to some, but the part I enjoy the most is thinking through the idea. Most of the time an implementation is an important part of that, and I enjoy hacking as much as anyone, but sometimes it&amp;#39;s not. Sometimes a more abstract representation of the problem is the best way to predict the relative value of a solution before committing time and effort to an implementation. Again, this isn&amp;#39;t the type of work that engineers get funded to do.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_62&quot;&gt;On Academia&lt;/h2&gt;
+
+&lt;p&gt;Perception of academia varies depending on the field and an individual&amp;#39;s cultural disposition. In the software community there is a certain sense of respect for the research and science on which our careers are built. People have even sort of deified greats like Alan Kay, Alonzo Church, and Alan Turing.&lt;/p&gt;
+
+&lt;p&gt;More and more though, the word &amp;quot;academic&amp;quot; is being used as a pejorative to mean irrelevant, unimportant, or a wasted effort. It&amp;#39;s easy to wave this away as an issue of sloppy semantics but I think it highlights the suffering perception of academics. In my experience working on research projects and doing a lot of reading over the last few years, much of the stigma appears to result from two issues. The first is, what people think research should be for, and the second is the occasionally impenetrable nature of formalism.&lt;/p&gt;
+
+&lt;p&gt;Computer Science research is frequently accompanied by proof of concept software. Many times it&amp;#39;s poorly constructed or at least hard to get working. In turn, that can lead to a poor opinion of the research and researchers. This is understandable, but the implementations are rarely the primary contribution of the work. The goal of the researcher is &lt;em&gt;not&lt;/em&gt; to provide implementations or information directly to industry but rather to produce a solution to an outstanding problem. The work of translating that solution into something &amp;quot;well built&amp;quot; or even concrete is frequently left to the reader ...&lt;/p&gt;
+
+&lt;p&gt;... and reading Computer Science papers can be hard work. The deluge of notation can be discouraging. It can even seem like unnecessary ceremony at times. Again, this is understandable, but a lot of ground has to be covered in the limited space provided for conference publications. Moreover, formalism and logic are the most important tools we have when coming to consensus on a good solution. In a perfect world all the necessary context would be easily accessible, and the formal tools used to establish the desired properties of a solution would be easy to understand. Sadly, that&amp;#39;s not the case, but that doesn&amp;#39;t diminish the value of the &amp;quot;encoded&amp;quot; contribution.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s &lt;em&gt;because&lt;/em&gt; of these things and not in spite of them that I&amp;#39;m going back to school. I want to work in an environment that explicitly promotes a focus on the fundamentals of a problem and requires that the utmost care be taken when presenting a solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_63&quot;&gt;The Fourth Path&lt;/h2&gt;
+
+&lt;p&gt;I guess you could say I&amp;#39;m taking The Fourth Path™.&lt;/p&gt;
+
+&lt;p&gt;While I may be new to the academic environment, I have taken efforts to ensure that my impressions are not naive. I have been working on research projects since last year with folks at UCLA and I have been attending regular reading groups. I also know what problems I want to work on; one of which I&amp;#39;m pursuing with a strong blessing from my adviser.&lt;/p&gt;
+
+&lt;p&gt;Even if this doesn&amp;#39;t turn out as planned, at least I know that the &amp;quot;what&amp;quot; and &amp;quot;how&amp;quot; of my work will fit and that&amp;#39;s why I&amp;#39;m getting a PhD.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_64&quot;&gt;Acknowledgments&lt;/h3&gt;
+
+&lt;p&gt;Thanks to &lt;a href=&quot;https://twitter.com/keyist&quot;&gt;@keyist&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/melliebe&quot;&gt;@melliebe&lt;/a&gt; for their notes and revisions.&lt;/p&gt;
+
+&lt;p&gt;Special thanks to &lt;a href=&quot;http://philipmjohnson.wordpress.com/&quot;&gt;Professor Philip M. Johnson&lt;/a&gt; who has helped me continuously since I graduated from the University of Hawaii more than seven years ago. His advice has been extremely important in my long and winding path back to academia.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_65&quot;&gt;Footnotes&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;/2013/08/29/presentation-faster-javascript-through-category-theory/&quot;&gt;Presentation: Faster JavaScript through Category Theory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/2013/07/19/presentation-math-envy-and-coffeescripts-foibles/&quot;&gt;Presentation: Math Envy and CoffeeScript&amp;#39;s Foibles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&amp;quot;Less&amp;quot; is not, &amp;quot;not at all&amp;quot;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I also have a short list of things I&amp;#39;m &lt;em&gt;not&lt;/em&gt; interested in. I intended to include this in the main body of the post but it seemed like a distraction.&lt;/p&gt;
+
+&lt;p&gt;As a web developer and someone who&amp;#39;s worked almost exclusively on the client side for the last few years I have a fairly long list of things that do not interest me or are an active source of frustration. Nearly all of them would be impossible to describe as &amp;quot;general&amp;quot; problems.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Esoteric browser bugs (yes they still exist in abundance)&lt;/li&gt;
+&lt;li&gt;The culture/necessity of JavaScript micro-libraries&lt;/li&gt;
+&lt;li&gt;Effort required to provide broad access to web based content&lt;/li&gt;
+&lt;li&gt;Dynamic programming languages as an industry default&lt;/li&gt;
+&lt;li&gt;Non-transferable esoterica (e.g., how iptables works on CentOS, Chef&amp;#39;s attribute resolution order)&lt;/li&gt;
+&lt;li&gt;Large JavaScript projects&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I&amp;#39;m not above working on, or around, these problems. For a web developer many of these are simply facts of life. I&amp;#39;m just not content to let them bother me indefinitely which means contributing to solutions or moving on.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Presentation: Faster JavaScript through Category Theory</title>
+   <link href="http://johnbender.github.com/2013/08/29/presentation-faster-javascript-through-category-theory"/>
+   <updated>2013-08-29T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/08/29/presentation-faster-javascript-through-category-theory</id>
+   <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My final presentation of the material from JQuery UK has been posted. On a personal note the venue and speakers made for an awesome setting to retire this talk.&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/71132093&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://vimeo.com/album/2509484/video/71132093&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the same material at JQCON 2012 has been posted. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;http://player.vimeo.com/video/44085271&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>System State and Declarative Languages</title>
+   <link href="http://johnbender.github.com/2013/07/26/on-state-and-declarative-languages"/>
+   <updated>2013-07-26T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/07/26/on-state-and-declarative-languages</id>
+   <content type="html">&lt;p&gt;Declarative programming languages are often characterized by how they express computation in terms of a desired outcome. This is in contrast to imperative languages which are seen, vis-a-vis declarative languages, as expressing computation with a series of steps to reach an outcome. The advantage of the declarative approach is clear, the program author states his or her intentions and the rest is left to the runtime [1]. In practice many languages that have earned the declarative label require much of the &amp;quot;how&amp;quot; to be included out of necessity.&lt;/p&gt;
+
+&lt;p&gt;In this post we&amp;#39;ll look at two examples where the declarative approach has proven valuable: the data definition subset of SQL (DDL) and configuration management (Puppet?). In particular, we&amp;#39;ll examine where each falls down as the desired system state evolves over time and how that might be remedied.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_52&quot;&gt;SQL&lt;/h2&gt;
+
+&lt;p&gt;SQL is the language most often cited when an example of a declarative language is called for. The DDL subset provides the tools to establish a database schema by creating tables, keys, constraints, indexes, and more. For example creating a table &lt;code&gt;foo&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;Though you could argue that removing the &lt;code&gt;CREATE&lt;/code&gt; would make it more &amp;quot;declarative&amp;quot;, this accurately captures the desired state of the database. Namely, it should contain a table identified by &lt;code&gt;foo&lt;/code&gt; with two columns, one and integer and the other text [2].&lt;/p&gt;
+
+&lt;p&gt;Unfortunately database schemas rarely remain this simple, an issue largely addressed by SQL&amp;#39;s declarative nature. More importantly, schemas must be &amp;quot;evolved&amp;quot; towards that complexity over time to support new instances as they are created and old ones as they are updated.&lt;/p&gt;
+
+&lt;p&gt;Since it&amp;#39;s unreasonable to drop the table and recreate it each time there&amp;#39;s a change to its structure, table alterations are made. Unfortunately this diverges from the declarative approach significantly. The maintainers of the schema are no longer defining the desired table structure and trusting that the runtime will make the necessary changes. They&amp;#39;re defining the necessary changes manually so the runtime can construct the desired schema. Possibly worse, making an alteration to a complex set of DDL statements requires comprehension of all alterations that came &amp;quot;before&amp;quot; leaving a lot of room for error.&lt;/p&gt;
+
+&lt;p&gt;So the question is, how do you preserve the declarative nature of DDL SQL statements while maintaining the idempotent properties of a schema definition?&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_53&quot;&gt;Configuration Management&lt;/h2&gt;
+
+&lt;p&gt;Configuration management has seen an explosion in popularity as applications are more frequently being hosted on virtualized hardware. The disposability of virtual servers has driven a need for tools that can quickly and consistently provision a new machine to serve a specific role. Encouragingly, many of the tools along with their accompanying EDSLs and custom languages have taken a declarative approach to system state.&lt;/p&gt;
+
+&lt;p&gt;TODO find an example resource that can have sub-statements removed / or needs extra statements for alteration&lt;/p&gt;
+
+&lt;p&gt;(Chef&amp;#39;s | Puppet&amp;#39;s) &lt;code&gt;package&lt;/code&gt; statement is a declaration in the same sense that &lt;code&gt;CREATE TABLE&lt;/code&gt; is, it defines a package that should be installed on the system and (Chef | Puppet) handles the rest. Though it&amp;#39;s clearly less painful in this instance, it must address the same problem that the SQL does. When the maintainer wishes to remove that package from the system he or she must account for new systems being built from scratch and old systems that have already been built. As a result additional syntax is necessary to clarify the intent.&lt;/p&gt;
+
+&lt;p&gt;Another issue highlighted here is that removing something from a system requires declaring its absence. An outside observer might wonder why anyone should be troubled with declaring all the things that should &lt;em&gt;not&lt;/em&gt; be present on a system!&lt;/p&gt;
+
+&lt;p&gt;Additionally, for both SQL and these configuration management tools, it&amp;#39;s unclear how these statements should be handled over time in a code base. Clearly once all existing systems have been updated it&amp;#39;s safe to remove them, but neither runtime provides facilities for that type of accounting leaving the user open to mistakes.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_54&quot;&gt;Explicit Change&lt;/h2&gt;
+
+&lt;p&gt;In these situations information about changes to declarations should be tracked by the runtime and reflected in system state. That is, the language and its accompanying runtime would benefit from a semantic definition of syntactic change by using it in conjunction with source history to determine system state.&lt;/p&gt;
+
+&lt;p&gt;The intent is to add a column to the table &lt;code&gt;foo&lt;/code&gt;. Ideally the &lt;code&gt;CREATE TABLE&lt;/code&gt; definition would simply expand to include the new column and databases built with the old defintion would update to match the new one.&lt;/p&gt;
+
+&lt;p&gt;In this example the difference between the two declarations could be reconciled by simply comparing it with the existing table. The need for access to source history arises from more sweeping changes to declarations like outright removal.&lt;/p&gt;
+
+&lt;p&gt;The absence of this table declaration could be handled by the runtime in a number of ways without access to source history. If the system requires that DDL statements only exist in a single canonical source file the runtime can confidently reconcile the absence of the table from the schema defintion and remove the table. Alternatively, the runtime could be fed all the DDL statements it needs to construct the schema properly and then reconcile that with its internal state thereby avoiding the &amp;quot;single source&amp;quot; requirement of the first option.&lt;/p&gt;
+
+&lt;p&gt;The issue with both of these solutions is that the table removal is implicit. For example, in the second case if a source file isn&amp;#39;t included in the list to be fed to the runtime a database table might be dropped inadvertantly. In contrast the diff constitutes an explicit declaration of the table&amp;#39;s &lt;em&gt;absence&lt;/em&gt; from the schema defition.&lt;/p&gt;
+
+&lt;p&gt;Possibly the largest advantage of the change based approach is the prospect of rolling back schema changes using source control. In the previous example dropping a table may be difficult to reconcile [3], but things like indexes and constraints can be added and removed safetly by simply reverting the change using soure control.&lt;/p&gt;
+
+&lt;p&gt;TODO sql example&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_55&quot;&gt;The Semantics of Change&lt;/h2&gt;
+
+&lt;p&gt;Language semantics are traditionally defined in terms of evaluation. Here the idea is that the addition and removal of syntax carries meaning in addition to the syntax itself.&lt;/p&gt;
+
+&lt;p&gt;The diff is semantically equivalent to the SQL statement when considered in the light of semantic changes and this achieves two very important goals. It promotes the declarative nature of SQL DDL and suggests that if &lt;code&gt;CREATE TABLE&lt;/code&gt; declarations can support that same features as the &lt;code&gt;ALTER TABLE&lt;/code&gt; declarations it might be possible to remove the latter all together.&lt;/p&gt;
+
+&lt;p&gt;Again the removal of the package declaration signals the intent to remove the package itself from target systems. A side benefit is that the &lt;code&gt;ensure =&amp;gt; &amp;quot;absen&amp;quot;&lt;/code&gt; and &lt;code&gt;action :remove&lt;/code&gt; are suddenly unnecessary.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_56&quot;&gt;Considerations&lt;/h2&gt;
+
+&lt;p&gt;For both SQL and configuration management there is still the question of what should be done about artifacts associated with certain declarations. In SQL the effects of a &lt;code&gt;CREATE TRIGGER&lt;/code&gt; on the data are not easily unwound without a comprehensive history of the data over time, and that makes the semantics of its absence hard to define. For configuration management even the simple installation of a package might affect system startup, create temporary files, and otherwise alter system state in ways that can&amp;#39;t be undone by simply removing it. This is to say nothing of more complex declarative abstractions for setting up web applications, databases, message queues, etc.&lt;/p&gt;
+
+&lt;p&gt;In spite of these outstanding questions there are many types of declarations that have straightforward meanings when changed, and they do little to diminish the value in incorporating those meanings into declarative runtimes.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_57&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Declarative languages offer a lot of power to users but it is often extremely difficult to remain purely declarative in the face of change. By incorporating the semantics of change into these environments the burden on the user can be reduced while maintaining expresive power and safety guarantees.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_58&quot;&gt;footnotes&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&amp;quot;It seems like a sufficiently advanced compiler...&amp;quot;, famous last words from an anonymous PhD who dropped out shortly thereafter.&lt;/li&gt;
+&lt;li&gt;It&amp;#39;s worth noting that most (all?) implementations will fail when confronted with a &lt;code&gt;CREATE TABLE&lt;/code&gt; statement for an existing table. The example can easily be augmented with &lt;code&gt;IF NOT EXISTS&lt;/code&gt; to get the desired effect.&lt;/li&gt;
+&lt;li&gt;It might be achieved with access to backups.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Presentation: Math Envy and CoffeeScript's Foibles</title>
-   <link href="http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles"/>
-   <updated>2013-02-07T00:00:00-08:00</updated>
-   <id>http://johnbender.github.com/2013/02/07/presentation-math-envy-and-coffeescripts-foibles</id>
-   <content type="html">&lt;p&gt;I&amp;#39;d like to thank the good folks at &lt;a href=&quot;http://js.la&quot;&gt;js.la&lt;/a&gt; for putting on a great meetup and having me out to participate. You can see the slides at &lt;a href=&quot;http://johnbender.us/presentation-cs-foibles&quot;&gt;http://johnbender.us/presentation-cs-foibles&lt;/a&gt;.&lt;/p&gt;
+   <link href="http://johnbender.github.com/2013/07/19/presentation-math-envy-and-coffeescripts-foibles"/>
+   <updated>2013-07-19T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/07/19/presentation-math-envy-and-coffeescripts-foibles</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt; Below I&amp;#39;ve included the recording of an extended and updated version of this talk that I gave at Future Insights Live in Las Vegas. You can also find a short Q &amp;amp; A that I did for the folks who ran the conference &lt;a href=&quot;http://www.futureinsights.com/home/math-envy-volleyball-and-why-academic-is-not-a-dirty-word.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;video x-webkit-airplay=&quot;allow&quot; src=&quot;http://wpc.0B0C.edgecastcdn.net/000B0C/carsons/events/2013/FILive2013/d3-r309-230pm-JB.mp4&quot; controls width=&quot;610&quot;&gt;&lt;/video&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;d like to thank the good folks at &lt;a href=&quot;http://js.la&quot;&gt;js.la&lt;/a&gt; for putting on a great meetup and having me out to participate. You can see the slides at &lt;a href=&quot;http://johnbender.us/presentation-cs-foibles&quot;&gt;http://johnbender.us/presentation-cs-foibles&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;
 &lt;iframe src=&quot;http://player.vimeo.com/video/58872586&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
@@ -29,13 +243,152 @@
  </entry>
  
  <entry>
+   <title>Presentation: O'Hearn's Resources, Concurrency, and Local Reasoning</title>
+   <link href="http://johnbender.github.com/2013/07/18/resources-local-reasoning"/>
+   <updated>2013-07-18T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/07/18/resources-local-reasoning</id>
+   <content type="html">&lt;p&gt;Below are the slides from my presentation at UCLA&amp;#39;s Programming Langauges Reading Group on Peter O&amp;#39;Hearn&amp;#39;s &lt;a href=&quot;http://www.eecs.qmul.ac.uk/%7Eohearn/papers/concurrency.pdf&quot;&gt;&lt;em&gt;Resources, Concurrency, and Local Reasoning&lt;/em&gt;&lt;/a&gt; [PDF].&lt;/p&gt;
+
+&lt;iframe src=&quot;http://www.slideshare.net/slideshow/embed_code/24403394?rel=0&quot; width=&quot;597&quot; height=&quot;486&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&quot; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Reasoning About the Heap in Rust</title>
+   <link href="http://johnbender.github.com/2013/04/30/reasoning-about-the-heap-in-rust"/>
+   <updated>2013-04-30T00:00:00-07:00</updated>
+   <id>http://johnbender.github.com/2013/04/30/reasoning-about-the-heap-in-rust</id>
+   <content type="html">&lt;p&gt;If you follow programming languages or web technologies closely it&amp;#39;s likely that you&amp;#39;ve heard of &lt;a href=&quot;http://www.rust-lang.org&quot;&gt;Rust&lt;/a&gt;. Rust is one part of a larger effort by &lt;a href=&quot;http://www.mozilla.org/en-US/research/&quot;&gt;Mozilla Research&lt;/a&gt; to build a new browser engine in &lt;a href=&quot;http://www.mozilla.org/en-US/research/projects/#servo&quot;&gt;Servo&lt;/a&gt;, but its value as a development tool certainly extends beyond that initial goal. In particular it has received attention for its memory model which, &amp;quot;encourages efficient data structures and safe concurrency patterns, forbidding invalid memory accesses that would otherwise cause segmentation faults&amp;quot; [&lt;a href=&quot;#footnotes&quot;&gt;1&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;In this post we&amp;#39;ll take a look at the basics of Hoare logic and an extension Separation logic which aid in reasoning about imperative program behavior and memory state. Then we&amp;#39;ll apply those tools to examine the impact that Rust&amp;#39;s &lt;a href=&quot;http://static.rust-lang.org/doc/0.6/tutorial.html#ownership&quot;&gt;memory ownership system&lt;/a&gt; has on the heap.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;While I was writing this post John Reynolds passed away. He was an incredible force in PL research and Separation logic was one of his most important works. There&amp;#39;s much more to it than is covered here so if you&amp;#39;re curious and you want to learn more please explore the links in the footnotes.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_45&quot;&gt;Hoare logic&lt;/h2&gt;
+
+&lt;p&gt;In the late 1960s &lt;a href=&quot;http://en.wikipedia.org/wiki/C._A._R._Hoare&quot;&gt;Tony Hoare&lt;/a&gt; proposed a formal system for reasoning about programs which would eventually be referred to as &lt;a href=&quot;http://en.wikipedia.org/wiki/Hoare_logic&quot;&gt;Hoare logic&lt;/a&gt;. The central feature of Hoare logic is a triple &lt;code&gt;{P} C {Q}&lt;/code&gt; where &lt;code&gt;P&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt; are predicate logic assertions, referred to as the pre/post conditions, and &lt;code&gt;C&lt;/code&gt; is a command (reads: program/program fragment). The idea is that, outside of any guarantee of termination [&lt;a href=&quot;#footnotes&quot;&gt;2&lt;/a&gt;], if &lt;code&gt;P&lt;/code&gt; is true before &lt;code&gt;C&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt; is true after &lt;code&gt;C&lt;/code&gt;, the triple proves partial correctness for &lt;code&gt;P&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt;. That is, it proves some property asserted by &lt;code&gt;P&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt; about &lt;code&gt;C&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A simple example using C with the assertions in comments:&lt;/p&gt;
+
+&lt;p&gt;Here the triple &lt;code&gt;{P} C {Q}&lt;/code&gt; asserts that if &lt;code&gt;x&lt;/code&gt; is equal to some &lt;code&gt;n&lt;/code&gt; before &lt;code&gt;x = x + 1&lt;/code&gt; then &lt;code&gt;x&lt;/code&gt; will be equal to &lt;code&gt;n + 1&lt;/code&gt; afterward.&lt;/p&gt;
+
+&lt;p&gt;In addition to this basic structure it&amp;#39;s possible to define axioms for common programming constructs like assignment, branching, while loops, and for loops that allow for more general reasoning and manipulation of assertions. For assignment it takes the form &lt;code&gt;{P[E/V]} V=E {P}&lt;/code&gt;. That is, substituting &lt;code&gt;E&lt;/code&gt; for &lt;code&gt;V&lt;/code&gt; in &lt;code&gt;P&lt;/code&gt; before the assignment should hold and &lt;code&gt;P&lt;/code&gt; should hold afterward [&lt;a href=&quot;#footnotes&quot;&gt;3&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;Borrowing &lt;code&gt;Q&lt;/code&gt; from the earlier example here, &lt;code&gt;P&lt;/code&gt; is &lt;code&gt;x == n + 1&lt;/code&gt;. Substituting &lt;code&gt;x + 1&lt;/code&gt; for &lt;code&gt;x&lt;/code&gt; in &lt;code&gt;P&lt;/code&gt; gives &lt;code&gt;x + 1 == n + 1&lt;/code&gt;, or &lt;code&gt;x == n&lt;/code&gt;, for the precondition.&lt;/p&gt;
+
+&lt;p&gt;With the help of this and other axioms, established for each programming environment, Hoare logic allows the wielder to write specifications for programs. For most domains (especially those that my usual reader works in) the approach might be heavy handed, but there are many domains where this type of specification is necessary. In particular it&amp;#39;s often important to specify the behavior of a program with regards to memory.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_46&quot;&gt;Separation Logic&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Separation_logic&quot;&gt;Separation logic&lt;/a&gt; is an extension to Hoare logic that provides tools for specifying memory use and safety with new assertions for how a program will interact with the heap and stack [&lt;a href=&quot;#footnotes&quot;&gt;4&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;The four assertions that Separation logic adds for describing the heap are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;emp&lt;/code&gt; - for the empty heap. It asserts that the heap is empty, and it can be used to extend assertions about programs that don&amp;#39;t interact with the heap.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x |-&amp;gt; n&lt;/code&gt; - for the singleton heap. It asserts that there is a heap that contains one cell at address &lt;code&gt;x&lt;/code&gt; with contents &lt;code&gt;n&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;P * Q&lt;/code&gt; - as a replacement for &lt;code&gt;∧&lt;/code&gt; with disjoint heaps. It asserts that, if there is a heap where &lt;code&gt;P&lt;/code&gt; holds and a &lt;em&gt;separate&lt;/em&gt; (disjoint) heap where &lt;code&gt;Q&lt;/code&gt; holds, both &lt;code&gt;P&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt; hold in the conjunction of those two heaps.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;P -* Q&lt;/code&gt; - as a replacement for implication, &lt;code&gt;=&amp;gt;&lt;/code&gt;. It asserts that if there is a heap in which &lt;code&gt;P&lt;/code&gt; holds then &lt;code&gt;Q&lt;/code&gt; will hold in the current heap extended by the heap in which &lt;code&gt;P&lt;/code&gt; holds. An important point of clarity: &lt;code&gt;P -* Q&lt;/code&gt; holds for the &lt;em&gt;current heap&lt;/em&gt; and &lt;em&gt;not&lt;/em&gt; the current heap extended by the heap in which &lt;code&gt;P&lt;/code&gt; holds.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are also some shortcuts for common heap states that are built on top of these four assertions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x |-&amp;gt; n, o, p&lt;/code&gt; is equivalent to &lt;code&gt;x |-&amp;gt; n * x + 1 |-&amp;gt; o * x + 2 |-&amp;gt; p&lt;/code&gt;. That is, &lt;code&gt;x&lt;/code&gt; points to a series of memory cells that can be accessed by using &lt;code&gt;x&lt;/code&gt; and pointer arithmetic.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x -&amp;gt; n&lt;/code&gt; is a basic pointer assertion. It is equivalent to &lt;code&gt;x |-&amp;gt; n * true&lt;/code&gt;, that suggests there is a heap where &lt;code&gt;n&lt;/code&gt; is the value at &lt;code&gt;*x&lt;/code&gt; which is a part of a larger heap about which we can&amp;#39;t make any assertions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Again we&amp;#39;ll turn to C to demonstrate how these assertions fit with common programs [&lt;a href=&quot;#footnotes&quot;&gt;5&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;The first assertions states that the heap is empty (&lt;code&gt;emp&lt;/code&gt;). After the &lt;code&gt;malloc&lt;/code&gt; call and assignment there exists a singleton heap with a single cell containing the value &lt;code&gt;5&lt;/code&gt; that is pointed to by &lt;code&gt;ptr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Adding &lt;code&gt;ptr2&lt;/code&gt; means the addition of another singleton heap and the connective &lt;code&gt;*&lt;/code&gt;. It&amp;#39;s possible to write this as &lt;code&gt;{ (ptr -&amp;gt; 5) ∧ (ptr2 -&amp;gt; 5) }&lt;/code&gt;, but this assertion provides no information about how the heap is arranged. It simply says that there are two pointers to the value 5 somewhere in a heap. They might be pointing to the same memory location. By using the singleton heap pointer &lt;code&gt;|-&amp;gt;&lt;/code&gt; and the connective &lt;code&gt;*&lt;/code&gt;, the new assertion makes clear that the two pointers are &lt;em&gt;not&lt;/em&gt; pointing to the same memory location.&lt;/p&gt;
+
+&lt;p&gt;Here the comma separated list of values following the singleton pointer in &lt;code&gt;{ arry |-&amp;gt; 1,2,3 }&lt;/code&gt; denotes contiguous memory. It&amp;#39;s simply a shorthand notation for the pointer arithmetic.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s worth noting that separating implication, &lt;code&gt;P -* Q&lt;/code&gt; doesn&amp;#39;t appear to have any particularly useful or clear concrete examples. This seems to be the consequence of its relationship to logical implication in that the whole assertion is only false when &lt;code&gt;Q&lt;/code&gt; is false. Borrowing from Reynolds [&lt;a href=&quot;#footnotes&quot;&gt;6&lt;/a&gt;], something like &lt;code&gt;{ x |-&amp;gt; 1 -* Q }&lt;/code&gt; for some assertion &lt;code&gt;Q&lt;/code&gt; can be extended with the separating implication to show:&lt;/p&gt;
+
+&lt;p&gt;The precondition here says that there are two disjoint heaps. One in which &lt;code&gt;x |-&amp;gt; 0&lt;/code&gt; holds and one in which &lt;code&gt;(x |-&amp;gt; 1 -* Q)&lt;/code&gt; holds. The implication on the right is, if second heap was extended so that &lt;code&gt;x&lt;/code&gt; &lt;em&gt;was&lt;/em&gt; pointing to &lt;code&gt;1&lt;/code&gt;, &lt;code&gt;Q&lt;/code&gt; would hold. After the assignment &lt;code&gt;*x&lt;/code&gt; is no longer &lt;code&gt;0&lt;/code&gt; but rather the second heap has been extended so that &lt;code&gt;*x&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt; and as a result &lt;code&gt;Q&lt;/code&gt; holds [&lt;a href=&quot;#footnotes&quot;&gt;7&lt;/a&gt;].&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_47&quot;&gt;Rust Ownership&lt;/h2&gt;
+
+&lt;p&gt;Rust provides two new type modifiers for dealing with pointers and memory management. Both have very specific semantics that are checked at &lt;em&gt;compile time&lt;/em&gt; to help prevent memory leaks.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;~&lt;/code&gt; - provides a lexically scoped allocation on the heap. That is, when the newly assigned pointer variable goes out of scope the memory is freed.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@&lt;/code&gt; - provides a garbage collected allocation on the heap. In Rust each &lt;a href=&quot;http://static.rust-lang.org/doc/tutorial-tasks.html&quot;&gt;task&lt;/a&gt; has its own garbage collector responsible for handling this type of heap allocation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A few simple examples borrowed in part from Rust&amp;#39;s tutorials will illustrate when the memory for each of these type modifiers is freed.&lt;/p&gt;
+
+&lt;p&gt;With the tilde, the memory at &lt;code&gt;*a&lt;/code&gt; on the heap is freed when the variable to which it is assigned goes out of scope. Since &lt;code&gt;a&lt;/code&gt; is declared inside an explicit block it goes out of scope at the end of the block and the associated memory is freed.&lt;/p&gt;
+
+&lt;p&gt;When the ownership of memory is transferred between variables the compiler prevents further reference to the original owner. In this example &lt;code&gt;a&lt;/code&gt; is the new owner and the compiler will prevent any further reference to &lt;code&gt;b&lt;/code&gt;. This concept of single ownership is the reason that the memory can be deallocated safely when the current owner goes out of scope.&lt;/p&gt;
+
+&lt;p&gt;Alternately, the &lt;code&gt;@&lt;/code&gt; type modifier can be used to request that the run-time manage the allocated memory on a per-task basis. This presents some interesting issues when creating pointers to memory allocated as part of a record.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code&gt;x&lt;/code&gt; is declared as a mutable variable (Rust&amp;#39;s default is immutability). When a pointer is made to the field &lt;code&gt;f&lt;/code&gt; with &lt;code&gt;&amp;amp;x.f&lt;/code&gt; and then &lt;code&gt;x&lt;/code&gt; is reassigned, the memory at &lt;code&gt;*x&lt;/code&gt; would be subject to garbage collection. Luckily Rust does a bit of work for you and inserts a lexically scoped reference to the original record to prevent deallocation by the garbage collector.&lt;/p&gt;
+
+&lt;p&gt;You might also wonder how Rust handles references to lexically scoped record fields. In this case the compiler raises an error and (rather nicely) highlights the discrepancy in scoping expectations.&lt;/p&gt;
+
+&lt;p&gt;Here, &lt;code&gt;a&lt;/code&gt; is assigned the memory location of the field &lt;code&gt;f&lt;/code&gt; of &lt;code&gt;b&lt;/code&gt;, but the scope of &lt;code&gt;a&lt;/code&gt; is larger than the scope of &lt;code&gt;b&lt;/code&gt; which means that &lt;code&gt;*b&lt;/code&gt; will be freed long before &lt;code&gt;*a&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_48&quot;&gt;Formalizing Ownership&lt;/h2&gt;
+
+&lt;p&gt;Rust&amp;#39;s memory management facilities exist mostly at compile time to prevent users from shooting themselves in the foot, but it&amp;#39;s still worth applying Separation logic to get a feel for what&amp;#39;s happening to the heap.&lt;/p&gt;
+
+&lt;p&gt;Both &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; are scoped to the explicit block and exist in disjoint parts of the heap. When they go out of scope the memory associated with both is deallocated leaving an empty heap.&lt;/p&gt;
+
+&lt;p&gt;In this case if there was a reference to &lt;code&gt;b&lt;/code&gt; after the ownership of &lt;code&gt;*b&lt;/code&gt; was transferred to &lt;code&gt;a&lt;/code&gt; the compiler would complain. Since there is no reference we assume that &lt;code&gt;b&lt;/code&gt; is pointing to the same location until the pointer is removed at the close of the explicit block.&lt;/p&gt;
+
+&lt;p&gt;Here we&amp;#39;ve re-purposed the managed memory example from earlier with the explicit addition of the reference that would otherwise be inserted by Rust to prevent GC, &lt;code&gt;x1&lt;/code&gt;. Let&amp;#39;s examine each expression and the associated assertions in turn.&lt;/p&gt;
+
+&lt;p&gt;As before the allocation of managed memory creates a singleton heap pointer to the memory containing the record values [&lt;a href=&quot;#footnotes&quot;&gt;8&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;Adding an additional reference to that same memory means that we have two pointers to the same memory. As a result we &lt;em&gt;cannot&lt;/em&gt; use the &lt;code&gt;*&lt;/code&gt; connective or the the singleton heap pointer &lt;code&gt;|-&amp;gt;&lt;/code&gt; to represent the heap.&lt;/p&gt;
+
+&lt;p&gt;A new reference to the memory location of the first record field in &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;x1&lt;/code&gt; adds another pointer that overlaps with the existing heap. It&amp;#39;s important to keep in mind that the basic conjunction simply says that the heap &lt;em&gt;may&lt;/em&gt; overlap. To the reader it may be obvious, but in terms of specifying program behavior it&amp;#39;s a weaker assertion that the equivalent made with the &lt;code&gt;*&lt;/code&gt; connective.&lt;/p&gt;
+
+&lt;p&gt;Finally with the allocation of a wholly new record and pointer for &lt;code&gt;x&lt;/code&gt; we can employ the more powerful connective because the new record lives in a newly allocated section of memory on the heap. The remaining pointers to the original record and its first field remain ambiguous.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_49&quot;&gt;Further Reading&lt;/h2&gt;
+
+&lt;p&gt;Not covered here for brevity&amp;#39;s sake is an important part of Separation logic, the Frame Rule. The Frame Rule provides for rigorous local reasoning about the heap without concern for other possibly overlapping references to the same memory locations. That is, it allows each assertion to be correct in spite of the fact that the program fragments they pertain to are often operating in a larger application that manipulates the heap.&lt;/p&gt;
+
+&lt;p&gt;Also, the concept of borrowed pointers is important reading if you&amp;#39;re interested in Rust. A common but effective memory efficiency is achieved in C by passing pointers to data structures instead of using the default pass-by-value semantics. Similarly one can &amp;quot;borrow&amp;quot; a pointer to a data structure in Rust, but because of the type level restrictions it&amp;#39;s both safer and more complex [&lt;a href=&quot;#footnotes&quot;&gt;9&lt;/a&gt;]. The borrowed pointers &lt;a href=&quot;http://static.rust-lang.org/doc/tutorial-borrowed-ptr.html&quot;&gt;tutorial&lt;/a&gt; makes those complexities clear.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_50&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Hopefully this post has given you an initial sense of a portion of Rust&amp;#39;s memory management facilities and also the formalism of Separation logic.&lt;/p&gt;
+
+&lt;p&gt;Special thanks goes to &lt;a href=&quot;https://twitter.com/steveklabnik&quot;&gt;@steveklabnik&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/evanphx&quot;&gt;@evanphx&lt;/a&gt;, and Matt Brown for reviewing various bits of my post.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_51&quot;&gt;Footnotes&lt;/h3&gt;
+
+&lt;p&gt;&lt;a name=&quot;footnotes&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://static.rust-lang.org/doc/0.6/tutorial.html#introduction&quot;&gt;http://static.rust-lang.org/doc/0.6/tutorial.html#introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;When the program fragment can be shown to terminate the triple proves total correctness.&lt;/li&gt;
+&lt;li&gt;There are actually two forms of the assignment axiom. The second proposed by Floyd is more complex but addresses issues that exist in common imperative languages the first cannot.&lt;/li&gt;
+&lt;li&gt;More information on Separation logic &lt;a href=&quot;https://wiki.mpi-sws.org/star/cpl&quot;&gt;https://wiki.mpi-sws.org/star/cpl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The examples that follow assume that &lt;code&gt;malloc&lt;/code&gt; is always operating by allocating fresh memory not pointed to elsewhere.&lt;/li&gt;
+&lt;li&gt;John C. Reynolds: &lt;a href=&quot;http://www.cs.cmu.edu/%7Ejcr/seplogic.pdf&quot;&gt;Separation Logic: A Logic for Shared Mutable Data Structures.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;It certainly feels convoluted but the separating implication is used as a powerful tool when reasoning about the execution of programs moving backwards (among other things). All the examples in this post start from some initial state and then move forward following the execution of the program. Doing this can produce useless assertions if the thing you are trying to prove isn&amp;#39;t affected by some of the program snippets. Many times it&amp;#39;s easier to reason from the end goal, that is from the final result of a set of commands/expressions/program snippets and work backwards. As you can see &lt;code&gt;{ x |-&amp;gt; _ * (x |-&amp;gt; 1 -* Q) } *x = 1 { Q }&lt;/code&gt; the final assertion can be anything. This means that you can start with some assertion you want to show for a program and move backward &amp;quot;over&amp;quot; a memory mutation!&lt;/li&gt;
+&lt;li&gt;This assumes the memory allocated for a struct in Rust is sequential (for &lt;a href=&quot;http://static.rust-lang.org/doc/tutorial-borrowed-ptr.html#borrowing-unique-boxes&quot;&gt;reference&lt;/a&gt;). It also assumes that &lt;code&gt;x.f&lt;/code&gt; and &lt;code&gt;x.g&lt;/code&gt; aren&amp;#39;t explicitly scoped pointers but rather tranlate into an operation on the pointer &lt;code&gt;x&lt;/code&gt; at a low level (they aren&amp;#39;t represented in the assertions).&lt;/li&gt;
+&lt;li&gt;Obviously this depends on your perspective and how complex the code is that uses the pointer. That is, it may be exceptionally hard to get the memory freed properly as result of passing around pointers in which case the compiler might be extremely valuable when writing the Rust equivalent.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>System F in CoffeeScript</title>
    <link href="http://johnbender.github.com/2013/01/15/system-f-in-coffeescript"/>
    <updated>2013-01-15T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2013/01/15/system-f-in-coffeescript</id>
    <content type="html">&lt;p&gt;System F and its variants are used frequently in the study of typed computation and an extended form, System FC, plays an important role in GHC&amp;#39;s compilation process [1]. This post will attempt to translate the grammars of the Lambda Calculus, Simply Typed Lambda Calculus, and finally System F into a small subset of CoffeeScript while covering the basics of application and abstraction in each. Hopefully, through studying the basics here, readers who are interested in learning more about type theory and the lambda calculi will feel a little less intimidated by the notation and concepts.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_35&quot;&gt;Lambda Calculus&lt;/h2&gt;
+&lt;h2 id=&quot;toc_40&quot;&gt;Lambda Calculus&lt;/h2&gt;
 
 &lt;p&gt;Representing the Lambda Calculus only requires a small subset of CoffeeScript&amp;#39;s total syntax. Let&amp;#39;s define both grammars side by side.&lt;/p&gt;
 
@@ -61,7 +414,7 @@
 
 &lt;p&gt;The notion of &lt;em&gt;closed&lt;/em&gt; terms in the Lambda Calculus is a point of departure with CoffeeScript. A closed term has no free variables. For example, in &lt;code&gt;λx.y&lt;/code&gt; the &lt;code&gt;y&lt;/code&gt; variable is called &lt;em&gt;free&lt;/em&gt; because it hasn&amp;#39;t been bound by an enclosing abstractions. Adding an additional abstraction to get &lt;code&gt;λy.λx.y&lt;/code&gt; captures the &lt;code&gt;y&lt;/code&gt;. The JavaScript generated by the CoffeeScript &lt;code&gt;(x) -&amp;gt; y&lt;/code&gt; will throw a reference error without a definition for &lt;code&gt;y&lt;/code&gt; in scope, in contrast to the lambda term which will simply discard its argument and produce the &lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_36&quot;&gt;Simply Typed Lambda Calculus&lt;/h2&gt;
+&lt;h2 id=&quot;toc_41&quot;&gt;Simply Typed Lambda Calculus&lt;/h2&gt;
 
 &lt;p&gt;The Simply Typed Lambda Calculus expands on the Lambda Calculus with type information in abstractions.&lt;/p&gt;
 
@@ -81,7 +434,7 @@
 
 &lt;p&gt;Unfortunately even the simple case throws a rather large monkey wrench into the works. That&amp;#39;s because there&amp;#39;s no way to write &lt;code&gt;ifft&lt;/code&gt; such that it can know or inspect the arguments type and return type of a lambda term (JavaScript function). In spite of that let&amp;#39;s proceed to see what we can learn about System F.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_37&quot;&gt;System F&lt;/h2&gt;
+&lt;h2 id=&quot;toc_42&quot;&gt;System F&lt;/h2&gt;
 
 &lt;p&gt;System F adds the notion of &lt;em&gt;polymorphic types&lt;/em&gt; to the Simply Typed Lambda Calculus. The term polymorphic carries a lot of baggage, but here it is &lt;em&gt;parametric polymorphism&lt;/em&gt; [3]. That is, the type of a term can change depending on the setting.&lt;/p&gt;
 
@@ -105,7 +458,7 @@
 
 &lt;p&gt;For example the identity combinator &lt;code&gt;Λα.λx:α.x&lt;/code&gt;, or in CoffeeScript &lt;code&gt;(α) -&amp;gt; (x) -&amp;gt; ifft(α, x); x&lt;/code&gt;, has the polymorphic type &lt;code&gt;∀α.α → α&lt;/code&gt;. That is, its type isn&amp;#39;t determined until a type application takes place or it &amp;quot;works&amp;quot; for all types. The issue arises when a combinator like identity is passed as an argument to another lambda term that expects a polymorphic function. Again, &lt;code&gt;ifft&lt;/code&gt; can&amp;#39;t check the types of a combinator if a type has been applied and it certainly can&amp;#39;t check that the combinator is type agnostic in its dealings (polymorphic).&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_38&quot;&gt;Strong and Normal&lt;/h2&gt;
+&lt;h2 id=&quot;toc_43&quot;&gt;Strong and Normal&lt;/h2&gt;
 
 &lt;p&gt;System F has some really neat properties. Most importantly System F is &lt;em&gt;strongly normalizing&lt;/em&gt;. That means that it always terminates and always reduces to a normal form when the terms are well typed (the types line up properly). That alone makes it worth studying.&lt;/p&gt;
 
@@ -113,7 +466,7 @@
 
 &lt;p&gt;Even if we came up short of a really meaningful translation, hopefully it has demystified parts of how these calculi work. If you want to learn more I suggest reading &lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce/dp/0262162091&quot;&gt;&lt;em&gt;Types and Programming Languages&lt;/em&gt;&lt;/a&gt; by Pierce (not an affiliate link).&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_39&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_44&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;There are some &lt;a href=&quot;http://research.microsoft.com/en-us/um/people/simonpj/papers/ext-f/&quot;&gt;interesting papers&lt;/a&gt; to read from Microsoft Research this particular extension of System F.&lt;/li&gt;
@@ -132,9 +485,9 @@
    <id>http://johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2</id>
    <content type="html">&lt;p&gt;In the &lt;a href=&quot;/2012/11/27/math-envy-and-coffeescripts-foibles/&quot;&gt;previous post&lt;/a&gt; I presented the basics of operational semantics and showed how derivations trees can be used to differentiate two terms that are syntactically similar. This post develops the closing thoughts further with the introduction of type rules, example tools for automating evaluation and type derivation, and a concrete definition of semantic ambiguity. The primary goal is to establish the best way to detect ambiguous term pairings and then outline what will work for a tool that can be generalized beyond the CoffeeScript subset.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_22&quot;&gt;Type Rules&lt;/h2&gt;
+&lt;h2 id=&quot;toc_27&quot;&gt;Type Rules&lt;/h2&gt;
 
-&lt;p&gt;Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a &lt;em&gt;t-&lt;/em&gt; in this case to distinguish them from inference rules (_e-_).&lt;/p&gt;
+&lt;p&gt;Type rules are similar in construction to evaluation rules, consisting of a premise and conclusion. As with evaluation rules the premise establishes the preconditions for the conclusion. Again, each rule is tagged with a name for reference but preceded by a &lt;em&gt;t-&lt;/em&gt; in this case to distinguish them from inference rules (&lt;em&gt;e-&lt;/em&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;center&quot;&gt;
   &lt;img src=&quot;/assets/images/diagrams/math-envy-cs/cs-type-rules.png&quot;&gt;&lt;/img&gt;
@@ -160,7 +513,7 @@
 
 &lt;p&gt;&lt;em&gt;t-app&lt;/em&gt; is the type rule for lambda applications, e.g. &lt;code&gt;(-&amp;gt; true) false&lt;/code&gt;. The premise says that if the lambda term &lt;code&gt;λt&lt;/code&gt; on the left has the type &lt;code&gt;X -&amp;gt; T&lt;/code&gt; the conclusion is that the application will have the result type of the lambda term. Again, the type of an application, like invocation, is only concerned with the type of the &lt;em&gt;first&lt;/em&gt; lambda&amp;#39;s subterm &lt;code&gt;t&lt;/code&gt; and it ignores the type of the argument that it&amp;#39;s applied to.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_23&quot;&gt;Type Rule Stacking&lt;/h2&gt;
+&lt;h2 id=&quot;toc_28&quot;&gt;Type Rule Stacking&lt;/h2&gt;
 
 &lt;p&gt;This notation makes it easy to establish the type of a term by stacking the type rules on one another in the same fashion as evaluation rules. Taking a very simple example, some diagrams will illustrate how this works:&lt;/p&gt;
 
@@ -176,7 +529,7 @@
 
 &lt;p&gt;The second subterm of the application is unimportant where the type of the term is concerned and as a result it&amp;#39;s wholly ignored. Working on the left term, the tree extends upward until it reaches the atomic value type, &lt;code&gt;false : Bool&lt;/code&gt;. The complexity of nested lambdas and invocation make for a taller stack of type rules to reach the atomic &lt;code&gt;false&lt;/code&gt; when compared with the previous example.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_24&quot;&gt;Not Quite There&lt;/h2&gt;
+&lt;h2 id=&quot;toc_29&quot;&gt;Not Quite There&lt;/h2&gt;
 
 &lt;p&gt;At this point the type rules can describe the original issue. A derivation tree based on the typing rules highlights that the term is untypable. Taking our canonical example, &lt;code&gt;(-&amp;gt; true)() -&amp;gt; false&lt;/code&gt;:&lt;/p&gt;
 
@@ -196,7 +549,7 @@
 
 &lt;p&gt;&lt;em&gt;Note: The next five sections cover an implementation of a lexer, parser, evaluator and mechanisms for type/evaluation derivation. If you&amp;#39;d rather just read about how the generated evaluation and type derivations are used to find confusing term pairings you can skip to Detecting Ambiguity&lt;/em&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_25&quot;&gt;Happy Parsing&lt;/h2&gt;
+&lt;h2 id=&quot;toc_30&quot;&gt;Happy Parsing&lt;/h2&gt;
 
 &lt;p&gt;It&amp;#39;s time to build something concrete from the formal notion of evaluation and types. An AST for this CoffeeScript subset will provide enough information to perform evaluation and establish derivation trees for both evaluation and types. I&amp;#39;ve chosen Haskell along with the &lt;a href=&quot;http://www.haskell.org/alex/&quot;&gt;Alex&lt;/a&gt; and &lt;a href=&quot;http://www.haskell.org/happy/&quot;&gt;Happy&lt;/a&gt; tools to implement a simple lexer and parser. As you would expect the parser grammar definition looks very similar to the grammar definition presented in the previous post:&lt;/p&gt;
 
@@ -216,7 +569,7 @@
 
 &lt;p&gt;Where &lt;em&gt;e-arg-eval&lt;/em&gt; ensures that the argument of an application is fully evaluated, &lt;em&gt;e-app-eval&lt;/em&gt; ensures that the applicand is fully evaluated before the application takes place.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_26&quot;&gt;Matching Rules&lt;/h2&gt;
+&lt;h2 id=&quot;toc_31&quot;&gt;Matching Rules&lt;/h2&gt;
 
 &lt;p&gt;The abstract representation produced by the parser is a simple tree structure built with Haskell types. Pattern matching can be used with the type and inference rules to produce evaluation and derivation results. To start let&amp;#39;s look at a simple evaluator and derivation builder.&lt;/p&gt;
 
@@ -240,7 +593,7 @@
 
 &lt;p&gt;Finally, in situations like &lt;code&gt;true()&lt;/code&gt; or &lt;code&gt;true (-&amp;gt; true)&lt;/code&gt; where no rule applies, an error is raised.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_27&quot;&gt;Evaluating the Options&lt;/h2&gt;
+&lt;h2 id=&quot;toc_32&quot;&gt;Evaluating the Options&lt;/h2&gt;
 
 &lt;p&gt;The information contained in a &lt;code&gt;RuleMatch&lt;/code&gt; instance can be used to evaluate or derive a given term. Evaluation is a simple matter of applying the rules recursively.&lt;/p&gt;
 
@@ -250,7 +603,7 @@
 
 &lt;p&gt;&lt;code&gt;fullEval&lt;/code&gt; simply applies &lt;code&gt;eval&lt;/code&gt; to &lt;code&gt;t&lt;/code&gt; until it reaches a value term.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_28&quot;&gt;Automating Evaluation Derivation&lt;/h2&gt;
+&lt;h2 id=&quot;toc_33&quot;&gt;Automating Evaluation Derivation&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;RuleMatch&lt;/code&gt; instance is primarily geared toward building derivation trees. That&amp;#39;s why the structure appears so awkward in use with &lt;code&gt;eval&lt;/code&gt;.&lt;/p&gt;
 
@@ -268,7 +621,7 @@
 
 &lt;p&gt;The &lt;code&gt;derive&lt;/code&gt; function works in a similar fashion to &lt;code&gt;eval&lt;/code&gt;. For a value/&lt;code&gt;None&lt;/code&gt; result from &lt;code&gt;matchRules&lt;/code&gt; there are no inference rules that apply. For &lt;em&gt;e-inv&lt;/em&gt; or &lt;em&gt;e-app&lt;/em&gt;, &lt;code&gt;derive&lt;/code&gt; can recurse and build a derivation from the lambda&amp;#39;s subterm. For &lt;em&gt;e-arg-eval&lt;/em&gt; or &lt;em&gt;e-app-eval&lt;/em&gt; the premise must be further derived and the conclusion is a derivation for the original term &lt;code&gt;t&lt;/code&gt; with one evaluation step applied. That is, evaluating the subterm &lt;code&gt;t1&lt;/code&gt; once inside the original term &lt;code&gt;t&lt;/code&gt;. The use of &lt;code&gt;eval&lt;/code&gt; to do that may look funny but it&amp;#39;s just a convenience.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_29&quot;&gt;Automating Type Derivation&lt;/h2&gt;
+&lt;h2 id=&quot;toc_34&quot;&gt;Automating Type Derivation&lt;/h2&gt;
 
 &lt;p&gt;Deriving the type for a term in the CoffeeScript subset is slightly less complex than deriving the evaluation. Again, a type rule is matched to each valid AST construction.&lt;/p&gt;
 
@@ -292,7 +645,7 @@
 
 &lt;p&gt;As noted in the comments each step in the derivation resolves the type at that step based on the inference rules.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_30&quot;&gt;Detecting Ambiguity&lt;/h2&gt;
+&lt;h2 id=&quot;toc_35&quot;&gt;Detecting Ambiguity&lt;/h2&gt;
 
 &lt;p&gt;So far we&amp;#39;ve seen that it&amp;#39;s possible to build an understanding of evaluation and typing that provides more information than just the evaluation result or the fixed type for a term. Capturing that extra information, a term can be represented by a triple &lt;code&gt;(S, E, T)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; is the syntax string of the term, &lt;code&gt;E&lt;/code&gt; is the evaluation derivation, and &lt;code&gt;T&lt;/code&gt; is the type derivation. This triple can be used to determine whether two terms will cause confusion.&lt;/p&gt;
 
@@ -310,7 +663,7 @@
 
 &lt;p&gt;A relative value for string distance that can be used as a threshold &amp;quot;setting&amp;quot; makes building a tool for automating the process easier. That is, if two terms are deemed &amp;quot;close enough&amp;quot; by virtue of their &lt;em&gt;dist&lt;/em&gt; value being below a predetermined threshold and they have different information in either &lt;code&gt;E&lt;/code&gt; or &lt;code&gt;T&lt;/code&gt; then they might be flagged [3].&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_31&quot;&gt;Fuzzy Search&lt;/h2&gt;
+&lt;h2 id=&quot;toc_36&quot;&gt;Fuzzy Search&lt;/h2&gt;
 
 &lt;p&gt;We now have enough information to define a system that will automate the exploration of the &amp;quot;term space&amp;quot; (all term combinations), and run a check against existing known terms for ambiguous pairs for each generated term.&lt;/p&gt;
 
@@ -320,19 +673,19 @@
 
 &lt;p&gt;First, the complexity of many programming languages makes re-examining the same terms an enormous waste of time. Tracking the explored terms and &amp;quot;resuming&amp;quot; the exploration process would have a lot of value. Second, generating the derivations to store and compare along with the syntax is an involved effort. Again, it&amp;#39;s easy to tag a piece of syntax with the result of execution or typing but information is lost.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_32&quot;&gt;Quick and Dirty&lt;/h2&gt;
+&lt;h2 id=&quot;toc_37&quot;&gt;Quick and Dirty&lt;/h2&gt;
 
 &lt;p&gt;A less complicated representation of a term might still be effective, and could avoid extra effort required of the language creator in generating the evaluation and type derivations. For example the tuple &lt;code&gt;(S, A)&lt;/code&gt;, where &lt;code&gt;S&lt;/code&gt; remains the syntax of the term and &lt;code&gt;A&lt;/code&gt; is the AST representation.&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s obvious that the abstract representations capture the issue at hand even if there is some information lost [4]. Best of all the AST for a term is available regardless of the host language and serialization is the only extra requirement. Having a term generator that works with a (E)BNF, a way to generate the AST for a term (presumably through the language parser), and a database equipped with the ability to find like terms it seems entirely possible to alert the language creator of complex or convoluted pairings.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_33&quot;&gt;Further Work&lt;/h2&gt;
+&lt;h2 id=&quot;toc_38&quot;&gt;Further Work&lt;/h2&gt;
 
 &lt;p&gt;First I have to apologize for not building out a tool for generating terms or a schema for term storage. I wanted to do the automated evaluation and type derivations to get a feel for the effort involved and the result was an exceptionally long post. If I find the time to return to this I&amp;#39;d like to build out the term generator and couple it with a simple database. I think that going through the process of building a BNF parser would be a lot of fun by itself.&lt;/p&gt;
 
 &lt;p&gt;In the course of these two posts we&amp;#39;ve seen what it looks like to formalize both the evaluation and type semantics of a simple programming language. We&amp;#39;ve also come to a relatively satisfying formalization of semantic ambiguity that could be used in conjunction with a common language definition form (BNF, EBNF) to alert a language designer of potential issues [5] [6].&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_34&quot;&gt;footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_39&quot;&gt;footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;It might be that when a function identifier is the only difference between terms, here &lt;code&gt;*&lt;/code&gt; and &lt;code&gt;+&lt;/code&gt;, it&amp;#39;s reasonable to ignore ambiguous terms. In this case because the total string length for both terms is small it might be that a single character difference is enough to break some arbitrary threshold. I&amp;#39;m leaving this for further consideration.&lt;/li&gt;
@@ -357,7 +710,7 @@
 
 &lt;p&gt;What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_14&quot;&gt;CoffeeScript Confusion&lt;/h2&gt;
+&lt;h2 id=&quot;toc_19&quot;&gt;CoffeeScript Confusion&lt;/h2&gt;
 
 &lt;p&gt;I&amp;#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&amp;#39;s an example borrowed from Manuel Cerón&amp;#39;s &lt;a href=&quot;http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/&quot;&gt;post&lt;/a&gt;.&lt;/p&gt;
 
@@ -365,7 +718,7 @@
 
 &lt;p&gt;It&amp;#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer &lt;em&gt;during&lt;/em&gt; language creation.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_15&quot;&gt;Operational Semantics&lt;/h2&gt;
+&lt;h2 id=&quot;toc_20&quot;&gt;Operational Semantics&lt;/h2&gt;
 
 &lt;p&gt;Operational Semantics is one way [2] to formalize the semantics of a programming language. We&amp;#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&amp;#39;s book &lt;em&gt;Types and Programming Languages&lt;/em&gt; [3].&lt;/p&gt;
 
@@ -385,7 +738,7 @@
   &lt;img src=&quot;/assets/images/diagrams/math-envy-cs/bool-inference-rules.png&quot;&gt;&lt;/img&gt;
 &lt;/div&gt;
 
-&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;_e-_&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
+&lt;p&gt;These equations are collectively referred to as the &lt;em&gt;evaluation relation&lt;/em&gt; and individually as &lt;em&gt;inference rules&lt;/em&gt;. Each of them plays an important role in the &lt;em&gt;evaluation strategy&lt;/em&gt; of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &amp;quot;&lt;em&gt;e-&lt;/em&gt;&amp;quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;e-true&lt;/em&gt; and &lt;em&gt;e-false&lt;/em&gt; are fairly simple. They represent the expected evaluation results for the different guard values in an &lt;code&gt;if t then t else t&lt;/code&gt; term. With &lt;code&gt;true&lt;/code&gt; you get the first subterm and with &lt;code&gt;false&lt;/code&gt; you get the second subterm. Also, notice that there are no rules for either &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; by themselves. This further reinforces that &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; are values and that there&amp;#39;s no way to evaluate them further. &lt;em&gt;e-if&lt;/em&gt; is more interesting in its construction and how it captures an important part of the evaluation strategy.&lt;/p&gt;
 
@@ -399,7 +752,7 @@
 
 &lt;p&gt;There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&amp;#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_16&quot;&gt;CoffeeScript Grammar&lt;/h2&gt;
+&lt;h2 id=&quot;toc_21&quot;&gt;CoffeeScript Grammar&lt;/h2&gt;
 
 &lt;p&gt;The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.&lt;/p&gt;
 
@@ -421,7 +774,7 @@
 
 &lt;p&gt;Looking at the examples it&amp;#39;s reasonable to ask whether there&amp;#39;s value in providing a grammar that looks a lot like it&amp;#39;s own language. First, it maps the two different lambda forms to one form in the grammar, which makes reasoning about evaluation and types easier. Second, differentiating values (&lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;, and &lt;code&gt;-&amp;gt; t&lt;/code&gt;) from other terms by calling them values is important for knowing when evaluation has finished.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_17&quot;&gt;Inference Rules&lt;/h2&gt;
+&lt;h2 id=&quot;toc_22&quot;&gt;Inference Rules&lt;/h2&gt;
 
 &lt;p&gt;With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.&lt;/p&gt;
 
@@ -443,7 +796,7 @@
 
 &lt;p&gt;&lt;em&gt;e-arg-eval&lt;/em&gt; stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. &lt;em&gt;e-app&lt;/em&gt; informs the reader when lambda application can take place and &lt;em&gt;e-arg-eval&lt;/em&gt; informs the reader how to get there. Taken together these three rules define how terms get evaluated.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_18&quot;&gt;Derivation Trees&lt;/h2&gt;
+&lt;h2 id=&quot;toc_23&quot;&gt;Derivation Trees&lt;/h2&gt;
 
 &lt;p&gt;The inference rules in an operational semantics definition can be used in &lt;em&gt;derivation trees&lt;/em&gt; to show how a terms will evaluate. Rules are &amp;quot;stacked&amp;quot; on one another to show how they work in succession to produce an evaluation result.&lt;/p&gt;
 
@@ -485,7 +838,7 @@
 
 &lt;p&gt;&lt;em&gt;e-false&lt;/em&gt; is all that&amp;#39;s needed for the second tree to complete the evaluation to &lt;code&gt;false&lt;/code&gt;. At this point it may seem odd to call any part of this a derivation &amp;quot;tree&amp;quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_19&quot;&gt;Evaluating a Solution&lt;/h2&gt;
+&lt;h2 id=&quot;toc_24&quot;&gt;Evaluating a Solution&lt;/h2&gt;
 
 &lt;p&gt;Finally we know enough to apply the operational semantics to our problem. First the least complex term that prevents evaluation.&lt;/p&gt;
 
@@ -519,13 +872,13 @@
 
 &lt;p&gt;It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&amp;#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.&lt;/p&gt;
 
-&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (_e-true_, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;) against the second&amp;#39;s four (_e-true_, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You really can&amp;#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&amp;#39;t crop up with the CoffeeScript guinea pig.&lt;/p&gt;
+&lt;p&gt;The fact that the evaluation path is very different gets lost in a forest of &lt;code&gt;true&lt;/code&gt;&amp;#39;s and &lt;code&gt;false&lt;/code&gt;&amp;#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;) against the second&amp;#39;s four (&lt;em&gt;e-true&lt;/em&gt;, &lt;em&gt;e-if&lt;/em&gt;, &lt;em&gt;e-false&lt;/em&gt;, &lt;em&gt;e-true&lt;/em&gt;). Again, this is in spite of the fact that the evaluation &lt;em&gt;result&lt;/em&gt; is &lt;code&gt;false&lt;/code&gt; in both cases. You really can&amp;#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&amp;#39;t crop up with the CoffeeScript guinea pig.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_20&quot;&gt;Next Time&lt;/h2&gt;
+&lt;h2 id=&quot;toc_25&quot;&gt;Next Time&lt;/h2&gt;
 
 &lt;p&gt;In the next post I&amp;#39;ll take a look at how type information could replace the derivation trees as the semantic differentiator. Type information is often readily available even in languages like CoffeeScript that don&amp;#39;t have type annotations. If finding a difference between two terms is simple enough maybe a tool can be built to automate the process of ferreting out confusing term pairings.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_21&quot;&gt;footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_26&quot;&gt;footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.&lt;/li&gt;
@@ -538,37 +891,13 @@
  </entry>
  
  <entry>
-   <title>Presentation: Faster JavaScript through Category Theory</title>
-   <link href="http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory"/>
-   <updated>2012-08-26T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory</id>
-   <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the same material at JQCON 2012 has been posted. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;I'd like to give a big &quot;Thanks!&quot; to the folks at &lt;a href=&quot;http://js.la&quot;&gt;la.js&lt;/a&gt; for having me out, putting on a great meetup, and recording my presentation at the end of May. You can find the &lt;a href=&quot;https://github.com/johnbender/presentation-faster-js/blob/master/samples/scratch.js&quot;&gt;code samples&lt;/a&gt; and the &lt;a href=&quot;http://johnbender.github.com/presentation-faster-js&quot;&gt;presentation slides&lt;/a&gt; on Github.&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/44085271&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://player.vimeo.com/video/44085271&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
    <title>Splitting jQuery in Two, A Proposal</title>
    <link href="http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal"/>
    <updated>2012-07-19T00:00:00-07:00</updated>
    <id>http://johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal</id>
    <content type="html">&lt;p&gt;Previously I&amp;#39;ve described applications of Category Theory in JavaScript and with jQuery. An earlier post, &lt;a href=&quot;http://johnbender.us/2012/02/29/faster-javascript-through-category-theory/&quot;&gt;Faster JavaScript with Category Theory&lt;/a&gt;, identified a possible performance benefit where composition could be shown to hold for a Functor from &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;. This post follows up with a more concrete look at that optimization and suggests an additional, farther reaching, implication for the two categories.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_5&quot;&gt;Quick Recap&lt;/h2&gt;
+&lt;h2 id=&quot;toc_10&quot;&gt;Quick Recap&lt;/h2&gt;
 
 &lt;p&gt;Previously we defined the categories &lt;strong&gt;Html&lt;/strong&gt; and &lt;strong&gt;Jqry&lt;/strong&gt;, providing a concrete mathematical representation of DOM manipulations in raw form and their counterparts used inside the jQuery library.&lt;/p&gt;
 
@@ -584,7 +913,7 @@
 
 &lt;p&gt;which is an equivalence of two approaches (one of which requires one less iteration to accomplish the same task). This, viewed in the light of &amp;quot;interesting results from math&amp;quot;, is relatively exciting but the performance implications warranted some further exploration, which takes us to the meat of this post.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_6&quot;&gt;Performance Reality&lt;/h2&gt;
+&lt;h2 id=&quot;toc_11&quot;&gt;Performance Reality&lt;/h2&gt;
 
 &lt;p&gt;The most obvious and the least labor-intensive candidates for profiling loop fusion are jQuery methods that already rely on an &lt;em&gt;abstracted&lt;/em&gt; &lt;strong&gt;Html&lt;/strong&gt; morphism. They represent a real use case for that separation of functionality within the library.&lt;/p&gt;
 
@@ -600,7 +929,7 @@
 
 &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Qtq7Q.png&quot; alt=&quot;performance profile&quot;&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_7&quot;&gt;Even My Presentation had Side Effects&lt;/h2&gt;
+&lt;h2 id=&quot;toc_12&quot;&gt;Even My Presentation had Side Effects&lt;/h2&gt;
 
 &lt;p&gt;Most of the jQuery Core team was at the breakout session doing dramatic readings of bugs when I gave my presentation&lt;sup&gt;1&lt;/sup&gt; but there was a notable attendee in the front row, Yehuda Katz. He asked after my talk if the test methods were implemented using actual composition or simply invoked directly in serial (they were), alluding to the fact that the additional function call added with &lt;code&gt;cmps&lt;/code&gt; would negate the reduced loop iteration operations.&lt;/p&gt;
 
@@ -620,7 +949,7 @@
 
 &lt;p&gt;You can see in both cases that the overhead of abstracting the DOM manipulation into a function is mostly tenable, the notable exception being smaller sets of elements in Opera. If that small additional overhead in the common case is acceptable it exposes some benefits that the library can provide to framework authors and performance-minded developers.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_8&quot;&gt;Architecture Benefits&lt;/h2&gt;
+&lt;h2 id=&quot;toc_13&quot;&gt;Architecture Benefits&lt;/h2&gt;
 
 &lt;p&gt;Clearly, there are benefits from a clean separation for both the library itself and for advanced users relying on jQuery&amp;#39;s inbuilt &amp;quot;experience&amp;quot; with browser compatibility. If the two sides are kept separate jQuery Core could provide a build target that only includes the DOM manipulation and reduces the overall size of the gzipped include. Mobile devices have made file size a serious concern (belaboring the obvious) not just because of wire weight but also parsing time, and the reduction of code in this case could be significant.&lt;/p&gt;
 
@@ -628,7 +957,7 @@
 
 &lt;p&gt;Less interesting for end-users is the benefit to the Core team in terms of separating concerns and testing. For the DOM manipulations this change delineates &lt;code&gt;jQuery.fn&lt;/code&gt; methods as a usability layer on top of the underlying &lt;strong&gt;Html&lt;/strong&gt; morphism. If you ascribe to the ideas that fall out of the dependency between the two categories then &lt;strong&gt;Jqry&lt;/strong&gt; has always had this role. Also, where testing is concerned, the DOM manipulation methods can be tested in isolation from the code that makes jQuery easy to use (with stubbing in the latter case).&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_9&quot;&gt;Performance Benefits&lt;/h2&gt;
+&lt;h2 id=&quot;toc_14&quot;&gt;Performance Benefits&lt;/h2&gt;
 
 &lt;p&gt;Assuming a perfect world where every jQuery method involved in DOM element manipulation is built on an &lt;strong&gt;Html&lt;/strong&gt; morphism there are a couple of possible performance benefits. First, and least impactful is that it makes rewrapping DOM elements using the &lt;code&gt;$&lt;/code&gt;/&lt;code&gt;jQuery&lt;/code&gt; function unnecessary in many cases.&lt;/p&gt;
 
@@ -642,7 +971,7 @@
 
 &lt;p&gt;Again, the jQuery method would retain all its old functionality. The proposed underlying morphism is a new API. It can stick to what it does best: cross-platform manipulation of DOM elements. When a user is concerned about performance they can start looking at the ways their application uses jQuery and leverage a less friendly but still beautiful &amp;quot;low-level&amp;quot; API for DOM manipulations to save execution time.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_10&quot;&gt;Beautiful API Design&lt;/h2&gt;
+&lt;h2 id=&quot;toc_15&quot;&gt;Beautiful API Design&lt;/h2&gt;
 
 &lt;p&gt;Given the benefits in library size reduction a separate set of methods can provide, these methods should all be available on some top level namespace. &lt;code&gt;$&lt;/code&gt;/&lt;code&gt;jQuery&lt;/code&gt; may be the most obvious choice but this requires some consideration due to compatibility concerns with existing methods like &lt;code&gt;jQuery.removeAttr&lt;/code&gt; and &lt;code&gt;jQuery.css&lt;/code&gt;.&lt;/p&gt;
 
@@ -650,7 +979,7 @@
 
 &lt;p&gt;To illustrate, let&amp;#39;s look at an example with two conversions of a simple method chain assuming the jQuery function as the pure DOM manipulation namespace:&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_11&quot;&gt;What happened to the Math?&lt;/h2&gt;
+&lt;h2 id=&quot;toc_16&quot;&gt;What happened to the Math?&lt;/h2&gt;
 
 &lt;p&gt;Long story short: I&amp;#39;m looking into it. There is certainly a dependent relationship between the set of &lt;strong&gt;Jqry&lt;/strong&gt; morphisms that operate on the contents of &lt;strong&gt;Jqry&lt;/strong&gt; objects (remember there are &lt;strong&gt;Jqry&lt;/strong&gt; morphisms that don&amp;#39;t, eg. &lt;code&gt;jQuery.fn.first&lt;/code&gt; only alters the container) and the underlying &lt;strong&gt;Html&lt;/strong&gt; morphisms. That subset of morphisms and all jQuery objects may form a subcategory &lt;strong&gt;Jqry&lt;/strong&gt;&lt;sub&gt;h&lt;/sub&gt;.&lt;/p&gt;
 
@@ -660,7 +989,7 @@
 
 &lt;p&gt;I&amp;#39;m sure there&amp;#39;s a more elegant way to represent the two sets, objects and morphisms, of this subcategory but this works for me now. Also, it&amp;#39;s not clear that there are useful practical implications for the dependency aside from how it might otherwise affect our perception of jQuery as a library. I intend to look into this a bit more when I have time.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_12&quot;&gt;Further Investigation Required&lt;/h2&gt;
+&lt;h2 id=&quot;toc_17&quot;&gt;Further Investigation Required&lt;/h2&gt;
 
 &lt;p&gt;If the goals presented here turn out to be of real value there&amp;#39;s a lot of work left to do. Most importantly the performance overhead of an extra function call in so many jQuery methods needs to be examined thoroughly, not just in jQuery Core but in dependent projects like UI, Mobile, and possibly plugins. Hopefully the initial impression of fast function calls bears out in further testing.&lt;/p&gt;
 
@@ -668,7 +997,7 @@
 
 &lt;p&gt;Ultimately the ideas here are a rough sketch.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_13&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_18&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;To be totally clear this isn&amp;#39;t a jab at the core team. I&amp;#39;m under the impression that the readings are really entertaining. Moreover the talks at conferences are rarely really interesting to the presenters in my experience. Most of the time you can find them chatting/hacking in the halls, which might indicate some level of boredom with the material and may even be a leading indicator of when someone is ready to start submitting talk proposals in terms of experience/content knowledge.&lt;/li&gt;
@@ -1015,14 +1344,13 @@ elem.getAttribute( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
 &lt;/span&gt;elem.getAttribute( &lt;span class=&quot;string&quot;&gt;&quot;baz&quot;&lt;/span&gt; ); &lt;span class=&quot;comment&quot;&gt;// &quot;bak&quot;
 &lt;/span&gt;&lt;/pre&gt;
 
+&lt;p&gt;The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in &lt;strong&gt;Html&lt;/strong&gt; are closed under composition because of the type guarantees we&amp;#39;ve placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there&amp;#39;s no way to compose two of them that doesn&amp;#39;t also have the same type signature. Having met the three requirements for a category with &lt;strong&gt;Html&lt;/strong&gt; we can move on to the second, and more complex category &lt;strong&gt;Jqry&lt;/strong&gt;.&lt;/p&gt;
 
-The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in **Html** are closed under composition because of the type guarantees we've placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there's no way to compose two of them that doesn't also have the same type signature. Having met the three requirements for a category with **Html** we can move on to the second, and more complex category **Jqry**.
+&lt;h3 id=&quot;toc_3&quot;&gt;Jqry&lt;/h3&gt;
 
-### Jqry
+&lt;p&gt;&lt;strong&gt;Jqry&lt;/strong&gt; is the category of &lt;code&gt;jQuery&lt;/code&gt; objects and functions from &lt;code&gt;jQuery&lt;/code&gt; objects to &lt;code&gt;jQuery&lt;/code&gt; objects.&lt;sup&gt;3&lt;/sup&gt; It&amp;#39;s only slightly more complex than &lt;strong&gt;Html&lt;/strong&gt; because the reader must accept &lt;code&gt;this&lt;/code&gt; as an implicit parameter to the JavaScript functions that are the category&amp;#39;s morphisms. Also, these morphisms must be defined on the &lt;code&gt;$.fn&lt;/code&gt; object to guarantee the value of &lt;code&gt;this&lt;/code&gt; is a &lt;code&gt;jQuery&lt;/code&gt; object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like &lt;code&gt;$(&amp;quot;div&amp;quot;)&lt;/code&gt;, and the functions are JavaScript functions that retun jQuery objects.&lt;/p&gt;
 
-**Jqry** is the category of `jQuery` objects and functions from `jQuery` objects to `jQuery` objects.&lt;sup&gt;3&lt;/sup&gt; It's only slightly more complex than **Html** because the reader must accept `this` as an implicit parameter to the JavaScript functions that are the category's morphisms. Also, these morphisms must be defined on the `$.fn` object to guarantee the value of `this` is a `jQuery` object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like `$(&quot;div&quot;)`, and the functions are JavaScript functions that retun jQuery objects.
-
-Identity:
+&lt;p&gt;Identity:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;doc&quot;&gt;/** @this {jQuery}
@@ -1038,10 +1366,9 @@ Identity:
 assert($elem.id() == $elem); &lt;span class=&quot;comment&quot;&gt;// true
 &lt;/span&gt;&lt;/pre&gt;
 
+&lt;p&gt;As you can see, the value of &lt;code&gt;this&lt;/code&gt;, and therefore the constraint that the morphisms must be defined on &lt;code&gt;$.fn&lt;/code&gt;, plays an important roll in the way that the functions behave in the &lt;strong&gt;Jqry&lt;/strong&gt; category. If it&amp;#39;s unclear why that is, remember that &lt;code&gt;this&lt;/code&gt; is whatever object the method is invoked on using dot notation in JavaScript. Also recall that &lt;code&gt;$.fn == $.prototype&lt;/code&gt;, meaning when you call &lt;code&gt;$(&amp;quot;div&amp;quot;).foo()&lt;/code&gt; it finds &lt;code&gt;foo&lt;/code&gt; on the &lt;code&gt;$.fn&lt;/code&gt; by following the prototype chain.&lt;/p&gt;
 
-As you can see, the value of `this`, and therefore the constraint that the morphisms must be defined on `$.fn`, plays an important roll in the way that the functions behave in the **Jqry** category. If it's unclear why that is, remember that `this` is whatever object the method is invoked on using dot notation in JavaScript. Also recall that `$.fn == $.prototype`, meaning when you call `$(&quot;div&quot;).foo()` it finds `foo` on the `$.fn` by following the prototype chain.
-
-Composition:
+&lt;p&gt;Composition:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;doc&quot;&gt;/** @typedef {function(this:jQuery): jQuery} */&lt;/span&gt;
@@ -1083,19 +1410,19 @@ $elem.aAndB().attr( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/spa
 &lt;/span&gt;$elem.attr( &lt;span class=&quot;string&quot;&gt;&quot;baz&quot;&lt;/span&gt; );         &lt;span class=&quot;comment&quot;&gt;// &quot;bak&quot;
 &lt;/span&gt;&lt;/pre&gt;
 
-Please direct your attention to the fact that you could substitute the `a` and `b` functions from the **Html** `compose` example here for the functions that are mapped using `this.map` (`$.fn.map`) over the set of elements in the jQuery object (represented by `this`). This will be important when defining the Functor from **Html** to **Jqry**.
+&lt;p&gt;Please direct your attention to the fact that you could substitute the &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; functions from the &lt;strong&gt;Html&lt;/strong&gt; &lt;code&gt;compose&lt;/code&gt; example here for the functions that are mapped using &lt;code&gt;this.map&lt;/code&gt; (&lt;code&gt;$.fn.map&lt;/code&gt;) over the set of elements in the jQuery object (represented by &lt;code&gt;this&lt;/code&gt;). This will be important when defining the Functor from &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;.&lt;/p&gt;
 
-Again, we know that the morphisms of **Jqry** are closed under composition because each accepts and returns only jQuery objects.
+&lt;p&gt;Again, we know that the morphisms of &lt;strong&gt;Jqry&lt;/strong&gt; are closed under composition because each accepts and returns only jQuery objects.&lt;/p&gt;
 
-### $() ∉ Functors
+&lt;h3 id=&quot;toc_4&quot;&gt;$() ∉ Functors&lt;/h3&gt;
 
-Functors are a *single* morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &quot;works&quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating `$()` as a functor from **Html** to **Jqry**, shows that it translates the objects in the category **Html** (HTMLElements) properly to the objects in **Jqry** (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So `$()` is not, strictly speaking, a category theoretic functor.
+&lt;p&gt;Functors are a &lt;em&gt;single&lt;/em&gt; morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &amp;quot;works&amp;quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating &lt;code&gt;$()&lt;/code&gt; as a functor from &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;, shows that it translates the objects in the category &lt;strong&gt;Html&lt;/strong&gt; (HTMLElements) properly to the objects in &lt;strong&gt;Jqry&lt;/strong&gt; (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So &lt;code&gt;$()&lt;/code&gt; is not, strictly speaking, a category theoretic functor.&lt;/p&gt;
 
-On the other hand it's quite easy to define a function that handles both objects functions properly. As I noted in a previos post and in an earlier in this post, `$.fn.map` provides an easy way to change functions in **Html** to **Jqry**. So, this new functor just needs to check if it's operating on an object or a function from the **Html** category and respond accordingly.
+&lt;p&gt;On the other hand it&amp;#39;s quite easy to define a function that handles both objects functions properly. As I noted in a previos post and in an earlier in this post, &lt;code&gt;$.fn.map&lt;/code&gt; provides an easy way to change functions in &lt;strong&gt;Html&lt;/strong&gt; to &lt;strong&gt;Jqry&lt;/strong&gt;. So, this new functor just needs to check if it&amp;#39;s operating on an object or a function from the &lt;strong&gt;Html&lt;/strong&gt; category and respond accordingly.&lt;/p&gt;
 
-For the Haskell fans out there (and ciaranm in ##categorytheory) it's better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of `fmap`, but since this is flexible ol' JavaScript, it's possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I've chosen to deal with both in a single function.
+&lt;p&gt;For the Haskell fans out there (and ciaranm in ##categorytheory) it&amp;#39;s better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of &lt;code&gt;fmap&lt;/code&gt;, but since this is flexible ol&amp;#39; JavaScript, it&amp;#39;s possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I&amp;#39;ve chosen to deal with both in a single function.&lt;/p&gt;
 
-### Functor Html -&gt; Jqry
+&lt;h3 id=&quot;toc_5&quot;&gt;Functor Html -&amp;gt; Jqry&lt;/h3&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;doc&quot;&gt;/** @sig {HTMLElement | html.morphism} -&amp;gt; {jQuery | jqry.morphism} */&lt;/span&gt;
@@ -1118,8 +1445,7 @@ elem.nodeName;                        &lt;span class=&quot;comment&quot;&gt;// &
 &lt;/span&gt;$.Functor( elem ).prop( &lt;span class=&quot;string&quot;&gt;&quot;nodeName&quot;&lt;/span&gt; ); &lt;span class=&quot;comment&quot;&gt;// &quot;A&quot;
 &lt;/span&gt;&lt;/pre&gt;
 
-
-Sample use for functions:
+&lt;p&gt;Sample use for functions:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;js2-external-variable&quot;&gt;$&lt;/span&gt;.fn.myMorphism = $.Functor(&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;a&lt;/span&gt; ){
@@ -1131,9 +1457,9 @@ $( &lt;span class=&quot;string&quot;&gt;&quot;#example&quot;&lt;/span&gt; ).attr
 &lt;/span&gt;$( &lt;span class=&quot;string&quot;&gt;&quot;#example&quot;&lt;/span&gt; ).myMorphism().attr( &lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span&gt; ); &lt;span class=&quot;comment&quot;&gt;// &quot;bar&quot;
 &lt;/span&gt;&lt;/pre&gt;
 
-In the first example it takes an HTMLElement, the objects onf **Html**, and translates it into a jQuery object by using the `$()` function. In the second example it takes a function from HTMLElements to HTMLElements, a morpishm in **Html**, and translates it to a function from jQuery objects to jQuery objects.
+&lt;p&gt;In the first example it takes an HTMLElement, the objects onf &lt;strong&gt;Html&lt;/strong&gt;, and translates it into a jQuery object by using the &lt;code&gt;$()&lt;/code&gt; function. In the second example it takes a function from HTMLElements to HTMLElements, a morpishm in &lt;strong&gt;Html&lt;/strong&gt;, and translates it to a function from jQuery objects to jQuery objects.&lt;/p&gt;
 
-Having establish how the functor will operate it too has laws we must adhear to. First it must preserve identity:
+&lt;p&gt;Having establish how the functor will operate it too has laws we must adhear to. First it must preserve identity:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;a&lt;/span&gt; = document.getElementById( &lt;span class=&quot;string&quot;&gt;&quot;#example-anchor&quot;&lt;/span&gt; );
@@ -1149,7 +1475,7 @@ $.Functor(a);      &lt;span class=&quot;comment&quot;&gt;// [&amp;lt;a id=&quot;
 &lt;/span&gt;$.Functor(a).id(); &lt;span class=&quot;comment&quot;&gt;// [&amp;lt;a id=&quot;example-anchor&quot;&amp;gt;&amp;lt;/a&amp;gt;]
 &lt;/span&gt;&lt;/pre&gt;
 
-Whether the identity function is applied before or after the Functor the result should be the same. As you can see the return value of the two expressions is idenitcal. The second law states the the Functor must preserve composition. Assuming a and b from the html compose example:
+&lt;p&gt;Whether the identity function is applied before or after the Functor the result should be the same. As you can see the return value of the two expressions is idenitcal. The second law states the the Functor must preserve composition. Assuming a and b from the html compose example:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;&lt;span class=&quot;js2-warning&quot;&gt;$elem&lt;/span&gt;&lt;/span&gt; = $( &lt;span class=&quot;string&quot;&gt;&quot;#example-anchor&quot;&lt;/span&gt; );
@@ -1168,25 +1494,25 @@ $elem.sndAB().attr(&lt;span class=&quot;string&quot;&gt;&quot;foo&quot;&lt;/span
 &lt;/span&gt;$elem.attr(&lt;span class=&quot;string&quot;&gt;&quot;baz&quot;&lt;/span&gt;);                                   &lt;span class=&quot;comment&quot;&gt;// &quot;bak&quot;
 &lt;/span&gt;&lt;/pre&gt;
 
-This means that composing the functions and then applying the Functor should create a function that behaves identically to a function created by composing two functions that have had the Functor applied already. Essentially, for all input values the output will be the same. We'll see in a second why that distinction is important.
+&lt;p&gt;This means that composing the functions and then applying the Functor should create a function that behaves identically to a function created by composing two functions that have had the Functor applied already. Essentially, for all input values the output will be the same. We&amp;#39;ll see in a second why that distinction is important.&lt;/p&gt;
 
-The assertion at the top will fail of course because the functions are not the same object. More importantly it would fail even if the functions were compared as strings, because they using different internal mechanisms. Ultimately though the functionality is the same and that's what we care about. In each case both `a` and `b` will be allowed to alter each element in the jQuery object's set and apply the attribute values `foo` and `baz` respectively.
+&lt;p&gt;The assertion at the top will fail of course because the functions are not the same object. More importantly it would fail even if the functions were compared as strings, because they using different internal mechanisms. Ultimately though the functionality is the same and that&amp;#39;s what we care about. In each case both &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; will be allowed to alter each element in the jQuery object&amp;#39;s set and apply the attribute values &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;baz&lt;/code&gt; respectively.&lt;/p&gt;
 
-While they have the same outcome, the underlying machinery is very different. `$.fn.fstAB` is _one_ iteration over the set of HTMLElements in the jQuery set and `$.fn.sndAB` is _two_. That is `$.fn.sndAB` is applying two seperate `$.fn` methods which is equivelant to `$(&quot;foo&quot;).a().b()`, where as `$.fn.fstAB` is calling `$.fn.map` only once and piping each element through two composed functions that operate on HTMLElements, `$(&quot;foo&quot;).map(aAndB)`.&lt;sup&gt;4&lt;/sup&gt; They get the same results but `$.fn.sndAB` requires twice as many iterations over the jQuery set!
+&lt;p&gt;While they have the same outcome, the underlying machinery is very different. &lt;code&gt;$.fn.fstAB&lt;/code&gt; is &lt;em&gt;one&lt;/em&gt; iteration over the set of HTMLElements in the jQuery set and &lt;code&gt;$.fn.sndAB&lt;/code&gt; is &lt;em&gt;two&lt;/em&gt;. That is &lt;code&gt;$.fn.sndAB&lt;/code&gt; is applying two seperate &lt;code&gt;$.fn&lt;/code&gt; methods which is equivelant to &lt;code&gt;$(&amp;quot;foo&amp;quot;).a().b()&lt;/code&gt;, where as &lt;code&gt;$.fn.fstAB&lt;/code&gt; is calling &lt;code&gt;$.fn.map&lt;/code&gt; only once and piping each element through two composed functions that operate on HTMLElements, &lt;code&gt;$(&amp;quot;foo&amp;quot;).map(aAndB)&lt;/code&gt;.&lt;sup&gt;4&lt;/sup&gt; They get the same results but &lt;code&gt;$.fn.sndAB&lt;/code&gt; requires twice as many iterations over the jQuery set!&lt;/p&gt;
 
-You might recognize the optimization as [loop fusion](http://en.wikipedia.org/wiki/Loop_fusion). By ensuring that the functor satisfies the requsite laws we've stumbled upon an interesting relationship. That is, any time we use n &gt; 1 iterative `$.fn` methods that exist in **Jqry** it's possible to extract the pure HTMLElement-altering functions that _might_ underly them, compose those functions, and save n-1 full iterations in the process.
+&lt;p&gt;You might recognize the optimization as &lt;a href=&quot;http://en.wikipedia.org/wiki/Loop_fusion&quot;&gt;loop fusion&lt;/a&gt;. By ensuring that the functor satisfies the requsite laws we&amp;#39;ve stumbled upon an interesting relationship. That is, any time we use n &amp;gt; 1 iterative &lt;code&gt;$.fn&lt;/code&gt; methods that exist in &lt;strong&gt;Jqry&lt;/strong&gt; it&amp;#39;s possible to extract the pure HTMLElement-altering functions that &lt;em&gt;might&lt;/em&gt; underly them, compose those functions, and save n-1 full iterations in the process.&lt;/p&gt;
 
-### Loop Fusing Hipster
+&lt;h3 id=&quot;toc_6&quot;&gt;Loop Fusing Hipster&lt;/h3&gt;
 
-It's clear that someone using `$(&quot;foo&quot;).a().b()` could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying `a` and `b` could be unified to speed up execution and subsequently point out they've been fusing loops since before it was cool. What's not clear is how to know in other cases when it's possible to extract the underlying functions from the `$.fn` methods for composition. Because of the Functor laws we've unambiguously defined a specific subset of functions -- the set of **Html** morphisms with `$.fn.map` applied -- that we _know_ can be fused and will produce the same result. Put differently:
+&lt;p&gt;It&amp;#39;s clear that someone using &lt;code&gt;$(&amp;quot;foo&amp;quot;).a().b()&lt;/code&gt; could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; could be unified to speed up execution and subsequently point out they&amp;#39;ve been fusing loops since before it was cool. What&amp;#39;s not clear is how to know in other cases when it&amp;#39;s possible to extract the underlying functions from the &lt;code&gt;$.fn&lt;/code&gt; methods for composition. Because of the Functor laws we&amp;#39;ve unambiguously defined a specific subset of functions -- the set of &lt;strong&gt;Html&lt;/strong&gt; morphisms with &lt;code&gt;$.fn.map&lt;/code&gt; applied -- that we &lt;em&gt;know&lt;/em&gt; can be fused and will produce the same result. Put differently:&lt;/p&gt;
 
-As long as the *n* functions being mapped over the jQuery object's contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set *once*, and be asured the resulting jQuery object will be the same.
+&lt;p&gt;As long as the &lt;em&gt;n&lt;/em&gt; functions being mapped over the jQuery object&amp;#39;s contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set &lt;em&gt;once&lt;/em&gt;, and be asured the resulting jQuery object will be the same.&lt;/p&gt;
 
-### Package it up
+&lt;h3 id=&quot;toc_7&quot;&gt;Package it up&lt;/h3&gt;
 
-Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the **Jqry** category to see what this might look like.
+&lt;p&gt;Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the &lt;strong&gt;Jqry&lt;/strong&gt; category to see what this might look like.&lt;/p&gt;
 
-Plugin one:
+&lt;p&gt;Plugin one:&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;setFoo&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;elem&lt;/span&gt; ){
@@ -1228,11 +1554,11 @@ Plugin one:
 
 &lt;p&gt;Obviously these two examples are tiny and could easily be consolidated by hand, but two plugins with more complex DOM manipulations would be much harder to classify as &amp;quot;fusable&amp;quot;. By puting the onus on the plugin developer it gives the end user a better guarantee that it&amp;#39;s safe.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_3&quot;&gt;Did you make it?&lt;/h3&gt;
+&lt;h3 id=&quot;toc_8&quot;&gt;Did you make it?&lt;/h3&gt;
 
 &lt;p&gt;And there you have it. After defining a mathematical framework in which to view DOM alterations with jQuery and JavaScript we identified an important set of characteristics to use for speeding up our client side code. Maybe this isn&amp;#39;t enough to get you interested, but for me it&amp;#39;s an afirmation that, even this far from the its ivory towers, math has a role to play.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_4&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_9&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Thanks again to edwardk and xplat from #haskell-blah and ciaranm from ##categorytheory for reviewing my categories and providing feedback. I&amp;#39;d also like to thank &lt;a href=&quot;http://twitter.com/keyist&quot;&gt;Tim Goh&lt;/a&gt; for taking the time to enhance my terrible writting.&lt;/li&gt;
@@ -1274,23 +1600,23 @@ Plugin one:
 &lt;/span&gt;  });
 })( jQuery );&lt;/pre&gt;
 
-Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.
+&lt;p&gt;Developers altering the &lt;code&gt;click&lt;/code&gt; callback are required to know all the bindings in the current and parent scopes or face the possibility of attempting something unfortunate like using the invocation operator on a jQuery object. Second the inclusion of the state in each callback is implicit which means everything in the enclosing scope is carried with the callback. This is the beauty of the closure when used properly, but here it only adds complexity and possibly memory bloat. Third, and most importantly, the code tied up in the functions and callbacks is entirely unusable outside that context.&lt;/p&gt;
 
 &lt;h2&gt;Objects Not Functions&lt;/h2&gt;
 
-As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It's also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.
+&lt;p&gt;As far as alternatives go, it is possible to write JavaScript in a functional style. Sadly JavaScript lacks many language features that make functional programming easy and elegant. Partial application, pattern matching, tail call optimization, and simple composition are all missing. It&amp;#39;s also a style of programming that is unfamiliar to the vast majority of front end developers. For now objects appear to be the best means of code reuse and organization where JavaScript is concerned.&lt;/p&gt;
 
-With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it's &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.
+&lt;p&gt;With that in mind there are a number of options worth considering. Many JavaScript libraries provide a class system to emulate similar systems in other languages. &lt;a href=&quot;http://mootools.net/&quot; title=&quot;MooTools&quot;&gt;MooTools&lt;/a&gt; is a prime example in that it&amp;#39;s &lt;a href=&quot;http://mootools.net/docs/core/Class/Class&quot; title=&quot;class system&quot;&gt;Class&lt;/a&gt; constructor supports classical inheritance, mixins, and more. This approach has the obvious benefit of being relatively familiar to developers without a lot of JavaScript experience and if you prefer to work with the DOM via jQuery you can even discard the MooTools DOM API with the download builder.&lt;/p&gt;
 
-Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like &lt;a href=&quot;http://documentcloud.github.com/backbone/#Model&quot; title=&quot;Backbone Model&quot;&gt;Backbone&lt;/a&gt; and &lt;a href=&quot;http://docs.sproutcore.com/#doc=SC.Object&amp;src=false&quot; title=&quot;Sproutcore Object&quot;&gt;Sproutcore&lt;/a&gt; provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his &lt;a href=&quot;http://vimeo.com/22687694&quot; title=&quot;Getting Truth from the DOM&quot;&gt;presentation&lt;/a&gt; &quot;Getting Truth Out of the DOM&quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.
+&lt;p&gt;Additionally a lot of client side software involves state management between JavaScript objects and some DOM representation. Libraries like &lt;a href=&quot;http://documentcloud.github.com/backbone/#Model&quot; title=&quot;Backbone Model&quot;&gt;Backbone&lt;/a&gt; and &lt;a href=&quot;http://docs.sproutcore.com/#doc=SC.Object&amp;src=false&quot; title=&quot;Sproutcore Object&quot;&gt;Sproutcore&lt;/a&gt; provide models in one form or another that can act as a class replacement. As Yehuda Katz pointed out in his &lt;a href=&quot;http://vimeo.com/22687694&quot; title=&quot;Getting Truth from the DOM&quot;&gt;presentation&lt;/a&gt; &amp;quot;Getting Truth Out of the DOM&amp;quot;, attempting to manage complex state between the the DOM and JavaScript is best left to an existing solution. Taken with the need to better organize an application these libraries can be invaluable.&lt;/p&gt;
 
-Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript's object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it's prototype you can group, organize, and reuse common functionality quite easily&lt;sup&gt;1&lt;/sup&gt;. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.
+&lt;p&gt;Finally, you can use the (gasp) prototype system provided by JavaScript. The aversion to JavaScript&amp;#39;s object model appears to be an unfortunate side effect of the overall lack of experience with the language, but by creating a constructor and then defining methods on it&amp;#39;s prototype you can group, organize, and reuse common functionality quite easily&lt;sup&gt;1&lt;/sup&gt;. Even when choosing another solution, neglecting to understand JavaScript at this level is an unfortunate misstep.&lt;/p&gt;
 
-Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it's necessary to address binding context (ie &lt;code&gt;this&lt;/code&gt;) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).
+&lt;p&gt;Operating under the assumption that jQuery will remain the primary means of interacting with the DOM for most developers it&amp;#39;s necessary to address binding context (ie &lt;code&gt;this&lt;/code&gt;) as it becomes necessary when using object methods as arguments to higher order functions (eg event handlers).&lt;/p&gt;
 
 &lt;h2&gt;jQuery and Function.prototype.bind&lt;/h2&gt;
 
-&lt;del&gt;One conspicuous absence from jQuery is a helper for function context binding&lt;/del&gt; jQuery's answer for context binding is the &lt;code&gt;$.proxy&lt;/code&gt; method. That is, it provides a way to guarantee the value of &lt;code&gt;this&lt;/code&gt; during the invocation of a given function. &lt;code&gt;this&lt;/code&gt; becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we'll build a library agnostic version.
+&lt;p&gt;&lt;del&gt;One conspicuous absence from jQuery is a helper for function context binding&lt;/del&gt; jQuery&amp;#39;s answer for context binding is the &lt;code&gt;$.proxy&lt;/code&gt; method. That is, it provides a way to guarantee the value of &lt;code&gt;this&lt;/code&gt; during the invocation of a given function. &lt;code&gt;this&lt;/code&gt; becomes important very quickly in even simple attempts to reconcile DOM events with code organization through objects. Here we&amp;#39;ll build a library agnostic version.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;AlertArea&lt;/span&gt;( &lt;span class=&quot;js2-function-param&quot;&gt;$domElement&lt;/span&gt; ){
@@ -1311,7 +1637,7 @@ AlertArea.prototype.&lt;span class=&quot;function-name&quot;&gt;onCloseClick&lt;
 &lt;/span&gt;  &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;.$domElement.hide();
 };&lt;/pre&gt;
 
-In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it's displayed. It also binds the prototype method &lt;code&gt;onCloseClick&lt;/code&gt; to clicks on child elements matching the &lt;code&gt;div.close&lt;/code&gt; selector. The problem here is that &lt;code&gt;this&lt;/code&gt; in &lt;code&gt;onCloseClick&lt;/code&gt; won't be the &lt;code&gt;AlertArea&lt;/code&gt; object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the &lt;code&gt;this&lt;/code&gt; value upon invocation a binding function is required.
+&lt;p&gt;In this example when the constructor is invoked with some jQuery wrapped DOM object, if that object has text, it&amp;#39;s displayed. It also binds the prototype method &lt;code&gt;onCloseClick&lt;/code&gt; to clicks on child elements matching the &lt;code&gt;div.close&lt;/code&gt; selector. The problem here is that &lt;code&gt;this&lt;/code&gt; in &lt;code&gt;onCloseClick&lt;/code&gt; won&amp;#39;t be the &lt;code&gt;AlertArea&lt;/code&gt; object when the click event is triggered but rather the DOM element on which the event was triggered (a feature of jQuery). To guarantee the &lt;code&gt;this&lt;/code&gt; value upon invocation a binding function is required.&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;function-name&quot;&gt;bindContext&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;, &lt;span class=&quot;js2-function-param&quot;&gt;fn&lt;/span&gt;) {
@@ -1320,18 +1646,17 @@ In this example when the constructor is invoked with some jQuery wrapped DOM obj
   };
 }&lt;/pre&gt;
 
-This function takes as arguments a context (&lt;code&gt;newThis&lt;/code&gt;) and a function (&lt;code&gt;fn&lt;/code&gt;). It then creates a new function that, when invoked, will use the &lt;code&gt;apply&lt;/code&gt; method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.
+&lt;p&gt;This function takes as arguments a context (&lt;code&gt;newThis&lt;/code&gt;) and a function (&lt;code&gt;fn&lt;/code&gt;). It then creates a new function that, when invoked, will use the &lt;code&gt;apply&lt;/code&gt; method of the original function to invoke it with the new context. More commonly this is defined on the function prototype.&lt;/p&gt;
 
-    &lt;pre&gt;
-Function.prototype.&lt;span class=&quot;function-name&quot;&gt;bind&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;) {
-  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;self&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;
+&lt;p&gt;Function.prototype.&lt;span class=&quot;function-name&quot;&gt;bind&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;js2-function-param&quot;&gt;newThis&lt;/span&gt;) {
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;variable-name&quot;&gt;self&lt;/span&gt; = &lt;span class=&quot;builtin&quot;&gt;this&lt;/span&gt;;&lt;/p&gt;
 
-  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
+&lt;p&gt;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;() {
     self.apply(newThis, arguments);
   };
-};&lt;/pre&gt;
+};&lt;/pre&gt;&lt;/p&gt;
 
-With that in place the &lt;code&gt;this&lt;/code&gt; value of the &lt;code&gt;onCloseClick&lt;/code&gt; method can be guaranteed by altering the click binding
+&lt;p&gt;With that in place the &lt;code&gt;this&lt;/code&gt; value of the &lt;code&gt;onCloseClick&lt;/code&gt; method can be guaranteed by altering the click binding&lt;/p&gt;
 
 &lt;pre&gt;
 &lt;span class=&quot;comment&quot;&gt;// bind to the instances onCloseClick

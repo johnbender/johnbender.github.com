@@ -30,6 +30,8 @@
   </head>
 
   <body class="">
+    <a href="https://plus.google.com/112550334078819814430?rel=author" style="display:none">Google</a>
+
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
@@ -93,6 +95,9 @@
             <a href="http://github.com/johnbender">
               <i class="icon-github-sign"></i>
             </a>
+            <a href="https://plus.google.com/112550334078819814430" rel="publisher">
+              <i class="icon-google-plus-sign"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -113,7 +118,7 @@
 
 <p>What follows is the first of two posts aimed at answering that question. This post provides an introduction to operational semantics, a description of one semantic issue in CoffeeScript, and the operational semantics for a CoffeeScript subset capable of reproducing said issue. The second post will introduce type derivations, define them for the same CoffeeScript subset, and attempt to formalize semantic ambiguity more completely. The background needed to understand the math is covered, but the post generally follows my thought process.</p>
 
-<h2 id="toc_14">CoffeeScript Confusion</h2>
+<h2 id="toc_19">CoffeeScript Confusion</h2>
 
 <p>I&#39;ve chosen to address the lambda syntax cited by both of the linked posts. Specifically the option to omit parenthesis in lambda declarations and how that interacts with 0-arity lambdas as arguments. Here&#39;s an example borrowed from Manuel Cerón&#39;s <a href="http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/">post</a>.</p>
 
@@ -121,7 +126,7 @@
 
 <p>It&#39;s easy to see where this might cause issues given that the only difference between the two expressions is a single whitespace character. The goal then is to apply some formalism to this part of CoffeeScript. Ideally the formalism will result in an approach, technique, or tool that can highlight problems like this for a language designer <em>during</em> language creation.</p>
 
-<h2 id="toc_15">Operational Semantics</h2>
+<h2 id="toc_20">Operational Semantics</h2>
 
 <p>Operational Semantics is one way [2] to formalize the semantics of a programming language. We&#39;ll build a basic understanding of how it works by borrowing an example language from Pierce&#39;s book <em>Types and Programming Languages</em> [3].</p>
 
@@ -141,7 +146,7 @@
   <img src="/assets/images/diagrams/math-envy-cs/bool-inference-rules.png"></img>
 </div>
 
-<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;_e-_&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
+<p>These equations are collectively referred to as the <em>evaluation relation</em> and individually as <em>inference rules</em>. Each of them plays an important role in the <em>evaluation strategy</em> of the example which instructs the reader in how to evaluate a term in the language. All of them are tagged with a name preceded by an &quot;<em>e-</em>&quot; for evaluation. The tags will be helpful when referring to the rules and later to keep them visually distinct from type rules.</p>
 
 <p><em>e-true</em> and <em>e-false</em> are fairly simple. They represent the expected evaluation results for the different guard values in an <code>if t then t else t</code> term. With <code>true</code> you get the first subterm and with <code>false</code> you get the second subterm. Also, notice that there are no rules for either <code>true</code> or <code>false</code> by themselves. This further reinforces that <code>true</code> and <code>false</code> are values and that there&#39;s no way to evaluate them further. <em>e-if</em> is more interesting in its construction and how it captures an important part of the evaluation strategy.</p>
 
@@ -155,7 +160,7 @@
 
 <p>There is enough information here for an interested party to implement this language without wondering about how to construct terms or how those terms should be evaluated. Additionally there are interesting properties that can be proved inductively using the inferences rules. For example it&#39;s possible to show that there is one and only one way to evaluate each term at each step [4]. The next step then is to turn back to CoffeeScript and begin apply operational semantics to see if anything interesting happens.</p>
 
-<h2 id="toc_16">CoffeeScript Grammar</h2>
+<h2 id="toc_21">CoffeeScript Grammar</h2>
 
 <p>The grammar will cover the subset of CoffeeScript necessary to reproduce the aforementioned ambiguity. In the original example, the overhead of assignment and identifiers can be avoided by using lambda expressions directly.</p>
 
@@ -177,7 +182,7 @@
 
 <p>Looking at the examples it&#39;s reasonable to ask whether there&#39;s value in providing a grammar that looks a lot like it&#39;s own language. First, it maps the two different lambda forms to one form in the grammar, which makes reasoning about evaluation and types easier. Second, differentiating values (<code>true</code>, <code>false</code>, and <code>-&gt; t</code>) from other terms by calling them values is important for knowing when evaluation has finished.</p>
 
-<h2 id="toc_17">Inference Rules</h2>
+<h2 id="toc_22">Inference Rules</h2>
 
 <p>With the grammar in place the next step is to define both the inference rules and evaluation strategy. Obviously it will use the call-by-value, left to right strategy [5] employed by CoffeeScript and JavaScript.</p>
 
@@ -199,7 +204,7 @@
 
 <p><em>e-arg-eval</em> stipulates in the premise (above the bar) that if the lambda argument term can take a step of evaluation it should. <em>e-app</em> informs the reader when lambda application can take place and <em>e-arg-eval</em> informs the reader how to get there. Taken together these three rules define how terms get evaluated.</p>
 
-<h2 id="toc_18">Derivation Trees</h2>
+<h2 id="toc_23">Derivation Trees</h2>
 
 <p>The inference rules in an operational semantics definition can be used in <em>derivation trees</em> to show how a terms will evaluate. Rules are &quot;stacked&quot; on one another to show how they work in succession to produce an evaluation result.</p>
 
@@ -241,7 +246,7 @@
 
 <p><em>e-false</em> is all that&#39;s needed for the second tree to complete the evaluation to <code>false</code>. At this point it may seem odd to call any part of this a derivation &quot;tree&quot;, but a more complex rule could have multiple terms in the premise resulting in a tree like structure.</p>
 
-<h2 id="toc_19">Evaluating a Solution</h2>
+<h2 id="toc_24">Evaluating a Solution</h2>
 
 <p>Finally we know enough to apply the operational semantics to our problem. First the least complex term that prevents evaluation.</p>
 
@@ -275,13 +280,13 @@
 
 <p>It might be possible to just compare evaluation results instead of the derivation trees but there are problems with that approach. In the example boolean language it&#39;s extremely easy to define two terms that evaluate to an identical result but have different derivation trees.</p>
 
-<p>The fact that the evaluation path is very different gets lost in a forest of <code>true</code>&#39;s and <code>false</code>&#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (_e-true_, <em>e-if</em>, <em>e-false</em>) against the second&#39;s four (_e-true_, <em>e-if</em>, <em>e-false</em>, <em>e-true</em>). Again, this is in spite of the fact that the evaluation <em>result</em> is <code>false</code> in both cases. You really can&#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&#39;t crop up with the CoffeeScript guinea pig.</p>
+<p>The fact that the evaluation path is very different gets lost in a forest of <code>true</code>&#39;s and <code>false</code>&#39;s. More concretely the string distance between the two terms is at most 5 characters out of 78, but the first example has a derivation tree with three rules (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>) against the second&#39;s four (<em>e-true</em>, <em>e-if</em>, <em>e-false</em>, <em>e-true</em>). Again, this is in spite of the fact that the evaluation <em>result</em> is <code>false</code> in both cases. You really can&#39;t tell with the naked eye how different the evaluation is and in a language with side effects the difference could be critical. If the result of this work will be general it must account for this subtlety even if it doesn&#39;t crop up with the CoffeeScript guinea pig.</p>
 
-<h2 id="toc_20">Next Time</h2>
+<h2 id="toc_25">Next Time</h2>
 
 <p>In the next post I&#39;ll take a look at how type information could replace the derivation trees as the semantic differentiator. Type information is often readily available even in languages like CoffeeScript that don&#39;t have type annotations. If finding a difference between two terms is simple enough maybe a tool can be built to automate the process of ferreting out confusing term pairings.</p>
 
-<h3 id="toc_21">footnotes</h3>
+<h3 id="toc_26">footnotes</h3>
 
 <ol>
 <li>An example is the confusion over Monads and Functors in Haskell. This is due in part to odd names and their relationship with mathematics.</li>
@@ -320,7 +325,7 @@
     
     	<li><a href="/archive.html#javascript">javascript <span>10</span></a></li>
     
-    	<li><a href="/archive.html#math">math <span>12</span></a></li>
+    	<li><a href="/archive.html#math">math <span>14</span></a></li>
     
   
 
@@ -334,14 +339,18 @@
 
       </div>
 
+      
+
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="//johnbender.github.com/2012/08/26/presentation-faster-javascript-through-category-theory" title="Presentation: Faster JavaScript through Category Theory">&larr; Previous</a></li>
+        <li class="prev"><a href="//johnbender.github.com/2012/07/19/splitting-jquery-in-two-a-proposal" title="Splitting jQuery in Two, A Proposal">&larr; Older</a></li>
       
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       
-        <li class="next"><a href="//johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2" title="Math Envy and CoffeeScript's Foibles, Part 2">Next &rarr;</a></li>
+        <li class="next">
+          <a href="//johnbender.github.com/2013/01/09/math-envy-and-coffeescripts-foibles-2" title="Math Envy and CoffeeScript's Foibles, Part 2">Newer &rarr;</a>
+        </li>
       
       </ul>
     </div>
@@ -356,22 +365,6 @@
     </div>
 
     
-
-
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-21257360-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-
 
   </body>
 </html>

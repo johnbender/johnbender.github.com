@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Reasoning About the Heap in Rust</title>
+    
+    
+    <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/cv.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body class="">
+    <a href="https://plus.google.com/112550334078819814430?rel=author" style="display:none">Google</a>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+
+          <div class="social-media">
+            <a href="http://twitter.com/johnbender">
+              <i class="icon-twitter-sign"></i>
+            </a>
+            <a href="http://github.com/johnbender">
+              <i class="icon-github-sign"></i>
+            </a>
+            <a href="https://plus.google.com/112550334078819814430" rel="publisher">
+              <i class="icon-google-plus-sign"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Reasoning About the Heap in Rust</h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span10 text">
+    <p>If you follow programming languages or web technologies closely it&#39;s likely that you&#39;ve heard of <a href="http://www.rust-lang.org">Rust</a>. Rust is one part of a larger effort by <a href="http://www.mozilla.org/en-US/research/">Mozilla Research</a> to build a new browser engine in <a href="http://www.mozilla.org/en-US/research/projects/#servo">Servo</a>, but its value as a development tool certainly extends beyond that initial goal. In particular it has received attention for its memory model which, &quot;encourages efficient data structures and safe concurrency patterns, forbidding invalid memory accesses that would otherwise cause segmentation faults&quot; [<a href="#footnotes">1</a>].</p>
+
+<p>In this post we&#39;ll take a look at the basics of Hoare logic and an extension Separation logic which aid in reasoning about imperative program behavior and memory state. Then we&#39;ll apply those tools to examine the impact that Rust&#39;s <a href="http://static.rust-lang.org/doc/0.6/tutorial.html#ownership">memory ownership system</a> has on the heap.</p>
+
+<p><em>While I was writing this post John Reynolds passed away. He was an incredible force in PL research and Separation logic was one of his most important works. There&#39;s much more to it than is covered here so if you&#39;re curious and you want to learn more please explore the links in the footnotes.</em></p>
+
+<h2 id="toc_45">Hoare logic</h2>
+
+<p>In the late 1960s <a href="http://en.wikipedia.org/wiki/C._A._R._Hoare">Tony Hoare</a> proposed a formal system for reasoning about programs which would eventually be referred to as <a href="http://en.wikipedia.org/wiki/Hoare_logic">Hoare logic</a>. The central feature of Hoare logic is a triple <code>{P} C {Q}</code> where <code>P</code> and <code>Q</code> are predicate logic assertions, referred to as the pre/post conditions, and <code>C</code> is a command (reads: program/program fragment). The idea is that, outside of any guarantee of termination [<a href="#footnotes">2</a>], if <code>P</code> is true before <code>C</code> and <code>Q</code> is true after <code>C</code>, the triple proves partial correctness for <code>P</code> and <code>Q</code>. That is, it proves some property asserted by <code>P</code> and <code>Q</code> about <code>C</code>.</p>
+
+<p>A simple example using C with the assertions in comments:</p>
+
+<p>Here the triple <code>{P} C {Q}</code> asserts that if <code>x</code> is equal to some <code>n</code> before <code>x = x + 1</code> then <code>x</code> will be equal to <code>n + 1</code> afterward.</p>
+
+<p>In addition to this basic structure it&#39;s possible to define axioms for common programming constructs like assignment, branching, while loops, and for loops that allow for more general reasoning and manipulation of assertions. For assignment it takes the form <code>{P[E/V]} V=E {P}</code>. That is, substituting <code>E</code> for <code>V</code> in <code>P</code> before the assignment should hold and <code>P</code> should hold afterward [<a href="#footnotes">3</a>].</p>
+
+<p>Borrowing <code>Q</code> from the earlier example here, <code>P</code> is <code>x == n + 1</code>. Substituting <code>x + 1</code> for <code>x</code> in <code>P</code> gives <code>x + 1 == n + 1</code>, or <code>x == n</code>, for the precondition.</p>
+
+<p>With the help of this and other axioms, established for each programming environment, Hoare logic allows the wielder to write specifications for programs. For most domains (especially those that my usual reader works in) the approach might be heavy handed, but there are many domains where this type of specification is necessary. In particular it&#39;s often important to specify the behavior of a program with regards to memory.</p>
+
+<h2 id="toc_46">Separation Logic</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Separation_logic">Separation logic</a> is an extension to Hoare logic that provides tools for specifying memory use and safety with new assertions for how a program will interact with the heap and stack [<a href="#footnotes">4</a>].</p>
+
+<p>The four assertions that Separation logic adds for describing the heap are:</p>
+
+<ul>
+<li><code>emp</code> - for the empty heap. It asserts that the heap is empty, and it can be used to extend assertions about programs that don&#39;t interact with the heap.</li>
+<li><code>x |-&gt; n</code> - for the singleton heap. It asserts that there is a heap that contains one cell at address <code>x</code> with contents <code>n</code>.</li>
+<li><code>P * Q</code> - as a replacement for <code>∧</code> with disjoint heaps. It asserts that, if there is a heap where <code>P</code> holds and a <em>separate</em> (disjoint) heap where <code>Q</code> holds, both <code>P</code> and <code>Q</code> hold in the conjunction of those two heaps.</li>
+<li><code>P -* Q</code> - as a replacement for implication, <code>=&gt;</code>. It asserts that if there is a heap in which <code>P</code> holds then <code>Q</code> will hold in the current heap extended by the heap in which <code>P</code> holds. An important point of clarity: <code>P -* Q</code> holds for the <em>current heap</em> and <em>not</em> the current heap extended by the heap in which <code>P</code> holds.</li>
+</ul>
+
+<p>There are also some shortcuts for common heap states that are built on top of these four assertions:</p>
+
+<ul>
+<li><code>x |-&gt; n, o, p</code> is equivalent to <code>x |-&gt; n * x + 1 |-&gt; o * x + 2 |-&gt; p</code>. That is, <code>x</code> points to a series of memory cells that can be accessed by using <code>x</code> and pointer arithmetic.</li>
+<li><code>x -&gt; n</code> is a basic pointer assertion. It is equivalent to <code>x |-&gt; n * true</code>, that suggests there is a heap where <code>n</code> is the value at <code>*x</code> which is a part of a larger heap about which we can&#39;t make any assertions.</li>
+</ul>
+
+<p>Again we&#39;ll turn to C to demonstrate how these assertions fit with common programs [<a href="#footnotes">5</a>].</p>
+
+<p>The first assertions states that the heap is empty (<code>emp</code>). After the <code>malloc</code> call and assignment there exists a singleton heap with a single cell containing the value <code>5</code> that is pointed to by <code>ptr</code>.</p>
+
+<p>Adding <code>ptr2</code> means the addition of another singleton heap and the connective <code>*</code>. It&#39;s possible to write this as <code>{ (ptr -&gt; 5) ∧ (ptr2 -&gt; 5) }</code>, but this assertion provides no information about how the heap is arranged. It simply says that there are two pointers to the value 5 somewhere in a heap. They might be pointing to the same memory location. By using the singleton heap pointer <code>|-&gt;</code> and the connective <code>*</code>, the new assertion makes clear that the two pointers are <em>not</em> pointing to the same memory location.</p>
+
+<p>Here the comma separated list of values following the singleton pointer in <code>{ arry |-&gt; 1,2,3 }</code> denotes contiguous memory. It&#39;s simply a shorthand notation for the pointer arithmetic.</p>
+
+<p>It&#39;s worth noting that separating implication, <code>P -* Q</code> doesn&#39;t appear to have any particularly useful or clear concrete examples. This seems to be the consequence of its relationship to logical implication in that the whole assertion is only false when <code>Q</code> is false. Borrowing from Reynolds [<a href="#footnotes">6</a>], something like <code>{ x |-&gt; 1 -* Q }</code> for some assertion <code>Q</code> can be extended with the separating implication to show:</p>
+
+<p>The precondition here says that there are two disjoint heaps. One in which <code>x |-&gt; 0</code> holds and one in which <code>(x |-&gt; 1 -* Q)</code> holds. The implication on the right is, if second heap was extended so that <code>x</code> <em>was</em> pointing to <code>1</code>, <code>Q</code> would hold. After the assignment <code>*x</code> is no longer <code>0</code> but rather the second heap has been extended so that <code>*x</code> is <code>1</code> and as a result <code>Q</code> holds [<a href="#footnotes">7</a>].</p>
+
+<h2 id="toc_47">Rust Ownership</h2>
+
+<p>Rust provides two new type modifiers for dealing with pointers and memory management. Both have very specific semantics that are checked at <em>compile time</em> to help prevent memory leaks.</p>
+
+<ul>
+<li><code>~</code> - provides a lexically scoped allocation on the heap. That is, when the newly assigned pointer variable goes out of scope the memory is freed.</li>
+<li><code>@</code> - provides a garbage collected allocation on the heap. In Rust each <a href="http://static.rust-lang.org/doc/tutorial-tasks.html">task</a> has its own garbage collector responsible for handling this type of heap allocation.</li>
+</ul>
+
+<p>A few simple examples borrowed in part from Rust&#39;s tutorials will illustrate when the memory for each of these type modifiers is freed.</p>
+
+<p>With the tilde, the memory at <code>*a</code> on the heap is freed when the variable to which it is assigned goes out of scope. Since <code>a</code> is declared inside an explicit block it goes out of scope at the end of the block and the associated memory is freed.</p>
+
+<p>When the ownership of memory is transferred between variables the compiler prevents further reference to the original owner. In this example <code>a</code> is the new owner and the compiler will prevent any further reference to <code>b</code>. This concept of single ownership is the reason that the memory can be deallocated safely when the current owner goes out of scope.</p>
+
+<p>Alternately, the <code>@</code> type modifier can be used to request that the run-time manage the allocated memory on a per-task basis. This presents some interesting issues when creating pointers to memory allocated as part of a record.</p>
+
+<p>Note that <code>x</code> is declared as a mutable variable (Rust&#39;s default is immutability). When a pointer is made to the field <code>f</code> with <code>&amp;x.f</code> and then <code>x</code> is reassigned, the memory at <code>*x</code> would be subject to garbage collection. Luckily Rust does a bit of work for you and inserts a lexically scoped reference to the original record to prevent deallocation by the garbage collector.</p>
+
+<p>You might also wonder how Rust handles references to lexically scoped record fields. In this case the compiler raises an error and (rather nicely) highlights the discrepancy in scoping expectations.</p>
+
+<p>Here, <code>a</code> is assigned the memory location of the field <code>f</code> of <code>b</code>, but the scope of <code>a</code> is larger than the scope of <code>b</code> which means that <code>*b</code> will be freed long before <code>*a</code>.</p>
+
+<h2 id="toc_48">Formalizing Ownership</h2>
+
+<p>Rust&#39;s memory management facilities exist mostly at compile time to prevent users from shooting themselves in the foot, but it&#39;s still worth applying Separation logic to get a feel for what&#39;s happening to the heap.</p>
+
+<p>Both <code>a</code> and <code>b</code> are scoped to the explicit block and exist in disjoint parts of the heap. When they go out of scope the memory associated with both is deallocated leaving an empty heap.</p>
+
+<p>In this case if there was a reference to <code>b</code> after the ownership of <code>*b</code> was transferred to <code>a</code> the compiler would complain. Since there is no reference we assume that <code>b</code> is pointing to the same location until the pointer is removed at the close of the explicit block.</p>
+
+<p>Here we&#39;ve re-purposed the managed memory example from earlier with the explicit addition of the reference that would otherwise be inserted by Rust to prevent GC, <code>x1</code>. Let&#39;s examine each expression and the associated assertions in turn.</p>
+
+<p>As before the allocation of managed memory creates a singleton heap pointer to the memory containing the record values [<a href="#footnotes">8</a>].</p>
+
+<p>Adding an additional reference to that same memory means that we have two pointers to the same memory. As a result we <em>cannot</em> use the <code>*</code> connective or the the singleton heap pointer <code>|-&gt;</code> to represent the heap.</p>
+
+<p>A new reference to the memory location of the first record field in <code>x</code> and <code>x1</code> adds another pointer that overlaps with the existing heap. It&#39;s important to keep in mind that the basic conjunction simply says that the heap <em>may</em> overlap. To the reader it may be obvious, but in terms of specifying program behavior it&#39;s a weaker assertion that the equivalent made with the <code>*</code> connective.</p>
+
+<p>Finally with the allocation of a wholly new record and pointer for <code>x</code> we can employ the more powerful connective because the new record lives in a newly allocated section of memory on the heap. The remaining pointers to the original record and its first field remain ambiguous.</p>
+
+<h2 id="toc_49">Further Reading</h2>
+
+<p>Not covered here for brevity&#39;s sake is an important part of Separation logic, the Frame Rule. The Frame Rule provides for rigorous local reasoning about the heap without concern for other possibly overlapping references to the same memory locations. That is, it allows each assertion to be correct in spite of the fact that the program fragments they pertain to are often operating in a larger application that manipulates the heap.</p>
+
+<p>Also, the concept of borrowed pointers is important reading if you&#39;re interested in Rust. A common but effective memory efficiency is achieved in C by passing pointers to data structures instead of using the default pass-by-value semantics. Similarly one can &quot;borrow&quot; a pointer to a data structure in Rust, but because of the type level restrictions it&#39;s both safer and more complex [<a href="#footnotes">9</a>]. The borrowed pointers <a href="http://static.rust-lang.org/doc/tutorial-borrowed-ptr.html">tutorial</a> makes those complexities clear.</p>
+
+<h2 id="toc_50">Conclusion</h2>
+
+<p>Hopefully this post has given you an initial sense of a portion of Rust&#39;s memory management facilities and also the formalism of Separation logic.</p>
+
+<p>Special thanks goes to <a href="https://twitter.com/steveklabnik">@steveklabnik</a>, <a href="https://twitter.com/evanphx">@evanphx</a>, and Matt Brown for reviewing various bits of my post.</p>
+
+<h3 id="toc_51">Footnotes</h3>
+
+<p><a name="footnotes"></a></p>
+
+<ol>
+<li><a href="http://static.rust-lang.org/doc/0.6/tutorial.html#introduction">http://static.rust-lang.org/doc/0.6/tutorial.html#introduction</a></li>
+<li>When the program fragment can be shown to terminate the triple proves total correctness.</li>
+<li>There are actually two forms of the assignment axiom. The second proposed by Floyd is more complex but addresses issues that exist in common imperative languages the first cannot.</li>
+<li>More information on Separation logic <a href="https://wiki.mpi-sws.org/star/cpl">https://wiki.mpi-sws.org/star/cpl</a></li>
+<li>The examples that follow assume that <code>malloc</code> is always operating by allocating fresh memory not pointed to elsewhere.</li>
+<li>John C. Reynolds: <a href="http://www.cs.cmu.edu/%7Ejcr/seplogic.pdf">Separation Logic: A Logic for Shared Mutable Data Structures.</a></li>
+<li>It certainly feels convoluted but the separating implication is used as a powerful tool when reasoning about the execution of programs moving backwards (among other things). All the examples in this post start from some initial state and then move forward following the execution of the program. Doing this can produce useless assertions if the thing you are trying to prove isn&#39;t affected by some of the program snippets. Many times it&#39;s easier to reason from the end goal, that is from the final result of a set of commands/expressions/program snippets and work backwards. As you can see <code>{ x |-&gt; _ * (x |-&gt; 1 -* Q) } *x = 1 { Q }</code> the final assertion can be anything. This means that you can start with some assertion you want to show for a program and move backward &quot;over&quot; a memory mutation!</li>
+<li>This assumes the memory allocated for a struct in Rust is sequential (for <a href="http://static.rust-lang.org/doc/tutorial-borrowed-ptr.html#borrowing-unique-boxes">reference</a>). It also assumes that <code>x.f</code> and <code>x.g</code> aren&#39;t explicitly scoped pointers but rather tranlate into an operation on the pointer <code>x</code> at a low level (they aren&#39;t represented in the assertions).</li>
+<li>Obviously this depends on your perspective and how complex the code is that uses the pointer. That is, it may be exceptionally hard to get the memory freed properly as result of passing around pointers in which case the compiler might be extremely valuable when writing the Rust equivalent.</li>
+</ol>
+
+    
+  </div>
+
+  <div id="info" class="span2">
+  
+    <h4>Vote/Comment</h4>
+    <ul id="vote">
+      <li>
+        <a id="hn" href="http://news.ycombinator.com/" alt="Hacker News">Hacker News</a>
+      </li>
+    </ul>
+  
+
+    <h4>Published</h4>
+    <div class="date"><span>30 Apr 2013</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+    
+    	<li><a href="/archive.html#rust">rust <span>1</span></a></li>
+    
+    	<li><a href="/archive.html#math">math <span>14</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </div>
+</div>
+
+
+      </div>
+
+      
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/2013/01/15/system-f-in-coffeescript" title="System F in CoffeeScript">&larr; Older</a></li>
+      
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      
+        <li class="next">
+          <a href="//johnbender.github.com/2013/07/18/resources-local-reasoning" title="Presentation: O'Hearn's Resources, Concurrency, and Local Reasoning">Newer &rarr;</a>
+        </li>
+      
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; John Bender 2012
+        with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+        and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+    </footer>
+
+    </div>
+
+    
+
+  </body>
+</html>
+

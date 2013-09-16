@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    
+    <title>System State and Declarative Languages</title>
+    
+    
+    <meta name="author" content="John Bender">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//johnbender.github.com/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/cv.css" rel="stylesheet" type="text/css" media="all">
+    <link href="//johnbender.github.com/assets/themes/twitter/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body class="">
+    <a href="https://plus.google.com/112550334078819814430?rel=author" style="display:none">Google</a>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="//johnbender.github.com">johnbender.us</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+
+          <div class="social-media">
+            <a href="http://twitter.com/johnbender">
+              <i class="icon-twitter-sign"></i>
+            </a>
+            <a href="http://github.com/johnbender">
+              <i class="icon-github-sign"></i>
+            </a>
+            <a href="https://plus.google.com/112550334078819814430" rel="publisher">
+              <i class="icon-google-plus-sign"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>System State and Declarative Languages</h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span10 text">
+    <p>Declarative programming languages are often characterized by how they express computation in terms of a desired outcome. This is in contrast to imperative languages which are seen, vis-a-vis declarative languages, as expressing computation with a series of steps to reach an outcome. The advantage of the declarative approach is clear, the program author states his or her intentions and the rest is left to the runtime [1]. In practice many languages that have earned the declarative label require much of the &quot;how&quot; to be included out of necessity.</p>
+
+<p>In this post we&#39;ll look at two examples where the declarative approach has proven valuable: the data definition subset of SQL (DDL) and configuration management (Puppet?). In particular, we&#39;ll examine where each falls down as the desired system state evolves over time and how that might be remedied.</p>
+
+<h2 id="toc_52">SQL</h2>
+
+<p>SQL is the language most often cited when an example of a declarative language is called for. The DDL subset provides the tools to establish a database schema by creating tables, keys, constraints, indexes, and more. For example creating a table <code>foo</code>:</p>
+
+<p>Though you could argue that removing the <code>CREATE</code> would make it more &quot;declarative&quot;, this accurately captures the desired state of the database. Namely, it should contain a table identified by <code>foo</code> with two columns, one and integer and the other text [2].</p>
+
+<p>Unfortunately database schemas rarely remain this simple, an issue largely addressed by SQL&#39;s declarative nature. More importantly, schemas must be &quot;evolved&quot; towards that complexity over time to support new instances as they are created and old ones as they are updated.</p>
+
+<p>Since it&#39;s unreasonable to drop the table and recreate it each time there&#39;s a change to its structure, table alterations are made. Unfortunately this diverges from the declarative approach significantly. The maintainers of the schema are no longer defining the desired table structure and trusting that the runtime will make the necessary changes. They&#39;re defining the necessary changes manually so the runtime can construct the desired schema. Possibly worse, making an alteration to a complex set of DDL statements requires comprehension of all alterations that came &quot;before&quot; leaving a lot of room for error.</p>
+
+<p>So the question is, how do you preserve the declarative nature of DDL SQL statements while maintaining the idempotent properties of a schema definition?</p>
+
+<h2 id="toc_53">Configuration Management</h2>
+
+<p>Configuration management has seen an explosion in popularity as applications are more frequently being hosted on virtualized hardware. The disposability of virtual servers has driven a need for tools that can quickly and consistently provision a new machine to serve a specific role. Encouragingly, many of the tools along with their accompanying EDSLs and custom languages have taken a declarative approach to system state.</p>
+
+<p>TODO find an example resource that can have sub-statements removed / or needs extra statements for alteration</p>
+
+<p>(Chef&#39;s | Puppet&#39;s) <code>package</code> statement is a declaration in the same sense that <code>CREATE TABLE</code> is, it defines a package that should be installed on the system and (Chef | Puppet) handles the rest. Though it&#39;s clearly less painful in this instance, it must address the same problem that the SQL does. When the maintainer wishes to remove that package from the system he or she must account for new systems being built from scratch and old systems that have already been built. As a result additional syntax is necessary to clarify the intent.</p>
+
+<p>Another issue highlighted here is that removing something from a system requires declaring its absence. An outside observer might wonder why anyone should be troubled with declaring all the things that should <em>not</em> be present on a system!</p>
+
+<p>Additionally, for both SQL and these configuration management tools, it&#39;s unclear how these statements should be handled over time in a code base. Clearly once all existing systems have been updated it&#39;s safe to remove them, but neither runtime provides facilities for that type of accounting leaving the user open to mistakes.</p>
+
+<h2 id="toc_54">Explicit Change</h2>
+
+<p>In these situations information about changes to declarations should be tracked by the runtime and reflected in system state. That is, the language and its accompanying runtime would benefit from a semantic definition of syntactic change by using it in conjunction with source history to determine system state.</p>
+
+<p>The intent is to add a column to the table <code>foo</code>. Ideally the <code>CREATE TABLE</code> definition would simply expand to include the new column and databases built with the old defintion would update to match the new one.</p>
+
+<p>In this example the difference between the two declarations could be reconciled by simply comparing it with the existing table. The need for access to source history arises from more sweeping changes to declarations like outright removal.</p>
+
+<p>The absence of this table declaration could be handled by the runtime in a number of ways without access to source history. If the system requires that DDL statements only exist in a single canonical source file the runtime can confidently reconcile the absence of the table from the schema defintion and remove the table. Alternatively, the runtime could be fed all the DDL statements it needs to construct the schema properly and then reconcile that with its internal state thereby avoiding the &quot;single source&quot; requirement of the first option.</p>
+
+<p>The issue with both of these solutions is that the table removal is implicit. For example, in the second case if a source file isn&#39;t included in the list to be fed to the runtime a database table might be dropped inadvertantly. In contrast the diff constitutes an explicit declaration of the table&#39;s <em>absence</em> from the schema defition.</p>
+
+<p>Possibly the largest advantage of the change based approach is the prospect of rolling back schema changes using source control. In the previous example dropping a table may be difficult to reconcile [3], but things like indexes and constraints can be added and removed safetly by simply reverting the change using soure control.</p>
+
+<p>TODO sql example</p>
+
+<h2 id="toc_55">The Semantics of Change</h2>
+
+<p>Language semantics are traditionally defined in terms of evaluation. Here the idea is that the addition and removal of syntax carries meaning in addition to the syntax itself.</p>
+
+<p>The diff is semantically equivalent to the SQL statement when considered in the light of semantic changes and this achieves two very important goals. It promotes the declarative nature of SQL DDL and suggests that if <code>CREATE TABLE</code> declarations can support that same features as the <code>ALTER TABLE</code> declarations it might be possible to remove the latter all together.</p>
+
+<p>Again the removal of the package declaration signals the intent to remove the package itself from target systems. A side benefit is that the <code>ensure =&gt; &quot;absen&quot;</code> and <code>action :remove</code> are suddenly unnecessary.</p>
+
+<h2 id="toc_56">Considerations</h2>
+
+<p>For both SQL and configuration management there is still the question of what should be done about artifacts associated with certain declarations. In SQL the effects of a <code>CREATE TRIGGER</code> on the data are not easily unwound without a comprehensive history of the data over time, and that makes the semantics of its absence hard to define. For configuration management even the simple installation of a package might affect system startup, create temporary files, and otherwise alter system state in ways that can&#39;t be undone by simply removing it. This is to say nothing of more complex declarative abstractions for setting up web applications, databases, message queues, etc.</p>
+
+<p>In spite of these outstanding questions there are many types of declarations that have straightforward meanings when changed, and they do little to diminish the value in incorporating those meanings into declarative runtimes.</p>
+
+<h2 id="toc_57">Conclusion</h2>
+
+<p>Declarative languages offer a lot of power to users but it is often extremely difficult to remain purely declarative in the face of change. By incorporating the semantics of change into these environments the burden on the user can be reduced while maintaining expresive power and safety guarantees.</p>
+
+<h3 id="toc_58">footnotes</h3>
+
+<ol>
+<li>&quot;It seems like a sufficiently advanced compiler...&quot;, famous last words from an anonymous PhD who dropped out shortly thereafter.</li>
+<li>It&#39;s worth noting that most (all?) implementations will fail when confronted with a <code>CREATE TABLE</code> statement for an existing table. The example can easily be augmented with <code>IF NOT EXISTS</code> to get the desired effect.</li>
+<li>It might be achieved with access to backups.</li>
+</ol>
+
+    
+  </div>
+
+  <div id="info" class="span2">
+  
+
+    <h4>Published</h4>
+    <div class="date"><span>26 Jul 2013</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+    
+    	<li><a href="/archive.html#sql">sql <span>1</span></a></li>
+    
+    	<li><a href="/archive.html#devops">devops <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </div>
+</div>
+
+
+      </div>
+
+      
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="//johnbender.github.com/2013/07/19/presentation-math-envy-and-coffeescripts-foibles" title="Presentation: Math Envy and CoffeeScript's Foibles">&larr; Older</a></li>
+      
+        <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
+      
+        <li class="next">
+          <a href="//johnbender.github.com/2013/08/29/presentation-faster-javascript-through-category-theory" title="Presentation: Faster JavaScript through Category Theory">Newer &rarr;</a>
+        </li>
+      
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; John Bender 2012
+        with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+        and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+    </footer>
+
+    </div>
+
+    
+
+  </body>
+</html>
+

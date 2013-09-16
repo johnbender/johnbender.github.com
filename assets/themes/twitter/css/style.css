@@ -8,10 +8,6 @@ body {
   width: auto;
 }
 
-iframe {
-  margin: 1em 0;
-}
-
 .navbar {
   margin-bottom: 0;
 }
@@ -214,6 +210,10 @@ pre, code {
 }
 
 pre {
+  margin: 1em 0;
+}
+
+div.highlight {
   margin: 1.5em 0;
 }
 
@@ -460,4 +460,16 @@ body.missing .content p {
 body.missing .content {
   margin-top: 100px;
   min-height: 400px;
+}
+
+video {
+  background-color: black;
+}
+
+video, iframe {
+  margin: 1em 0 2em 0;
+}
+
+.highlight + .highlight {
+  margin-top: -1.1em;
 }
