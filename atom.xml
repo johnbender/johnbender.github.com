@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-11-03T22:26:44-08:00</updated>
+ <updated>2013-11-04T08:06:46-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -17,11 +17,11 @@
    <link href="http://johnbender.github.com/2013/11/04/a-better-sql"/>
    <updated>2013-11-04T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2013/11/04/a-better-sql</id>
-   <content type="html">&lt;p&gt;The relational model for data is ubiquitous. Consequently so is SQL, but it has its warts. In particular schema change with the DDL subset of the language can be awkward when an idempotent migration is called for. Awkward enough that frequently the responsibility is delegated to the application layer where more expressive languages are employed. In this, the first of two posts proposing improvements to SQL, I&amp;#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&amp;#39;s declarative core.&lt;/p&gt;
+   <content type="html">&lt;p&gt;The relational model for data is ubiquitous. That&amp;#39;s in part due to SQL&amp;#39;s declarative approach to dealing with data. Unfortunately SQL has its warts. In particular schema change with the data definition subset of the language (DDL) [1] can be awkward for creating idempotent migrations. It&amp;#39;s awkward enough that the responsibility is frequently delegated to the application layer where more expressive languages can be employed. In this, the first of two posts proposing improvements to SQL, I&amp;#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&amp;#39;s declarative core.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_59&quot;&gt;A Common Activity&lt;/h2&gt;
 
-&lt;p&gt;To illustrate how schema changes break the initially declarative model that DDL provides, lets look at an example:&lt;/p&gt;
+&lt;p&gt;To illustrate how schema changes break the initially declarative semantics of DDL, lets look at an example:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
@@ -30,7 +30,7 @@
 &lt;/div&gt;
 
 &lt;p&gt;All tables start this way. The only piece of syntax that might otherwise alert a new user to the fact that this is not an entirely descriptive declarative language is &lt;code&gt;create&lt;/code&gt;. The definition is very much &amp;quot;what&amp;quot; is desired and not &amp;quot;how&amp;quot; to get it. This breaks down when anything about the table needs to change:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;exists&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -39,8 +39,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Additionally the user might extend the &lt;code&gt;create&lt;/code&gt; with an &lt;code&gt;if exists&lt;/code&gt;. All together this will ensure the proper end-state whether the target database is at the initial state without the table &lt;code&gt;foo&lt;/code&gt; or at the second state where &lt;code&gt;foo&lt;/code&gt; lacks the column &lt;code&gt;bak&lt;/code&gt;. In this case it&amp;#39;s idempotent and easy to understand the final state of the table because the examples is very simple. As the schema definition grows more complex through many &lt;code&gt;drop&lt;/code&gt;s, &lt;code&gt;add&lt;/code&gt;s and type casts the final state of the table is less clear when viewed at the syntactic level:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;p&gt;All together this will ensure the proper end-state whether the target database is at the initial state without the table &lt;code&gt;foo&lt;/code&gt; or at the second state where &lt;code&gt;foo&lt;/code&gt; lacks the column &lt;code&gt;bak&lt;/code&gt;. In this case it&amp;#39;s easy to understand the final state of the table because the example is very simple, but it&amp;#39;s acquired an imperative pall with the inclusion of the first &lt;code&gt;alter&lt;/code&gt;. As the schema definition grows more complex through many &lt;code&gt;drop&lt;/code&gt;, &lt;code&gt;add&lt;/code&gt;, and type cast changes, the final state of the table becomes less clear:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;exists&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -51,13 +51,11 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;It would be better to simply add columns to the original table definition, and then the resulting schema representation would be immediately clear at a glance.&lt;/p&gt;
+&lt;p&gt;It would be better to simply add columns to the original table definition, and then the shape of the resulting table would be immediately clear at a glance.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_60&quot;&gt;Differential Semantics&lt;/h2&gt;
 
-&lt;p&gt;The key insight here is that we can permit schema migrations while retaining an entirely descriptive declarative syntax by appealing to the differential information available via source control tools.&lt;/p&gt;
-
-&lt;p&gt;In our toy example the desired table definition included a new column &lt;code&gt;bak&lt;/code&gt;. An entirely descriptive version of our desired table would look something like this (Note that the original alter statement is absent):&lt;/p&gt;
+&lt;p&gt;In our toy example the desired table definition included a new column &lt;code&gt;bak&lt;/code&gt;. An entirely descriptive update to the table declaration would look like this (Note that the original alter statement is absent):&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -66,11 +64,9 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Unfortunately the SQL runtime only considers the existing syntax and makes no attempt to reconcile that syntax with it&amp;#39;s existing schema/state. That makes perfect sense in light of the fact that a user is permitted to run small, ad hoc snippets in addition to full schema migration scripts. That is, the RDBMS can&amp;#39;t know where this declaration is coming from nor why it&amp;#39;s being run. In contrast a well outfitted user has all of that information.&lt;/p&gt;
-
-&lt;p&gt;If an augmented runtime is provided with more information about how a given declaration has &lt;em&gt;changed&lt;/em&gt;, it can use that in lieu of the alteration statements to reconcile the current schema state.&lt;/p&gt;
+&lt;p&gt;Unfortunately the SQL runtime considers the syntax in isolation and makes no attempt to reconcile that with it&amp;#39;s internal representation. That makes perfect sense because a user is permitted to run small, ad hoc snippets in addition to full schema migration scripts. That is, the RDBMS can&amp;#39;t know where this declaration is coming from nor why it&amp;#39;s being run so it&amp;#39;s unsafe to assume it should do any reconciliation. In contrast a well outfitted user can provide exactly that information.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;diff&quot;&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,4 +1,5 @@&lt;/span&gt;
- create table foo (
+ create table foo (l;
    bar int,
 &lt;span class=&quot;gd&quot;&gt;-  baz text&lt;/span&gt;
 &lt;span class=&quot;gi&quot;&gt;+  baz text,&lt;/span&gt;
@@ -79,33 +75,36 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Just looking at the diff it&amp;#39;s very clear what the intention is: to add the column &lt;code&gt;bak&lt;/code&gt; to the table. All that&amp;#39;s left is to assign some semantics to this diff and its parent table statement. A simple pre-processor might map this differential to the corresponding alter statement in DDL, namely the original alter statement.&lt;/p&gt;
+&lt;p&gt;Looking at the diff, it&amp;#39;s clear that the intention is to add the column &lt;code&gt;bak&lt;/code&gt; to the table. What&amp;#39;s required then, is to assign some semantics to this diff. With that established a simple pre-processor could map this differential to the corresponding alter statement in DDL, namely the original alter statement.&lt;/p&gt;
+
+&lt;p&gt;The key insight here is that we can permit schema migrations while retaining an entirely descriptive declarative syntax by appealing to the differential information available via source control tools.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_61&quot;&gt;Value Proposition&lt;/h2&gt;
 
-&lt;p&gt;The value proposition for the simple case is reduced cognitive overhead in maintaining schemas using SQL DDL. In addition, DDL&amp;#39;s syntax is reduced by about half because alters and drops [1] can simply go away which should make it easier to learn as well [2].&lt;/p&gt;
+&lt;p&gt;The basic value proposition is reduced cognitive overhead when maintaining schemas using SQL DDL. In addition, DDL&amp;#39;s syntax is reduced by about half because alters and drops [2] can simply go away which should make it easier to learn [3].&lt;/p&gt;
 
 &lt;p&gt;This could also be pushed up the stack to migration tools by an enterprising library or framework author. For example, Rails generates and maintains a &lt;code&gt;db/schema.rb&lt;/code&gt; file that is supposed to represent the state of the schema for the associated migrations. A similar technique could be applied there to divine the appropriate alterations when an change to that file is made in place of using migrations for schema changes.&lt;/p&gt;
 
-&lt;p&gt;Finally, by associating meaning with syntactic change the user can more safely understand and execute post commit reverts to schema changes. That is, instead of manually defining the necessary steps to &amp;quot;undo&amp;quot; some previous schema change, the source control system can provide the exact information that is necessary given a semantics that&amp;#39;s powerful enough to represent the differential.&lt;/p&gt;
+&lt;p&gt;Finally, by associating meaning with syntactic change the user can more safely understand and execute post commit reverts to schema changes. That is, instead of manually defining the necessary steps to &amp;quot;undo&amp;quot; some previous schema change, the source control system can provide the exact information that is necessary.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_62&quot;&gt;Pitfalls&lt;/h2&gt;
 
-&lt;p&gt;Clearly, not every migration is just about the schema. Frequently the data has to be altered to conform to the target schema. This is actually an area of active research in the Database Systems community [3].&lt;/p&gt;
+&lt;p&gt;Obviously, not every migration is just about the schema. Frequently the data has to be altered to conform to the target schema. This is actually an area of active research in the Database Systems community [4].&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_63&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;For the interested reader, I started work on a &lt;a href=&quot;https://github.com/johnbender/sql-delta&quot;&gt;preprocessor&lt;/a&gt; implemented in Haskell. Unfortunately since I don&amp;#39;t have any plans to pursue this further as a research topic I haven&amp;#39;t been working on it. Also, for comparison I&amp;#39;ve included two very simple denotational semantics in the footnotes [4]. They highlight the symmetry of this new approach to the language when compared with the current implementation.&lt;/p&gt;
+&lt;p&gt;For the interested reader, I started work on a &lt;a href=&quot;https://github.com/johnbender/sql-delta&quot;&gt;preprocessor&lt;/a&gt; implemented in Haskell. Unfortunately since I don&amp;#39;t have any plans to pursue this further I haven&amp;#39;t been working on it. Also, for comparison I&amp;#39;ve included two very simple sets of denotational semantics in the footnotes; one to represent the current implementation and one to represent the differential semantics [5]. They highlight the symmetry of this new approach to the language when compared with the current implementation.&lt;/p&gt;
 
 &lt;p&gt;This technique can be extended to other languages that manage system state declaratively like configuration management DSLs or even HTML. Though in the case of configuration management, understanding the mapping between syntax and state is quite complex because system components frequently generate artifacts that are not explicitly declared.&lt;/p&gt;
 
-&lt;p&gt;Broadly, the idea of differential semantics is to gather more information about intent from readily available sources so that language runtimes (declarative or otherwise) can make informed decisions about user intent. The results need not be confined to accurate interpretation of the desired system state.&lt;/p&gt;
+&lt;p&gt;Broadly, the idea of differential semantics is to gather more information about intent from readily available sources so that language runtimes (declarative or otherwise) can make more informed decisions about user intent. The results need not be confined to accurate interpretation of the desired system state.&lt;/p&gt;
 
 &lt;p&gt;In the next post we&amp;#39;ll look at how a type system applied to SQL might provide some useful safety properties during schema migration and beyond.&lt;/p&gt;
 
 &lt;h3 id=&quot;toc_64&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Data_definition_language&quot;&gt;http://en.wikipedia.org/wiki/Data_definition_language&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;In our example a drop would be accomplished by removing the table definition completely.&lt;/li&gt;
 &lt;li&gt;The mapping presumes feature parity in the create with the alter statements, but in my study of the standard and Postgres&amp;#39; implementation this appears to be the case.&lt;/li&gt;
 &lt;li&gt;There&amp;#39;s a lot of interesting work and tooling around preventing issues resulting from schema migrations: &lt;a href=&quot;http://scholar.google.com/scholar?q=prism+schema+evolution&amp;amp;btnG=&amp;amp;hl=en&amp;amp;as_sdt=0%2C5&quot;&gt;schema evolution&lt;/a&gt;.&lt;/li&gt;
