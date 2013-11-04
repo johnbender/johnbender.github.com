@@ -8,9 +8,9 @@ http://johnbender.github.com/sitemap.txt
 http://johnbender.github.com/atom.xml
 http://johnbender.github.com/cv.html
 
+http://johnbender.github.com/2013/11/04/a-better-sql
 http://johnbender.github.com/2013/09/16/why-im-getting-a-phd
 http://johnbender.github.com/2013/08/29/presentation-faster-javascript-through-category-theory
-http://johnbender.github.com/2013/07/26/on-state-and-declarative-languages
 http://johnbender.github.com/2013/07/19/presentation-math-envy-and-coffeescripts-foibles
 http://johnbender.github.com/2013/07/18/resources-local-reasoning
 http://johnbender.github.com/2013/04/30/reasoning-about-the-heap-in-rust

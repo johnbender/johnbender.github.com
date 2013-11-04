@@ -4,13 +4,117 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2013-09-16T14:01:53-07:00</updated>
+ <updated>2013-11-03T22:26:44-08:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
    <email>john.m.bender@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>A Better SQL, Part 1</title>
+   <link href="http://johnbender.github.com/2013/11/04/a-better-sql"/>
+   <updated>2013-11-04T00:00:00-08:00</updated>
+   <id>http://johnbender.github.com/2013/11/04/a-better-sql</id>
+   <content type="html">&lt;p&gt;The relational model for data is ubiquitous. Consequently so is SQL, but it has its warts. In particular schema change with the DDL subset of the language can be awkward when an idempotent migration is called for. Awkward enough that frequently the responsibility is delegated to the application layer where more expressive languages are employed. In this, the first of two posts proposing improvements to SQL, I&amp;#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&amp;#39;s declarative core.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_59&quot;&gt;A Common Activity&lt;/h2&gt;
+
+&lt;p&gt;To illustrate how schema changes break the initially declarative model that DDL provides, lets look at an example:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;All tables start this way. The only piece of syntax that might otherwise alert a new user to the fact that this is not an entirely descriptive declarative language is &lt;code&gt;create&lt;/code&gt;. The definition is very much &amp;quot;what&amp;quot; is desired and not &amp;quot;how&amp;quot; to get it. This breaks down when anything about the table needs to change:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;alter&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bak&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Additionally the user might extend the &lt;code&gt;create&lt;/code&gt; with an &lt;code&gt;if exists&lt;/code&gt;. All together this will ensure the proper end-state whether the target database is at the initial state without the table &lt;code&gt;foo&lt;/code&gt; or at the second state where &lt;code&gt;foo&lt;/code&gt; lacks the column &lt;code&gt;bak&lt;/code&gt;. In this case it&amp;#39;s idempotent and easy to understand the final state of the table because the examples is very simple. As the schema definition grows more complex through many &lt;code&gt;drop&lt;/code&gt;s, &lt;code&gt;add&lt;/code&gt;s and type casts the final state of the table is less clear when viewed at the syntactic level:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;alter&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bak&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;alter&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;drop&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bak&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;alter&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baks&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It would be better to simply add columns to the original table definition, and then the resulting schema representation would be immediately clear at a glance.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_60&quot;&gt;Differential Semantics&lt;/h2&gt;
+
+&lt;p&gt;The key insight here is that we can permit schema migrations while retaining an entirely descriptive declarative syntax by appealing to the differential information available via source control tools.&lt;/p&gt;
+
+&lt;p&gt;In our toy example the desired table definition included a new column &lt;code&gt;bak&lt;/code&gt;. An entirely descriptive version of our desired table would look something like this (Note that the original alter statement is absent):&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bak&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Unfortunately the SQL runtime only considers the existing syntax and makes no attempt to reconcile that syntax with it&amp;#39;s existing schema/state. That makes perfect sense in light of the fact that a user is permitted to run small, ad hoc snippets in addition to full schema migration scripts. That is, the RDBMS can&amp;#39;t know where this declaration is coming from nor why it&amp;#39;s being run. In contrast a well outfitted user has all of that information.&lt;/p&gt;
+
+&lt;p&gt;If an augmented runtime is provided with more information about how a given declaration has &lt;em&gt;changed&lt;/em&gt;, it can use that in lieu of the alteration statements to reconcile the current schema state.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;diff&quot;&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,4 +1,5 @@&lt;/span&gt;
+ create table foo (
+   bar int,
+&lt;span class=&quot;gd&quot;&gt;-  baz text&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+  baz text,&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+  bak text&lt;/span&gt;
+ );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Just looking at the diff it&amp;#39;s very clear what the intention is: to add the column &lt;code&gt;bak&lt;/code&gt; to the table. All that&amp;#39;s left is to assign some semantics to this diff and its parent table statement. A simple pre-processor might map this differential to the corresponding alter statement in DDL, namely the original alter statement.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_61&quot;&gt;Value Proposition&lt;/h2&gt;
+
+&lt;p&gt;The value proposition for the simple case is reduced cognitive overhead in maintaining schemas using SQL DDL. In addition, DDL&amp;#39;s syntax is reduced by about half because alters and drops [1] can simply go away which should make it easier to learn as well [2].&lt;/p&gt;
+
+&lt;p&gt;This could also be pushed up the stack to migration tools by an enterprising library or framework author. For example, Rails generates and maintains a &lt;code&gt;db/schema.rb&lt;/code&gt; file that is supposed to represent the state of the schema for the associated migrations. A similar technique could be applied there to divine the appropriate alterations when an change to that file is made in place of using migrations for schema changes.&lt;/p&gt;
+
+&lt;p&gt;Finally, by associating meaning with syntactic change the user can more safely understand and execute post commit reverts to schema changes. That is, instead of manually defining the necessary steps to &amp;quot;undo&amp;quot; some previous schema change, the source control system can provide the exact information that is necessary given a semantics that&amp;#39;s powerful enough to represent the differential.&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_62&quot;&gt;Pitfalls&lt;/h2&gt;
+
+&lt;p&gt;Clearly, not every migration is just about the schema. Frequently the data has to be altered to conform to the target schema. This is actually an area of active research in the Database Systems community [3].&lt;/p&gt;
+
+&lt;h2 id=&quot;toc_63&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;For the interested reader, I started work on a &lt;a href=&quot;https://github.com/johnbender/sql-delta&quot;&gt;preprocessor&lt;/a&gt; implemented in Haskell. Unfortunately since I don&amp;#39;t have any plans to pursue this further as a research topic I haven&amp;#39;t been working on it. Also, for comparison I&amp;#39;ve included two very simple denotational semantics in the footnotes [4]. They highlight the symmetry of this new approach to the language when compared with the current implementation.&lt;/p&gt;
+
+&lt;p&gt;This technique can be extended to other languages that manage system state declaratively like configuration management DSLs or even HTML. Though in the case of configuration management, understanding the mapping between syntax and state is quite complex because system components frequently generate artifacts that are not explicitly declared.&lt;/p&gt;
+
+&lt;p&gt;Broadly, the idea of differential semantics is to gather more information about intent from readily available sources so that language runtimes (declarative or otherwise) can make informed decisions about user intent. The results need not be confined to accurate interpretation of the desired system state.&lt;/p&gt;
+
+&lt;p&gt;In the next post we&amp;#39;ll look at how a type system applied to SQL might provide some useful safety properties during schema migration and beyond.&lt;/p&gt;
+
+&lt;h3 id=&quot;toc_64&quot;&gt;Footnotes&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;In our example a drop would be accomplished by removing the table definition completely.&lt;/li&gt;
+&lt;li&gt;The mapping presumes feature parity in the create with the alter statements, but in my study of the standard and Postgres&amp;#39; implementation this appears to be the case.&lt;/li&gt;
+&lt;li&gt;There&amp;#39;s a lot of interesting work and tooling around preventing issues resulting from schema migrations: &lt;a href=&quot;http://scholar.google.com/scholar?q=prism+schema+evolution&amp;amp;btnG=&amp;amp;hl=en&amp;amp;as_sdt=0%2C5&quot;&gt;schema evolution&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;A denotational semantics for both the current DDL semantics and the proposed semantics. Note that in the proposed section the &amp;quot;differential&amp;quot; semantics eval function is parameterized by the state of the syntax.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;p  style=&quot; margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block;&quot;&gt;   &lt;a title=&quot;View SQL DDL Differential Semantics on Scribd&quot; href=&quot;http://www.scribd.com/doc/181098166/SQL-DDL-Differential-Semantics&quot;  style=&quot;text-decoration: underline;&quot; &gt;SQL DDL Differential Semantics&lt;/a&gt;&lt;/p&gt;&lt;iframe class=&quot;scribd_iframe_embed&quot; src=&quot;//www.scribd.com/embeds/181098166/content?start_page=1&amp;view_mode=scroll&amp;show_recommendations=true&quot; data-auto-height=&quot;false&quot; data-aspect-ratio=&quot;undefined&quot; scrolling=&quot;no&quot; id=&quot;doc_64435&quot; width=&quot;100%&quot; height=&quot;600&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Why I'm Getting a PhD</title>
@@ -21,7 +125,7 @@
 
 &lt;p&gt;Unsurprisingly, I&amp;#39;ve been asked many times why I want to get a PhD and I rarely get a chance to explain my thinking fully. This post is both a detailed account of my reasons and a counterpoint to the popular opinion that there isn&amp;#39;t much value in higher education in Computer Science.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_59&quot;&gt;Why Bother?&lt;/h2&gt;
+&lt;h2 id=&quot;toc_52&quot;&gt;Why Bother?&lt;/h2&gt;
 
 &lt;p&gt;Any confusion or surprise over my decision to go back to school can generally be reduced to a simple idea: the success I would otherwise have while getting my PhD is of greater absolute value than the education.&lt;/p&gt;
 
@@ -31,7 +135,7 @@
 
 &lt;p&gt;In each case, I&amp;#39;m consistently left wanting more time to describe my thinking and the personal experiences that landed me in a PhD program.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_60&quot;&gt;Career Path&lt;/h2&gt;
+&lt;h2 id=&quot;toc_53&quot;&gt;Career Path&lt;/h2&gt;
 
 &lt;p&gt;When I got my first legitimate management position as the director of engineering at a consultancy/incubator it quickly became clear that management wasn&amp;#39;t for me. I enjoyed seeing my teammates succeed. I enjoyed building and refining Process. I enjoyed winning business. I enjoyed the subtleties of communicating complex technical ideas to people with all types of backgrounds and experience. By my own estimation I was even pretty good at all those things.&lt;/p&gt;
 
@@ -47,7 +151,7 @@
 
 &lt;p&gt;Unfortunately, the problems I gravitate towards are not normally assigned to engineers and attempts to marry my interests with my domain of expertise [1,2] have met with understandably tepid responses. The ideas are hard to follow in short presentations, most people don&amp;#39;t have time to read marathon blog posts, and the underlying work isn&amp;#39;t funded by my employer. All of that makes perfect sense but it means I can&amp;#39;t focus on the problems that I&amp;#39;m interested in.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_61&quot;&gt;What Interests Me&lt;/h2&gt;
+&lt;h2 id=&quot;toc_54&quot;&gt;What Interests Me&lt;/h2&gt;
 
 &lt;p&gt;The things that keep me up past midnight working and learning are technical. Problems both large and small that remain unsolved or problems where the solution seems unsatisfactory to me. A short and incomplete list in no particular order:&lt;/p&gt;
 
@@ -63,7 +167,7 @@
 
 &lt;p&gt;A few of these might align with a job posting somewhere but most don&amp;#39;t. More importantly, I&amp;#39;m not as interested in the implementation as I am in conceiving a solution and understanding its value. I&amp;#39;m sure that will sound like laziness to some, but the part I enjoy the most is thinking through the idea. Most of the time an implementation is an important part of that, and I enjoy hacking as much as anyone, but sometimes it&amp;#39;s not. Sometimes a more abstract representation of the problem is the best way to predict the relative value of a solution before committing time and effort to an implementation. Again, this isn&amp;#39;t the type of work that engineers get funded to do.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_62&quot;&gt;On Academia&lt;/h2&gt;
+&lt;h2 id=&quot;toc_55&quot;&gt;On Academia&lt;/h2&gt;
 
 &lt;p&gt;Perception of academia varies depending on the field and an individual&amp;#39;s cultural disposition. In the software community there is a certain sense of respect for the research and science on which our careers are built. People have even sort of deified greats like Alan Kay, Alonzo Church, and Alan Turing.&lt;/p&gt;
 
@@ -75,7 +179,7 @@
 
 &lt;p&gt;It&amp;#39;s &lt;em&gt;because&lt;/em&gt; of these things and not in spite of them that I&amp;#39;m going back to school. I want to work in an environment that explicitly promotes a focus on the fundamentals of a problem and requires that the utmost care be taken when presenting a solution.&lt;/p&gt;
 
-&lt;h2 id=&quot;toc_63&quot;&gt;The Fourth Path&lt;/h2&gt;
+&lt;h2 id=&quot;toc_56&quot;&gt;The Fourth Path&lt;/h2&gt;
 
 &lt;p&gt;I guess you could say I&amp;#39;m taking The Fourth Path™.&lt;/p&gt;
 
@@ -85,13 +189,13 @@
 
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_64&quot;&gt;Acknowledgments&lt;/h3&gt;
+&lt;h3 id=&quot;toc_57&quot;&gt;Acknowledgments&lt;/h3&gt;
 
 &lt;p&gt;Thanks to &lt;a href=&quot;https://twitter.com/keyist&quot;&gt;@keyist&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/melliebe&quot;&gt;@melliebe&lt;/a&gt; for their notes and revisions.&lt;/p&gt;
 
 &lt;p&gt;Special thanks to &lt;a href=&quot;http://philipmjohnson.wordpress.com/&quot;&gt;Professor Philip M. Johnson&lt;/a&gt; who has helped me continuously since I graduated from the University of Hawaii more than seven years ago. His advice has been extremely important in my long and winding path back to academia.&lt;/p&gt;
 
-&lt;h3 id=&quot;toc_65&quot;&gt;Footnotes&lt;/h3&gt;
+&lt;h3 id=&quot;toc_58&quot;&gt;Footnotes&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;/2013/08/29/presentation-faster-javascript-through-category-theory/&quot;&gt;Presentation: Faster JavaScript through Category Theory&lt;/a&gt;&lt;/li&gt;
@@ -142,83 +246,6 @@
 &lt;a href=&quot;http://player.vimeo.com/video/44085271&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The larger format presented on &lt;a href=&quot;http://vimeo.com/44085271&quot;&gt;the Vimeo site itself&lt;/a&gt; might be better viewing.&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>System State and Declarative Languages</title>
-   <link href="http://johnbender.github.com/2013/07/26/on-state-and-declarative-languages"/>
-   <updated>2013-07-26T00:00:00-07:00</updated>
-   <id>http://johnbender.github.com/2013/07/26/on-state-and-declarative-languages</id>
-   <content type="html">&lt;p&gt;Declarative programming languages are often characterized by how they express computation in terms of a desired outcome. This is in contrast to imperative languages which are seen, vis-a-vis declarative languages, as expressing computation with a series of steps to reach an outcome. The advantage of the declarative approach is clear, the program author states his or her intentions and the rest is left to the runtime [1]. In practice many languages that have earned the declarative label require much of the &amp;quot;how&amp;quot; to be included out of necessity.&lt;/p&gt;
-
-&lt;p&gt;In this post we&amp;#39;ll look at two examples where the declarative approach has proven valuable: the data definition subset of SQL (DDL) and configuration management (Puppet?). In particular, we&amp;#39;ll examine where each falls down as the desired system state evolves over time and how that might be remedied.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_52&quot;&gt;SQL&lt;/h2&gt;
-
-&lt;p&gt;SQL is the language most often cited when an example of a declarative language is called for. The DDL subset provides the tools to establish a database schema by creating tables, keys, constraints, indexes, and more. For example creating a table &lt;code&gt;foo&lt;/code&gt;:&lt;/p&gt;
-
-&lt;p&gt;Though you could argue that removing the &lt;code&gt;CREATE&lt;/code&gt; would make it more &amp;quot;declarative&amp;quot;, this accurately captures the desired state of the database. Namely, it should contain a table identified by &lt;code&gt;foo&lt;/code&gt; with two columns, one and integer and the other text [2].&lt;/p&gt;
-
-&lt;p&gt;Unfortunately database schemas rarely remain this simple, an issue largely addressed by SQL&amp;#39;s declarative nature. More importantly, schemas must be &amp;quot;evolved&amp;quot; towards that complexity over time to support new instances as they are created and old ones as they are updated.&lt;/p&gt;
-
-&lt;p&gt;Since it&amp;#39;s unreasonable to drop the table and recreate it each time there&amp;#39;s a change to its structure, table alterations are made. Unfortunately this diverges from the declarative approach significantly. The maintainers of the schema are no longer defining the desired table structure and trusting that the runtime will make the necessary changes. They&amp;#39;re defining the necessary changes manually so the runtime can construct the desired schema. Possibly worse, making an alteration to a complex set of DDL statements requires comprehension of all alterations that came &amp;quot;before&amp;quot; leaving a lot of room for error.&lt;/p&gt;
-
-&lt;p&gt;So the question is, how do you preserve the declarative nature of DDL SQL statements while maintaining the idempotent properties of a schema definition?&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_53&quot;&gt;Configuration Management&lt;/h2&gt;
-
-&lt;p&gt;Configuration management has seen an explosion in popularity as applications are more frequently being hosted on virtualized hardware. The disposability of virtual servers has driven a need for tools that can quickly and consistently provision a new machine to serve a specific role. Encouragingly, many of the tools along with their accompanying EDSLs and custom languages have taken a declarative approach to system state.&lt;/p&gt;
-
-&lt;p&gt;TODO find an example resource that can have sub-statements removed / or needs extra statements for alteration&lt;/p&gt;
-
-&lt;p&gt;(Chef&amp;#39;s | Puppet&amp;#39;s) &lt;code&gt;package&lt;/code&gt; statement is a declaration in the same sense that &lt;code&gt;CREATE TABLE&lt;/code&gt; is, it defines a package that should be installed on the system and (Chef | Puppet) handles the rest. Though it&amp;#39;s clearly less painful in this instance, it must address the same problem that the SQL does. When the maintainer wishes to remove that package from the system he or she must account for new systems being built from scratch and old systems that have already been built. As a result additional syntax is necessary to clarify the intent.&lt;/p&gt;
-
-&lt;p&gt;Another issue highlighted here is that removing something from a system requires declaring its absence. An outside observer might wonder why anyone should be troubled with declaring all the things that should &lt;em&gt;not&lt;/em&gt; be present on a system!&lt;/p&gt;
-
-&lt;p&gt;Additionally, for both SQL and these configuration management tools, it&amp;#39;s unclear how these statements should be handled over time in a code base. Clearly once all existing systems have been updated it&amp;#39;s safe to remove them, but neither runtime provides facilities for that type of accounting leaving the user open to mistakes.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_54&quot;&gt;Explicit Change&lt;/h2&gt;
-
-&lt;p&gt;In these situations information about changes to declarations should be tracked by the runtime and reflected in system state. That is, the language and its accompanying runtime would benefit from a semantic definition of syntactic change by using it in conjunction with source history to determine system state.&lt;/p&gt;
-
-&lt;p&gt;The intent is to add a column to the table &lt;code&gt;foo&lt;/code&gt;. Ideally the &lt;code&gt;CREATE TABLE&lt;/code&gt; definition would simply expand to include the new column and databases built with the old defintion would update to match the new one.&lt;/p&gt;
-
-&lt;p&gt;In this example the difference between the two declarations could be reconciled by simply comparing it with the existing table. The need for access to source history arises from more sweeping changes to declarations like outright removal.&lt;/p&gt;
-
-&lt;p&gt;The absence of this table declaration could be handled by the runtime in a number of ways without access to source history. If the system requires that DDL statements only exist in a single canonical source file the runtime can confidently reconcile the absence of the table from the schema defintion and remove the table. Alternatively, the runtime could be fed all the DDL statements it needs to construct the schema properly and then reconcile that with its internal state thereby avoiding the &amp;quot;single source&amp;quot; requirement of the first option.&lt;/p&gt;
-
-&lt;p&gt;The issue with both of these solutions is that the table removal is implicit. For example, in the second case if a source file isn&amp;#39;t included in the list to be fed to the runtime a database table might be dropped inadvertantly. In contrast the diff constitutes an explicit declaration of the table&amp;#39;s &lt;em&gt;absence&lt;/em&gt; from the schema defition.&lt;/p&gt;
-
-&lt;p&gt;Possibly the largest advantage of the change based approach is the prospect of rolling back schema changes using source control. In the previous example dropping a table may be difficult to reconcile [3], but things like indexes and constraints can be added and removed safetly by simply reverting the change using soure control.&lt;/p&gt;
-
-&lt;p&gt;TODO sql example&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_55&quot;&gt;The Semantics of Change&lt;/h2&gt;
-
-&lt;p&gt;Language semantics are traditionally defined in terms of evaluation. Here the idea is that the addition and removal of syntax carries meaning in addition to the syntax itself.&lt;/p&gt;
-
-&lt;p&gt;The diff is semantically equivalent to the SQL statement when considered in the light of semantic changes and this achieves two very important goals. It promotes the declarative nature of SQL DDL and suggests that if &lt;code&gt;CREATE TABLE&lt;/code&gt; declarations can support that same features as the &lt;code&gt;ALTER TABLE&lt;/code&gt; declarations it might be possible to remove the latter all together.&lt;/p&gt;
-
-&lt;p&gt;Again the removal of the package declaration signals the intent to remove the package itself from target systems. A side benefit is that the &lt;code&gt;ensure =&amp;gt; &amp;quot;absen&amp;quot;&lt;/code&gt; and &lt;code&gt;action :remove&lt;/code&gt; are suddenly unnecessary.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_56&quot;&gt;Considerations&lt;/h2&gt;
-
-&lt;p&gt;For both SQL and configuration management there is still the question of what should be done about artifacts associated with certain declarations. In SQL the effects of a &lt;code&gt;CREATE TRIGGER&lt;/code&gt; on the data are not easily unwound without a comprehensive history of the data over time, and that makes the semantics of its absence hard to define. For configuration management even the simple installation of a package might affect system startup, create temporary files, and otherwise alter system state in ways that can&amp;#39;t be undone by simply removing it. This is to say nothing of more complex declarative abstractions for setting up web applications, databases, message queues, etc.&lt;/p&gt;
-
-&lt;p&gt;In spite of these outstanding questions there are many types of declarations that have straightforward meanings when changed, and they do little to diminish the value in incorporating those meanings into declarative runtimes.&lt;/p&gt;
-
-&lt;h2 id=&quot;toc_57&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Declarative languages offer a lot of power to users but it is often extremely difficult to remain purely declarative in the face of change. By incorporating the semantics of change into these environments the burden on the user can be reduced while maintaining expresive power and safety guarantees.&lt;/p&gt;
-
-&lt;h3 id=&quot;toc_58&quot;&gt;footnotes&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&amp;quot;It seems like a sufficiently advanced compiler...&amp;quot;, famous last words from an anonymous PhD who dropped out shortly thereafter.&lt;/li&gt;
-&lt;li&gt;It&amp;#39;s worth noting that most (all?) implementations will fail when confronted with a &lt;code&gt;CREATE TABLE&lt;/code&gt; statement for an existing table. The example can easily be augmented with &lt;code&gt;IF NOT EXISTS&lt;/code&gt; to get the desired effect.&lt;/li&gt;
-&lt;li&gt;It might be achieved with access to backups.&lt;/li&gt;
-&lt;/ol&gt;
 </content>
  </entry>
  
