@@ -115,28 +115,24 @@
   <div class="span10 text">
     <p>The relational model for data is ubiquitous. That&#39;s in part due to SQL&#39;s declarative approach to manipulating and exploring data stored as relations. Unfortunately SQL has its warts. In particular schema changes made in the data definition subset of the language (DDL) [1] can be awkward for creating idempotent migrations. Enough so, that the responsibility is frequently delegated to the application layer where more expressive languages can be employed. In this, the first of two posts proposing improvements to SQL, I&#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&#39;s declarative core.</p>
 
-<h2 id="toc_59">A Common Activity</h2>
+<h2 id="toc_0">A Common Activity</h2>
 
 <p>To illustrate how schema changes break the initially declarative semantics of DDL, lets look at an example:</p>
-<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>All tables start this way. The only piece of syntax that might otherwise alert a new user to the fact that this is not an entirely descriptive declarative language is <code>create</code>. The definition is very much &quot;what&quot; is desired and not &quot;how&quot; to get it. This breaks down when anything about the table needs to change:</p>
-<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
 
 <span class="k">alter</span> <span class="k">table</span> <span class="n">foo</span> <span class="k">add</span> <span class="k">column</span> <span class="n">bak</span> <span class="nb">text</span><span class="p">;</span>
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>All together this will ensure the proper end-state whether the target database is at the initial state without the table <code>foo</code> or at the second state where <code>foo</code> lacks the column <code>bak</code>. In this case it&#39;s easy to understand the final state of the table because the example is very simple, but it&#39;s acquired an imperative pall with the inclusion of the first <code>alter</code>. As the schema definition grows more complex through many <code>drop</code>, <code>add</code>, and type cast changes, the final state of the table becomes less clear:</p>
-<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
@@ -144,38 +140,32 @@
 <span class="k">alter</span> <span class="k">table</span> <span class="n">foo</span> <span class="k">add</span> <span class="k">column</span> <span class="n">bak</span> <span class="nb">text</span><span class="p">;</span>
 <span class="k">alter</span> <span class="k">table</span> <span class="n">foo</span> <span class="k">drop</span> <span class="k">column</span> <span class="n">bak</span> <span class="nb">text</span><span class="p">;</span>
 <span class="k">alter</span> <span class="k">table</span> <span class="n">foo</span> <span class="k">add</span> <span class="k">column</span> <span class="n">baks</span> <span class="nb">text</span><span class="p">;</span>
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>It would be better to simply add columns to the original table definition, and then the shape of the resulting table would be immediately clear at a glance.</p>
 
-<h2 id="toc_60">Differential Semantics</h2>
+<h2 id="toc_1">Differential Semantics</h2>
 
 <p>In our toy example the desired table definition included a new column <code>bak</code>. An entirely descriptive update to the table declaration would look like this (Note that the original alter statement is absent):</p>
-<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span><span class="p">,</span>
   <span class="n">bak</span> <span class="nb">text</span>
 <span class="p">);</span>
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>Unfortunately the SQL runtime considers the syntax in isolation and makes no attempt to reconcile that with it&#39;s internal representation. That makes perfect sense because a user is permitted to run small, ad hoc snippets in addition to full schema migration scripts. That is, the RDBMS can&#39;t know where this declaration is coming from nor why it&#39;s being run so it&#39;s unsafe to assume it should do any reconciliation. In contrast a well outfitted user can provide exactly that information.</p>
-<div class="highlight"><pre><code class="diff"><span class="gu">@@ -1,4 +1,5 @@</span>
+<div class="highlight"><pre><code class="diff language-diff" data-lang="diff"><span class="gu">@@ -1,4 +1,5 @@</span>
  create table foo (l;
    bar int,
 <span class="gd">-  baz text</span>
 <span class="gi">+  baz text,</span>
 <span class="gi">+  bak text</span>
  );
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>Looking at the diff, it&#39;s clear that the intention is to add the column <code>bak</code> to the table. What&#39;s required then, is to assign some semantics to this diff. With that established a simple pre-processor could map this differential to the corresponding alter statement in DDL, namely the original alter statement.</p>
 
 <p>The key insight here is that we can permit schema migrations while retaining an entirely descriptive declarative syntax by appealing to the differential information available via source control tools.</p>
 
-<h2 id="toc_61">Value Proposition</h2>
+<h2 id="toc_2">Value Proposition</h2>
 
 <p>The basic value proposition is reduced cognitive overhead when maintaining schemas using SQL DDL. In addition, DDL&#39;s syntax is reduced by about half because alters and drops [2] can simply go away which should make it easier to learn [3].</p>
 
@@ -183,11 +173,11 @@
 
 <p>Finally, by associating meaning with syntactic change the user can more safely understand and execute post commit reverts to schema changes. That is, instead of manually defining the necessary steps to &quot;undo&quot; some previous schema change, the source control system can provide the exact information that is necessary.</p>
 
-<h2 id="toc_62">Pitfalls</h2>
+<h2 id="toc_3">Pitfalls</h2>
 
 <p>Obviously, not every migration is just about the schema. Frequently the data has to be altered to conform to the target schema. This is actually an area of active research in the Database Systems community [4].</p>
 
-<h2 id="toc_63">Conclusion</h2>
+<h2 id="toc_4">Conclusion</h2>
 
 <p>For the interested reader, I started work on a <a href="https://github.com/johnbender/sql-delta">preprocessor</a> implemented in Haskell. Unfortunately since I don&#39;t have any plans to pursue this further I haven&#39;t been working on it. Also, for comparison I&#39;ve included two very simple sets of denotational semantics in the footnotes; one to represent the current implementation and one to represent the differential semantics [5]. They highlight the symmetry of this new approach to the language when compared with the current implementation.</p>
 
@@ -197,7 +187,7 @@
 
 <p>In the next post we&#39;ll look at how a type system applied to SQL might provide some useful safety properties during schema migration and beyond.</p>
 
-<h3 id="toc_64">Footnotes</h3>
+<h3 id="toc_5">Footnotes</h3>
 
 <ol>
 <li><a href="http://en.wikipedia.org/wiki/Data_definition_language">http://en.wikipedia.org/wiki/Data_definition_language</a></li>
@@ -256,7 +246,7 @@
 
 <p>Unsurprisingly, I&#39;ve been asked many times why I want to get a PhD and I rarely get a chance to explain my thinking fully. This post is both a detailed account of my reasons and a counterpoint to the popular opinion that there isn&#39;t much value in higher education in Computer Science.</p>
 
-<h2 id="toc_52">Why Bother?</h2>
+<h2 id="toc_0">Why Bother?</h2>
 
 <p>Any confusion or surprise over my decision to go back to school can generally be reduced to a simple idea: the success I would otherwise have while getting my PhD is of greater absolute value than the education.</p>
 
@@ -266,7 +256,7 @@
 
 <p>In each case, I&#39;m consistently left wanting more time to describe my thinking and the personal experiences that landed me in a PhD program.</p>
 
-<h2 id="toc_53">Career Path</h2>
+<h2 id="toc_1">Career Path</h2>
 
 <p>When I got my first legitimate management position as the director of engineering at a consultancy/incubator it quickly became clear that management wasn&#39;t for me. I enjoyed seeing my teammates succeed. I enjoyed building and refining Process. I enjoyed winning business. I enjoyed the subtleties of communicating complex technical ideas to people with all types of backgrounds and experience. By my own estimation I was even pretty good at all those things.</p>
 
@@ -282,7 +272,7 @@
 
 <p>Unfortunately, the problems I gravitate towards are not normally assigned to engineers and attempts to marry my interests with my domain of expertise [1,2] have met with understandably tepid responses. The ideas are hard to follow in short presentations, most people don&#39;t have time to read marathon blog posts, and the underlying work isn&#39;t funded by my employer. All of that makes perfect sense but it means I can&#39;t focus on the problems that I&#39;m interested in.</p>
 
-<h2 id="toc_54">What Interests Me</h2>
+<h2 id="toc_2">What Interests Me</h2>
 
 <p>The things that keep me up past midnight working and learning are technical. Problems both large and small that remain unsolved or problems where the solution seems unsatisfactory to me. A short and incomplete list in no particular order:</p>
 
@@ -298,7 +288,7 @@
 
 <p>A few of these might align with a job posting somewhere but most don&#39;t. More importantly, I&#39;m not as interested in the implementation as I am in conceiving a solution and understanding its value. I&#39;m sure that will sound like laziness to some, but the part I enjoy the most is thinking through the idea. Most of the time an implementation is an important part of that, and I enjoy hacking as much as anyone, but sometimes it&#39;s not. Sometimes a more abstract representation of the problem is the best way to predict the relative value of a solution before committing time and effort to an implementation. Again, this isn&#39;t the type of work that engineers get funded to do.</p>
 
-<h2 id="toc_55">On Academia</h2>
+<h2 id="toc_3">On Academia</h2>
 
 <p>Perception of academia varies depending on the field and an individual&#39;s cultural disposition. In the software community there is a certain sense of respect for the research and science on which our careers are built. People have even sort of deified greats like Alan Kay, Alonzo Church, and Alan Turing.</p>
 
@@ -310,7 +300,7 @@
 
 <p>It&#39;s <em>because</em> of these things and not in spite of them that I&#39;m going back to school. I want to work in an environment that explicitly promotes a focus on the fundamentals of a problem and requires that the utmost care be taken when presenting a solution.</p>
 
-<h2 id="toc_56">The Fourth Path</h2>
+<h2 id="toc_4">The Fourth Path</h2>
 
 <p>I guess you could say I&#39;m taking The Fourth Path™.</p>
 
@@ -320,13 +310,13 @@
 
 <p><br/></p>
 
-<h3 id="toc_57">Acknowledgments</h3>
+<h3 id="toc_5">Acknowledgments</h3>
 
 <p>Thanks to <a href="https://twitter.com/keyist">@keyist</a> and <a href="https://twitter.com/melliebe">@melliebe</a> for their notes and revisions.</p>
 
 <p>Special thanks to <a href="http://philipmjohnson.wordpress.com/">Professor Philip M. Johnson</a> who has helped me continuously since I graduated from the University of Hawaii more than seven years ago. His advice has been extremely important in my long and winding path back to academia.</p>
 
-<h3 id="toc_58">Footnotes</h3>
+<h3 id="toc_6">Footnotes</h3>
 
 <ol>
 <li><a href="/2013/08/29/presentation-faster-javascript-through-category-theory/">Presentation: Faster JavaScript through Category Theory</a></li>
@@ -511,9 +501,9 @@
 
 <div class="row-fluid">
   <div class="span10 text">
-    <p>Below are the slides from my presentation at UCLA&#39;s Programming Langauges Reading Group on Peter O&#39;Hearn&#39;s <a href="http://www.eecs.qmul.ac.uk/%7Eohearn/papers/concurrency.pdf"><em>Resources, Concurrency, and Local Reasoning</em></a> [PDF].</p>
+    <iframe src="http://www.slideshare.net/slideshow/embed_code/24403394?rel=0" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
 
-<iframe src="http://www.slideshare.net/slideshow/embed_code/24403394?rel=0" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe>
+<p>Below are the slides from my presentation at UCLA&#39;s Programming Langauges Reading Group on Peter O&#39;Hearn&#39;s <a href="http://www.eecs.qmul.ac.uk/%7Eohearn/papers/concurrency.pdf"><em>Resources, Concurrency, and Local Reasoning</em></a> [PDF].</p>
 
   </div>
 
@@ -550,6 +540,42 @@
 
       </div>
 
+      
+        
+
+          
+            
+          
+
+          
+
+        
+
+          
+
+          
+
+        
+
+          
+
+          
+
+        
+
+          
+
+          
+
+        
+
+          
+
+          
+            
+          
+
+        
       
 
     <div class="pagination">

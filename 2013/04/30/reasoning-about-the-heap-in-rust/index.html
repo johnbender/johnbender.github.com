@@ -118,21 +118,31 @@
 
 <p><em>While I was writing this post John Reynolds passed away. He was an incredible force in PL research and Separation logic was one of his most important works. There&#39;s much more to it than is covered here so if you&#39;re curious and you want to learn more please explore the links in the footnotes.</em></p>
 
-<h2 id="toc_45">Hoare logic</h2>
+<h2 id="toc_0">Hoare logic</h2>
 
 <p>In the late 1960s <a href="http://en.wikipedia.org/wiki/C._A._R._Hoare">Tony Hoare</a> proposed a formal system for reasoning about programs which would eventually be referred to as <a href="http://en.wikipedia.org/wiki/Hoare_logic">Hoare logic</a>. The central feature of Hoare logic is a triple <code>{P} C {Q}</code> where <code>P</code> and <code>Q</code> are predicate logic assertions, referred to as the pre/post conditions, and <code>C</code> is a command (reads: program/program fragment). The idea is that, outside of any guarantee of termination [<a href="#footnotes">2</a>], if <code>P</code> is true before <code>C</code> and <code>Q</code> is true after <code>C</code>, the triple proves partial correctness for <code>P</code> and <code>Q</code>. That is, it proves some property asserted by <code>P</code> and <code>Q</code> about <code>C</code>.</p>
 
 <p>A simple example using C with the assertions in comments:</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// { x == n }</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+<span class="c1">// { x == n + 1 }</span>
+</code></pre></div>
 <p>Here the triple <code>{P} C {Q}</code> asserts that if <code>x</code> is equal to some <code>n</code> before <code>x = x + 1</code> then <code>x</code> will be equal to <code>n + 1</code> afterward.</p>
 
 <p>In addition to this basic structure it&#39;s possible to define axioms for common programming constructs like assignment, branching, while loops, and for loops that allow for more general reasoning and manipulation of assertions. For assignment it takes the form <code>{P[E/V]} V=E {P}</code>. That is, substituting <code>E</code> for <code>V</code> in <code>P</code> before the assignment should hold and <code>P</code> should hold afterward [<a href="#footnotes">3</a>].</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// P[E/V]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+<span class="c1">// P</span>
+</code></pre></div>
 <p>Borrowing <code>Q</code> from the earlier example here, <code>P</code> is <code>x == n + 1</code>. Substituting <code>x + 1</code> for <code>x</code> in <code>P</code> gives <code>x + 1 == n + 1</code>, or <code>x == n</code>, for the precondition.</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// The result of substituting `x + 1` for `x` in `x == n + 1`:</span>
+<span class="c1">// { x == n }</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+<span class="c1">// { x == n + 1 }</span>
+</code></pre></div>
 <p>With the help of this and other axioms, established for each programming environment, Hoare logic allows the wielder to write specifications for programs. For most domains (especially those that my usual reader works in) the approach might be heavy handed, but there are many domains where this type of specification is necessary. In particular it&#39;s often important to specify the behavior of a program with regards to memory.</p>
 
-<h2 id="toc_46">Separation Logic</h2>
+<h2 id="toc_1">Separation Logic</h2>
 
 <p><a href="http://en.wikipedia.org/wiki/Separation_logic">Separation logic</a> is an extension to Hoare logic that provides tools for specifying memory use and safety with new assertions for how a program will interact with the heap and stack [<a href="#footnotes">4</a>].</p>
 
@@ -153,18 +163,39 @@
 </ul>
 
 <p>Again we&#39;ll turn to C to demonstrate how these assertions fit with common programs [<a href="#footnotes">5</a>].</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// { emp }</span>
+<span class="k">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">sizeof</span><span class="p">(</span><span class="k">int</span><span class="p">));</span>
+<span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="m">5</span><span class="p">;</span>
+<span class="c1">// { ptr |-&gt; 5 }</span>
+</code></pre></div>
 <p>The first assertions states that the heap is empty (<code>emp</code>). After the <code>malloc</code> call and assignment there exists a singleton heap with a single cell containing the value <code>5</code> that is pointed to by <code>ptr</code>.</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// { emp }</span>
+<span class="k">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">sizeof</span><span class="p">(</span><span class="k">int</span><span class="p">));</span>
+<span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="m">5</span><span class="p">;</span>
+<span class="c1">// { ptr |-&gt; 5 }</span>
+<span class="k">int</span> <span class="o">*</span><span class="n">ptr2</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">sizeof</span><span class="p">(</span><span class="k">int</span><span class="p">));</span>
+<span class="o">*</span><span class="n">ptr2</span> <span class="o">=</span> <span class="m">5</span><span class="p">;</span>
+<span class="c1">// { (ptr |-&gt; 5) * (ptr2 |-&gt; 5) }</span>
+</code></pre></div>
 <p>Adding <code>ptr2</code> means the addition of another singleton heap and the connective <code>*</code>. It&#39;s possible to write this as <code>{ (ptr -&gt; 5) ∧ (ptr2 -&gt; 5) }</code>, but this assertion provides no information about how the heap is arranged. It simply says that there are two pointers to the value 5 somewhere in a heap. They might be pointing to the same memory location. By using the singleton heap pointer <code>|-&gt;</code> and the connective <code>*</code>, the new assertion makes clear that the two pointers are <em>not</em> pointing to the same memory location.</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// { emp }</span>
+<span class="k">int</span> <span class="o">*</span><span class="n">arry</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="k">int</span><span class="p">));</span>
+<span class="o">*</span><span class="n">arry</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="o">*</span><span class="p">(</span><span class="n">arry</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="o">=</span> <span class="m">2</span><span class="p">;</span>
+<span class="o">*</span><span class="p">(</span><span class="n">arry</span> <span class="o">+</span> <span class="m">2</span><span class="p">)</span> <span class="o">=</span> <span class="m">3</span><span class="p">;</span>
+<span class="c1">// { arry |-&gt; 1,2,3 }</span>
+</code></pre></div>
 <p>Here the comma separated list of values following the singleton pointer in <code>{ arry |-&gt; 1,2,3 }</code> denotes contiguous memory. It&#39;s simply a shorthand notation for the pointer arithmetic.</p>
-
+<div class="highlight"><pre><code class="text language-text" data-lang="text">// { arry |-&gt; 1 * (arry + 1) |-&gt; 2 * (arry + 2) |-&gt; 3 }
+</code></pre></div>
 <p>It&#39;s worth noting that separating implication, <code>P -* Q</code> doesn&#39;t appear to have any particularly useful or clear concrete examples. This seems to be the consequence of its relationship to logical implication in that the whole assertion is only false when <code>Q</code> is false. Borrowing from Reynolds [<a href="#footnotes">6</a>], something like <code>{ x |-&gt; 1 -* Q }</code> for some assertion <code>Q</code> can be extended with the separating implication to show:</p>
-
+<div class="highlight"><pre><code class="rust language-rust" data-lang="rust"><span class="c1">// { x |-&gt; 0 * (x |-&gt; 1 -* Q) }</span>
+<span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="c1">// { Q }</span>
+</code></pre></div>
 <p>The precondition here says that there are two disjoint heaps. One in which <code>x |-&gt; 0</code> holds and one in which <code>(x |-&gt; 1 -* Q)</code> holds. The implication on the right is, if second heap was extended so that <code>x</code> <em>was</em> pointing to <code>1</code>, <code>Q</code> would hold. After the assignment <code>*x</code> is no longer <code>0</code> but rather the second heap has been extended so that <code>*x</code> is <code>1</code> and as a result <code>Q</code> holds [<a href="#footnotes">7</a>].</p>
 
-<h2 id="toc_47">Rust Ownership</h2>
+<h2 id="toc_2">Rust Ownership</h2>
 
 <p>Rust provides two new type modifiers for dealing with pointers and memory management. Both have very specific semantics that are checked at <em>compile time</em> to help prevent memory leaks.</p>
 
@@ -175,49 +206,182 @@
 
 <p>A few simple examples borrowed in part from Rust&#39;s tutorials will illustrate when the memory for each of these type modifiers is freed.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="o">~</span><span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span> <span class="c1">// a is out of scope and *a is freed</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>With the tilde, the memory at <code>*a</code> on the heap is freed when the variable to which it is assigned goes out of scope. Since <code>a</code> is declared inside an explicit block it goes out of scope at the end of the block and the associated memory is freed.</p>
+
+<div class="highlight"><pre><code class="rust"><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">a</span><span class="p">;</span>
+
+    <span class="p">{</span>
+        <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="o">~</span><span class="m">1</span><span class="p">;</span>
+
+        <span class="c1">// move ownership of *b to a</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+
+        <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">));</span> <span class="c1">// error: use of moved value: `b`</span>
+        <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">));</span> <span class="c1">// =&gt; 1</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="c1">// *a is destroyed here</span>
+</code></pre></div>
 
 <p>When the ownership of memory is transferred between variables the compiler prevents further reference to the original owner. In this example <code>a</code> is the new owner and the compiler will prevent any further reference to <code>b</code>. This concept of single ownership is the reason that the memory can be deallocated safely when the current owner goes out of scope.</p>
 
 <p>Alternately, the <code>@</code> type modifier can be used to request that the run-time manage the allocated memory on a per-task basis. This presents some interesting issues when creating pointers to memory allocated as part of a record.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="k">struct</span> <span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="k">int</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="k">int</span> <span class="p">}</span>
+
+<span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">0</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">1</span> <span class="p">};</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">.</span><span class="n">f</span><span class="p">;</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">2</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">3</span> <span class="p">};</span>
+
+    <span class="c1">// original *x is now subject to gc</span>
+
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">));</span> <span class="c1">// =&gt; {f: 2, g: 3}</span>
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">));</span> <span class="c1">// =&gt; 0</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>Note that <code>x</code> is declared as a mutable variable (Rust&#39;s default is immutability). When a pointer is made to the field <code>f</code> with <code>&amp;x.f</code> and then <code>x</code> is reassigned, the memory at <code>*x</code> would be subject to garbage collection. Luckily Rust does a bit of work for you and inserts a lexically scoped reference to the original record to prevent deallocation by the garbage collector.</p>
+
+<div class="highlight"><pre><code class="rust"><span class="k">struct</span> <span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="k">int</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="k">int</span> <span class="p">}</span>
+
+<span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">0</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">1</span> <span class="p">};</span>
+    <span class="k">let</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">.</span><span class="n">f</span><span class="p">;</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">2</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">3</span> <span class="p">};</span>
+
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">));</span> <span class="c1">// =&gt; {f: 2, g: 3}</span>
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">));</span> <span class="c1">// =&gt; 0</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <p>You might also wonder how Rust handles references to lexically scoped record fields. In this case the compiler raises an error and (rather nicely) highlights the discrepancy in scoping expectations.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="k">struct</span> <span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="k">int</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="k">int</span> <span class="p">}</span>
+
+<span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">a</span><span class="p">;</span>
+
+    <span class="p">{</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">b</span> <span class="o">=</span> <span class="o">~</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">1</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">2</span> <span class="p">};</span>
+
+        <span class="c1">// move ownership of *b to a</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">.</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// error: illegal borrow: borrowed value does not live long enough</span>
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>Here, <code>a</code> is assigned the memory location of the field <code>f</code> of <code>b</code>, but the scope of <code>a</code> is larger than the scope of <code>b</code> which means that <code>*b</code> will be freed long before <code>*a</code>.</p>
 
-<h2 id="toc_48">Formalizing Ownership</h2>
+<h2 id="toc_3">Formalizing Ownership</h2>
 
 <p>Rust&#39;s memory management facilities exist mostly at compile time to prevent users from shooting themselves in the foot, but it&#39;s still worth applying Separation logic to get a feel for what&#39;s happening to the heap.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// { emp }</span>
+    <span class="p">{</span>
+        <span class="c1">// { emp }</span>
+        <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="o">~</span><span class="m">0</span><span class="p">;</span>
+        <span class="c1">// { a |-&gt; 0 }</span>
+        <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="o">~</span><span class="m">1</span><span class="p">;</span>
+        <span class="c1">// { a |-&gt; 0 * b |-&gt; 1 }</span>
+    <span class="p">}</span>
+    <span class="c1">// { emp }</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <p>Both <code>a</code> and <code>b</code> are scoped to the explicit block and exist in disjoint parts of the heap. When they go out of scope the memory associated with both is deallocated leaving an empty heap.</p>
+
+<div class="highlight"><pre><code class="rust"><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">a</span><span class="p">;</span>
+    <span class="c1">// { emp }</span>
+    <span class="p">{</span>
+        <span class="c1">// { emp }</span>
+        <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="o">~</span><span class="m">1</span><span class="p">;</span>
+        <span class="c1">// { b |-&gt; 1 }</span>
+        <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+        <span class="c1">// { a -&gt; 1 ∧ b -&gt; 1 }</span>
+    <span class="p">}</span>
+    <span class="c1">// { a |-&gt; 1 }</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <p>In this case if there was a reference to <code>b</code> after the ownership of <code>*b</code> was transferred to <code>a</code> the compiler would complain. Since there is no reference we assume that <code>b</code> is pointing to the same location until the pointer is removed at the close of the explicit block.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="k">struct</span> <span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="k">int</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="k">int</span> <span class="p">}</span>
+
+<span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// { emp }</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">0</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">1</span> <span class="p">};</span>
+    <span class="c1">// { x |-&gt; 0, 1 }</span>
+    <span class="k">let</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 }</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x1</span><span class="p">.</span><span class="n">f</span><span class="p">;</span>
+    <span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 ∧ y -&gt; 0 }</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">2</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">3</span> <span class="p">};</span>
+    <span class="c1">// { (x1 -&gt; 0, 1 ∧ y -&gt; 0) * x |-&gt; 2, 3 }</span>
+
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">));</span> <span class="c1">// =&gt; {f: 2, g: 3}</span>
+    <span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="n">fmt</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;%?&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">));</span> <span class="c1">// =&gt; 0</span>
+<span class="p">}</span> <span class="c1">// { emp }</span>
+</code></pre></div>
+
 <p>Here we&#39;ve re-purposed the managed memory example from earlier with the explicit addition of the reference that would otherwise be inserted by Rust to prevent GC, <code>x1</code>. Let&#39;s examine each expression and the associated assertions in turn.</p>
+
+<div class="highlight"><pre><code class="rust"><span class="c1">// { emp }</span>
+<span class="k">let</span> <span class="k">mut</span> <span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">0</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">1</span> <span class="p">};</span>
+<span class="c1">// { x |-&gt; 0, 1 }</span>
+</code></pre></div>
 
 <p>As before the allocation of managed memory creates a singleton heap pointer to the memory containing the record values [<a href="#footnotes">8</a>].</p>
 
+<div class="highlight"><pre><code class="rust"><span class="c1">// { x |-&gt; 0, 1 }</span>
+<span class="k">let</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 }</span>
+</code></pre></div>
+
 <p>Adding an additional reference to that same memory means that we have two pointers to the same memory. As a result we <em>cannot</em> use the <code>*</code> connective or the the singleton heap pointer <code>|-&gt;</code> to represent the heap.</p>
+
+<div class="highlight"><pre><code class="rust"><span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 }</span>
+<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">x1</span><span class="p">.</span><span class="n">f</span><span class="p">;</span>
+<span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 ∧ y -&gt; 0 }</span>
+</code></pre></div>
 
 <p>A new reference to the memory location of the first record field in <code>x</code> and <code>x1</code> adds another pointer that overlaps with the existing heap. It&#39;s important to keep in mind that the basic conjunction simply says that the heap <em>may</em> overlap. To the reader it may be obvious, but in terms of specifying program behavior it&#39;s a weaker assertion that the equivalent made with the <code>*</code> connective.</p>
 
+<div class="highlight"><pre><code class="rust"><span class="c1">// { x1 -&gt; 0, 1 ∧ x -&gt; 0, 1 ∧ y -&gt; 0 }</span>
+<span class="n">x</span> <span class="o">=</span> <span class="o">@</span><span class="n">X</span> <span class="p">{</span> <span class="n">f</span><span class="o">:</span> <span class="m">2</span><span class="p">,</span> <span class="n">g</span><span class="o">:</span> <span class="m">3</span> <span class="p">};</span>
+<span class="c1">// { (x1 -&gt; 0, 1 ∧ y -&gt; 0) * x |-&gt; 2, 3 }</span>
+</code></pre></div>
+
 <p>Finally with the allocation of a wholly new record and pointer for <code>x</code> we can employ the more powerful connective because the new record lives in a newly allocated section of memory on the heap. The remaining pointers to the original record and its first field remain ambiguous.</p>
 
-<h2 id="toc_49">Further Reading</h2>
+<h2 id="toc_4">Further Reading</h2>
 
 <p>Not covered here for brevity&#39;s sake is an important part of Separation logic, the Frame Rule. The Frame Rule provides for rigorous local reasoning about the heap without concern for other possibly overlapping references to the same memory locations. That is, it allows each assertion to be correct in spite of the fact that the program fragments they pertain to are often operating in a larger application that manipulates the heap.</p>
 
 <p>Also, the concept of borrowed pointers is important reading if you&#39;re interested in Rust. A common but effective memory efficiency is achieved in C by passing pointers to data structures instead of using the default pass-by-value semantics. Similarly one can &quot;borrow&quot; a pointer to a data structure in Rust, but because of the type level restrictions it&#39;s both safer and more complex [<a href="#footnotes">9</a>]. The borrowed pointers <a href="http://static.rust-lang.org/doc/tutorial-borrowed-ptr.html">tutorial</a> makes those complexities clear.</p>
 
-<h2 id="toc_50">Conclusion</h2>
+<h2 id="toc_5">Conclusion</h2>
 
 <p>Hopefully this post has given you an initial sense of a portion of Rust&#39;s memory management facilities and also the formalism of Separation logic.</p>
 
 <p>Special thanks goes to <a href="https://twitter.com/steveklabnik">@steveklabnik</a>, <a href="https://twitter.com/evanphx">@evanphx</a>, and Matt Brown for reviewing various bits of my post.</p>
 
-<h3 id="toc_51">Footnotes</h3>
+<h3 id="toc_6">Footnotes</h3>
 
 <p><a name="footnotes"></a></p>
 
@@ -274,6 +438,9 @@
 
       </div>
 
+      
+        
+        
       
 
     <div class="pagination">
