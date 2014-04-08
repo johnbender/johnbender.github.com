@@ -4,8 +4,16 @@
     <title>johnbender.us</title>
     <description>johnbender.us</description>
     <link>"http://johnbender.github.com"</link>
-    <lastBuildDate>2014-03-29T11:40:46-07:00</lastBuildDate>
+    <lastBuildDate>2014-04-07T22:08:51-07:00</lastBuildDate>
 
+    
+    <item>
+      <title>Presentation: Differential Semantics</title>
+      <description>Presentation: Differential Semantics</description>
+      <link>http://johnbender.github.com/2014/04/07/presentation-differential-semantics"</link>
+      <pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
+      <pubDate>2014-04-07T00:00:00-07:00</pubDate>
+    </item>
     
     <item>
       <title>A Better SQL, Part 1</title>
