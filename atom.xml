@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2014-04-07T22:08:51-07:00</updated>
+ <updated>2014-04-08T08:05:21-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -21,7 +21,8 @@
   A quick presentation I gave to my CS 239, Spring 2014 on my early thinking around deriving programmer intent from source control and program evolution.
 &lt;/p&gt;
 
-&lt;p style=&quot;margin-top: 2em;&quot;&gt;
+&lt;p style=&quot;margin-top: 2em
+;&quot;&gt;
   &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;af35e490a0b00131f6cb2abc05ca10ad&quot; data-ratio=&quot;1.33333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 &lt;/p&gt;
 </content>
