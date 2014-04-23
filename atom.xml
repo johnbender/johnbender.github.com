@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2014-04-08T08:05:21-07:00</updated>
+ <updated>2014-04-23T11:55:23-07:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -29,11 +29,11 @@
  </entry>
  
  <entry>
-   <title>A Better SQL, Part 1</title>
+   <title>A Better SQL</title>
    <link href="http://johnbender.github.com/2013/11/04/a-better-sql"/>
    <updated>2013-11-04T00:00:00-08:00</updated>
    <id>http://johnbender.github.com/2013/11/04/a-better-sql</id>
-   <content type="html">&lt;p&gt;The relational model for data is ubiquitous. That&amp;#39;s in part due to SQL&amp;#39;s declarative approach to manipulating and exploring data stored as relations. Unfortunately SQL has its warts. In particular schema changes made in the data definition subset of the language (DDL) [1] can be awkward for creating idempotent migrations. Enough so, that the responsibility is frequently delegated to the application layer where more expressive languages can be employed. In this, the first of two posts proposing improvements to SQL, I&amp;#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&amp;#39;s declarative core.&lt;/p&gt;
+   <content type="html">&lt;p&gt;The relational model for data is ubiquitous. That&amp;#39;s in part due to SQL&amp;#39;s declarative approach to manipulating and exploring data stored as relations. Unfortunately SQL has its warts. In particular schema changes made in the data definition subset of the language (DDL) [1] can be awkward for creating idempotent migrations. Enough so, that the responsibility is frequently delegated to the application layer where more expressive languages can be employed. Here I&amp;#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&amp;#39;s declarative core.&lt;/p&gt;
 
 &lt;h2 id=&quot;toc_0&quot;&gt;A Common Activity&lt;/h2&gt;
 
@@ -104,8 +104,6 @@
 &lt;p&gt;This technique can be extended to other languages that manage system state declaratively like configuration management DSLs or even HTML. Though in the case of configuration management, understanding the mapping between syntax and state is quite complex because system components frequently generate artifacts that are not explicitly declared.&lt;/p&gt;
 
 &lt;p&gt;Broadly, the idea of differential semantics is to gather more information about intent from readily available sources so that language runtimes (declarative or otherwise) can make more informed decisions about user intent. The results need not be confined to accurate interpretation of the desired system state.&lt;/p&gt;
-
-&lt;p&gt;In the next post we&amp;#39;ll look at how a type system applied to SQL might provide some useful safety properties during schema migration and beyond.&lt;/p&gt;
 
 &lt;h3 id=&quot;toc_5&quot;&gt;Footnotes&lt;/h3&gt;
 
