@@ -1,0 +1,70 @@
+==================================================================
+https://keybase.io/johnbender
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://johnbender.us
+  * I am johnbender (https://keybase.io/johnbender) on keybase.
+  * I have a public key with fingerprint 56AD FEE0 8B4D F194 1E76  DF77 5BFB 243D 5898 7620
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "56adfee08b4df1941e76df775bfb243d58987620",
+            "host": "keybase.io",
+            "key_id": "5bfb243d58987620",
+            "uid": "a3814cd1f2a044c3a638034af5321500",
+            "username": "johnbender"
+        },
+        "service": {
+            "hostname": "johnbender.us",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1401901213,
+    "expire_in": 157680000,
+    "prev": "ec3138445991963904a28d3f2b79a3feb5bc4f883a3c0aef34a027d2258d305d",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v0.1.20
+Comment: https://keybase.io/crypto
+
+yML8AnicZZF9UBR1HMbvCCReT2kkahyhVfHEC/b1dheHBCWHLG6YiDqV49q9/e3d
++rJ77S7vb4FmCEHmQNSoCBI5nDhhOWNiGTakFUMgAwoFwpBAQzGk40wUernH1F/+
+/tnZ5/t5nme+8+0Je0IXrK8tCNv41amIEX1v9/1cXeb7GSeLIVbiCqHEYmgfWP7w
+gugEslsWRBVKhAgzw/EAwBSLczxC4wggzRxPkgTLsyiOcQRFU6QZhSET5JIUn0OL
+YRkFxAuSpmk/doHz5TzO5y4PGIxCcAeH8CgD47gDY8wYBWM4wxMYihDwMqgAWWQO
+AI3eK7lEFogckKFSE6TpeYJD04uXyx9j4nMVze6WJVVySPu1kUtV3Yk+p1ro9qH5
+gLX/F2JnBZHTVtcMeUBWBEmEEhGNdKiCLxXBYYSGERTBTBAocAsysAs+giDNFKw9
+Xw3I0yKBA0MwCscJmkZoM0bDOINSHMajLEkzGA9YgnXgPEVhDOaAGcBrq8IoyaEo
+oVEwwWn9CnhLlKBErUllnFqkIjhFRs2VAVT67dVsf50+WLciwM93PF1w0Mr/Txqx
+2fCv9GGL/NMH0Lt3dFEzA7qlV75e809o+ImtJ/Pqk4abnZeybr9H7x6MHK80oMbn
+rhnaegxZ4RW93qKjnpymy/1n/C0J3srjvRemRkaP3DVmNxxNSNvKzIwfWir7zRDr
+p9zzOlL/LCi7RfbrnE8ej/aeT70zslo4k2Zto24cG+rOqBtrDQxnAi2t/bVvFoCE
+wsnpHavO/Wg/PTp06Q2xuN599VTo6a75h9JEdYq353C9EJle0rW27lpx1bSwK4uc
+eNXt2f2i3+xgY9jTh1tmrWUPXvPoO8enzXFDSsqNyZC5mO9nOmwvVJU0HjONn0jr
+aLpycHVAxnr75U1vh2WHWGJ/dpU3DOtmV8X8uu+z27aAUrTwZtrIEf+PawY2lE8l
+CTvXmsKhi7Jwc2PF2fya6D/mBy2R330SWdgXaiQWEWdw9HBdszy3Lv31MWPLM/bQ
+i9NLZT98UTFaEjw/4N2b3bytL8QTcT0uKualhVsLxsqgdHLRhTTtcd5tnPB2btnV
+EXuwu+tvT47Vylk3V//VnrKy05M/9ssO4+TLnz7bUhm+qWFnb2DtRwc2FPTtr4s7
+12F76Mo5+7m8ZXvR83NBC+uVp5zb86aGI65MVQ3uaW/vH5i8947tQZv/VG3UOptE
+XqepoQuhzGDmiuTzM18m/R6fqq9OztzmQdRuNbmm0XL/m6JOL9K6ZrH8EUzdkmM=
+=PERc
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/johnbender
+
+==================================================================
