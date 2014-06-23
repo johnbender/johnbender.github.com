@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>RQuery: refactored and simplified</title>
+    <title>NP-completeness: how hard is that climb?</title>
     
     
     <meta name="author" content="John Bender">
@@ -107,48 +107,74 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>RQuery: refactored and simplified</h1>
+  <h1>NP-completeness: how hard is that climb?</h1>
 </div>
 
 <div class="row-fluid">
   <div class="span10 text">
-    I've gone back and knocked off a couple of big todos in rquery. Namely, removing the Symbol capability, and using instances of the new OperationCollector in place of the global class variable + mutex required by the Symbol alterations. Also, as a consequence, I was able to remove the Declarations methods ( .is, .is_not )  previously required for use with overloaded operators like ==.
+    <p>turing machine
+robustness of turing machine</p>
 
-<h2>No More Symbols</h2>
+<p>difficulty of problems
+- easy vs hard
+- efficient vs inneficient
+- should I bother trying to come up with something clever?
+- polytime vs &quot;not polytime&quot;</p>
 
-Previously there were two DSLs coexisting in the library. One opened up the Symbol class and added the  declaration methods.
+<p>definitions
+- polynomial time
+- non-determinstic polynomial time
+- certs vs non-determinism</p>
 
-<pre>
-<span class="type">User</span>.where { <span class="constant">:age</span>.is == 12 }
-</pre><br />
+<p>np-completeness
+- two components
+- &quot;at least as hard&quot; as other problems that are in NP
+- also in NP</p>
 
-This, in my opinion, was an interesting hack and fun to implement but required both global storage for the results of the executing statements and the pollution of the Symbol class. The library's better half used a block parameter that represented a collection of the attributes provided by ActiveRecord.
+<p>mountain analogy
+- P = hours, day trip, supplies: water
+- NP = multiple weeks, supplies: other people, oxygen, food, shelter, wifi
+- reduction = bridge
+- P-reduction = bridge that takes at most a day to cross
+- friend asks you to plan a climb of mountain X
+- you don&#39;t know anything about mountain X
+- you know how hard mountain Y is
+- distinction between really hard mountains and regular mountains
+- just height?
+- regular mountains doable in a day
+- hard mountains, many days, really dangerous, above 8000m
+- you can convincingly show that X is similar to mountain Y</p>
 
-<pre>
-<span class="type">User</span>.where { |user| user.age.is == 12 }
-</pre><br />
+<p>polytime reduction, bridge
+- build a  bridge horizontal or higher, arrive ON the moutain, not on TOP (polytime reduction, hardness)
+- the bridge can only take regular mountain time (1 dayish) to cross
+- otherwise the bridge will ruin your comparison
+- if it takes the same amount of time to cross the bridge as it would to climb a huge moutain you may have climbed a huge mountain in the process!</p>
 
-In removing support for the Symbol based syntax, the block based version became much cleaner both externally and internally. Externally there's no longer a need for the .is and .is_not declarations while the from, between, in and contains methods remain the same.
+<p>alternately
+- obscurred by clouds
+- you set yourself up so you can measure that it&#39;s at least as tall as mountain Y under the clouds
+- another way to put it: if you were to build a horizontal bridge between the top of mountain Y, then climb mountain X up to the level of the bridge, cross the bridge,  you would end up at the top of mountain Y. That means X is at least as hard (height wise) as mountain Y
+- if it takes the same amount of time to cross the bridge as it would to climb a huge moutain you may have climbed a huge mountain in the process!
+- this is the polynomial time reduction, if you can climb mountain X in a few days, then you can certainly climb mountain Y in a few days if only by climbing X to the bridge and then taking a day to cross.
+- seems backwards, but the thing we&#39;re trying to prevent is classifying some mountain Z as being as hard as Y when it&#39;s not. So if you couldn&#39;t cross that hypothetical bridge from Z to Y and be at the top then Z is not the same as Y. Eg, you can&#39;t climb a grassy gnoll and then cross a horizontal bridge in a day and be at the top of moutain that takes a week to climb.</p>
 
-<pre>
-<span class="type">User</span>.where <span class="keyword">do</span> |user|
-  user.age == 12
-  user.name.contains <span class="string">"George"</span>
-  user.weight.between 160..180
-<span class="keyword">end</span>
-</pre><br />
+<ul>
+<li>can&#39;t build a day trip bridge down from a week long hike mountain to a day trip mountain, the mountain is too tall, the brige won&#39;t reach</li>
+<li>could be possible, teleportation? We don&#39;t know!</li>
+<li>if you could find a way to bridge from a day mountain to a weeks mountain then you could just hop other bridges from that weeks long mountain to any other weeks long mountain in days which would make all weeks long mountain trips take only days instead of weeks!</li>
+<li>similarly if we could show that there is a reduction from any NP-complete problem to a problem in P then we could use polytime reductions from that NP-complete problem to any other to solve it in polynomial time.</li>
+</ul>
 
-Though, because of Ruby's restriction on overloading the != operator it now looks like:
+<p>In the hard mountains class
+- knowing the mountain is at least as hard as something else has value
+- you could call the trip off based just on that
+- ideally show that it&#39;s just as hard and not harder
+- eg, k2 and not olympus mons
+- satellite photos etc</p>
 
-<pre>
-<span class="type">User</span>.where <span class="keyword">do</span> |user|
-  user.age.not = 12
-<span class="keyword">end</span>
-</pre><br />
-
-<h2>Simple Internals</h2>
-
-The internals have been simplified as well. At a glance, there is now a single class that handles the organization of the calls to the adapter for serialization, OperationCollector. In addition every time the where method is called, a new instance of this class is created so there's no need to have the mutex to prevent race conditions. Please take a look at the <a href="http://github.com/johnbender/rquery/tree/master">newness</a> for more details.
+<p>notes
+- days vs weeks gulf doesn&#39;t capture the gulf between P and NP but serves here</p>
 
     
   </div>
@@ -157,7 +183,7 @@ The internals have been simplified as well. At a glance, there is now a single c
   
 
     <h4>Published</h4>
-    <div class="date"><span>22 Aug 2009</span></div>
+    <div class="date"><span>22 Jun 2014</span></div>
 
   
     <h4>Tags</h4>
@@ -168,7 +194,7 @@ The internals have been simplified as well. At a glance, there is now a single c
 
   
     
-    	<li><a href="/archive.html#ruby">ruby <span>12</span></a></li>
+    	<li><a href="/archive.html#math">math <span>16</span></a></li>
     
   
 

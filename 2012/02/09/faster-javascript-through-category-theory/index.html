@@ -44,34 +44,12 @@
 
   
     
-      
-    
-  
-    
-      
-      	
-        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
-      	
-      
-    
   
     
       
       	
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       	
-      
-    
-  
-    
-  
-    
-  
-    
-      
-    
-  
-    
       
     
   
@@ -84,6 +62,24 @@
       	
         <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
       	
+      
+    
+  
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
       
     
   
@@ -120,7 +116,7 @@
 
 <p>In the course of this post we&#39;ll define two categories: one for HTMLElements and the other for jQuery objects. We&#39;ll then construct a Functor that maps from the category of HTMLElements to the category of jQuery objects. At the end we&#39;ll see how jQuery plugin authors can help user&#39;s speed up their JavaScript.</p>
 
-<h3 id="toc_0">Asumptions/Requirements</h3>
+<h3 id="asumptions/requirements">Asumptions/Requirements</h3>
 
 <p>Some things to know before getting started:</p>
 
@@ -130,7 +126,7 @@
 <li>My examples do not constitute proofs but I&#39;m fairly confident that both categories and the functor satisfy their respective laws.<sup>1</sup></li>
 </ol>
 
-<h3 id="toc_1">Categories</h3>
+<h3 id="categories">Categories</h3>
 
 <p>If you&#39;re perfectly happy taking the category definitions at face value, feel free to skip ahead to the next section.</p>
 
@@ -151,7 +147,7 @@
 
 <p>These laws are important for understanding the conclusions drawn from the rest of the post and we&#39;ll cover how both the <strong>Html</strong> and <strong>Jqry</strong> categories satisfies each.</p>
 
-<h3 id="toc_2">Html</h3>
+<h3 id="html">Html</h3>
 
 <p>The Category <strong>Html</strong> is extremely simple and, if you&#39;re still interested in understanding categories more generally, it will help in building an intuition for them. The objects in <strong>Html</strong> are the HTMLElements that you&#39;re familiar with from JavaScript (eg, HTMLDivElement, HTMLAnchorElement). The morphisms are JavaScript functions that opperate on those objects, and <em>only</em> those objects.</p>
 
@@ -200,16 +196,16 @@ elem.getAttribute( <span class="string">"foo"</span> ); <span class="comment">//
 elem = compose( a, b )( elem );
 elem.getAttribute( <span class="string">"foo"</span> ); <span class="comment">// "bar"
 </span>elem.getAttribute( <span class="string">"baz"</span> ); <span class="comment">// "bak"
-</span></pre>
+</span>
+</pre>
 
+<p>The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in <strong>Html</strong> are closed under composition because of the type guarantees we&#39;ve placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there&#39;s no way to compose two of them that doesn&#39;t also have the same type signature. Having met the three requirements for a category with <strong>Html</strong> we can move on to the second, and more complex category <strong>Jqry</strong>.</p>
 
-The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in **Html** are closed under composition because of the type guarantees we've placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there's no way to compose two of them that doesn't also have the same type signature. Having met the three requirements for a category with **Html** we can move on to the second, and more complex category **Jqry**.
+<h3 id="jqry">Jqry</h3>
 
-### Jqry
+<p><strong>Jqry</strong> is the category of <code>jQuery</code> objects and functions from <code>jQuery</code> objects to <code>jQuery</code> objects.<sup>3</sup> It&#39;s only slightly more complex than <strong>Html</strong> because the reader must accept <code>this</code> as an implicit parameter to the JavaScript functions that are the category&#39;s morphisms. Also, these morphisms must be defined on the <code>$.fn</code> object to guarantee the value of <code>this</code> is a <code>jQuery</code> object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like <code>$(&quot;div&quot;)</code>, and the functions are JavaScript functions that retun jQuery objects.</p>
 
-**Jqry** is the category of `jQuery` objects and functions from `jQuery` objects to `jQuery` objects.<sup>3</sup> It's only slightly more complex than **Html** because the reader must accept `this` as an implicit parameter to the JavaScript functions that are the category's morphisms. Also, these morphisms must be defined on the `$.fn` object to guarantee the value of `this` is a `jQuery` object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like `$("div")`, and the functions are JavaScript functions that retun jQuery objects.
-
-Identity:
+<p>Identity:</p>
 
 <pre>
 <span class="doc">/** @this {jQuery}
@@ -223,12 +219,12 @@ Identity:
 <span class="keyword">var</span> <span class="variable-name">$elem</span> = $( <span class="string">"#example-anchor"</span> );
 
 assert($elem.id() == $elem); <span class="comment">// true
-</span></pre>
+</span>
+</pre>
 
+<p>As you can see, the value of <code>this</code>, and therefore the constraint that the morphisms must be defined on <code>$.fn</code>, plays an important roll in the way that the functions behave in the <strong>Jqry</strong> category. If it&#39;s unclear why that is, remember that <code>this</code> is whatever object the method is invoked on using dot notation in JavaScript. Also recall that <code>$.fn == $.prototype</code>, meaning when you call <code>$(&quot;div&quot;).foo()</code> it finds <code>foo</code> on the <code>$.fn</code> by following the prototype chain.</p>
 
-As you can see, the value of `this`, and therefore the constraint that the morphisms must be defined on `$.fn`, plays an important roll in the way that the functions behave in the **Jqry** category. If it's unclear why that is, remember that `this` is whatever object the method is invoked on using dot notation in JavaScript. Also recall that `$.fn == $.prototype`, meaning when you call `$("div").foo()` it finds `foo` on the `$.fn` by following the prototype chain.
-
-Composition:
+<p>Composition:</p>
 
 <pre>
 <span class="doc">/** @typedef {function(this:jQuery): jQuery} */</span>
@@ -268,21 +264,22 @@ $elem.attr( <span class="string">"foo"</span> );         <span class="comment">/
 
 $elem.aAndB().attr( <span class="string">"foo"</span> ); <span class="comment">// "bar"
 </span>$elem.attr( <span class="string">"baz"</span> );         <span class="comment">// "bak"
-</span></pre>
+</span>
+</pre>
 
-Please direct your attention to the fact that you could substitute the `a` and `b` functions from the **Html** `compose` example here for the functions that are mapped using `this.map` (`$.fn.map`) over the set of elements in the jQuery object (represented by `this`). This will be important when defining the Functor from **Html** to **Jqry**.
+<p>Please direct your attention to the fact that you could substitute the <code>a</code> and <code>b</code> functions from the <strong>Html</strong> <code>compose</code> example here for the functions that are mapped using <code>this.map</code> (<code>$.fn.map</code>) over the set of elements in the jQuery object (represented by <code>this</code>). This will be important when defining the Functor from <strong>Html</strong> to <strong>Jqry</strong>.</p>
 
-Again, we know that the morphisms of **Jqry** are closed under composition because each accepts and returns only jQuery objects.
+<p>Again, we know that the morphisms of <strong>Jqry</strong> are closed under composition because each accepts and returns only jQuery objects.</p>
 
-### $() ∉ Functors
+<h3 id="$()-∉-functors">$() ∉ Functors</h3>
 
-Functors are a *single* morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or "works" in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating `$()` as a functor from **Html** to **Jqry**, shows that it translates the objects in the category **Html** (HTMLElements) properly to the objects in **Jqry** (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So `$()` is not, strictly speaking, a category theoretic functor.
+<p>Functors are a <em>single</em> morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &quot;works&quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating <code>$()</code> as a functor from <strong>Html</strong> to <strong>Jqry</strong>, shows that it translates the objects in the category <strong>Html</strong> (HTMLElements) properly to the objects in <strong>Jqry</strong> (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So <code>$()</code> is not, strictly speaking, a category theoretic functor.</p>
 
-On the other hand it's quite easy to define a function that handles both objects functions properly. As I noted in a previos post and in an earlier in this post, `$.fn.map` provides an easy way to change functions in **Html** to **Jqry**. So, this new functor just needs to check if it's operating on an object or a function from the **Html** category and respond accordingly.
+<p>On the other hand it&#39;s quite easy to define a function that handles both objects functions properly. As I noted in a previos post and in an earlier in this post, <code>$.fn.map</code> provides an easy way to change functions in <strong>Html</strong> to <strong>Jqry</strong>. So, this new functor just needs to check if it&#39;s operating on an object or a function from the <strong>Html</strong> category and respond accordingly.</p>
 
-For the Haskell fans out there (and ciaranm in ##categorytheory) it's better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of `fmap`, but since this is flexible ol' JavaScript, it's possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I've chosen to deal with both in a single function.
+<p>For the Haskell fans out there (and ciaranm in ##categorytheory) it&#39;s better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of <code>fmap</code>, but since this is flexible ol&#39; JavaScript, it&#39;s possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I&#39;ve chosen to deal with both in a single function.</p>
 
-### Functor Html -> Jqry
+<h3 id="functor-html--&gt;-jqry">Functor Html -&gt; Jqry</h3>
 
 <pre>
 <span class="doc">/** @sig {HTMLElement | html.morphism} -&gt; {jQuery | jqry.morphism} */</span>
@@ -303,10 +300,10 @@ For the Haskell fans out there (and ciaranm in ##categorytheory) it's better to 
 <span class="keyword">var</span> <span class="variable-name"><span class="js2-warning">elem</span></span> = document.getElementsById( <span class="string">"example"</span> );
 elem.nodeName;                        <span class="comment">// "A"
 </span>$.Functor( elem ).prop( <span class="string">"nodeName"</span> ); <span class="comment">// "A"
-</span></pre>
+</span>
+</pre>
 
-
-Sample use for functions:
+<p>Sample use for functions:</p>
 
 <pre>
 <span class="js2-external-variable">$</span>.fn.myMorphism = $.Functor(<span class="keyword">function</span>( <span class="js2-function-param">a</span> ){
@@ -316,11 +313,12 @@ Sample use for functions:
 
 $( <span class="string">"#example"</span> ).attr( <span class="string">"foo"</span> );              <span class="comment">// undefined
 </span>$( <span class="string">"#example"</span> ).myMorphism().attr( <span class="string">"foo"</span> ); <span class="comment">// "bar"
-</span></pre>
+</span>
+</pre>
 
-In the first example it takes an HTMLElement, the objects onf **Html**, and translates it into a jQuery object by using the `$()` function. In the second example it takes a function from HTMLElements to HTMLElements, a morpishm in **Html**, and translates it to a function from jQuery objects to jQuery objects.
+<p>In the first example it takes an HTMLElement, the objects onf <strong>Html</strong>, and translates it into a jQuery object by using the <code>$()</code> function. In the second example it takes a function from HTMLElements to HTMLElements, a morpishm in <strong>Html</strong>, and translates it to a function from jQuery objects to jQuery objects.</p>
 
-Having establish how the functor will operate it too has laws we must adhear to. First it must preserve identity:
+<p>Having establish how the functor will operate it too has laws we must adhear to. First it must preserve identity:</p>
 
 <pre>
 <span class="keyword">var</span> <span class="variable-name">a</span> = document.getElementById( <span class="string">"#example-anchor"</span> );
@@ -334,9 +332,10 @@ id(a);             <span class="comment">// &lt;a id="example-anchor"&gt;&lt;/a&
 </span>
 $.Functor(a);      <span class="comment">// [&lt;a id="example-anchor"&gt;&lt;/a&gt;]
 </span>$.Functor(a).id(); <span class="comment">// [&lt;a id="example-anchor"&gt;&lt;/a&gt;]
-</span></pre>
+</span>
+</pre>
 
-Whether the identity function is applied before or after the Functor the result should be the same. As you can see the return value of the two expressions is idenitcal. The second law states the the Functor must preserve composition. Assuming a and b from the html compose example:
+<p>Whether the identity function is applied before or after the Functor the result should be the same. As you can see the return value of the two expressions is idenitcal. The second law states the the Functor must preserve composition. Assuming a and b from the html compose example:</p>
 
 <pre>
 <span class="keyword">var</span> <span class="variable-name"><span class="js2-warning">$elem</span></span> = $( <span class="string">"#example-anchor"</span> );
@@ -353,27 +352,28 @@ $.Functor(a);                                        <span class="comment">// fu
 </span><span class="js2-external-variable">$</span>.fn.sndAB = $.compose( $.Functor(a), $.Functor(b) );
 $elem.sndAB().attr(<span class="string">"foo"</span>);                           <span class="comment">// "bar"
 </span>$elem.attr(<span class="string">"baz"</span>);                                   <span class="comment">// "bak"
-</span></pre>
+</span>
+</pre>
 
-This means that composing the functions and then applying the Functor should create a function that behaves identically to a function created by composing two functions that have had the Functor applied already. Essentially, for all input values the output will be the same. We'll see in a second why that distinction is important.
+<p>This means that composing the functions and then applying the Functor should create a function that behaves identically to a function created by composing two functions that have had the Functor applied already. Essentially, for all input values the output will be the same. We&#39;ll see in a second why that distinction is important.</p>
 
-The assertion at the top will fail of course because the functions are not the same object. More importantly it would fail even if the functions were compared as strings, because they using different internal mechanisms. Ultimately though the functionality is the same and that's what we care about. In each case both `a` and `b` will be allowed to alter each element in the jQuery object's set and apply the attribute values `foo` and `baz` respectively.
+<p>The assertion at the top will fail of course because the functions are not the same object. More importantly it would fail even if the functions were compared as strings, because they using different internal mechanisms. Ultimately though the functionality is the same and that&#39;s what we care about. In each case both <code>a</code> and <code>b</code> will be allowed to alter each element in the jQuery object&#39;s set and apply the attribute values <code>foo</code> and <code>baz</code> respectively.</p>
 
-While they have the same outcome, the underlying machinery is very different. `$.fn.fstAB` is _one_ iteration over the set of HTMLElements in the jQuery set and `$.fn.sndAB` is _two_. That is `$.fn.sndAB` is applying two seperate `$.fn` methods which is equivelant to `$("foo").a().b()`, where as `$.fn.fstAB` is calling `$.fn.map` only once and piping each element through two composed functions that operate on HTMLElements, `$("foo").map(aAndB)`.<sup>4</sup> They get the same results but `$.fn.sndAB` requires twice as many iterations over the jQuery set!
+<p>While they have the same outcome, the underlying machinery is very different. <code>$.fn.fstAB</code> is <em>one</em> iteration over the set of HTMLElements in the jQuery set and <code>$.fn.sndAB</code> is <em>two</em>. That is <code>$.fn.sndAB</code> is applying two seperate <code>$.fn</code> methods which is equivelant to <code>$(&quot;foo&quot;).a().b()</code>, where as <code>$.fn.fstAB</code> is calling <code>$.fn.map</code> only once and piping each element through two composed functions that operate on HTMLElements, <code>$(&quot;foo&quot;).map(aAndB)</code>.<sup>4</sup> They get the same results but <code>$.fn.sndAB</code> requires twice as many iterations over the jQuery set!</p>
 
-You might recognize the optimization as [loop fusion](http://en.wikipedia.org/wiki/Loop_fusion). By ensuring that the functor satisfies the requsite laws we've stumbled upon an interesting relationship. That is, any time we use n > 1 iterative `$.fn` methods that exist in **Jqry** it's possible to extract the pure HTMLElement-altering functions that _might_ underly them, compose those functions, and save n-1 full iterations in the process.
+<p>You might recognize the optimization as <a href="http://en.wikipedia.org/wiki/Loop_fusion">loop fusion</a>. By ensuring that the functor satisfies the requsite laws we&#39;ve stumbled upon an interesting relationship. That is, any time we use n &gt; 1 iterative <code>$.fn</code> methods that exist in <strong>Jqry</strong> it&#39;s possible to extract the pure HTMLElement-altering functions that <em>might</em> underly them, compose those functions, and save n-1 full iterations in the process.</p>
 
-### Loop Fusing Hipster
+<h3 id="loop-fusing-hipster">Loop Fusing Hipster</h3>
 
-It's clear that someone using `$("foo").a().b()` could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying `a` and `b` could be unified to speed up execution and subsequently point out they've been fusing loops since before it was cool. What's not clear is how to know in other cases when it's possible to extract the underlying functions from the `$.fn` methods for composition. Because of the Functor laws we've unambiguously defined a specific subset of functions -- the set of **Html** morphisms with `$.fn.map` applied -- that we _know_ can be fused and will produce the same result. Put differently:
+<p>It&#39;s clear that someone using <code>$(&quot;foo&quot;).a().b()</code> could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying <code>a</code> and <code>b</code> could be unified to speed up execution and subsequently point out they&#39;ve been fusing loops since before it was cool. What&#39;s not clear is how to know in other cases when it&#39;s possible to extract the underlying functions from the <code>$.fn</code> methods for composition. Because of the Functor laws we&#39;ve unambiguously defined a specific subset of functions -- the set of <strong>Html</strong> morphisms with <code>$.fn.map</code> applied -- that we <em>know</em> can be fused and will produce the same result. Put differently:</p>
 
-As long as the *n* functions being mapped over the jQuery object's contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set *once*, and be asured the resulting jQuery object will be the same.
+<p>As long as the <em>n</em> functions being mapped over the jQuery object&#39;s contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set <em>once</em>, and be asured the resulting jQuery object will be the same.</p>
 
-### Package it up
+<h3 id="package-it-up">Package it up</h3>
 
-Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the **Jqry** category to see what this might look like.
+<p>Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the <strong>Jqry</strong> category to see what this might look like.</p>
 
-Plugin one:
+<p>Plugin one:</p>
 
 <pre>
 <span class="keyword">function</span> <span class="function-name">setFoo</span>( <span class="js2-function-param">elem</span> ){
@@ -415,11 +415,11 @@ Plugin one:
 
 <p>Obviously these two examples are tiny and could easily be consolidated by hand, but two plugins with more complex DOM manipulations would be much harder to classify as &quot;fusable&quot;. By puting the onus on the plugin developer it gives the end user a better guarantee that it&#39;s safe.</p>
 
-<h3 id="toc_3">Did you make it?</h3>
+<h3 id="did-you-make-it?">Did you make it?</h3>
 
 <p>And there you have it. After defining a mathematical framework in which to view DOM alterations with jQuery and JavaScript we identified an important set of characteristics to use for speeding up our client side code. Maybe this isn&#39;t enough to get you interested, but for me it&#39;s an afirmation that, even this far from the its ivory towers, math has a role to play.</p>
 
-<h3 id="toc_4">Footnotes</h3>
+<h3 id="footnotes">Footnotes</h3>
 
 <ol>
 <li>Thanks again to edwardk and xplat from #haskell-blah and ciaranm from ##categorytheory for reviewing my categories and providing feedback. I&#39;d also like to thank <a href="http://twitter.com/keyist">Tim Goh</a> for taking the time to enhance my terrible writting.</li>
@@ -450,7 +450,7 @@ Plugin one:
     
     	<li><a href="/archive.html#jquery">jquery <span>8</span></a></li>
     
-    	<li><a href="/archive.html#math">math <span>15</span></a></li>
+    	<li><a href="/archive.html#math">math <span>16</span></a></li>
     
   
 

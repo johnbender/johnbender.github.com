@@ -1,14 +1,14 @@
 
-http://johnbender.github.com/rss.xml
-http://johnbender.github.com/portfolio.html
-http://johnbender.github.com/archive.html
-http://johnbender.github.com/index.html
 http://johnbender.github.com/404.html
-http://johnbender.github.com/mothers_day.html
-http://johnbender.github.com/sitemap.txt
+http://johnbender.github.com/archive.html
 http://johnbender.github.com/atom.xml
 http://johnbender.github.com/cv.html
+http://johnbender.github.com/index.html
+http://johnbender.github.com/portfolio.html
+http://johnbender.github.com/rss.xml
+http://johnbender.github.com/sitemap.txt
 
+http://johnbender.github.com/2014/06/22/complexity-how-hard-is-that-climb
 http://johnbender.github.com/2014/04/07/presentation-differential-semantics
 http://johnbender.github.com/2013/11/04/a-better-sql
 http://johnbender.github.com/2013/09/16/why-im-getting-a-phd

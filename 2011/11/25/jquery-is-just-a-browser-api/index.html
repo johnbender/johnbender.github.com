@@ -44,34 +44,12 @@
 
   
     
-      
-    
-  
-    
-      
-      	
-        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
-      	
-      
-    
   
     
       
       	
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       	
-      
-    
-  
-    
-  
-    
-  
-    
-      
-    
-  
-    
       
     
   
@@ -84,6 +62,24 @@
       	
         <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
       	
+      
+    
+  
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
       
     
   
@@ -304,7 +300,7 @@ DialogWarnTextArea.prototype = <span class="keyword">new</span> TextArea();
 </pre>
 
 <p>Third, defining a <code>limitWarn</code> attribute on the <code>DialogWarnTextArea</code> prototype means that objects created with the <code>DialogWarnTextArea</code> will use that definition since it appears earlier in the prototype chain.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;pre&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;pre&gt;
 </code></pre></div>
 <p>DialogWarnTextArea.prototype.<span class="function-name">limitWarn</span> = <span class="keyword">function</span>() {
   <span class="keyword">if</span>( <span class="builtin">this</span>.$textArea.val().length &gt; <span class="builtin">this</span>.limit ) {

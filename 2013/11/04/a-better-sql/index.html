@@ -44,34 +44,12 @@
 
   
     
-      
-    
-  
-    
-      
-      	
-        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
-      	
-      
-    
   
     
       
       	
         <li><a href="//johnbender.github.com/archive.html">Archive</a></li>
       	
-      
-    
-  
-    
-  
-    
-  
-    
-      
-    
-  
-    
       
     
   
@@ -84,6 +62,24 @@
       	
         <li><a href="//johnbender.github.com/cv.html">Curriculum Vitae</a></li>
       	
+      
+    
+  
+    
+  
+    
+      
+      	
+        <li><a href="//johnbender.github.com/portfolio.html">Portfolio</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
       
     
   
@@ -118,16 +114,16 @@
   <div class="span10 text">
     <p>The relational model for data is ubiquitous. That&#39;s in part due to SQL&#39;s declarative approach to manipulating and exploring data stored as relations. Unfortunately SQL has its warts. In particular schema changes made in the data definition subset of the language (DDL) [1] can be awkward for creating idempotent migrations. Enough so, that the responsibility is frequently delegated to the application layer where more expressive languages can be employed. Here I&#39;ll lay out an alternate semantics for SQL DDL that embraces schema change and expands the expressive power of DDL&#39;s declarative core.</p>
 
-<h2 id="toc_0">A Common Activity</h2>
+<h2 id="a-common-activity">A Common Activity</h2>
 
 <p>To illustrate how schema changes break the initially declarative semantics of DDL, lets look at an example:</p>
-<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
 </code></pre></div>
 <p>All tables start this way. The only piece of syntax that might otherwise alert a new user to the fact that this is not an entirely descriptive declarative language is <code>create</code>. The definition is very much &quot;what&quot; is desired and not &quot;how&quot; to get it. This breaks down when anything about the table needs to change:</p>
-<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
@@ -135,7 +131,7 @@
 <span class="k">alter</span> <span class="k">table</span> <span class="n">foo</span> <span class="k">add</span> <span class="k">column</span> <span class="n">bak</span> <span class="nb">text</span><span class="p">;</span>
 </code></pre></div>
 <p>All together this will ensure the proper end-state whether the target database is at the initial state without the table <code>foo</code> or at the second state where <code>foo</code> lacks the column <code>bak</code>. In this case it&#39;s easy to understand the final state of the table because the example is very simple, but it&#39;s acquired an imperative pall with the inclusion of the first <code>alter</code>. As the schema definition grows more complex through many <code>drop</code>, <code>add</code>, and type cast changes, the final state of the table becomes less clear:</p>
-<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span>
 <span class="p">);</span>
@@ -146,17 +142,17 @@
 </code></pre></div>
 <p>It would be better to simply add columns to the original table definition, and then the shape of the resulting table would be immediately clear at a glance.</p>
 
-<h2 id="toc_1">Differential Semantics</h2>
+<h2 id="differential-semantics">Differential Semantics</h2>
 
 <p>In our toy example the desired table definition included a new column <code>bak</code>. An entirely descriptive update to the table declaration would look like this (Note that the original alter statement is absent):</p>
-<div class="highlight"><pre><code class="sql language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">foo</span> <span class="p">(</span>
   <span class="n">bar</span> <span class="nb">int</span><span class="p">,</span>
   <span class="n">baz</span> <span class="nb">text</span><span class="p">,</span>
   <span class="n">bak</span> <span class="nb">text</span>
 <span class="p">);</span>
 </code></pre></div>
 <p>Unfortunately the SQL runtime considers the syntax in isolation and makes no attempt to reconcile that with it&#39;s internal representation. That makes perfect sense because a user is permitted to run small, ad hoc snippets in addition to full schema migration scripts. That is, the RDBMS can&#39;t know where this declaration is coming from nor why it&#39;s being run so it&#39;s unsafe to assume it should do any reconciliation. In contrast a well outfitted user can provide exactly that information.</p>
-<div class="highlight"><pre><code class="diff language-diff" data-lang="diff"><span class="gu">@@ -1,4 +1,5 @@</span>
+<div class="highlight"><pre><code class="language-diff" data-lang="diff"><span class="gu">@@ -1,4 +1,5 @@</span>
  create table foo (l;
    bar int,
 <span class="gd">-  baz text</span>
@@ -168,7 +164,7 @@
 
 <p>The key insight here is that we can permit schema migrations while retaining an entirely descriptive declarative syntax by appealing to the differential information available via source control tools.</p>
 
-<h2 id="toc_2">Value Proposition</h2>
+<h2 id="value-proposition">Value Proposition</h2>
 
 <p>The basic value proposition is reduced cognitive overhead when maintaining schemas using SQL DDL. In addition, DDL&#39;s syntax is reduced by about half because alters and drops [2] can simply go away which should make it easier to learn [3].</p>
 
@@ -176,11 +172,11 @@
 
 <p>Finally, by associating meaning with syntactic change the user can more safely understand and execute post commit reverts to schema changes. That is, instead of manually defining the necessary steps to &quot;undo&quot; some previous schema change, the source control system can provide the exact information that is necessary.</p>
 
-<h2 id="toc_3">Pitfalls</h2>
+<h2 id="pitfalls">Pitfalls</h2>
 
 <p>Obviously, not every migration is just about the schema. Frequently the data has to be altered to conform to the target schema. This is actually an area of active research in the Database Systems community [4].</p>
 
-<h2 id="toc_4">Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>For the interested reader, I started work on a <a href="https://github.com/johnbender/sql-delta">preprocessor</a> implemented in Haskell. Unfortunately since I don&#39;t have any plans to pursue this further I haven&#39;t been working on it. Also, for comparison I&#39;ve included two very simple sets of denotational semantics in the footnotes; one to represent the current implementation and one to represent the differential semantics [5]. They highlight the symmetry of this new approach to the language when compared with the current implementation.</p>
 
@@ -188,7 +184,7 @@
 
 <p>Broadly, the idea of differential semantics is to gather more information about intent from readily available sources so that language runtimes (declarative or otherwise) can make more informed decisions about user intent. The results need not be confined to accurate interpretation of the desired system state.</p>
 
-<h3 id="toc_5">Footnotes</h3>
+<h3 id="footnotes">Footnotes</h3>
 
 <ol>
 <li><a href="http://en.wikipedia.org/wiki/Data_definition_language">http://en.wikipedia.org/wiki/Data_definition_language</a></li>
