@@ -1,10 +1,10 @@
 
-http://johnbender.github.com/404.html
-http://johnbender.github.com/archive.html
+http://johnbender.github.com/404
+http://johnbender.github.com/archive
 http://johnbender.github.com/atom.xml
-http://johnbender.github.com/cv.html
-http://johnbender.github.com/index.html
-http://johnbender.github.com/portfolio.html
+http://johnbender.github.com/cv
+http://johnbender.github.com/
+http://johnbender.github.com/portfolio
 http://johnbender.github.com/rss.xml
 http://johnbender.github.com/sitemap.txt
 
