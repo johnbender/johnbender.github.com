@@ -95,6 +95,10 @@ h1 > a:hover {
   border-top: none;
 }
 
+.content iframe {
+  max-width: 97%;
+}
+
 .navbar .brand {
   color: black;
 }
