@@ -4,7 +4,7 @@
  <title>johnbender.us</title>
  <link href="http://johnbender.github.com/atom.xml" rel="self"/>
  <link href="http://johnbender.github.com"/>
- <updated>2018-07-21T01:04:36-04:00</updated>
+ <updated>2018-07-24T14:47:15-04:00</updated>
  <id>http://johnbender.github.com</id>
  <author>
    <name>John Bender</name>
@@ -363,18 +363,18 @@ alter table foo add column baks text;
    <id>http://johnbender.github.com/2013/08/29/presentation-faster-javascript-through-category-theory</id>
    <content type="html">&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My final presentation of the material from JQuery UK has been posted. On a personal note the venue and speakers made for an awesome setting to retire this talk.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe src=&quot;http://player.vimeo.com/video/71132093&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://vimeo.com/album/2509484/video/71132093&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;iframe src=&quot;//player.vimeo.com/video/71132093&quot; width=&quot;610&quot; height=&quot;340&quot; frameborder=&quot;0&quot; webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;//vimeo.com/album/2509484/video/71132093&quot; class=&quot;video-link&quot;&gt;View video on Vimeo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;http://twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Update&lt;/b&gt; My presentation of the revised material from JSCONFEU 2012 has been posted. Thanks again the &lt;a href=&quot;//twitter.com/jsconfeu&quot;&gt;@jsconfeu&lt;/a&gt; crew for puting on one of the best conferences I've yet been to.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;//www.youtube.com/embed/PtD-WKSC6ak&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;//www.youtube.com/watch?v=PtD-WKSC6ak&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;My presentation at JQCON 2012. Thanks again to the good folks from &lt;a href=&quot;http://twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
+&lt;p&gt;My presentation at JQCON 2012. Thanks again to the good folks from &lt;a href=&quot;//twitter.com/confreaks&quot;&gt;@confreaks&lt;/a&gt; for all the hard work they do.&lt;/p&gt;
 
-&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;http://www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;a href=&quot;http://www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;iframe width=&quot;610&quot; height=&quot;340&quot; src=&quot;//www.youtube.com/embed/u-_lZ2G82Rk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;a href=&quot;//www.youtube.com/watch?v=u-_lZ2G82Rk&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
