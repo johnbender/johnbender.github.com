@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Formalization of Java&#39;s Concurrent Access Modes</title>
+    <meta name="Description" content="Writings on computer stuff.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-vs.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Assistant to the Proof Assistant">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Assistant to the Proof Assistant</a></h1>
+      <ul class="nav">
+        <li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/about/">About</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      
+
+<h1>A Formalization of Java&#39;s Concurrent Access Modes</h1>
+
+
+<div class="content ">
+<p>Java’s memory model was recently updated and expanded with new access modes. The accompanying documentation for these access modes is intended to make strong guarantees about program behavior that the Java compiler must enforce, yet the documentation is frequently unclear. This makes the intended program behavior ambiguous, impedes discussion of key design decisions, and makes it impossible to prove general properties about the semantics of the access modes. In this paper we present the first formalization of Java’s access modes. We have constructed an axiomatic model for all of the modes using the Herd modeling tool. This allows us to give precise answers to questions about the behavior of example programs, called litmus tests. We have validated our model using a large suite of litmus tests from existing research which helps to shed light on the relationship with other memory models. We have also modeled the semantics in Coq and proven several general theorems including a DRF guarantee, which says that if a program is properly synchronized then it will exhibit sequentially consistent behavior. Finally, we use our model to prove that the unusual design choice of a partial order among writes to the same location is unobservable in any program.</p>
+<ul>
+<li><a href="/assets/oopsla-2019.pdf">Preprint (in submission)</a></li>
+<li><a href="https://bitbucket.org/ucla-pls/jam">Project: Herd and Coq formalizations</a></li>
+</ul>
+
+</div>
+
+
+<p><a href="/">← Home</a></p>
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /research/ooplsa-2019/ -->
+  </body>
+</html>
