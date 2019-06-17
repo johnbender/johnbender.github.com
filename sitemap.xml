@@ -57,11 +57,6 @@
   </url>
   
   <url>
-    <loc>https://johnbender.us/</loc>
-    <lastmod>2019-06-15</lastmod>
-  </url>
-  
-  <url>
     <loc>https://johnbender.us/page-list/</loc>
     <lastmod>2019-06-15</lastmod>
   </url>
@@ -112,11 +107,6 @@
   </url>
   
   <url>
-    <loc>https://johnbender.us/tags/sql/</loc>
-    <lastmod>2019-06-15</lastmod>
-  </url>
-  
-  <url>
     <loc>https://johnbender.us/tags/research/</loc>
     <lastmod>2019-06-15</lastmod>
   </url>
@@ -142,6 +132,11 @@
   </url>
   
   <url>
+    <loc>https://johnbender.us/tags/sql/</loc>
+    <lastmod>2019-06-15</lastmod>
+  </url>
+  
+  <url>
     <loc>https://johnbender.us/research/</loc>
     <lastmod>2019-06-16</lastmod>
   </url>
@@ -149,6 +144,11 @@
   <url>
     <loc>https://johnbender.us/about/</loc>
     <lastmod>2019-06-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://johnbender.us/</loc>
+    <lastmod>2019-06-17</lastmod>
   </url>
   
   <url>
