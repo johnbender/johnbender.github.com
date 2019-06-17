@@ -267,7 +267,7 @@ img.pinned {
 
 @media(max-width: 45em){
   img.pinned {
-    float: right;
+    display: none;
   }
 }
 
