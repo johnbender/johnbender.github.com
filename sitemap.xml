@@ -102,12 +102,22 @@
   </url>
   
   <url>
+    <loc>https://johnbender.us/tags/research/</loc>
+    <lastmod>2019-06-15</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://johnbender.us/tags/OOPSLA%20&amp;amp;#39;19/</loc>
+    <lastmod>2019-06-15</lastmod>
+  </url>
+  
+  <url>
     <loc>https://johnbender.us/tags/semantics/</loc>
     <lastmod>2019-06-15</lastmod>
   </url>
   
   <url>
-    <loc>https://johnbender.us/tags/research/</loc>
+    <loc>https://johnbender.us/tags/sql/</loc>
     <lastmod>2019-06-15</lastmod>
   </url>
   
@@ -118,21 +128,6 @@
   
   <url>
     <loc>https://johnbender.us/tags/OOPSLA%20&amp;amp;#39;15/</loc>
-    <lastmod>2019-06-15</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://johnbender.us/tags/OOPSLA%20&amp;amp;#39;19/</loc>
-    <lastmod>2019-06-15</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://johnbender.us/tags/draft/</loc>
-    <lastmod>2019-06-15</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://johnbender.us/tags/sql/</loc>
     <lastmod>2019-06-15</lastmod>
   </url>
   
@@ -152,7 +147,7 @@
   </url>
   
   <url>
-    <loc>https://johnbender.us/research/ooplsa-2019/</loc>
+    <loc>https://johnbender.us/research/oopsla-2019/</loc>
     <lastmod>2019-10-20</lastmod>
   </url>
 </urlset>
