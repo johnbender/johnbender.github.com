@@ -13,7 +13,7 @@
     <header>
       <h1 class="home"><a href="/">Assistant to the Proof Assistant</a></h1>
       <ul class="nav">
-        <li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/about/">About</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li></ul>
+        <li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
     </header>
 
     <main class="tmpl-post">
@@ -25,14 +25,14 @@
 <div class="content ">
 <p>This post started out as a <a href="https://gist.github.com/7242a7434195565b4a9d">gist</a> that I was using to work through what I've learned about category theory by applying it to something I already know: JavaScript. The surprising result was a clearly defined set of JavaScript functions and jQuery helpers that could be optimized to reduce execution time.</p>
 <p>In the course of this post we'll define two categories: one for HTMLElements and the other for jQuery objects. We'll then construct a Functor that maps from the category of HTMLElements to the category of jQuery objects. At the end we'll see how jQuery plugin authors can help user's speed up their JavaScript.</p>
-<h3 id="asumptions%2Frequirements">Asumptions/Requirements <a class="direct-link" href="#asumptions%2Frequirements" aria-hidden="true">#</a></h3>
+<h3 id="asumptions%2Frequirements">Asumptions/Requirements <a class="direct-link" href="#asumptions%2Frequirements">#</a></h3>
 <p>Some things to know before getting started:</p>
 <ol>
 <li><code>this</code> is treated as an implicit parameter to jQuery helper functions, later referred to as <strong>Jqry</strong> morphisms.</li>
 <li>Type guarantees are made by the closure compiler JSDoc type annotations and custom <code>@sig</code> type signature annotation. Don't worry if this is new to you -- it only adds a bit more rigor to the discussion.</li>
 <li>My examples do not constitute proofs but I'm fairly confident that both categories and the functor satisfy their respective laws.<sup>1</sup></li>
 </ol>
-<h3 id="categories">Categories <a class="direct-link" href="#categories" aria-hidden="true">#</a></h3>
+<h3 id="categories">Categories <a class="direct-link" href="#categories">#</a></h3>
 <p>If you're perfectly happy taking the category definitions at face value, feel free to skip ahead to the next section.</p>
 <p>A category consists of two things, a set of objects and a set of morphisms sometimes referred to as arrows that relate two of those objects. In layman's terms, a category is a consistent set of things (objects) and operations on those things (morphisms/arrows). The abstract nature of both is exactly what gives categories and category theory power, because you can define a wide range of systems in terms of a categories. A few examples, including the two defined later in the post, will help to build an intuition for the forms that objects and morphisms can take.</p>
 <ol>
@@ -46,7 +46,7 @@
 <li>Closed Under Composition: When composing two morphisms in a category the result must also be in the set of morphisms in the category. For Hask this means that the output of composing two functions must be another function that takes a Haskell type and returns a Haskell type which is the criteria for the function being in the set of Hask's morphisms.</li>
 </ol>
 <p>These laws are important for understanding the conclusions drawn from the rest of the post and we'll cover how both the <strong>Html</strong> and <strong>Jqry</strong> categories satisfies each.</p>
-<h3 id="html">Html <a class="direct-link" href="#html" aria-hidden="true">#</a></h3>
+<h3 id="html">Html <a class="direct-link" href="#html">#</a></h3>
 <p>The Category <strong>Html</strong> is extremely simple and, if you're still interested in understanding categories more generally, it will help in building an intuition for them. The objects in <strong>Html</strong> are the HTMLElements that you're familiar with from JavaScript (eg, HTMLDivElement, HTMLAnchorElement). The morphisms are JavaScript functions that opperate on those objects, and <em>only</em> those objects.</p>
 <p>The next step is to make sure that <strong>Html</strong> satisfies the three category laws:</p>
 <p>Identity:</p>
@@ -90,7 +90,7 @@ elem.getAttribute( <span class="string">"foo"</span> ); <span class="comment">//
 </span>
 </pre>
 <p>The identity function is trivial and, as noted before, function composition is always associative. We know that the functions in <strong>Html</strong> are closed under composition because of the type guarantees we've placed on them. That is, all the functions accept as their only argument HTMLElements and return only HTMLElements so there's no way to compose two of them that doesn't also have the same type signature. Having met the three requirements for a category with <strong>Html</strong> we can move on to the second, and more complex category <strong>Jqry</strong>.</p>
-<h3 id="jqry">Jqry <a class="direct-link" href="#jqry" aria-hidden="true">#</a></h3>
+<h3 id="jqry">Jqry <a class="direct-link" href="#jqry">#</a></h3>
 <p><strong>Jqry</strong> is the category of <code>jQuery</code> objects and functions from <code>jQuery</code> objects to <code>jQuery</code> objects.<sup>3</sup> It's only slightly more complex than <strong>Html</strong> because the reader must accept <code>this</code> as an implicit parameter to the JavaScript functions that are the category's morphisms. Also, these morphisms must be defined on the <code>$.fn</code> object to guarantee the value of <code>this</code> is a <code>jQuery</code> object. Otherwise the objects are simply jQuery objects as you know them from day to day use, ie the result of something like <code>$(&quot;div&quot;)</code>, and the functions are JavaScript functions that retun jQuery objects.</p>
 <p>Identity:</p>
 <pre>
@@ -146,11 +146,11 @@ $elem.aAndB().attr( <span class="string">"foo"</span> ); <span class="comment">/
 </pre>
 <p>Please direct your attention to the fact that you could substitute the <code>a</code> and <code>b</code> functions from the <strong>Html</strong> <code>compose</code> example here for the functions that are mapped using <code>this.map</code> (<code>$.fn.map</code>) over the set of elements in the jQuery object (represented by <code>this</code>). This will be important when defining the Functor from <strong>Html</strong> to <strong>Jqry</strong>.</p>
 <p>Again, we know that the morphisms of <strong>Jqry</strong> are closed under composition because each accepts and returns only jQuery objects.</p>
-<h3 id="%24()-%E2%88%89-functors">$() ∉ Functors <a class="direct-link" href="#%24()-%E2%88%89-functors" aria-hidden="true">#</a></h3>
+<h3 id="%24()-%E2%88%89-functors">$() ∉ Functors <a class="direct-link" href="#%24()-%E2%88%89-functors">#</a></h3>
 <p>Functors are a <em>single</em> morphism from one category to another. Another way to think about them is a an operation that can take either an object or a morphism from one category and translate it so that it exists or &quot;works&quot; in another category. This obvioulsy means that a given functor handles both morphisms and objects. Evaluating <code>$()</code> as a functor from <strong>Html</strong> to <strong>Jqry</strong>, shows that it translates the objects in the category <strong>Html</strong> (HTMLElements) properly to the objects in <strong>Jqry</strong> (instances of jQuery) but turns the morphisms (functions) into dom ready callbacks. So <code>$()</code> is not, strictly speaking, a category theoretic functor.</p>
 <p>On the other hand it's quite easy to define a function that handles both objects functions properly. As I noted in a previos post and in an earlier in this post, <code>$.fn.map</code> provides an easy way to change functions in <strong>Html</strong> to <strong>Jqry</strong>. So, this new functor just needs to check if it's operating on an object or a function from the <strong>Html</strong> category and respond accordingly.</p>
 <p>For the Haskell fans out there (and ciaranm in ##categorytheory) it's better to define a seperate function to handle the translation of morphisms from one category to another in the spirit of <code>fmap</code>, but since this is flexible ol' JavaScript, it's possible to use type unions in the closure compiler type constraints, and I think it makes the mapping from theory to Javascript a bit easier to understand, I've chosen to deal with both in a single function.</p>
-<h3 id="functor-html--%3E-jqry">Functor Html -&gt; Jqry <a class="direct-link" href="#functor-html--%3E-jqry" aria-hidden="true">#</a></h3>
+<h3 id="functor-html--%3E-jqry">Functor Html -&gt; Jqry <a class="direct-link" href="#functor-html--%3E-jqry">#</a></h3>
 <pre>
 <span class="doc">/** @sig {HTMLElement | html.morphism} -&gt; {jQuery | jqry.morphism} */</span>
 <span class="js2-external-variable">$</span>.<span class="function-name">Functor</span> = <span class="keyword">function</span>( <span class="js2-function-param">a</span> ){
@@ -219,10 +219,10 @@ $elem.sndAB().attr(<span class="string">"foo"</span>);                          
 <p>The assertion at the top will fail of course because the functions are not the same object. More importantly it would fail even if the functions were compared as strings, because they using different internal mechanisms. Ultimately though the functionality is the same and that's what we care about. In each case both <code>a</code> and <code>b</code> will be allowed to alter each element in the jQuery object's set and apply the attribute values <code>foo</code> and <code>baz</code> respectively.</p>
 <p>While they have the same outcome, the underlying machinery is very different. <code>$.fn.fstAB</code> is <em>one</em> iteration over the set of HTMLElements in the jQuery set and <code>$.fn.sndAB</code> is <em>two</em>. That is <code>$.fn.sndAB</code> is applying two seperate <code>$.fn</code> methods which is equivelant to <code>$(&quot;foo&quot;).a().b()</code>, where as <code>$.fn.fstAB</code> is calling <code>$.fn.map</code> only once and piping each element through two composed functions that operate on HTMLElements, <code>$(&quot;foo&quot;).map(aAndB)</code>.<sup>4</sup> They get the same results but <code>$.fn.sndAB</code> requires twice as many iterations over the jQuery set!</p>
 <p>You might recognize the optimization as <a href="http://en.wikipedia.org/wiki/Loop_fusion">loop fusion</a>. By ensuring that the functor satisfies the requsite laws we've stumbled upon an interesting relationship. That is, any time we use n &gt; 1 iterative <code>$.fn</code> methods that exist in <strong>Jqry</strong> it's possible to extract the pure HTMLElement-altering functions that <em>might</em> underly them, compose those functions, and save n-1 full iterations in the process.</p>
-<h3 id="loop-fusing-hipster">Loop Fusing Hipster <a class="direct-link" href="#loop-fusing-hipster" aria-hidden="true">#</a></h3>
+<h3 id="loop-fusing-hipster">Loop Fusing Hipster <a class="direct-link" href="#loop-fusing-hipster">#</a></h3>
 <p>It's clear that someone using <code>$(&quot;foo&quot;).a().b()</code> could, entirely indepdendent of this rigmarole, arrive at the same conclusion that the loops underlying <code>a</code> and <code>b</code> could be unified to speed up execution and subsequently point out they've been fusing loops since before it was cool. What's not clear is how to know in other cases when it's possible to extract the underlying functions from the <code>$.fn</code> methods for composition. Because of the Functor laws we've unambiguously defined a specific subset of functions -- the set of <strong>Html</strong> morphisms with <code>$.fn.map</code> applied -- that we <em>know</em> can be fused and will produce the same result. Put differently:</p>
 <p>As long as the <em>n</em> functions being mapped over the jQuery object's contents individually are all from HTMLElements to HTMLElements, we can compose them, map the resulting composed function over the jQuery object set <em>once</em>, and be asured the resulting jQuery object will be the same.</p>
-<h3 id="package-it-up">Package it up <a class="direct-link" href="#package-it-up" aria-hidden="true">#</a></h3>
+<h3 id="package-it-up">Package it up <a class="direct-link" href="#package-it-up">#</a></h3>
 <p>Now that we know which functions can be composed to save some execution time it would be nice to know how use this to improve jQuery plugins. One way is to get jQuery plugin authors provide the underlying DOM manipulation functions as attributes on the plugin methods. This would allow users to do the fusing when it makes sense. Lets use our two composition examples from the <strong>Jqry</strong> category to see what this might look like.</p>
 <p>Plugin one:</p>
 <pre>
@@ -259,9 +259,9 @@ $elem.sndAB().attr(<span class="string">"foo"</span>);                          
 </span>$(<span class="string">"foo"</span>).map(compose($.fn.a.pure, $.fn.b.pure));
 </pre>
 <p>Obviously these two examples are tiny and could easily be consolidated by hand, but two plugins with more complex DOM manipulations would be much harder to classify as &quot;fusable&quot;. By puting the onus on the plugin developer it gives the end user a better guarantee that it's safe.</p>
-<h3 id="did-you-make-it%3F">Did you make it? <a class="direct-link" href="#did-you-make-it%3F" aria-hidden="true">#</a></h3>
+<h3 id="did-you-make-it%3F">Did you make it? <a class="direct-link" href="#did-you-make-it%3F">#</a></h3>
 <p>And there you have it. After defining a mathematical framework in which to view DOM alterations with jQuery and JavaScript we identified an important set of characteristics to use for speeding up our client side code. Maybe this isn't enough to get you interested, but for me it's an afirmation that, even this far from the its ivory towers, math has a role to play.</p>
-<h3 id="footnotes">Footnotes <a class="direct-link" href="#footnotes" aria-hidden="true">#</a></h3>
+<h3 id="footnotes">Footnotes <a class="direct-link" href="#footnotes">#</a></h3>
 <ol>
 <li>Thanks again to edwardk and xplat from #haskell-blah and ciaranm from ##categorytheory for reviewing my categories and providing feedback. I'd also like to thank <a href="http://twitter.com/keyist">Tim Goh</a> for taking the time to enhance my terrible writting.</li>
 <li>Function composition is always associative, even for impure functions. You'll have to google around a bit for a proof but this appears to be a <a href="http://en.wikipedia.org/wiki/Function_composition">generally excepted truth</a>.</li>

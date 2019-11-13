@@ -13,7 +13,7 @@
     <header>
       <h1 class="home"><a href="/">Assistant to the Proof Assistant</a></h1>
       <ul class="nav">
-        <li class="nav-item nav-item-active "><a href="/">Home</a></li><li class="nav-item"><a href="/about/">About</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li></ul>
+        <li class="nav-item nav-item-active "><a href="/">Home</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
     </header>
 
     <main class="tmpl-home">
@@ -22,6 +22,16 @@
 
 
 <ol class="postlist" style="counter-reset: post">
+
+  <li class="postlist-item">
+    <a href="/posts/2019-11-12-presentation-formalizing-javas-concurrent-access-modes/" class="postlist-link">Formalizing Java&#39;s Access Modes</a>
+    <div class="postlist-metadata">
+    <time class="postlist-date" datetime="2019-11-12">12 Nov 2019</time>
+    
+      <a href="/tags/presentation/" class="tag">presentation</a>
+      <a href="/tags/OOPSLA &amp;#39;19/" class="tag">OOPSLA &#39;19</a>
+    </div>
+  </li>
 
   <li class="postlist-item">
     <a href="/posts/2014-06-22-complexity-how-hard-is-that-climb/" class="postlist-link">NP-complete: how hard is that climb?</a>
@@ -42,16 +52,6 @@
     </div>
   </li>
 
-  <li class="postlist-item">
-    <a href="/posts/2013-11-04-a-better-sql/" class="postlist-link">A Better SQL</a>
-    <div class="postlist-metadata">
-    <time class="postlist-date" datetime="2013-11-04">04 Nov 2013</time>
-    
-      <a href="/tags/semantics/" class="tag">semantics</a>
-      <a href="/tags/sql/" class="tag">sql</a>
-    </div>
-  </li>
-
 </ol>
 
 
@@ -59,14 +59,29 @@
 
 
 
+  
+  
+  
+<h1 class="homepost">Formalizing Java&#39;s Access Modes <img src="/img/pin.png" class="pinned"/></h1>
 
 
+<div class="content homepost">
+<p>This is our presentation from OOPSLA 2019 on our formal model for the Varhandle API in JDK 9. More information on the paper can be found <a href="/research/oopsla-2019/">here</a>. The Coq <a href="https://bitbucket.org/ucla-pls/jam/src/master/coq/">source</a> and our <a href="https://bitbucket.org/ucla-pls/jam/src/master/herd/">Herd model/tests</a> have been made available as well.</p>
+<p><iframe width="100%" height="360" src="https://www.youtube.com/embed/Tkr7cinHhg8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="https://www.youtube.com/embed/Tkr7cinHhg8" class="video-link">View video on Youtube</a></p>
+
+</div>
+
+
+  
+  
+  
 <h1 class="homepost">NP-complete: how hard is that climb? <img src="/img/pin.png" class="pinned"/></h1>
 
 
 <div class="content homepost">
 <p>The purpose of this post is to clarify the difference between <strong>NP</strong>-hard and <strong>NP</strong>-complete problems for developers who, like me, have found that the abstract nature of the definitions make developing an intuition for it difficult.</p>
-<h2 id="climbing-a-mountain">Climbing a Mountain <a class="direct-link" href="#climbing-a-mountain" aria-hidden="true">#</a></h2>
+<h2 id="climbing-a-mountain">Climbing a Mountain <a class="direct-link" href="#climbing-a-mountain">#</a></h2>
 <p>Imagine that a friend came to you and said that she would like you plan a trip up an obscure mountain,  <strong>X</strong>. Obviously you need to know how difficult the trip is going to be to do a good job. If it's only a quick day hike to the top you probably just need some sandwiches and water, but if it's a multi-week expedition then you'll need a more comprehensive set of supplies.</p>
 <p>Further, imagine that you are unable to find any information about the difficulty of climbing up mountain <strong>X</strong>! Your intuitive reaction would probably be to find <em>comparable</em> mountains to get a sense for the difficulty of mountain <strong>X</strong> using some sort of comparison. Fortunately, right near by there is a mountain <strong>Y</strong> that is well known. In fact it's close enough that a comparison by height (which we'll use as our proxy for difficulty) is possible save for that fact that peak of mountain <strong>X</strong> is constantly covered by clouds.</p>
 <p><img src="/img/complexity/x-obscured.png" alt="X mountain obscured"></p>
@@ -76,7 +91,7 @@
 <p>Lets assume that <strong>Y</strong> is &quot;Weeks and Days&quot;-hard, and that means we know that <strong>X</strong> is too because it's at least as big as <strong>Y</strong>. But there's still a problem, we don't know <em>exactly</em> how big mountain <strong>X</strong> is since the top is obscured by clouds. We only know that it's as as least as hard as <strong>Y</strong> to climb. If <strong>X</strong> ends up being as tall as Olympus Mons we should probably just forget it. So, on a clear day when the top of mountain <strong>X</strong> is visible and comparable to the top of mountain <strong>Y</strong> you take a look and verify that mountain <strong>X</strong> is roughly the same size as mountain <strong>Y</strong>. Now we say that mountain <strong>X</strong> is <strong>WD</strong>-complete. That is, we know it's at least as hard as another &quot;Weeks and Days&quot; mountain and we feel confident that it will <em>only</em> take weeks and days and not, for instance, months and years.</p>
 <p><img src="/img/complexity/x-visible.png" alt="X visible"></p>
 <p>This is really great for a couple of reasons. First, we have enough information to start planning a trip to the top of mountain <strong>X</strong>. Second, because we've classified mountain <strong>X</strong> as being both <strong>WD</strong>-hard and &quot;in&quot; the class of <strong>WD</strong> mountains it stands as an exemplar of that class of mountain, which means we can use it to classify other mountains, in the same way we did with mountain <strong>Y</strong>.</p>
-<h2 id="p%2C-np%2C-np-hard%2C-np-complete"><strong>P</strong>, <strong>NP</strong>, <strong>NP</strong>-hard, <strong>NP</strong>-complete <a class="direct-link" href="#p%2C-np%2C-np-hard%2C-np-complete" aria-hidden="true">#</a></h2>
+<h2 id="p%2C-np%2C-np-hard%2C-np-complete"><strong>P</strong>, <strong>NP</strong>, <strong>NP</strong>-hard, <strong>NP</strong>-complete <a class="direct-link" href="#p%2C-np%2C-np-hard%2C-np-complete">#</a></h2>
 <p>While you may not be a climbing fan, this serves to illustrate the basic process of establishing when a decision problem is <strong>NP</strong>-complete by &quot;comparison&quot;. To make the analogy clear we'll define, <strong>P</strong>, <strong>NP</strong>, <strong>NP</strong>-hard and <strong>NP</strong>-complete and link them to the analogy. First though we need to establish exactly what a decision problem is and how Turing machines fit in so that the definitions will make more sense.</p>
 <p>NP-hard problems like <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">The Traveling Salesman</a> ( <strong>TSP</strong> ) are often characterized in their optimization form. In this case the problem is to find the <em>shortest possible route</em> that visits all cities. The decision version is subtly different. The question is changed to whether there exists a path, less than or equal to some length, that visits all the cities. More formally:</p>
 <blockquote>
@@ -85,14 +100,14 @@
 <p>If an algorithm can tell you whether an arbitrary pair <code>&lt;G, l&gt;</code> is in <strong>TSP</strong> we say that the algorithm &quot;decides&quot; <strong>TSP</strong>.</p>
 <p>The distinction between these two characterizations may seem like a minor detail especially given that solving the optimization version gives you an answer to the decision version. Later we'll see the fact that the decision version has a yes or no answer is important when we talk about a problem being &quot;in <strong>NP</strong>&quot; in the same way that mountain <strong>X</strong> was discovered to be &quot;in <strong>WD</strong>&quot;.</p>
 <p>The final bit of required preamble is the Turing machine. I am going to assume some familiarity with Turing machines for the sake of space but when we talk about algorithms and their complexity we're talking about those algorithms and a corresponding Turing machine. The choice of the Turing machine as the model for discussions in complexity is due to it's incredibly robust and universal nature [1] though we won't explore that here. In particular we can feel confident that when we say a Turing machine operates in polynomial time it isn't due to some cleverness that we employed in the construction of the Turing machine [2].</p>
-<h2 id="polynomial-time">Polynomial Time <a class="direct-link" href="#polynomial-time" aria-hidden="true">#</a></h2>
+<h2 id="polynomial-time">Polynomial Time <a class="direct-link" href="#polynomial-time">#</a></h2>
 <p>Informally the class <strong>P</strong> is the class of problems that can be solved in polynomial time, or in other words the class of problems that can be solved in a number of steps that is a polynomial function of the size of the input. A slightly more formal definition of polynomial time problems:</p>
 <blockquote>
 <p>A problem is in <strong>P</strong> if there exists a Turing machine that can decide an instance of the problem in a number of steps that is a polynomial function of the size of the input.</p>
 </blockquote>
 <p>Again, deciding a problem means determining an instance's inclusion in the set for the problem (eg, whether a graph and length <code>&lt;G, l&gt;</code> are in <strong>TSP</strong>).</p>
 <p>In terms of our analogy, <strong>P</strong> corresponds with the day hike category, <strong>D</strong>. That is, efficiently solvable problems equate with easily hikeable mountains. I think it's initially hard to swallow polynomial functions like n<sup>5</sup> as &quot;efficient&quot; since they can clearly grow quite quickly with the size of the input. The key is that polynomial time functions represent some sort of cleverness in finding a solution. With a polynomial time function it's certainly <em>not</em> the case that all the possibilities for a given input have to be tried to determine the answer.</p>
-<h2 id="non-deterministic-polynomial-time">Non-deterministic Polynomial Time <a class="direct-link" href="#non-deterministic-polynomial-time" aria-hidden="true">#</a></h2>
+<h2 id="non-deterministic-polynomial-time">Non-deterministic Polynomial Time <a class="direct-link" href="#non-deterministic-polynomial-time">#</a></h2>
 <p>Contrary to the section title we're going to use the more popular definition of <strong>NP</strong>, which is that of a verifying Turing machine that can take an instance of a problem and some &quot;certificate&quot; that convinces the Turing machine to decide positively for the instance. This definition and that of the non-deterministic polynomial time Turing machine are equivalent [3] but the first requires a less detailed discussion of Turing machine so we adopt it here.</p>
 <blockquote>
 <p>A problem is in <strong>NP</strong> if there exists a Turing machine that can decide an instance of the problem in polynomial time given a certificate of size polynomial in the size of the instance.</p>
@@ -101,7 +116,7 @@
 <p>Note that the certificate must be polynomial in the size of the problem instance or the Turing machine wouldn't be able to read the certificate in polynomial time let alone use it for verification! Again, for <strong>TSP</strong> the certificate is a subset of the edges of the graph (a path with length &lt;= <code>l</code>) so it's linear in the size of the input.</p>
 <p>In our analogy, <strong>NP</strong> problems equate with weeks and days long hikes, <strong>WD</strong>. While <strong>WD</strong> is fairly abstract in terms of difficulty <strong>NP</strong> problems are very precise in that they require that a solution can be <em>verified</em> in polynomial time given some certificate. Also, just like the mountains, all problems in <strong>P</strong> are in <strong>NP</strong> in the same way that all day long hikes can also be done in weeks and days if you like to take your time. The containment of <strong>P</strong> in <strong>NP</strong> follows from observing that each polynomial time Turing machine can act as a polynomial time verifier for a problem instance by simply ignoring the certificate and generating the solution directly.</p>
 <p>A slight departure from our analogy is that the distinction between <strong>D</strong> and <strong>WD</strong> is fairly clear. It's possible that in some distant future there will be shortcuts to the top of mountains like K2 and Everest that will make them surmountable in a day (teleportation?), but intuitively day hikes and weeks long hikes are very different things. Not necessarily so for <strong>P</strong> and <strong>NP</strong>. For good reason [4] it is <em>strongly</em> believed that <strong>P</strong> is not the same as <strong>NP</strong> though it has yet to be shown conclusively. Further, the definitions ask nothing that might automatically differentiate the two classes and so whenever we distinguish between <strong>P</strong> and <strong>NP</strong> it comes with the caveat that it is still possible they are the same class of problem however unlikely that may be.</p>
-<h2 id="polynomial-time-reduction">Polynomial Time Reduction <a class="direct-link" href="#polynomial-time-reduction" aria-hidden="true">#</a></h2>
+<h2 id="polynomial-time-reduction">Polynomial Time Reduction <a class="direct-link" href="#polynomial-time-reduction">#</a></h2>
 <p>We used vision to compare mountains but for the complexity of decision problems we need something more precise. The primary tool for comparison in complexity is the reduction. A reduction is a sort of translation and it's valid if the translated problem's solution implies a solution to the original problem and vice versa.</p>
 <blockquote>
 <p>A problem is polynomial time reducible to another problem if there exists a Turing machine that can translate any instance of the first problem to the second such that the original instance has a solution if and only if the reduced instance has a solution and if the reduction operates in polynomial time.</p>
@@ -112,7 +127,7 @@
 <p>This is important because if you could devise some special bridge (teleporter?) that allowed you to cross from the top of a weeks and days mountain to the top of a day trip mountain in the length of a day trip, you'd have a way to scale that weeks and days mountain in about a day by climbing the day trip mountain and then taking the bridge.</p>
 <p><img src="/img/complexity/d-hike-d-bridge.png" alt="X mountain obscured"></p>
 <p>In essence you will have shrunk the bigger mountain! Further, if you have &quot;day trip bridges&quot; between that first big mountain and other big mountains then you could get to the top of any them with a relatively short trip. The hiking world would be changed forever [5].</p>
-<h2 id="np-hard"><strong>NP</strong>-hard <a class="direct-link" href="#np-hard" aria-hidden="true">#</a></h2>
+<h2 id="np-hard"><strong>NP</strong>-hard <a class="direct-link" href="#np-hard">#</a></h2>
 <p>It's this type of reduction that defines what it means for a problem to be <strong>NP</strong>-hard. We say that a problem is <strong>NP</strong>-hard if it can be compared to any other problem in <strong>NP</strong> by means of a reduction in the same way that we can classify mountain <strong>X</strong> by means of a &quot;reduction&quot; or &quot;bridge&quot; from mountain <strong>Y</strong>. The seeming impossibility of building a day trip bridge from a weeks and days mountain to a day trip mountain ensures that if you <em>can</em> build that bridge one of two things has happened:</p>
 <ol>
 <li>You've come up with an absolutely ground breaking bridge building technique.</li>
@@ -122,13 +137,13 @@
 <p>It's also important to note that if we want to get an understanding for how difficult mountains are the bridges must be from tops to tops. That is, you could build a day bridge from the top of a day mountain to the <em>side</em> of a much bigger mountain but that wouldn't tell you a whole lot about the much bigger mountain.</p>
 <p><img src="/img/complexity/d-bridge-to-nowhere.png" alt="X mountain obscured"></p>
 <p>Similarly you can reduce from polynomial time problems to <strong>NP</strong>-hard problems but it's not going to mean a whole lot, which is why we reduce <em>from</em> problems known to be <strong>NP</strong>-hard and in <strong>NP</strong> [6].</p>
-<h2 id="np-complete"><strong>NP</strong>-complete <a class="direct-link" href="#np-complete" aria-hidden="true">#</a></h2>
+<h2 id="np-complete"><strong>NP</strong>-complete <a class="direct-link" href="#np-complete">#</a></h2>
 <p>Recall that when a mountain is <strong>WD</strong>-hard like <strong>X</strong> was before the clouds cleared we said that it was going to take <em>at least</em> weeks and days to climb; it could take more. Again <strong>NP</strong>-hard gives the same characterization for problems. When we say that something is <strong>NP</strong>-hard we're simply saying that it's <em>at least</em> as hard as any other problem in <strong>NP</strong> but it could be harder.</p>
 <p>So in addition to knowing whether a problem is <strong>NP</strong>-hard, if we can also show that a problem is in the class <strong>NP</strong>, we say that it is <strong>NP</strong>-complete and that it represents a prime example of the class. This is precisely why the optimization form of <strong>TSP</strong> can only be said to be <strong>NP</strong>-hard and not <strong>NP</strong>-complete because verifying the optimal solution for a given graph of cities will take as long as generating the solution in the first place, so there's no way to build an algorithm that can verify that a given solution is optimal in polynomial time. On the other hand if we tweak the question and ask whether a graph has a solution of a certain length then we can certainly check that in polynomial time placing it firmly in <strong>NP</strong>!</p>
 <p>If the mountain is both <strong>WD</strong>-hard and also in the <strong>WD</strong> class it's a <strong>WD</strong>-complete mountain. If a problem is <strong>NP</strong>-hard also in <strong>NP</strong> it's an <strong>NP</strong>-complete problem.</p>
-<h2 id="closing">Closing <a class="direct-link" href="#closing" aria-hidden="true">#</a></h2>
+<h2 id="closing">Closing <a class="direct-link" href="#closing">#</a></h2>
 <p>If we want to know just how hard a problem is in terms of computation it's really not enough to know that it's at least as hard as another problem for the same reason we must know more about a mountain before we can plan to climb it. Ultimately we want to define our problems as complete for some complexity class so that we can clearly say to our hiking friends just how hard the climb will be.</p>
-<h3 id="footnotes">Footnotes <a class="direct-link" href="#footnotes" aria-hidden="true">#</a></h3>
+<h3 id="footnotes">Footnotes <a class="direct-link" href="#footnotes">#</a></h3>
 <ol>
 <li><a href="http://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis">Wikipedia - Church-Turing Thesis</a></li>
 <li>&quot;logarithmic slowdown in simulation&quot;. - <a href="http://en.wikipedia.org/wiki/Turing_machine#Universal_Turing_machines">Wikipedia - Turing Machine</a></li>
@@ -139,6 +154,7 @@
 </ol>
 
 </div>
+
 
 
 
