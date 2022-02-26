@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compiling Volatile Correctly in Java</title>
+    <meta name="Description" content="Writings on computer stuff.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-vs.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Assistant to the Proof Assistant">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Assistant to the Proof Assistant</a></h1>
+      <ul class="nav">
+        <li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/research/">Research</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      
+
+<h1>Compiling Volatile Correctly in Java</h1>
+
+
+<ul>
+
+   <li>
+   Shuyang Liu
+   </li>
+
+   <li>
+   John Bender
+   </li>
+
+   <li>
+   Jens Palsberg
+   </li>
+
+</ul>
+
+<div class="content ">
+<p>The compilation scheme for Volatile accesses in the OpenJDK 9 HotSpot Java Virtual Machine has a major problem that persists despite a recent bug report and a long discussion. One of the suggested fixes is to let Java compile Volatile accesses in the same way as C/C++11. However, we show that this approach is invalid for Java. Indeed, we show a set of optimizations that is valid for C/C++11 but invalid for Java, while the compilation scheme is similar. We prove the correctness of the compilation scheme to Power and x86 and a suite of valid optimizations in Java. Our proofs are based on a language model that we validate by proving key properties such as the DRF-SC theorem and by running litmus tests via our implementation of Java in Herd7</p>
+<ul>
+<li><a href="/assets/ecoop-2022.pdf">Preprint</a> (accepted ECOOP'22)</li>
+<li><a href="https://github.com/ShuyangLiu/ECOOP22-Supplementary-Material">Project: Herd and Coq formalizations</a></li>
+</ul>
+
+</div>
+
+
+<p><a href="/">← Home</a></p>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /research/ecoop-2022/ -->
+  </body>
+</html>
