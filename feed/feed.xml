@@ -4,7 +4,7 @@
 	<subtitle>Writings on computer stuff.</subtitle>
 	<link href="https://johnbender.us/feed/feed.xml" rel="self"/>
 	<link href="https://johnbender.us/"/>
-	<updated>2022-02-25T00:00:00Z</updated>
+	<updated>2022-03-14T00:00:00Z</updated>
 	<id>https://johnbender.us/</id>
 	<author>
 		<name>John Bender</name>
@@ -758,8 +758,9 @@ The result of our work is a trivial optimization that most users should be able 
 		<updated>2019-11-12T00:00:00Z</updated>
 		<id>https://johnbender.us/posts/2019-11-12-presentation-formalizing-javas-concurrent-access-modes/</id>
 		<content type="html">&lt;p&gt;This is my presentation from OOPSLA 2019 on our formal model for the Varhandle API in JDK 9. More information on the paper can be found &lt;a href=&quot;https://johnbender.us/research/oopsla-2019/&quot;&gt;here&lt;/a&gt;. The Coq &lt;a href=&quot;https://bitbucket.org/ucla-pls/jam/src/master/coq/&quot;&gt;source&lt;/a&gt; and our &lt;a href=&quot;https://bitbucket.org/ucla-pls/jam/src/master/herd/&quot;&gt;Herd model/tests&lt;/a&gt; have been made available as well.&lt;/p&gt;
-&lt;p&gt;&lt;iframe width=&quot;100%&quot; height=&quot;360&quot; src=&quot;https://www.youtube.com/embed/Tkr7cinHhg8&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;a href=&quot;https://www.youtube.com/embed/Tkr7cinHhg8&quot; class=&quot;video-link&quot;&gt;View video on Youtube&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;iframe width=&quot;100%&quot; height=&quot;360&quot; src=&quot;https://www.youtube.com/embed/Tkr7cinHhg8&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/p&gt;
 </content>
 	</entry>
 	
@@ -773,6 +774,18 @@ The result of our work is a trivial optimization that most users should be able 
 &lt;li&gt;&lt;a href=&quot;https://johnbender.us/assets/ecoop-2022.pdf&quot;&gt;Preprint&lt;/a&gt; (accepted ECOOP&#39;22)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/ShuyangLiu/ECOOP22-Supplementary-Material&quot;&gt;Project: Herd and Coq formalizations&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>An Introduction to Formal Methods</title>
+		<link href="https://johnbender.us/posts/2022-03-14-intro-to-formal/"/>
+		<updated>2022-03-14T00:00:00Z</updated>
+		<id>https://johnbender.us/posts/2022-03-14-intro-to-formal/</id>
+		<content type="html">&lt;p&gt;This is a somewhat narrow introduction to formal methods I presented at UCLA in March of 2022 with the goal of describing some of my research at Sandia.&lt;/p&gt;
+&lt;p&gt;
+  &lt;iframe width=&quot;100%&quot; height=&quot;360&quot; src=&quot;https://www.youtube.com/embed/dZIU2JhHYdg&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/p&gt;
 </content>
 	</entry>
 </feed>
